@@ -3,6 +3,8 @@ const stack = [
   { name: 'Python',     cat: 'core' },
   { name: 'FastAPI',    cat: 'api' },
   { name: 'pandas',     cat: 'data' },
+  { name: 'scikit-learn', cat: 'ml' },
+  { name: 'matplotlib', cat: 'eda' },
   { name: 'PostgreSQL', cat: 'db' },
   { name: 'Prefect',    cat: 'pipelines' },
   { name: 'Redis',      cat: 'cache' },
@@ -29,18 +31,18 @@ const stack = [
         <h2 class="font-[family-name:var(--font-display)] text-[44px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-2">
           Emiliano<br />Gandini
         </h2>
-        <p class="text-xs text-(--color-text-dim) mb-8 tracking-wide">Montevideo, Uruguay · FING / UdelaR</p>
+        <p class="text-xs text-(--color-text-dim) mb-8 tracking-wide">Montevideo, Uruguay</p>
         <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">
-          Backend developer and data scientist. I work mostly in Python — pipelines, APIs, and
+          Backend developer and data scientist. I work mostly in Python: pipelines, APIs, and
           the infrastructure that keeps them running. I care about clean architecture,
           good documentation, and building things that hold up under load.
         </p>
         <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">
-          Founder of Eclipse Labs, a dev studio targeting SMBs. Also run LibreCourseUY,
+          I learn by building things until they break, then figuring out why. Also run LibreCourseUY,
           an open source organization promoting the OSS ecosystem in Uruguay.
         </p>
         <p class="text-[13px] leading-[1.8] text-(--color-text-muted)">
-          Arch Linux + Hyprland daily. nvim.
+          Arch (btw) :D
         </p>
       </div>
 
@@ -54,6 +56,21 @@ const stack = [
             </div>
           ))}
         </div>
+
+        <a
+          href="https://blog.emiliano-gandini-outeda.uy"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group block border border-(--color-border-subtle) bg-(--color-surface) hover:bg-(--color-bg) transition-colors duration-200 p-4 mt-5 rounded"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">blog</span>
+            <span class="text-(--color-border) group-hover:text-(--color-text-muted) transition-colors duration-200 text-sm">↗</span>
+          </div>
+          <p class="text-xs leading-[1.6] text-(--color-text-muted)">
+            Thoughts on backend, data, and building things.
+          </p>
+        </a>
       </div>
 
     </div>
