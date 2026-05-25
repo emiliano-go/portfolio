@@ -1,0 +1,61 @@
+---
+const stack = [
+  { name: 'Python',     cat: 'core' },
+  { name: 'FastAPI',    cat: 'api' },
+  { name: 'pandas',     cat: 'data' },
+  { name: 'PostgreSQL', cat: 'db' },
+  { name: 'Prefect',    cat: 'pipelines' },
+  { name: 'Redis',      cat: 'cache' },
+  { name: 'Docker',     cat: 'infra' },
+  { name: 'Traefik',    cat: 'infra' },
+  { name: 'Vue 3',      cat: 'frontend' },
+  { name: 'Celery',     cat: 'workers' },
+];
+---
+
+<section id="about" class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[60%] max-w-none min-w-[320px]">
+
+    <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+      <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+        About
+      </span>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+
+      <div data-reveal data-delay="0.1">
+        <h2 class="font-[family-name:var(--font-display)] text-[44px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-2">
+          Emiliano<br />Gandini
+        </h2>
+        <p class="text-xs text-(--color-text-dim) mb-8 tracking-wide">Montevideo, Uruguay · FING / UdelaR</p>
+        <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">
+          Backend developer and data scientist. I work mostly in Python — pipelines, APIs, and
+          the infrastructure that keeps them running. I care about clean architecture,
+          good documentation, and building things that hold up under load.
+        </p>
+        <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">
+          Founder of Eclipse Labs, a dev studio targeting SMBs. Also run LibreCourseUY,
+          an open source organization promoting the OSS ecosystem in Uruguay.
+        </p>
+        <p class="text-[13px] leading-[1.8] text-(--color-text-muted)">
+          Arch Linux + Hyprland daily. nvim.
+        </p>
+      </div>
+
+      <div data-reveal data-delay="0.18">
+        <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Stack</p>
+        <div class="grid grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
+          {stack.map((item) => (
+            <div class="flex justify-between items-center px-3 py-2.5 bg-(--color-bg) text-[11px]">
+              <span class="text-(--color-text-muted)">{item.name}</span>
+              <span class="text-(--color-text-dim) text-[10px]">{item.cat}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

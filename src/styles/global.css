@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #111616;
+  --color-surface: #161d1d;
+  --color-border: #2e4040;
+  --color-border-subtle: #1e2e2e;
+  --color-text-dim: #4a7a70;
+  --color-text-muted: #7aada0;
+  --color-text-base: #a8ccc4;
+  --color-text-bright: #c8ddd8;
+  --color-text-head: #e4efea;
+  --color-accent: #5a9e8a;
+  --color-accent-dim: #3a6e5a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #111616;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

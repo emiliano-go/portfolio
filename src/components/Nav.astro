@@ -1,0 +1,48 @@
+---
+const links = [
+  { label: 'projects', href: '#projects' },
+  { label: 'LibreCourseUY', href: '#librecourseuy' },
+  { label: 'open source', href: '#oss' },
+  { label: 'about', href: '#about' },
+  { label: 'blog ↗', href: 'https://blog.emiliano-gandini-outeda.uy', external: true },
+];
+---
+
+<nav
+  id="nav"
+  class="fixed top-0 left-0 right-0 z-50 border-b border-(--color-border-subtle) opacity-0"
+  style="backdrop-filter: blur(12px); background: rgba(17,22,22,0.88);"
+>
+  <div class="mx-auto w-[60%] max-w-none min-w-[320px] flex items-center justify-between py-5">
+    <span class="font-[family-name:var(--font-display)] text-lg font-bold tracking-widest uppercase text-(--color-text-head)">
+      Emiliano Gandini
+    </span>
+    <ul class="hidden md:flex gap-7 list-none">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+            class="text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  import { animate } from 'motion';
+
+  const nav = document.getElementById('nav')!;
+  animate(nav, { opacity: [0, 1] }, { duration: 0.6, delay: 1.2, easing: 'ease-out' });
+
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 40
+      ? 'var(--color-border)'
+      : 'var(--color-border-subtle)';
+  }, { passive: true });
+</script>

@@ -1,0 +1,41 @@
+---
+// Injects a single shared IntersectionObserver for all [data-reveal] elements.
+// Each element starts hidden; the observer triggers a Motion animation on entry.
+// Respects prefers-reduced-motion.
+---
+
+<script>
+  import { animate } from 'motion';
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const delay = parseFloat(el.dataset.delay ?? '0');
+
+        if (prefersReduced) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        } else {
+          animate(
+            el,
+            { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0px)'] },
+            { duration: 0.6, delay, easing: [0.25, 0.46, 0.45, 0.94] }
+          );
+        }
+
+        observer.unobserve(el);
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    const htmlEl = el as HTMLElement;
+    htmlEl.style.opacity = '0';
+    observer.observe(htmlEl);
+  });
+</script>
