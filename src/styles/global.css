@@ -15,17 +15,17 @@
 }
 
 html.light {
-  --color-bg: #f2f7f5;
-  --color-surface: #e6eeeb;
-  --color-border: #c8d8d0;
-  --color-border-subtle: #dce6e0;
-  --color-text-dim: #6a9e90;
-  --color-text-muted: #4a7a6e;
-  --color-text-base: #1a2e2a;
-  --color-text-bright: #0e1e1a;
-  --color-text-head: #06120e;
-  --color-accent: #3a8a72;
-  --color-accent-dim: #2a6a56;
+  --color-bg: #edf3f0;
+  --color-surface: #d5e3de;
+  --color-border: #b0c8be;
+  --color-border-subtle: #c8dbd3;
+  --color-text-dim: #3d6b5e;
+  --color-text-muted: #1a3a32;
+  --color-text-base: #0a1c18;
+  --color-text-bright: #04120e;
+  --color-text-head: #020a08;
+  --color-accent: #2a7a62;
+  --color-accent-dim: #1a5a4a;
 }
 
 @layer base {
@@ -36,7 +36,7 @@ html.light {
   }
 
   html.light {
-    background-color: #f2f7f5;
+    background-color: #edf3f0;
   }
 
   @media (prefers-reduced-motion: reduce) {
