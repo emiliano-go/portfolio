@@ -25,6 +25,16 @@ const {
       href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (stored === 'light' || (!stored && prefersLight)) {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
   </head>
   <body class="bg-(--color-bg) font-[family-name:var(--font-body)] text-(--color-text-base) antialiased">
     <slot />

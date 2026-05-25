@@ -10,10 +10,10 @@ const links = [
 
 <nav
   id="nav"
-  class="fixed top-0 left-0 right-0 z-50 border-b border-(--color-border-subtle) opacity-0"
-  style="backdrop-filter: blur(12px); background: rgba(17,22,22,0.88);"
+  class="fixed top-0 left-0 right-0 z-50 border-b border-(--color-border-subtle) opacity-0 bg-(--color-bg)/88"
+  style="backdrop-filter: blur(12px);"
 >
-  <div class="mx-auto w-[60%] max-w-none min-w-[320px] flex items-center justify-between py-5">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px] flex items-center justify-between py-5">
     <span class="font-[family-name:var(--font-display)] text-lg font-bold tracking-widest uppercase text-(--color-text-head)">
       Emiliano Gandini
     </span>
@@ -30,9 +30,52 @@ const links = [
           </a>
         </li>
       ))}
+      <li>
+        <button id="theme-toggle-desktop" class="flex items-center px-2 py-1 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer" aria-label="Toggle theme">
+          <svg id="sun-icon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="moon-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </li>
     </ul>
+    <div class="md:hidden flex items-center gap-2">
+      <button id="theme-toggle-mobile" class="text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200 cursor-pointer" aria-label="Toggle theme">
+        <svg id="sun-icon-mobile" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="moon-icon-mobile" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button id="menu-btn" class="flex flex-col gap-1.5 p-2 cursor-pointer relative z-10" aria-label="Toggle menu">
+        <span class="block w-5 h-px bg-(--color-text-muted) transition-all duration-200"></span>
+        <span class="block w-5 h-px bg-(--color-text-muted) transition-all duration-200"></span>
+        <span class="block w-5 h-px bg-(--color-text-muted) transition-all duration-200"></span>
+      </button>
+    </div>
   </div>
 </nav>
+
+<!-- Mobile menu overlay (outside nav to avoid z-index conflicts) -->
+<div id="mobile-menu" class="md:hidden fixed inset-0 z-40 pt-20 opacity-0 pointer-events-none transition-opacity duration-300 bg-(--color-bg)">
+  <button id="menu-close" class="absolute top-6 right-[7.5%] md:hidden text-(--color-text-muted) hover:text-(--color-text-bright) text-2xl cursor-pointer" aria-label="Close menu">✕</button>
+  <ul class="flex flex-col items-center gap-8 pt-16 list-none">
+    {links.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+          class="text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+    <li>
+      <button id="theme-toggle-overlay" class="flex items-center gap-2 text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200 cursor-pointer" aria-label="Toggle theme">
+        <svg id="sun-icon-overlay" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="moon-icon-overlay" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span id="theme-label-overlay">Light mode</span>
+      </button>
+    </li>
+  </ul>
+</div>
 
 <script>
   import { animate } from 'motion';
@@ -45,4 +88,63 @@ const links = [
       ? 'var(--color-border)'
       : 'var(--color-border-subtle)';
   }, { passive: true });
+
+  // Hamburger menu toggle
+  const menuBtn = document.getElementById('menu-btn')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const bars = menuBtn.querySelectorAll('span');
+
+  menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.contains('opacity-100');
+    if (open) {
+      mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+      mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+      bars.forEach(b => { b.style.transform = ''; b.style.backgroundColor = ''; });
+    } else {
+      mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+      mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+      bars[0].style.transform = 'translateY(7px) rotate(45deg)';
+      bars[1].style.transform = 'scaleX(0)';
+      bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    }
+  });
+
+  // Close menu on link click
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+      mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+      bars.forEach(b => { b.style.transform = ''; b.style.backgroundColor = ''; });
+    });
+  });
+
+  // Theme toggle
+  function setTheme(light) {
+    const html = document.documentElement;
+    if (light) {
+      html.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+    }
+    updateIcons();
+  }
+
+  function updateIcons() {
+    const isLight = document.documentElement.classList.contains('light');
+    document.querySelectorAll('[id^="sun-icon"]').forEach(el => el.classList.toggle('hidden', !isLight));
+    document.querySelectorAll('[id^="moon-icon"]').forEach(el => el.classList.toggle('hidden', isLight));
+    const label = document.getElementById('theme-label-overlay');
+    if (label) label.textContent = isLight ? 'Dark mode' : 'Light mode';
+  }
+
+  document.querySelectorAll('[id^="theme-toggle"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isLight = document.documentElement.classList.contains('light');
+      setTheme(!isLight);
+    });
+  });
+
+  updateIcons();
 </script>

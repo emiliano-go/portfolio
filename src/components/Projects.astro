@@ -1,39 +1,39 @@
 ---
 const projects = [
   {
-    tag: 'Private SaaS · ETL Platform',
-    name: 'InsightGrid',
-    desc: 'ETL platform built for business data. Handles large XLSX, CSV, and XML files with streaming processing and real-time progress. Four tiers, production-deployed.',
-    tags: ['FastAPI', 'Celery', 'Redis', 'PostgreSQL', 'Vue 3', 'Docker'],
-    arch: [
-      'Streaming upload + parse',
-      'Celery task queue',
-      'Redis Pub/Sub progress',
-      'Multi-format output',
-      'REST API + Vue 3 frontend',
-    ],
-    featured: true,
-    private: true,
-  },
-  {
     tag: 'Python Package · PyPI',
     name: 'DBWarden',
-    desc: 'Django-like migration management for FastAPI/SQLAlchemy projects. Multi-database, dev/prod separation, SQL translation layer.',
+    desc: 'Django-like migration management for FastAPI/SQLAlchemy projects. Multi-database, dev/prod separation, SQL translation layer, FastAPI integrations.',
     tags: ['SQLAlchemy', 'FastAPI', 'CLI', 'PyPI'],
-    href: 'https://github.com/emiliano-gandini-outeda/DBWarden',
+    links: [
+      { label: 'GitHub', href: 'https://github.com/emiliano-gandini-outeda/DBWarden' },
+      { label: 'PyPI', href: 'https://pypi.org/project/dbwarden/' },
+    ],
+    featured: true,
+  },
+  {
+    tag: 'Private SaaS · ETL',
+    name: 'InsightGrid',
+    desc: 'ETL platform built for business data. Handles large XLSX, CSV, and XML files with streaming processing and real-time progress. Four tiers, production-deployed.',
+    tags: ['FastAPI', 'Celery', 'Redis', 'PostgreSQL', 'Vue 3'],
+    private: true,
+    inProgress: true,
   },
   {
     tag: 'Python Package · PyPI',
-    name: 'accroresolv',
-    desc: 'Acronym resolver for Python. Converts natural language phrases to acronyms and vice versa.',
+    name: 'acrresolv',
+    desc: 'Acronym resolver for Python. Converts natural language phrases to acronyms.',
     tags: ['NLP', 'Python', 'PyPI'],
-    href: 'https://github.com/emiliano-gandini-outeda/accroresolv',
+    links: [
+      { label: 'GitHub', href: 'https://github.com/emiliano-gandini-outeda/accroresolv' },
+      { label: 'PyPI', href: 'https://pypi.org/project/accroresolv/' },
+    ],
   },
 ];
 ---
 
 <section id="projects" class="py-16 border-b border-(--color-border-subtle)">
-  <div class="mx-auto w-[60%] max-w-none min-w-[320px]">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
     <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
       <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
@@ -42,58 +42,89 @@ const projects = [
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <!-- Featured: InsightGrid — single unified card -->
+    <!-- Big card: featured project -->
     {projects.filter(p => p.featured).map((p) => (
       <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) mb-px bg-(--color-surface)">
         <div class="p-6">
-          <div class="flex items-start justify-between mb-2">
-            <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">{p.tag}</p>
-            {p.private && (
-              <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-dim) tracking-wide">private</span>
-            )}
-          </div>
-          <h2 class="font-[family-name:var(--font-display)] text-3xl font-bold uppercase tracking-wide text-(--color-text-head) mb-3">{p.name}</h2>
-          <p class="text-xs leading-[1.75] text-(--color-text-muted) mb-5 max-w-[520px]">{p.desc}</p>
-
-          <!-- Architecture inline -->
-          <div class="border-t border-(--color-border-subtle) pt-4 mb-5">
-            <p class="text-[10px] uppercase tracking-[0.08em] text-(--color-text-dim) mb-3">Architecture</p>
-            <div class="flex flex-wrap gap-x-6 gap-y-1">
-              {p.arch!.map((line) => (
-                <div class="text-[11px] text-(--color-text-muted) flex gap-2 items-center">
-                  <span class="text-(--color-accent-dim)">→</span>
-                  <span>{line}</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <div class="flex items-start justify-between mb-2">
+                <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">{p.tag}</p>
+              </div>
+              <h2 class="font-[family-name:var(--font-display)] text-3xl font-bold uppercase tracking-wide text-(--color-text-head) mb-3">{p.name}</h2>
+              <p class="text-xs leading-[1.75] text-(--color-text-muted) mb-5 max-w-[520px]">{p.desc}</p>
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="flex flex-wrap gap-2">
+                  {p.tags.map(t => (
+                    <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+                  ))}
                 </div>
-              ))}
+                {p.links && (
+                  <div class="flex flex-wrap gap-3 shrink-0">
+                    {p.links.map(link => (
+                      <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-
-          <div class="flex flex-wrap gap-2">
-            {p.tags.map(t => (
-              <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
-            ))}
+            <div class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden self-start">
+              <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
+                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
+              </div>
+              <div class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted)">
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden make-migrations <span class="text-(--color-text-dim)">"create users table"</span></div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden status</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden rollback</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden history</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     ))}
 
-    <!-- Other projects -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mt-px">
+    <!-- Small cards: 50% grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
       {projects.filter(p => !p.featured).map((p, i) => (
-        <div
-          data-reveal
-          data-delay={String(0.15 + i * 0.08)}
-          class="relative p-6 bg-(--color-bg) hover:bg-(--color-surface) transition-colors duration-200 group cursor-pointer"
-        >
-          <a href={p.href} target="_blank" rel="noopener noreferrer" class="absolute inset-0 z-10" aria-label={p.name} />
-          <span class="absolute top-5 right-5 text-(--color-border) group-hover:text-(--color-text-muted) transition-colors duration-200 text-sm">↗</span>
-          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{p.tag}</p>
-          <h2 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">{p.name}</h2>
-          <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-4">{p.desc}</p>
-          <div class="flex flex-wrap gap-2">
-            {p.tags.map(t => (
-              <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
-            ))}
+        <div data-reveal data-delay={String(0.15 + i * 0.08)} class="bg-(--color-surface) flex">
+          <div class="p-5 pb-4 flex flex-col w-full">
+            <div class="flex items-center justify-between mb-2 h-[20px]">
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) leading-none">{p.tag}</p>
+              <div class="flex items-center gap-2 shrink-0 leading-none">
+                {p.inProgress && (
+                  <span class="text-[10px] px-2 py-[3px] border border-yellow-700 text-yellow-600 tracking-wide whitespace-nowrap leading-none">In Progress</span>
+                )}
+                {p.private && (
+                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-dim) tracking-wide whitespace-nowrap leading-none">private</span>
+                )}
+              </div>
+            </div>
+            <h2 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">{p.name}</h2>
+            <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">{p.desc}</p>
+            <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-4">
+              <div class="flex flex-wrap gap-2">
+                {p.tags.map(t => (
+                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+                ))}
+              </div>
+              {p.links && (
+                <div class="flex flex-wrap gap-3 shrink-0">
+                  {p.links.map(link => (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       ))}

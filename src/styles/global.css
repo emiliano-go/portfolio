@@ -14,10 +14,29 @@
   --color-accent-dim: #3a6e5a;
 }
 
+html.light {
+  --color-bg: #f2f7f5;
+  --color-surface: #e6eeeb;
+  --color-border: #c8d8d0;
+  --color-border-subtle: #dce6e0;
+  --color-text-dim: #6a9e90;
+  --color-text-muted: #4a7a6e;
+  --color-text-base: #1a2e2a;
+  --color-text-bright: #0e1e1a;
+  --color-text-head: #06120e;
+  --color-accent: #3a8a72;
+  --color-accent-dim: #2a6a56;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
     background-color: #111616;
+  }
+
+  html.light {
+    background-color: #f2f7f5;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -27,5 +46,9 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+
+  *, *::before, *::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 }
