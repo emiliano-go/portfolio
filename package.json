@@ -11,6 +11,9 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "overrides": {
+    "vite": "7.3.3"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.7",
