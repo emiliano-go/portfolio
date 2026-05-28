@@ -6,9 +6,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "dev": "NODE_OPTIONS='--no-deprecation' astro dev",
+    "build": "NODE_OPTIONS='--no-deprecation' astro build",
+    "preview": "NODE_OPTIONS='--no-deprecation' astro preview",
     "astro": "astro"
   },
   "overrides": {

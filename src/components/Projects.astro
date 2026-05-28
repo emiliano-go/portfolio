@@ -14,7 +14,7 @@ const projects = [
   {
     tag: 'Private SaaS · ETL',
 
-    name: 'InsightGrid',
+    name: 'Datavyr',
     desc: 'ETL platform built for business data. Handles large XLSX, CSV, and XML files with streaming processing and real-time progress. Four tiers, production-deployed.',
     tags: ['FastAPI', 'Celery', 'Redis', 'PostgreSQL', 'Vue 3'],
     private: true,
@@ -53,7 +53,7 @@ const projects = [
                 <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">{p.tag}</p>
               </div>
               <h2 class="font-[family-name:var(--font-display)] text-3xl font-bold uppercase tracking-wide text-(--color-text-head) mb-3">{p.name}</h2>
-              <p class="text-xs leading-[1.75] text-(--color-text-muted) mb-5 max-w-[520px]">{p.desc}</p>
+              <p class="text-sm leading-relaxed text-(--color-text-muted) mb-5 max-w-[520px]">{p.desc}</p>
               <div class="flex flex-wrap items-start justify-between gap-4">
                 <div class="flex flex-wrap gap-2">
                   {p.tags.map(t => (
@@ -109,7 +109,7 @@ const projects = [
               </div>
             </div>
             <h2 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">{p.name}</h2>
-            <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">{p.desc}</p>
+            <p class="text-sm leading-relaxed text-(--color-text-muted) flex-1">{p.desc}</p>
             <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-4">
               <div class="flex flex-wrap gap-2">
                 {p.tags.map(t => (
@@ -129,6 +129,15 @@ const projects = [
           </div>
         </div>
       ))}
+    </div>
+
+    <div data-reveal data-delay="0.32" class="mt-6 text-center">
+      <a
+        href="/projects"
+        class="inline-flex items-center gap-1.5 text-[13px] md:text-[11px] px-4 py-2 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+      >
+        View all projects →
+      </a>
     </div>
 
   </div>
