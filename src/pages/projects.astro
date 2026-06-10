@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import LibreCourse from '../components/LibreCourse.astro';
+import OpenSource from '../components/OpenSource.astro';
+import Footer from '../components/Footer.astro';
+import RevealObserver from '../components/RevealObserver.astro';
+---
+
+<Layout title="Projects | Emiliano Gandini">
+  <Nav />
+  <main>
+
+    <!-- ─── DBWarden — Dedicated Section ─── -->
+    <section id="dbwarden" class="pt-28 pb-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+        <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap">
+            Featured Project
+          </span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div data-reveal data-delay="0.08" class="mb-10">
+          <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Python Package · PyPI</p>
+          <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
+            DBWarden
+          </h1>
+          <p class="text-lg md:text-xl text-(--color-text-bright) mb-6">The SQL-first database toolkit for SQLAlchemy.</p>
+          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-4">
+            DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
+          </p>
+          
+          <!-- Feature grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            {[
+              { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.' },
+              { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.' },
+              { title: 'Schema snapshots', desc: 'Checksummed JSON after every migration for deterministic diffs.' },
+              { title: 'Column-level diffing', desc: 'Type, nullability, default, and comment changes.' },
+              { title: 'Impact analysis', desc: 'AST-based scan to detect breaking changes before deploy.' },
+              { title: 'Offline mode', desc: 'Export model state, generate migrations anywhere, no DB needed.' },
+              { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.' },
+              { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.' },
+            ].map(f => (
+              <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+                <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
+                <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- Stats bar -->
+          <div class="flex flex-wrap gap-6 md:gap-10 mb-8 py-4 border-t border-b border-(--color-border-subtle)">
+            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
+            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
+            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
+            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5">DB dialects</span></div>
+            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5">CLI commands</span></div>
+          </div>
+
+          <!-- Terminal + links row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            <div class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
+              <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
+                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
+              </div>
+              <div class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted)">
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden make-migrations <span class="text-(--color-text-dim)">"create users table"</span></div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden status</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden rollback</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden history</div>
+                <div><span class="text-(--color-accent-dim)">$</span> dbwarden check-impact <span class="text-(--color-text-dim)">0042 --database primary</span></div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-3">
+              <a href="https://github.com/emiliano-gandini-outeda/DBWarden" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                GitHub ↗
+              </a>
+              <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                PyPI ↗
+              </a>
+              <a href="https://emiliano-gandini-outeda.me/DBWarden/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                Full documentation ↗
+              </a>
+              <a href="https://deepwiki.com/emiliano-gandini-outeda/DBWarden/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                DeepWiki ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── schemap ─── -->
+    <section id="schemap" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+        <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+            Python Package
+          </span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8">
+          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">PyPI</p>
+          <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">schemap</h2>
+          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-[600px]">
+            Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.
+            Define your model once, schemap generates Create, Update, Public, and Full schemas automatically,
+            with field-level type mapping, nullability handling, and configurable exclusions.
+          </p>
+          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6 max-w-[600px]">
+            Supports <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">AutoBase</code> inheritance and <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">@auto_schema</code> decorator,
+            with built-in TimestampMixin and SoftDeleteMixin. Eliminates repetitive schema boilerplate.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap gap-2">
+              {['Pydantic v2', 'SQLAlchemy 2.0', 'PyPI'].map(t => (
+                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+              ))}
+            </div>
+            <div class="flex flex-wrap gap-3 shrink-0">
+              <a href="https://github.com/emiliano-gandini-outeda/schemap" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                GitHub ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Site Twilight ─── -->
+    <section id="site-twilight" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+        <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+            Web App
+          </span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8">
+          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Django · Vue · Production</p>
+          <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">Site Twilight</h2>
+          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-[600px]">
+            Internal web system for managing identities, characters, and factions in an
+            SCP:RP roleplay environment. Handles user authentication, character profiles,
+            faction hierarchies, access levels, and classified documentation.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap gap-2">
+              {['Django', 'Vue', 'RBAC', 'SCP:RP'].map(t => (
+                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+              ))}
+            </div>
+            <div class="flex flex-wrap gap-3 shrink-0">
+              <a href="https://site-twilight.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                Visit site ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PyPI Utilities ─── -->
+    <section id="pypi-utils" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+        <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+            PyPI Utilities
+          </span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface)">
+          <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-(--color-border-subtle)">
+            <!-- crxml -->
+            <div class="p-6 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">crxml</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Rust</span>
+              </div>
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
+                Fast streaming parser for Crystal Reports XML exports with Rust acceleration.
+                100 MB in ~0.42s, ~75 MB RSS. Pipelines, parallel mode, pandas integration.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <a href="https://github.com/emiliano-gandini-outeda/crxml" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  GitHub ↗
+                </a>
+                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  PyPI ↗
+                </a>
+              </div>
+            </div>
+            <!-- detrack -->
+            <div class="p-6 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">detrack</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
+              </div>
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
+                Strip tracking parameters from URLs. Deterministically. Zero dependencies.
+                60+ default patterns, case-insensitive, pure functions, metadata returned.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <a href="https://github.com/emiliano-gandini-outeda/detrack" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  GitHub ↗
+                </a>
+                <a href="https://pypi.org/project/detrack/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  PyPI ↗
+                </a>
+              </div>
+            </div>
+            <!-- acrresolv -->
+            <div class="p-6 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">acrresolv</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
+              </div>
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
+                Acronym resolver for Python. Converts natural language phrases to acronyms.
+                Zero dependencies, CLI and library usage. Being expanded with ML.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <a href="https://github.com/emiliano-gandini-outeda/acrresolv" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  GitHub ↗
+                </a>
+                <a href="https://pypi.org/project/acrresolv/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  PyPI ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── LibreCourseUY ─── -->
+    <LibreCourse />
+
+    <!-- ─── Open Source ─── -->
+    <OpenSource />
+
+  </main>
+  <Footer />
+  <RevealObserver />
+</Layout>

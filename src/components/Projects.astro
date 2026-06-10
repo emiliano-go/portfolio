@@ -1,33 +1,14 @@
 ---
+
 const projects = [
   {
     tag: 'Python Package · PyPI',
     name: 'DBWarden',
-    desc: 'Django-like migration management for FastAPI/SQLAlchemy projects. Multi-database, dev/prod separation, SQL translation layer, FastAPI integrations.',
-    tags: ['SQLAlchemy', 'FastAPI', 'CLI', 'PyPI'],
+    desc: 'DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. No migration runtime, no generated Python scripts. Built-in rollback, schema snapshots, offline CI generation, and pre-deploy impact analysis.',
+    tags: ['SQLAlchemy', 'FastAPI', 'PostgreSQL', '5 dialects'],
     links: [
       { label: 'GitHub', href: 'https://github.com/emiliano-gandini-outeda/DBWarden' },
       { label: 'PyPI', href: 'https://pypi.org/project/dbwarden/' },
-    ],
-    featured: true,
-  },
-  {
-    tag: 'Private SaaS · ETL',
-
-    name: 'InsightGrid',
-    desc: 'ETL platform built for business data. Handles large XLSX, CSV, and XML files with streaming processing and real-time progress. Four tiers, production-deployed.',
-    tags: ['FastAPI', 'Celery', 'Redis', 'PostgreSQL', 'Vue 3'],
-    private: true,
-    inProgress: true,
-  },
-  {
-    tag: 'Python Package · PyPI',
-    name: 'acrresolv',
-    desc: 'Acronym resolver for Python. Converts natural language phrases to acronyms. Currently being expanded with Machine Learning.',
-    tags: ['NLP', 'Python', 'PyPI'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-gandini-outeda/acrresolv' },
-      { label: 'PyPI', href: 'https://pypi.org/project/acrresolv/' },
     ],
   },
 ];
@@ -43,8 +24,8 @@ const projects = [
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <!-- Big card: featured project -->
-    {projects.filter(p => p.featured).map((p) => (
+    <!-- DBWarden — featured card -->
+    {projects.map((p) => (
       <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) mb-px bg-(--color-surface)">
         <div class="p-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -60,15 +41,13 @@ const projects = [
                     <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
                   ))}
                 </div>
-                {p.links && (
-                  <div class="flex flex-wrap gap-3 shrink-0">
-                    {p.links.map(link => (
-                      <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                        {link.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
+                <div class="flex flex-wrap gap-3 shrink-0">
+                  {p.links.map(link => (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
             <div class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden self-start">
@@ -92,43 +71,51 @@ const projects = [
       </div>
     ))}
 
-    <!-- Small cards: 50% grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
-      {projects.filter(p => !p.featured).map((p, i) => (
-        <div data-reveal data-delay={String(0.15 + i * 0.08)} class="bg-(--color-surface) flex">
-          <div class="p-5 pb-4 flex flex-col w-full">
-            <div class="flex items-center justify-between mb-2 h-[20px]">
-              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) leading-none">{p.tag}</p>
-              <div class="flex items-center gap-2 shrink-0 leading-none">
-                {p.inProgress && (
-                  <span class="text-[10px] px-2 py-[3px] border border-yellow-700 text-yellow-600 tracking-wide whitespace-nowrap leading-none">In Progress</span>
-                )}
-                {p.private && (
-                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-dim) tracking-wide whitespace-nowrap leading-none">private</span>
-                )}
-              </div>
+    <!-- Small cards: schemap + Site Twilight -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mt-px">
+      <!-- schemap -->
+      <div data-reveal data-delay="0.15" class="bg-(--color-surface) flex">
+        <div class="p-5 pb-4 flex flex-col w-full">
+          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Python Package</p>
+          <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">schemap</h3>
+          <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.</p>
+          <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-3">
+            <div class="flex flex-wrap gap-2">
+              {['Pydantic v2', 'SQLAlchemy 2.0'].map(t => (
+                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+              ))}
             </div>
-            <h2 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">{p.name}</h2>
-            <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">{p.desc}</p>
-            <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-4">
-              <div class="flex flex-wrap gap-2">
-                {p.tags.map(t => (
-                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
-                ))}
-              </div>
-              {p.links && (
-                <div class="flex flex-wrap gap-3 shrink-0">
-                  {p.links.map(link => (
-                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+            <a href="/projects#schemap" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+              Details →
+            </a>
           </div>
         </div>
-      ))}
+      </div>
+      <!-- Site Twilight -->
+      <div data-reveal data-delay="0.2" class="bg-(--color-surface) flex">
+        <div class="p-5 pb-4 flex flex-col w-full">
+          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Web App</p>
+          <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">Site Twilight</h3>
+          <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">Internal web system for SCP:RP roleplay environment management.</p>
+          <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-3">
+            <div class="flex flex-wrap gap-2">
+              {['Django', 'Vue', 'RBAC'].map(t => (
+                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+              ))}
+            </div>
+            <a href="https://site-twilight.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+              Visit site ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View all -->
+    <div data-reveal data-delay="0.25" class="flex justify-center mt-px">
+      <a href="/projects" class="w-full flex items-center justify-center gap-1.5 text-[13px] px-4 py-3 border border-(--color-border-subtle) bg-(--color-surface) hover:bg-(--color-bg) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+        View all projects ↗
+      </a>
     </div>
 
   </div>

@@ -1,0 +1,88 @@
+---
+interface ExperienceItem {
+  date: string;
+  company: string;
+  title: string;
+  description: string;
+  tags: string[];
+  link?: string;
+}
+
+const experiences: ExperienceItem[] = [
+  {
+    date: 'Jan 2024 — Present',
+    company: 'Some Company',
+    title: 'Backend Engineer',
+    description: 'Building data pipelines and API infrastructure serving 50K+ daily requests. Designed and deployed a streaming ETL system processing large XLSX and CSV files with real-time progress tracking.',
+    tags: ['FastAPI', 'Celery', 'PostgreSQL', 'Redis', 'Docker'],
+    link: 'https://example.com',
+  },
+  {
+    date: '2022 — 2023',
+    company: 'Another Co',
+    title: 'Data Engineer',
+    description: 'Developed ETL pipelines for business intelligence and reporting. Migrated legacy batch processing to event-driven architecture, reducing data latency from hours to minutes.',
+    tags: ['Python', 'Airflow', 'AWS', 'Snowflake', 'dbt'],
+  },
+  {
+    date: '2020 — 2022',
+    company: 'Startup XYZ',
+    title: 'Junior Developer',
+    description: 'Full-stack development for a SaaS product. Built REST APIs, integrated third-party services, and maintained the CI/CD pipeline. Transitioned the team from monolithic to service-oriented architecture.',
+    tags: ['Python', 'Django', 'Vue 3', 'PostgreSQL', 'Docker'],
+  },
+];
+---
+
+<section id="experience" class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+    <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+      <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+        Experience
+      </span>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <div class="flex flex-col gap-px">
+      {experiences.map((exp, i) => (
+        <div
+          data-reveal
+          data-delay={String(0.1 + i * 0.08)}
+          class="border border-(--color-border-subtle) bg-(--color-surface) border-l-[3px] border-l-(--color-accent)"
+        >
+          <div class="p-5">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+              <div>
+                <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">{exp.date}</p>
+                <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head)">
+                  {exp.company}
+                </h3>
+              </div>
+              <span class="text-[11px] text-(--color-accent) whitespace-nowrap">{exp.title}</span>
+            </div>
+            <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-4 max-w-[600px]">{exp.description}</p>
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex flex-wrap gap-2">
+                {exp.tags.map(t => (
+                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+                ))}
+              </div>
+              {exp.link && (
+                <a
+                  href={exp.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+                >
+                  View →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
