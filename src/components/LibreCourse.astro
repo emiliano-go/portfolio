@@ -66,7 +66,7 @@
                   turnstileWrapper.classList.remove('hidden');
                   if (window.turnstile) {
                     window.turnstile.render(turnstileWrapper, {
-                      sitekey: '1x00000000000000000000AA',
+                      sitekey: '0x4AAAAAADnwElIbCKA7magk',
                       theme: 'dark',
                       callback: () => {
                         turnstileWrapper.classList.add('hidden');
@@ -81,7 +81,7 @@
                         clearInterval(check);
                         turnstileWrapper.textContent = '';
                         window.turnstile.render(turnstileWrapper, {
-                          sitekey: '1x00000000000000000000AA',
+                          sitekey: '0x4AAAAAADnwElIbCKA7magk',
                           theme: 'dark',
                           callback: () => {
                             turnstileWrapper.classList.add('hidden');
