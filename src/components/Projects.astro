@@ -57,7 +57,7 @@ const projects = [
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
               </div>
-              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[186px] overflow-y-auto"></div>
+              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[223px] overflow-y-auto"></div>
             </div>
           </div>
         </div>
@@ -122,11 +122,17 @@ const projects = [
     if (!content) return;
 
     const sessions = [
-      [{ cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] }],
-      [{ cmd: 'dbwarden config', output: ['Configuration:', '  Databases:', '    primary (default):', '      Type: sqlite', '      Sync URL: sqlite:///./app.db'] }],
-      [{ cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', '', 'Created: primary__0001_create_core_tables.sql'] }],
-      [{ cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied successfully (42ms)', '[DBWarden] All migrations applied. Pending: 0'] }],
-      [{ cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] }],
+      [
+        { cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] },
+        { cmd: 'dbwarden config', output: ['  Primary (sqlite)     sqlite:///./app.db', '  Migrations:          migrations/primary'] },
+      ],
+      [
+        { cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', 'Created: primary__0001_create_core_tables.sql'] },
+      ],
+      [
+        { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied (42ms)'] },
+        { cmd: 'dbwarden status', output: ['  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
+      ],
     ];
 
     function sleep(ms) {
