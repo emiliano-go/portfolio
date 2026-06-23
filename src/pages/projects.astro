@@ -21,56 +21,19 @@ import Footer from '../components/Footer.astro';
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
         </div>
 
-        <div class="mb-10">
-          <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Python Package · PyPI</p>
-          <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
-            DBWarden
-          </h1>
-          <p class="text-lg md:text-xl text-(--color-text-bright) mb-6">The SQL-first database toolkit for SQLAlchemy.</p>
-          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-4">
-            DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
-          </p>
-          
-          <!-- Feature grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-            {[
-              { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.' },
-              { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.' },
-              { title: 'Schema snapshots', desc: 'Checksummed JSON after every migration for deterministic diffs.' },
-              { title: 'Column-level diffing', desc: 'Type, nullability, default, and comment changes.' },
-              { title: 'Impact analysis', desc: 'AST-based scan to detect breaking changes before deploy.' },
-              { title: 'Offline mode', desc: 'Export model state, generate migrations anywhere, no DB needed.' },
-              { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.' },
-              { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.' },
-            ].map(f => (
-              <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
-                <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
-                <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <!-- Stats bar -->
-          <div id="dbwarden-stats" class="flex flex-wrap gap-6 md:gap-10 mb-8 py-4 border-t border-b border-(--color-border-subtle)">
-            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
-            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
-            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
-            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5">DB dialects</span></div>
-            <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5">CLI commands</span></div>
-          </div>
-
-          <!-- Terminal + links row -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-            <div id="dbwarden-terminal" class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
-              <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
-                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
-              </div>
-              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[223px] overflow-y-auto"></div>
-            </div>
-            <div class="flex flex-col gap-3">
+        <!-- Title + desc on left, terminal on right -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Python Package · PyPI</p>
+            <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
+              DBWarden
+            </h1>
+            <p class="text-lg md:text-xl text-(--color-text-bright) mb-6">The SQL-first database toolkit for SQLAlchemy.</p>
+            <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-6">
+              DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
+            </p>
+            <!-- 2x2 link grid -->
+            <div class="grid grid-cols-2 gap-3">
               <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
                 GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
@@ -85,6 +48,43 @@ import Footer from '../components/Footer.astro';
               </a>
             </div>
           </div>
+          <div id="dbwarden-terminal" class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
+            <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
+              <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+              <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+              <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+              <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
+            </div>
+            <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[223px] overflow-y-auto"></div>
+          </div>
+        </div>
+
+        <!-- Feature grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+          {[
+            { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.' },
+            { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.' },
+            { title: 'Schema snapshots', desc: 'Checksummed JSON after every migration for deterministic diffs.' },
+            { title: 'Column-level diffing', desc: 'Type, nullability, default, and comment changes.' },
+            { title: 'Impact analysis', desc: 'AST-based scan to detect breaking changes before deploy.' },
+            { title: 'Offline mode', desc: 'Export model state, generate migrations anywhere, no DB needed.' },
+            { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.' },
+            { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.' },
+          ].map(f => (
+            <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
+              <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
+              <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Stats bar -->
+        <div id="dbwarden-stats" class="flex flex-wrap gap-6 md:gap-10 mb-8 py-4 border-t border-b border-(--color-border-subtle)">
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5">DB dialects</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5">CLI commands</span></div>
         </div>
       </div>
     </section>
