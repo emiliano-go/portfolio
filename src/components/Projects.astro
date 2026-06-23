@@ -4,7 +4,7 @@ const projects = [
   {
     tag: 'Python Package · PyPI',
     name: 'DBWarden',
-    desc: 'DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. No migration runtime, no generated Python scripts. Built-in rollback, schema snapshots, offline CI generation, and pre-deploy impact analysis.',
+    desc: 'DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. No migration runtime, no generated Python scripts. Built-in rollback, schema snapshots, offline CI generation, pre-deploy impact analysis, multi-database support, and a full CLI for managing the complete migration lifecycle from init through production rollbacks.',
     tags: ['SQLAlchemy', 'FastAPI', 'PostgreSQL', '5 dialects'],
     links: [
       { label: 'GitHub', href: 'https://github.com/emiliano-go/DBWarden' },
@@ -176,23 +176,31 @@ const projects = [
       await sleep(1400);
 
       for (const block of sessions) {
-        for (const entry of block) {
+        for (let i = 0; i < block.length; i++) {
+          const entry = block[i];
+          const isLast = i === block.length - 1;
+
           const cmdLine = addCmdLine();
           await typeChars(cmdLine, ' ' + entry.cmd, 50, 70);
-          await sleep(150 + Math.random() * 150);
+          await sleep(300 + Math.random() * 250);
 
           for (const out of entry.output) {
-            await sleep(40 + Math.random() * 40);
+            await sleep(120 + Math.random() * 80);
             addOutputLine(out);
           }
-          await sleep(200 + Math.random() * 200);
+
+          if (isLast) {
+            await sleep(1000 + Math.random() * 1000);
+          } else {
+            await sleep(800 + Math.random() * 400);
+          }
         }
 
         const clearLine = addCmdLine();
         await typeChars(clearLine, ' clear', 50, 70);
-        await sleep(250);
-        content.innerHTML = '';
         await sleep(400);
+        content.innerHTML = '';
+        await sleep(600);
       }
 
       const cursorLine = document.createElement('div');
