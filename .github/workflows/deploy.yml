@@ -25,4 +25,4 @@ jobs:
           context: .
           push: true
           provenance: false
-          tags: ghcr.io/emiliano-gandini-outeda/${{ github.event.repository.name }}:latest
+          tags: ghcr.io/emiliano-go/${{ github.event.repository.name }}:latest
