@@ -9,20 +9,26 @@
       <div>
         <p
           id="hero-tag"
-          class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4 opacity-0"
+          class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mb-4 font-semibold opacity-0"
         >
           Backend Engineer · Data Scientist
         </p>
-        <h1
-          id="hero-title"
-          class="font-[family-name:var(--font-display)] text-[clamp(48px,6vw,76px)] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-6 opacity-0"
-          style="transform: translateY(24px)"
-        >
-          Building<br />
-          systems that<br />
-          <span class="text-(--color-text-dim)">handle</span><br />
-          real data.
-        </h1>
+
+        <!-- Liquid glass heading -->
+        <div class="glass-panel relative p-5 md:p-7 mb-6 rounded-lg border border-(--color-border-subtle)/50 backdrop-blur-sm bg-(--color-bg)/15 overflow-hidden">
+          <div class="shimmer absolute inset-0 pointer-events-none"></div>
+          <h1
+            id="hero-title"
+            class="relative z-10 font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) opacity-0"
+            style="transform: translateY(24px)"
+          >
+            Building<br />
+            systems that<br />
+            <span class="text-(--color-text-dim)">handle</span><br />
+            real data.
+          </h1>
+        </div>
+
         <p
           id="hero-desc"
           class="text-sm leading-relaxed text-(--color-text-muted) max-w-[360px] opacity-0"
@@ -55,11 +61,13 @@
     </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="scroll-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5">
-    <span class="text-[9px] uppercase tracking-[0.15em] text-(--color-text-dim)">scroll</span>
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="text-(--color-text-dim)">
-      <path d="M7 1v10M3 7l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Mouse scroll indicator -->
+  <div class="mouse-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+    <svg width="20" height="32" viewBox="0 0 20 32" fill="none" class="text-(--color-text-dim)">
+      <rect x="1.5" y="1.5" width="17" height="29" rx="8.5" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="10" y1="6" x2="10" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="wheel-line"/>
+      <line x1="10" y1="18" x2="10" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M10 28l-3-3 3 3 3-3-3 3z" fill="currentColor"/>
     </svg>
   </div>
 </section>
@@ -70,20 +78,45 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 60% 40% at 25% 30%, color-mix(in srgb, var(--color-accent) 6%, transparent) 0%, transparent 100%),
-      radial-gradient(ellipse 50% 30% at 75% 60%, color-mix(in srgb, var(--color-text-dim) 4%, transparent) 0%, transparent 100%),
-      radial-gradient(circle 0.5px at 50% 50%, var(--color-text-dim) 0.5px, transparent 0.5px);
-    background-size: 100% 100%, 100% 100%, 24px 24px;
+      radial-gradient(ellipse 60% 40% at 25% 30%, color-mix(in srgb, var(--color-accent) 12%, transparent) 0%, transparent 100%),
+      radial-gradient(ellipse 50% 30% at 75% 60%, color-mix(in srgb, var(--color-text-dim) 8%, transparent) 0%, transparent 100%),
+      radial-gradient(circle 0.7px at 50% 50%, var(--color-text-dim) 0.7px, transparent 0.7px);
+    background-size: 100% 100%, 100% 100%, 20px 20px;
     pointer-events: none;
   }
 
-  .scroll-indicator {
-    animation: scroll-bounce 2s ease-in-out infinite;
+  .shimmer {
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      color-mix(in srgb, var(--color-text-head) 5%, transparent) 45%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-slide 5s ease-in-out infinite;
   }
 
-  @keyframes scroll-bounce {
+  @keyframes shimmer-slide {
+    0%, 100% { background-position: 200% 0; }
+    50% { background-position: -100% 0; }
+  }
+
+  .mouse-indicator {
+    animation: mouse-bounce 2.5s ease-in-out infinite;
+  }
+
+  .wheel-line {
+    animation: wheel-scroll 2.5s ease-in-out infinite;
+  }
+
+  @keyframes mouse-bounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(6px); }
+    50% { transform: translateX(-50%) translateY(4px); }
+  }
+
+  @keyframes wheel-scroll {
+    0%, 100% { y1: 6; y2: 12; opacity: 1; }
+    50% { y1: 12; y2: 18; opacity: 0.3; }
   }
 </style>
 
