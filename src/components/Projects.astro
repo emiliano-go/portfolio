@@ -116,10 +116,21 @@ const projects = [
 
 <script>
   (() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const content = document.getElementById('terminal-content');
-    if (!content) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const content = document.getElementById('terminal-content');
+      if (content) {
+        content.innerHTML = `
+          <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
+          <div class="terminal-line">Initialized DBWarden project structure</div>
+          <div class="terminal-line">Created migrations directory</div>
+          <div class="terminal-line">Created dbwarden.py</div>
+          <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
+          <div class="terminal-line">[DBWarden] Applying migrations...</div>
+          <div class="terminal-line">[DBWarden] All migrations applied. Pending: 0</div>
+          <div class="terminal-line" style="margin-top:4px"><span style="color:var(--color-accent-dim);animation:terminal-blink 1s step-end infinite">▊</span></div>`;
+      }
+      return;
+    }
 
     const sessions = [
       [
@@ -173,7 +184,7 @@ const projects = [
     }
 
     (async () => {
-      await sleep(1400);
+        await sleep(400);
 
       while (true) {
         for (const block of sessions) {
@@ -212,7 +223,7 @@ const projects = [
         cursor.style.animation = 'terminal-blink 1s step-end infinite';
         cursorLine.appendChild(cursor);
         content.appendChild(cursorLine);
-        await sleep(2500 + Math.random() * 1000);
+        await sleep(1500 + Math.random() * 500);
         content.innerHTML = '';
         await sleep(500);
       }
