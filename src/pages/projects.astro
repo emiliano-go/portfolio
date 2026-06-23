@@ -69,7 +69,7 @@ import RevealObserver from '../components/RevealObserver.astro';
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
               </div>
-              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[246px] overflow-y-auto"></div>
+              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[207px] overflow-y-auto"></div>
             </div>
             <div class="flex flex-col gap-3">
               <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
@@ -261,27 +261,17 @@ import RevealObserver from '../components/RevealObserver.astro';
     const content = document.getElementById('terminal-content');
     if (content) {
       const sessions = [
-        [
-          { cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] },
-          { cmd: 'dbwarden config', output: ['Configuration:', '  Databases:', '    primary (default):', '      Type: sqlite', '      Sync URL: sqlite:///./app.db', '      Model Paths: app', '      Migrations Dir: migrations/primary'] },
-        ],
-        [
-          { cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', '', 'Created: primary__0001_create_core_tables.sql'] },
-          { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied successfully (42ms)', '[DBWarden] All migrations applied. Pending: 0'] },
-        ],
-        [
-          { cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
-          { cmd: 'dbwarden check', output: ['Checking migrations for primary:', '  primary__0001_create_core_tables:', '    CREATE TABLE users           SAFE', '    CREATE TABLE posts           SAFE', '  Result: 2 SAFE, 0 WARN, 0 CRITICAL'] },
-        ],
-        [
-          { cmd: 'dbwarden history', output: [' V0001  create_core_tables  2025-01-15  10:30:00  a1b2c3d4...'] },
-          { cmd: 'dbwarden rollback --count 1', output: ['[DBWarden] Rolling back primary__0001_create_core_tables...', '[DBWarden] Rollback complete'] },
-          { cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  0', '  Pending:  1', '  Status:   pending'] },
-        ],
-        [
-          { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied successfully (35ms)', '[DBWarden] All migrations applied. Pending: 0'] },
-          { cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
-        ],
+        [{ cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] }],
+        [{ cmd: 'dbwarden config', output: ['Configuration:', '  Databases:', '    primary (default):', '      Type: sqlite', '      Sync URL: sqlite:///./app.db', '      Model Paths: app', '      Migrations Dir: migrations/primary'] }],
+        [{ cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', '', 'Created: primary__0001_create_core_tables.sql'] }],
+        [{ cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied successfully (42ms)', '[DBWarden] All migrations applied. Pending: 0'] }],
+        [{ cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] }],
+        [{ cmd: 'dbwarden check', output: ['Checking migrations for primary:', '  primary__0001_create_core_tables:', '    CREATE TABLE users           SAFE', '    CREATE TABLE posts           SAFE', '  Result: 2 SAFE, 0 WARN, 0 CRITICAL'] }],
+        [{ cmd: 'dbwarden history', output: [' V0001  create_core_tables  2025-01-15  10:30:00  a1b2c3d4...'] }],
+        [{ cmd: 'dbwarden rollback --count 1', output: ['[DBWarden] Rolling back primary__0001_create_core_tables...', '[DBWarden] Rollback complete'] }],
+        [{ cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  0', '  Pending:  1', '  Status:   pending'] }],
+        [{ cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied successfully (35ms)', '[DBWarden] All migrations applied. Pending: 0'] }],
+        [{ cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] }],
       ];
 
       function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
