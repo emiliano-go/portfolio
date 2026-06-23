@@ -44,7 +44,7 @@ import RevealObserver from '../components/RevealObserver.astro';
               { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.' },
               { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.' },
             ].map(f => (
-              <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+              <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
                 <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
                 <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
               </div>
@@ -52,7 +52,7 @@ import RevealObserver from '../components/RevealObserver.astro';
           </div>
 
           <!-- Stats bar -->
-          <div class="flex flex-wrap gap-6 md:gap-10 mb-8 py-4 border-t border-b border-(--color-border-subtle)">
+          <div id="dbwarden-stats" class="flex flex-wrap gap-6 md:gap-10 mb-8 py-4 border-t border-b border-(--color-border-subtle)">
             <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
             <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
             <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
@@ -62,7 +62,7 @@ import RevealObserver from '../components/RevealObserver.astro';
 
           <!-- Terminal + links row -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-            <div class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
+            <div id="dbwarden-terminal" class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
               <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
@@ -70,27 +70,27 @@ import RevealObserver from '../components/RevealObserver.astro';
                 <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
               </div>
               <div class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted)">
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden make-migrations <span class="text-(--color-text-dim)">"create users table"</span></div>
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden status</div>
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden rollback</div>
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden history</div>
-                <div><span class="text-(--color-accent-dim)">$</span> dbwarden check-impact <span class="text-(--color-text-dim)">0042 --database primary</span></div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden make-migrations <span class="text-(--color-text-dim)">"create users table"</span></div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden status</div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden rollback</div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden history</div>
+                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden check-impact <span class="text-(--color-text-dim)">0042 --database primary</span></div>
               </div>
             </div>
             <div class="flex flex-col gap-3">
-              <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                GitHub ↗
+              <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                PyPI ↗
+              <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="https://emiliano-go.me/DBWarden/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                Full documentation ↗
+              <a href="https://emiliano-go.me/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                Full documentation <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="https://deepwiki.com/emiliano-go/DBWarden/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                DeepWiki ↗
+              <a href="https://deepwiki.com/emiliano-go/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                DeepWiki <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
             </div>
           </div>
@@ -109,7 +109,7 @@ import RevealObserver from '../components/RevealObserver.astro';
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
         </div>
 
-        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8">
+        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8 transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
           <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">PyPI</p>
           <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">schemap</h2>
           <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-[600px]">
@@ -128,8 +128,8 @@ import RevealObserver from '../components/RevealObserver.astro';
               ))}
             </div>
             <div class="flex flex-wrap gap-3 shrink-0">
-              <a href="https://github.com/emiliano-go/schemap" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                GitHub ↗
+              <a href="https://github.com/emiliano-go/schemap" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
             </div>
           </div>
@@ -148,7 +148,7 @@ import RevealObserver from '../components/RevealObserver.astro';
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
         </div>
 
-        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8">
+        <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8 transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
           <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Django · Vue · Production</p>
           <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">Site Twilight</h2>
           <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-[600px]">
@@ -163,8 +163,8 @@ import RevealObserver from '../components/RevealObserver.astro';
               ))}
             </div>
             <div class="flex flex-wrap gap-3 shrink-0">
-              <a href="https://site-twilight.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                Visit site ↗
+              <a href="https://site-twilight.com" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                Visit site <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
             </div>
           </div>
@@ -196,11 +196,11 @@ import RevealObserver from '../components/RevealObserver.astro';
                 100 MB in ~0.42s, ~75 MB RSS. Pipelines, parallel mode, pandas integration.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
-                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  GitHub ↗
+                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
-                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  PyPI ↗
+                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
             </div>
@@ -215,11 +215,11 @@ import RevealObserver from '../components/RevealObserver.astro';
                 60+ default patterns, case-insensitive, pure functions, metadata returned.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
-                <a href="https://github.com/emiliano-go/detrack" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  GitHub ↗
+                <a href="https://github.com/emiliano-go/detrack" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
-                <a href="https://pypi.org/project/detrack/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  PyPI ↗
+                <a href="https://pypi.org/project/detrack/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
             </div>
@@ -234,11 +234,11 @@ import RevealObserver from '../components/RevealObserver.astro';
                 Zero dependencies, CLI and library usage. Being expanded with ML.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
-                <a href="https://github.com/emiliano-go/acrresolv" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  GitHub ↗
+                <a href="https://github.com/emiliano-go/acrresolv" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
-                <a href="https://pypi.org/project/acrresolv/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  PyPI ↗
+                <a href="https://pypi.org/project/acrresolv/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
             </div>
@@ -257,3 +257,60 @@ import RevealObserver from '../components/RevealObserver.astro';
   <Footer />
   <RevealObserver />
 </Layout>
+
+<script>
+  import { animate, stagger } from 'motion';
+
+  (() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    // ─── Terminal typing ───
+    const terminal = document.getElementById('dbwarden-terminal');
+    if (terminal) {
+      const lines = terminal.querySelectorAll('.terminal-line');
+      lines.forEach(l => { l.style.opacity = '0'; l.style.transform = 'translateY(6px)'; });
+
+      const terminalObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animate(
+                lines,
+                { opacity: [0, 1], transform: ['translateY(6px)', 'translateY(0)'] },
+                { delay: stagger(0.18), duration: 0.35, easing: [0.25, 0.46, 0.45, 0.94] }
+              );
+              terminalObserver.unobserve(terminal);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      terminalObserver.observe(terminal);
+    }
+
+    // ─── Stats stagger ───
+    const statsBar = document.getElementById('dbwarden-stats');
+    if (statsBar) {
+      const statItems = statsBar.querySelectorAll(':scope > div');
+      statItems.forEach(s => { s.style.opacity = '0'; s.style.transform = 'translateY(8px)'; });
+
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animate(
+                statItems,
+                { opacity: [0, 1], transform: ['translateY(8px)', 'translateY(0)'] },
+                { delay: stagger(0.08), duration: 0.4, easing: [0.25, 0.46, 0.45, 0.94] }
+              );
+              statsObserver.unobserve(statsBar);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      statsObserver.observe(statsBar);
+    }
+  })();
+</script>

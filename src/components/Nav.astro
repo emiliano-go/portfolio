@@ -24,7 +24,7 @@ const links = [
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
-            class="text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+            class="nav-link text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
           >
             {link.label}
           </a>
@@ -148,3 +148,23 @@ const links = [
 
   updateIcons();
 </script>
+
+<style>
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--color-text-bright);
+    transition: width 0.25s ease, left 0.25s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+</style>
