@@ -274,25 +274,16 @@ import Footer from '../components/Footer.astro';
         [
           { cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] },
           { cmd: 'dbwarden config', output: ['  Primary (sqlite)     sqlite:///./app.db', '  Migrations:          migrations/primary'] },
-        ],
-        [
           { cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', 'Created: primary__0001_create_core_tables.sql'] },
         ],
         [
           { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied (42ms)'] },
           { cmd: 'dbwarden status', output: ['  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
-        ],
-        [
           { cmd: 'dbwarden check', output: ['  CREATE TABLE users          SAFE', '  CREATE TABLE posts          SAFE', '  Result: 2 SAFE, 0 WARN'] },
         ],
         [
           { cmd: 'dbwarden history', output: ['  V0001  create_core_tables  2025-01-15'] },
           { cmd: 'dbwarden rollback --count 1', output: ['[DBWarden] Rolling back primary__0001...', '[DBWarden] Rollback complete'] },
-        ],
-        [
-          { cmd: 'dbwarden status', output: ['  Applied:  0', '  Pending:  1'] },
-        ],
-        [
           { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied (35ms)'] },
           { cmd: 'dbwarden status', output: ['  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
         ],
