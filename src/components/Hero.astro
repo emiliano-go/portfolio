@@ -17,13 +17,15 @@
         <!-- Liquid glass heading -->
         <h1
           id="hero-title"
-          class="glass-text relative z-10 font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide opacity-0 mb-6"
+          class="font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide opacity-0 mb-6"
           style="transform: translateY(24px)"
         >
-          Building<br />
-          systems that<br />
-          <span class="text-(--color-text-dim)">handle</span><br />
-          real data.
+          <span class="glass-word" style="--i: 0">Building</span><br />
+          <span class="glass-word" style="--i: 1">systems</span>
+          <span class="glass-word" style="--i: 2">that</span><br />
+          <span class="glass-word dim" style="--i: 3">handle</span><br />
+          <span class="glass-word" style="--i: 4">real</span>
+          <span class="glass-word" style="--i: 5">data.</span>
         </h1>
 
         <p
@@ -81,25 +83,47 @@
     pointer-events: none;
   }
 
-  .glass-text {
+  .glass-word {
+    display: inline-block;
     background: linear-gradient(
-      135deg,
-      var(--color-text-head) 0%,
-      color-mix(in srgb, var(--color-text-head) 70%, transparent) 40%,
-      color-mix(in srgb, var(--color-text-head) 85%, white) 50%,
-      color-mix(in srgb, var(--color-text-head) 70%, transparent) 60%,
-      var(--color-text-head) 100%
+      105deg,
+      color-mix(in srgb, var(--color-text-head) 100%, white) 0%,
+      color-mix(in srgb, var(--color-text-head) 70%, white) 35%,
+      color-mix(in srgb, var(--color-text-head) 90%, white) 50%,
+      color-mix(in srgb, var(--color-text-head) 70%, white) 65%,
+      color-mix(in srgb, var(--color-text-head) 100%, white) 100%
     );
     background-size: 200% 100%;
+    background-position: -100% 0;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: glass-text-shine 6s ease-in-out infinite;
+    animation: word-shine 4s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.1s);
   }
 
-  @keyframes glass-text-shine {
-    0%, 100% { background-position: 200% 0; }
-    50% { background-position: -100% 0; }
+  .glass-word.dim {
+    background: linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--color-text-dim) 100%, white) 0%,
+      color-mix(in srgb, var(--color-text-dim) 70%, white) 35%,
+      color-mix(in srgb, var(--color-text-dim) 90%, white) 50%,
+      color-mix(in srgb, var(--color-text-dim) 70%, white) 65%,
+      color-mix(in srgb, var(--color-text-dim) 100%, white) 100%
+    );
+    background-size: 200% 100%;
+    background-position: -100% 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: word-shine 4s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.1s);
+  }
+
+  @keyframes word-shine {
+    0%, 100% { background-position: -100% 0; }
+    45% { background-position: 200% 0; }
+    55% { background-position: 200% 0; }
   }
 
   .mouse-indicator {
