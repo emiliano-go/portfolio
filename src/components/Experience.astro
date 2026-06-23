@@ -37,7 +37,7 @@ const experiences: ExperienceItem[] = [
 <section id="experience" class="py-16 border-b border-(--color-border-subtle)">
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
-    <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+    <div class="flex items-center gap-4 mb-10">
       <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
         Experience
       </span>
@@ -47,8 +47,6 @@ const experiences: ExperienceItem[] = [
     <div class="flex flex-col gap-px">
       {experiences.map((exp, i) => (
         <div
-          data-reveal
-          data-delay={String(0.1 + i * 0.08)}
           class="border border-(--color-border-subtle) bg-(--color-surface) border-l-[3px] border-l-(--color-accent)"
         >
           <div class="p-5">

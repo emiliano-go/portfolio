@@ -17,7 +17,7 @@ const projects = [
 <section id="projects" class="py-16 border-b border-(--color-border-subtle)">
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
-    <div data-reveal data-delay="0" class="flex items-center gap-4 mb-10">
+    <div class="flex items-center gap-4 mb-10">
       <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
         Projects
       </span>
@@ -26,7 +26,7 @@ const projects = [
 
     <!-- DBWarden — featured card -->
     {projects.map((p) => (
-      <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) mb-px bg-(--color-surface) transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
+      <div class="border border-(--color-border-subtle) mb-px bg-(--color-surface) transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
         <div class="p-7">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
@@ -67,7 +67,7 @@ const projects = [
     <!-- Small cards: schemap + Site Twilight -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mt-px">
       <!-- schemap -->
-      <div data-reveal data-delay="0.15" class="bg-(--color-surface) flex transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
+      <div class="bg-(--color-surface) flex transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
         <div class="p-5 pb-4 flex flex-col w-full">
           <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Python Package</p>
           <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">schemap</h3>
@@ -85,7 +85,7 @@ const projects = [
         </div>
       </div>
       <!-- Site Twilight -->
-      <div data-reveal data-delay="0.2" class="bg-(--color-surface) flex transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
+      <div class="bg-(--color-surface) flex transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
         <div class="p-5 pb-4 flex flex-col w-full">
           <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Web App</p>
           <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">Site Twilight</h3>
@@ -105,7 +105,7 @@ const projects = [
     </div>
 
     <!-- View all -->
-    <div data-reveal data-delay="0.25" class="flex justify-center mt-px">
+    <div class="flex justify-center mt-px">
       <a href="/projects" class="group w-full flex items-center justify-center gap-1.5 text-[13px] px-4 py-3 border border-(--color-border-subtle) bg-(--color-surface) hover:bg-(--color-bg) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
         View all projects <span class="inline-block transition-transform duration-200 group-hover:translate-x-1">↗</span>
       </a>
