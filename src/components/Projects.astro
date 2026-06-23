@@ -27,13 +27,13 @@ const projects = [
     <!-- DBWarden — featured card -->
     {projects.map((p) => (
       <div data-reveal data-delay="0.1" class="border border-(--color-border-subtle) mb-px bg-(--color-surface) transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
-        <div class="p-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-7">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <div class="flex items-start justify-between mb-2">
                 <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">{p.tag}</p>
               </div>
-              <h2 class="font-[family-name:var(--font-display)] text-3xl font-bold uppercase tracking-wide text-(--color-text-head) mb-3">{p.name}</h2>
+              <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-3">{p.name}</h2>
               <p class="text-xs leading-[1.75] text-(--color-text-muted) mb-5 max-w-[520px]">{p.desc}</p>
               <div class="flex flex-wrap items-start justify-between gap-4">
                 <div class="flex flex-wrap gap-2">
@@ -57,7 +57,7 @@ const projects = [
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
               </div>
-              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) min-h-[180px]"></div>
+              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[202px] overflow-y-auto"></div>
             </div>
           </div>
         </div>
