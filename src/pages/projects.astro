@@ -22,7 +22,7 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <!-- Title + desc on left, terminal on right -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 items-start">
           <div>
             <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Python Package · PyPI</p>
             <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
@@ -48,14 +48,14 @@ import Footer from '../components/Footer.astro';
               </a>
             </div>
           </div>
-          <div id="dbwarden-terminal" class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
+          <div id="dbwarden-terminal" class="w-full border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden">
             <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
               <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
             </div>
-            <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[223px] overflow-y-auto"></div>
+            <div id="terminal-content" class="px-4 py-3 w-full text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[223px] overflow-y-auto"></div>
           </div>
         </div>
 

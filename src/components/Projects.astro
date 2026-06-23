@@ -50,14 +50,14 @@ const projects = [
                 </div>
               </div>
             </div>
-            <div id="dbwarden-terminal" class="border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden self-start">
+            <div id="dbwarden-terminal" class="w-full border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden self-start">
               <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
               </div>
-              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[201px] overflow-y-auto"></div>
+              <div id="terminal-content" class="px-4 py-3 w-full text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[201px] overflow-y-auto"></div>
             </div>
           </div>
         </div>
@@ -131,6 +131,9 @@ const projects = [
       }
       return;
     }
+
+    const content = document.getElementById('terminal-content');
+    if (!content) return;
 
     const sessions = [
       [
