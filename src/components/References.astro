@@ -9,32 +9,25 @@ interface ReferenceItem {
 
 const references: ReferenceItem[] = [
   {
-    name: 'Juan Pérez',
-    title: 'CTO',
-    company: 'Some Company',
-    relationship: 'Manager, 2024—Present',
-    linkedin: 'https://linkedin.com/in/',
+    name: 'Igor Benav',
+    title: 'Founder',
+    company: 'Benav Labs',
+    relationship: 'Co-maintainer, 2025—Present',
+    linkedin: 'https://www.linkedin.com/in/igor-benav/',
   },
   {
-    name: 'Ana López',
-    title: 'Engineering Director',
-    company: 'Another Co',
-    relationship: 'Manager, 2022—2023',
-    linkedin: 'https://linkedin.com/in/',
+    name: 'Carlos A. Planchon',
+    title: 'Technical Leader',
+    company: 'Busco Jobs',
+    relationship: 'Colleague, 2023—Present',
+    linkedin: 'https://www.linkedin.com/in/carlosplanchon/',
   },
   {
-    name: 'Carlos Martínez',
-    title: 'Senior Engineer',
-    company: 'Startup XYZ',
-    relationship: 'Colleague, 2020—2022',
-    linkedin: 'https://linkedin.com/in/',
-  },
-  {
-    name: 'Lucía Fernández',
-    title: 'Tech Lead',
-    company: 'Some Company',
-    relationship: 'Peer, 2024—Present',
-    linkedin: 'https://linkedin.com/in/',
+    name: 'Maximiliano Schmidt',
+    title: 'Full-Stack Developer',
+    company: 'Casas Y Mas',
+    relationship: 'Colleague, 2026—Present',
+    linkedin: 'https://www.linkedin.com/in/maximiliano-schmidt/',
   },
 ];
 ---
@@ -49,19 +42,19 @@ const references: ReferenceItem[] = [
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-3 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
       {references.map((ref, i) => (
         <div
           data-reveal
           data-delay={String(0.1 + i * 0.08)}
-          class="border border-(--color-border-subtle) border-t-2 border-t-(--color-accent) bg-(--color-surface) flex"
+          class="bg-(--color-surface) flex"
         >
-          <div class="p-5 md:p-6 flex flex-col w-full">
-            <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-1">{ref.name}</h3>
-            <p class="text-sm text-(--color-text-dim)">
+          <div class="p-4 flex flex-col w-full">
+            <h3 class="font-[family-name:var(--font-display)] text-base font-bold uppercase tracking-wide text-(--color-text-head) mb-0.5">{ref.name}</h3>
+            <p class="text-xs text-(--color-text-dim) leading-snug">
               {ref.title}, <span class="text-(--color-text-muted)">{ref.company}</span>
             </p>
-            <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent-dim) mt-2 mb-4">{ref.relationship}</p>
+            <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent-dim) mt-2 mb-3">{ref.relationship}</p>
             <a
               href={ref.linkedin}
               target="_blank"
@@ -74,6 +67,7 @@ const references: ReferenceItem[] = [
           </div>
         </div>
       ))}
+    </div>
     </div>
 
   </div>
