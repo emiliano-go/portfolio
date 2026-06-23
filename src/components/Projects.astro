@@ -57,14 +57,7 @@ const projects = [
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
               </div>
-              <div class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted)">
-                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
-                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden make-migrations <span class="text-(--color-text-dim)">"create users table"</span></div>
-                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
-                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden status</div>
-                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden rollback</div>
-                <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden history</div>
-              </div>
+              <div id="terminal-content" class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) min-h-[180px]"></div>
             </div>
           </div>
         </div>
@@ -125,52 +118,91 @@ const projects = [
   (() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const terminal = document.getElementById('dbwarden-terminal');
-    if (!terminal) return;
+    const content = document.getElementById('terminal-content');
+    if (!content) return;
 
-    const lines = [...terminal.querySelectorAll('.terminal-line')];
+    const sessions = [
+      [
+        { cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] },
+        { cmd: 'dbwarden config', output: ['Configuration:', '  Databases:', '    primary (default):', '      Type: sqlite', '      Sync URL: sqlite:///./app.db'] },
+      ],
+      [
+        { cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', '', 'Created: primary__0001_create_core_tables.sql'] },
+        { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied successfully (42ms)', '[DBWarden] All migrations applied. Pending: 0'] },
+      ],
+      [
+        { cmd: 'dbwarden status', output: ['Database: primary', '  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
+      ],
+    ];
 
-    const lineData = lines.map(line => {
-      const chars = [];
-      for (const node of line.childNodes) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          for (const ch of node.textContent || '') chars.push({ ch, cls: '' });
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'SPAN') {
-          const cls = node.getAttribute('class') || '';
-          for (const ch of node.textContent || '') chars.push({ ch, cls });
-        }
-      }
-      return { chars, line };
-    });
-
-    lineData.forEach(({ line }) => { line.innerHTML = ''; });
-
-    let t = 1600;
-    lineData.forEach(({ chars, line }) => {
-      const lineSpeed = 50 + Math.random() * 70;
-      chars.forEach(({ ch, cls }) => {
-        const delay = t;
-        setTimeout(() => {
-          const span = document.createElement('span');
-          if (cls) span.setAttribute('class', cls);
-          span.textContent = ch;
-          line.appendChild(span);
-        }, delay);
-        t += lineSpeed + (Math.random() - 0.5) * 30;
-      });
-      t += 300 + Math.random() * 200;
-    });
-
-    const lastLine = lines[lines.length - 1];
-    if (lastLine) {
-      setTimeout(() => {
-        const cursor = document.createElement('span');
-        cursor.textContent = '▊';
-        cursor.style.color = 'var(--color-accent-dim)';
-        cursor.style.animation = 'terminal-blink 1s step-end infinite';
-        cursor.style.marginLeft = '2px';
-        lastLine.appendChild(cursor);
-      }, t + 100);
+    function sleep(ms) {
+      return new Promise(r => setTimeout(r, ms));
     }
+
+    function typeChars(parent, text, base, range) {
+      return new Promise(resolve => {
+        let i = 0;
+        function next() {
+          if (i >= text.length) { resolve(); return; }
+          const span = document.createElement('span');
+          span.textContent = text[i];
+          parent.appendChild(span);
+          i++;
+          setTimeout(next, base + Math.random() * range);
+        }
+        next();
+      });
+    }
+
+    function addCmdLine() {
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      const prompt = document.createElement('span');
+      prompt.className = 'text-(--color-accent-dim)';
+      prompt.textContent = '$';
+      line.appendChild(prompt);
+      content.appendChild(line);
+      return line;
+    }
+
+    function addOutputLine(text) {
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      line.textContent = text;
+      content.appendChild(line);
+    }
+
+    (async () => {
+      await sleep(1400);
+
+      for (const block of sessions) {
+        for (const entry of block) {
+          const cmdLine = addCmdLine();
+          await typeChars(cmdLine, ' ' + entry.cmd, 50, 70);
+          await sleep(150 + Math.random() * 150);
+
+          for (const out of entry.output) {
+            await sleep(40 + Math.random() * 40);
+            addOutputLine(out);
+          }
+          await sleep(200 + Math.random() * 200);
+        }
+
+        const clearLine = addCmdLine();
+        await typeChars(clearLine, ' clear', 50, 70);
+        await sleep(250);
+        content.innerHTML = '';
+        await sleep(400);
+      }
+
+      const cursorLine = document.createElement('div');
+      cursorLine.className = 'terminal-line';
+      const cursor = document.createElement('span');
+      cursor.textContent = '▊';
+      cursor.style.color = 'var(--color-accent-dim)';
+      cursor.style.animation = 'terminal-blink 1s step-end infinite';
+      cursorLine.appendChild(cursor);
+      content.appendChild(cursorLine);
+    })();
   })();
 </script>
