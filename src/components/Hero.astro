@@ -15,19 +15,16 @@
         </p>
 
         <!-- Liquid glass heading -->
-        <div class="glass-panel relative p-5 md:p-7 mb-6 rounded-lg border border-(--color-border-subtle)/50 backdrop-blur-sm bg-(--color-bg)/15 overflow-hidden">
-          <div class="shimmer absolute inset-0 pointer-events-none"></div>
-          <h1
-            id="hero-title"
-            class="relative z-10 font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) opacity-0"
-            style="transform: translateY(24px)"
-          >
-            Building<br />
-            systems that<br />
-            <span class="text-(--color-text-dim)">handle</span><br />
-            real data.
-          </h1>
-        </div>
+        <h1
+          id="hero-title"
+          class="glass-text relative z-10 font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide opacity-0 mb-6"
+          style="transform: translateY(24px)"
+        >
+          Building<br />
+          systems that<br />
+          <span class="text-(--color-text-dim)">handle</span><br />
+          real data.
+        </h1>
 
         <p
           id="hero-desc"
@@ -62,12 +59,11 @@
   </div>
 
   <!-- Mouse scroll indicator -->
-  <div class="mouse-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-    <svg width="20" height="32" viewBox="0 0 20 32" fill="none" class="text-(--color-text-dim)">
-      <rect x="1.5" y="1.5" width="17" height="29" rx="8.5" stroke="currentColor" stroke-width="1.5"/>
+  <div class="mouse-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
+    <svg width="20" height="38" viewBox="0 0 20 38" fill="none" class="text-(--color-text-dim)">
+      <rect x="1.5" y="1.5" width="17" height="26" rx="8.5" stroke="currentColor" stroke-width="1.5"/>
       <line x1="10" y1="6" x2="10" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="wheel-line"/>
-      <line x1="10" y1="18" x2="10" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M10 28l-3-3 3 3 3-3-3 3z" fill="currentColor"/>
+      <path d="M10 31l-4-4 4 4 4-4-4 4z" fill="currentColor"/>
     </svg>
   </div>
 </section>
@@ -85,18 +81,23 @@
     pointer-events: none;
   }
 
-  .shimmer {
+  .glass-text {
     background: linear-gradient(
-      105deg,
-      transparent 30%,
-      color-mix(in srgb, var(--color-text-head) 5%, transparent) 45%,
-      transparent 60%
+      135deg,
+      var(--color-text-head) 0%,
+      color-mix(in srgb, var(--color-text-head) 70%, transparent) 40%,
+      color-mix(in srgb, var(--color-text-head) 85%, white) 50%,
+      color-mix(in srgb, var(--color-text-head) 70%, transparent) 60%,
+      var(--color-text-head) 100%
     );
     background-size: 200% 100%;
-    animation: shimmer-slide 5s ease-in-out infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glass-text-shine 6s ease-in-out infinite;
   }
 
-  @keyframes shimmer-slide {
+  @keyframes glass-text-shine {
     0%, 100% { background-position: 200% 0; }
     50% { background-position: -100% 0; }
   }
