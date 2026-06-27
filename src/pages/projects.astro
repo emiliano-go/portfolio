@@ -78,7 +78,7 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <!-- Stats bar -->
-        <div id="dbwarden-stats" class="flex flex-wrap gap-6 md:gap-10 py-3 px-3 border border-(--color-border) bg-(--color-surface) rounded">
+        <div id="dbwarden-stats" class="flex flex-wrap justify-center gap-6 md:gap-10 py-3 px-3 border border-(--color-border) bg-(--color-surface) rounded">
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
@@ -260,10 +260,10 @@ import Footer from '../components/Footer.astro';
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Rust</span>
               </div>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">PyPI package</p>
-              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-none">
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
                 Fast streaming parser for Crystal Reports XML exports with Rust acceleration. Streams row-by-row without loading the full document into memory, handling files of any size. Built-in pipeline stages: rename, cast types, filter, and drop fields, all chained with <code class="text-[10px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">|</code> operators for composable transformations. Parallel mode distributes batches across worker processes using Python's multiprocessing, achieving near-linear speedups on multi-core systems. Outputs DataFrames via pandas, CSV files, or lists of dicts. The pandas import is lazy, only loaded when you actually convert, keeping the CLI lightweight.
               </p>
-              <div class="flex flex-wrap gap-1.5 mb-4">
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['Python', 'Rust', 'XML', 'pandas'].map(t => (
                   <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
                 ))}
@@ -280,10 +280,10 @@ import Footer from '../components/Footer.astro';
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Prefect</span>
               </div>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Prefect flow</p>
-              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-none">
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
                 Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity via PyGithub, then stores structured records in ClickHouse through dbwarden's migration framework.                 Designed for automated periodic execution: the flow runs on a cron schedule, collects the latest activity since the last run, and inserts it into the warehouse. Structured logging captures each pipeline stage, and errors surface through Prefect's native notification system instead of failing silently. A simple dashboard query gives you a timeline of your open source contribution activity without relying on GitHub's own graphs.
               </p>
-              <div class="flex flex-wrap gap-1.5 mb-4">
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['Python', 'Prefect', 'PyGithub', 'ClickHouse'].map(t => (
                   <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
                 ))}
@@ -299,10 +299,10 @@ import Footer from '../components/Footer.astro';
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">React</span>
               </div>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Web application</p>
-              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-none">
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
                 Tile-based building map editor built with React and Canvas. Draw multi-floor building layouts with a grid-based editor; place walls, designate rooms, and connect them with doors, stairs, and elevators. Each floor is a separate layer, and the A* pathfinding system can route from any room to any other across floors, automatically selecting stairs or elevators. The canvas renders at 60fps with virtual scrolling for large maps. State is managed entirely through React hooks, making it easy to undo, redo, or export the map data as JSON for use in other tools. No external mapping libraries or APIs required.
               </p>
-              <div class="flex flex-wrap gap-1.5 mb-4">
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['React', 'TypeScript', 'Canvas', 'A* Pathfinding'].map(t => (
                   <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
                 ))}
@@ -636,6 +636,8 @@ import Footer from '../components/Footer.astro';
 
   .split-panel {
     padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .split-content {
@@ -643,7 +645,9 @@ import Footer from '../components/Footer.astro';
   }
 
   .split-content.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   @media (min-width: 768px) {
