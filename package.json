@@ -15,8 +15,11 @@
     "vite": "7.3.3"
   },
   "dependencies": {
+    "@fontsource/barlow-condensed": "^5.2.8",
+    "@fontsource/inter": "^5.2.8",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.7",
+    "lightningcss": "^1.32.0",
     "motion": "^12.40.0",
     "tailwindcss": "^4.3.0"
   }

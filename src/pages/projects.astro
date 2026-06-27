@@ -100,27 +100,52 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <div class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8 transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
-          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">PyPI</p>
-          <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">schemap</h2>
-          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-[600px]">
-            Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.
-            Define your model once, schemap generates Create, Update, Public, and Full schemas automatically,
-            with field-level type mapping, nullability handling, and configurable exclusions.
-          </p>
-          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6 max-w-[600px]">
-            Supports <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">AutoBase</code> inheritance and <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">@auto_schema</code> decorator,
-            with built-in TimestampMixin and SoftDeleteMixin. Eliminates repetitive schema boilerplate.
-          </p>
-          <div class="flex flex-wrap items-center gap-3">
-            <div class="flex flex-wrap gap-2">
-              {['Pydantic v2', 'SQLAlchemy 2.0', 'PyPI'].map(t => (
-                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
-              ))}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">PyPI</p>
+              <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">schemap</h2>
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">
+                Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.
+                Define your model once, schemap generates Create, Update, Public, and Full schemas automatically,
+                with field-level type mapping, nullability handling, and configurable exclusions.
+              </p>
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6">
+                Supports <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">AutoBase</code> inheritance and <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">@auto_schema</code> decorator,
+                with built-in TimestampMixin and SoftDeleteMixin. Eliminates repetitive schema boilerplate.
+              </p>
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-wrap gap-2">
+                  {['Pydantic v2', 'SQLAlchemy 2.0', 'PyPI'].map(t => (
+                    <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+                  ))}
+                </div>
+                <div class="flex flex-wrap gap-3 shrink-0">
+                  <a href="https://github.com/emiliano-go/schemap" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                    GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="flex flex-wrap gap-3 shrink-0">
-              <a href="https://github.com/emiliano-go/schemap" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
-              </a>
+            <div class="flex items-start self-stretch">
+              <div class="w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-stretch">
+                <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
+                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                  <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">schemap.py</span>
+                </div>
+                <div class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) overflow-x-auto">
+                  <div><span class="text-(--color-accent-dim)">@auto_schema</span></div>
+                  <div><span class="text-(--color-text-dim)">class</span> <span class="text-(--color-text-head)">User</span>(Base):</div>
+                  <div>    <span class="text-(--color-text-dim)">__tablename__</span> = <span class="text-(--color-accent-dim)">"users"</span></div>
+                  <div>    id = Column(Integer, primary_key=<span class="text-(--color-accent-dim)">True</span>)</div>
+                  <div>    name = Column(String(100))</div>
+                  <div>    email = Column(String(255), unique=<span class="text-(--color-accent-dim)">True</span>)</div>
+                  <div>&nbsp;</div>
+                  <div><span class="text-(--color-text-dim)"># CreateUser, UpdateUser,</span></div>
+                  <div><span class="text-(--color-text-dim)"># PublicUser,  FullUser</span></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

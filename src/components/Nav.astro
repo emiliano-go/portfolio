@@ -78,10 +78,7 @@ const links = [
 </div>
 
 <script>
-  import { animate } from 'motion';
-
   const nav = document.getElementById('nav')!;
-  animate(nav, { opacity: [0, 1] }, { duration: 0.6, delay: 1.2, easing: 'ease-out' });
 
   window.addEventListener('scroll', () => {
     nav.style.borderBottomColor = window.scrollY > 40
@@ -150,6 +147,15 @@ const links = [
 </script>
 
 <style>
+  @keyframes nav-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  #nav {
+    animation: nav-fade-in 0.6s ease-out 1.2s forwards;
+  }
+
   .nav-link {
     position: relative;
   }
