@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://emiliano-go.com/sitemap.xml
