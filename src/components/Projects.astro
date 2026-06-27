@@ -26,8 +26,9 @@ const projects = [
 
     <!-- DBWarden — featured card -->
     {projects.map((p) => (
-      <div class="border border-(--color-border-subtle) mb-px bg-(--color-surface) transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
-        <div class="p-7">
+      <div class="dbwarden-card relative border border-(--color-border) border-l-[3px] border-l-(--color-accent-dim) mb-px bg-(--color-surface) transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
+        <div id="dbwarden-card-stars" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+        <div class="p-7 relative z-10">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <div class="flex items-start justify-between mb-2">
@@ -43,14 +44,14 @@ const projects = [
                 </div>
                 <div class="flex flex-wrap gap-3 shrink-0">
                   {p.links.map(link => (
-                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
                       {link.label}
                     </a>
                   ))}
                 </div>
               </div>
             </div>
-            <div id="dbwarden-terminal" class="w-full border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden self-start">
+            <div id="dbwarden-terminal" class="w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-start">
               <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
@@ -213,7 +214,7 @@ const projects = [
 
           const clearLine = addCmdLine();
           await typeChars(clearLine, ' clear', 50, 70);
-          await sleep(400);
+          await sleep(2000);
           content.innerHTML = '';
           await sleep(600);
         }
@@ -233,3 +234,126 @@ const projects = [
     })();
   })();
 </script>
+
+<script>
+  (() => {
+    const container = document.getElementById('dbwarden-card-stars');
+    if (!container) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const stars = [];
+    const minDist = 3;
+    const maxStars = 150;
+
+    for (let i = 0; i < maxStars; i++) {
+      let placed = false;
+      for (let attempt = 0; attempt < 80; attempt++) {
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        if (!stars.some(s => Math.hypot(s.x - x, s.y - y) < minDist)) {
+          stars.push({ x, y });
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) break;
+    }
+
+    for (const pos of stars) {
+      const star = document.createElement('span');
+      const size = 1 + Math.random() * 1.5;
+      star.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: var(--color-text-dim);
+        border-radius: 50%;
+        left: ${pos.x}%;
+        top: ${pos.y}%;
+        opacity: 0;
+        will-change: transform, opacity;
+      `;
+      container.appendChild(star);
+      const driftTargetX = Math.random() * 100;
+      const driftTargetY = Math.random() * 100;
+      star.__data = {
+        twinkleSpeed: 0.6 + Math.random() * 1.5,
+        twinklePhase: Math.random() * Math.PI * 2,
+        minOpacity: 0,
+        maxOpacity: 0.3 + Math.random() * 0.5,
+        size: size,
+        originX: pos.x,
+        originY: pos.y,
+        driftX: 0,
+        driftY: 0,
+        targetX: driftTargetX,
+        targetY: driftTargetY,
+        driftTimer: 0,
+      };
+    }
+
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+      mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+    });
+
+    function animate() {
+      currentX += (mouseX - currentX) * 0.04;
+      currentY += (mouseY - currentY) * 0.04;
+
+      const time = Date.now() / 1000;
+      const dt = 1/60;
+
+      const starEls = container.children;
+      for (let i = 0; i < starEls.length; i++) {
+        const el = starEls[i];
+        const d = el.__data;
+
+        d.driftTimer += dt;
+        if (d.driftTimer > 3 + Math.random() * 4) {
+          d.targetX = Math.random() * 100;
+          d.targetY = Math.random() * 100;
+          d.driftTimer = 0;
+        }
+
+        d.driftX += (d.targetX - (d.originX + d.driftX)) * 0.004;
+        d.driftY += (d.targetY - (d.originY + d.driftY)) * 0.004;
+
+        const parallaxX = currentX * 20 * d.size;
+        const parallaxY = currentY * 20 * d.size;
+
+        const twinkle = Math.sin(time * d.twinkleSpeed + d.twinklePhase);
+        const opacity = d.minOpacity + (twinkle + 1) / 2 * (d.maxOpacity - d.minOpacity);
+
+        const px = d.driftX + parallaxX;
+        const py = d.driftY + parallaxY;
+
+        el.style.transform = `translate(${px}px, ${py}px)`;
+        el.style.opacity = Math.max(0, Math.min(1, opacity));
+        el.style.left = `${d.originX}%`;
+        el.style.top = `${d.originY}%`;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  })();
+</script>
+
+<style>
+  .dbwarden-card {
+    animation: border-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes border-pulse {
+    0%, 100% { border-left-color: #3a6e5a; }
+    50% { border-left-color: #5a9e8a; }
+  }
+</style>

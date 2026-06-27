@@ -1,8 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
-import LibreCourse from '../components/LibreCourse.astro';
-import OpenSource from '../components/OpenSource.astro';
 import Footer from '../components/Footer.astro';
 ---
 
@@ -11,10 +9,11 @@ import Footer from '../components/Footer.astro';
   <main>
 
     <!-- ─── DBWarden — Dedicated Section ─── -->
-    <section id="dbwarden" class="pt-28 pb-16 border-b border-(--color-border-subtle)">
-      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+    <section id="dbwarden" class="min-h-screen pt-24 pb-6 md:pt-28 md:pb-10 border-b border-(--color-border-subtle) flex flex-col justify-center relative" style="background: var(--color-bg);">
+      <div id="dbwarden-stars" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px] relative z-10">
 
-        <div class="flex items-center gap-4 mb-10">
+        <div class="flex items-center gap-4 mb-6">
           <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap">
             Featured Project
           </span>
@@ -22,7 +21,7 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <!-- Title + desc on left, terminal on right -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start">
           <div>
             <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Python Package · PyPI</p>
             <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
@@ -34,21 +33,21 @@ import Footer from '../components/Footer.astro';
             </p>
             <!-- 2x2 link grid -->
             <div class="grid grid-cols-2 gap-3">
-              <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+              <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
                 GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+              <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
                 PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="https://emiliano-go.me/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+              <a href="https://emiliano-go.me/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
                 Full documentation <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="https://deepwiki.com/emiliano-go/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+              <a href="https://deepwiki.com/emiliano-go/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
                 DeepWiki <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
             </div>
           </div>
-          <div id="dbwarden-terminal" class="w-full border border-(--color-border-subtle) rounded bg-(--color-bg) overflow-hidden flex flex-col self-stretch">
+          <div id="dbwarden-terminal" class="w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden flex flex-col self-stretch">
             <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle) shrink-0">
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
@@ -60,7 +59,7 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <!-- Feature grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
           {[
             { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.' },
             { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.' },
@@ -71,7 +70,7 @@ import Footer from '../components/Footer.astro';
             { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.' },
             { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.' },
           ].map(f => (
-            <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
+            <div class="border border-(--color-border) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
               <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
               <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
             </div>
@@ -79,7 +78,7 @@ import Footer from '../components/Footer.astro';
         </div>
 
         <!-- Stats bar -->
-        <div id="dbwarden-stats" class="flex flex-wrap gap-6 md:gap-10 mb-8 py-4 border-t border-b border-(--color-border-subtle)">
+        <div id="dbwarden-stats" class="flex flex-wrap gap-6 md:gap-10 py-3 px-3 border border-(--color-border) bg-(--color-surface) rounded">
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
@@ -128,41 +127,6 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <!-- ─── Site Twilight ─── -->
-    <section id="site-twilight" class="py-16 border-b border-(--color-border-subtle)">
-      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
-
-        <div class="flex items-center gap-4 mb-10">
-          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
-            Web App
-          </span>
-          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
-        </div>
-
-        <div class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8 transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
-          <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Django · Vue · Production</p>
-          <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">Site Twilight</h2>
-          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-[600px]">
-            Internal web system for managing identities, characters, and factions in an
-            SCP:RP roleplay environment. Handles user authentication, character profiles,
-            faction hierarchies, access levels, and classified documentation.
-          </p>
-          <div class="flex flex-wrap items-center gap-3">
-            <div class="flex flex-wrap gap-2">
-              {['Django', 'Vue', 'RBAC', 'SCP:RP'].map(t => (
-                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
-              ))}
-            </div>
-            <div class="flex flex-wrap gap-3 shrink-0">
-              <a href="https://site-twilight.com" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                Visit site <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ─── PyPI Utilities ─── -->
     <section id="pypi-utils" class="py-16 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
@@ -176,21 +140,20 @@ import Footer from '../components/Footer.astro';
 
         <div class="border border-(--color-border-subtle) bg-(--color-surface)">
           <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-(--color-border-subtle)">
-            <!-- crxml -->
+            <!-- seoslug -->
             <div class="p-6 flex flex-col">
               <div class="flex items-center gap-2 mb-2">
-                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">crxml</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Rust</span>
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">seoslug</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
               </div>
               <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
-                Fast streaming parser for Crystal Reports XML exports with Rust acceleration.
-                100 MB in ~0.42s, ~75 MB RSS. Pipelines, parallel mode, pandas integration.
+                Deterministic SEO payload generation: canonical URLs, Open Graph, Twitter Cards, and JSON-LD. Same input always produces the same output. Testable, cacheable, predictable.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
-                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                <a href="https://github.com/emiliano-go/seoslug" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
                   GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
-                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                <a href="https://pypi.org/project/seoslug/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
                   PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
@@ -238,11 +201,95 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <!-- ─── LibreCourseUY ─── -->
-    <LibreCourse />
+    <!-- ─── More Projects ─── -->
+    <section id="more-projects" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
-    <!-- ─── Open Source ─── -->
-    <OpenSource />
+        <div class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+            More Projects
+          </span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="split-layout" id="split-layout">
+          <div class="split-nav" role="tablist">
+            <button class="split-btn active" data-target="0" role="tab" aria-selected="true">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">01</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">crxml</span>
+            </button>
+            <button class="split-btn" data-target="1" role="tab" aria-selected="false">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">02</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">vigil</span>
+            </button>
+            <button class="split-btn" data-target="2" role="tab" aria-selected="false">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">03</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</span>
+            </button>
+          </div>
+
+          <div class="split-panel">
+            <div class="split-content active" data-index="0">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">crxml</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Rust</span>
+              </div>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">PyPI package</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-none">
+                Fast streaming parser for Crystal Reports XML exports with Rust acceleration. Streams row-by-row without loading the full document into memory, handling files of any size. Built-in pipeline stages: rename, cast types, filter, and drop fields, all chained with <code class="text-[10px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">|</code> operators for composable transformations. Parallel mode distributes batches across worker processes using Python's multiprocessing, achieving near-linear speedups on multi-core systems. Outputs DataFrames via pandas, CSV files, or lists of dicts. The pandas import is lazy, only loaded when you actually convert, keeping the CLI lightweight.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {['Python', 'Rust', 'XML', 'pandas'].map(t => (
+                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
+              </div>
+            </div>
+
+            <div class="split-content" data-index="1">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">vigil</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Prefect</span>
+              </div>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Prefect flow</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-none">
+                Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity via PyGithub, then stores structured records in ClickHouse through dbwarden's migration framework.                 Designed for automated periodic execution: the flow runs on a cron schedule, collects the latest activity since the last run, and inserts it into the warehouse. Structured logging captures each pipeline stage, and errors surface through Prefect's native notification system instead of failing silently. A simple dashboard query gives you a timeline of your open source contribution activity without relying on GitHub's own graphs.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {['Python', 'Prefect', 'PyGithub', 'ClickHouse'].map(t => (
+                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/vigil" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+              </div>
+            </div>
+
+            <div class="split-content" data-index="2">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">React</span>
+              </div>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Web application</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) mb-4 max-w-none">
+                Tile-based building map editor built with React and Canvas. Draw multi-floor building layouts with a grid-based editor; place walls, designate rooms, and connect them with doors, stairs, and elevators. Each floor is a separate layer, and the A* pathfinding system can route from any room to any other across floors, automatically selecting stairs or elevators. The canvas renders at 60fps with virtual scrolling for large maps. State is managed entirely through React hooks, making it easy to undo, redo, or export the map data as JSON for use in other tools. No external mapping libraries or APIs required.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {['React', 'TypeScript', 'Canvas', 'A* Pathfinding'].map(t => (
+                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/mapcreator" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
   <Footer />
@@ -351,7 +398,7 @@ import Footer from '../components/Footer.astro';
 
             const clearLine = addCmdLine();
             await typeChars(clearLine, ' clear', 50, 70);
-            await sleep(400);
+            await sleep(2000);
             content.innerHTML = '';
             await sleep(600);
           }
@@ -372,4 +419,234 @@ import Footer from '../components/Footer.astro';
     }
 
   })();
+
+  // ─── Twinkling stars with mouse parallax ───
+  (() => {
+    const container = document.getElementById('dbwarden-stars');
+    if (!container) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const stars = [];
+    const minDist = 3;
+    const maxStars = 220;
+
+    for (let i = 0; i < maxStars; i++) {
+      let placed = false;
+      for (let attempt = 0; attempt < 80; attempt++) {
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        if (!stars.some(s => Math.hypot(s.x - x, s.y - y) < minDist)) {
+          stars.push({ x, y });
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) break;
+    }
+
+    for (const pos of stars) {
+      const star = document.createElement('span');
+      const size = 1 + Math.random() * 1.5;
+      star.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: var(--color-text-dim);
+        border-radius: 50%;
+        left: ${pos.x}%;
+        top: ${pos.y}%;
+        opacity: 0;
+        will-change: transform, opacity;
+      `;
+      container.appendChild(star);
+      const driftTargetX = Math.random() * 100;
+      const driftTargetY = Math.random() * 100;
+      star.__data = {
+        twinkleSpeed: 0.6 + Math.random() * 1.5,
+        twinklePhase: Math.random() * Math.PI * 2,
+        minOpacity: 0,
+        maxOpacity: 0.3 + Math.random() * 0.5,
+        size: size,
+        originX: pos.x,
+        originY: pos.y,
+        driftX: 0,
+        driftY: 0,
+        targetX: driftTargetX,
+        targetY: driftTargetY,
+        driftTimer: 0,
+      };
+    }
+
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+      mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+    });
+
+    function animate() {
+      currentX += (mouseX - currentX) * 0.04;
+      currentY += (mouseY - currentY) * 0.04;
+
+      const time = Date.now() / 1000;
+      const dt = 1/60;
+
+      const starEls = container.children;
+      for (let i = 0; i < starEls.length; i++) {
+        const el = starEls[i];
+        const d = el.__data;
+
+        d.driftTimer += dt;
+        if (d.driftTimer > 3 + Math.random() * 4) {
+          d.targetX = Math.random() * 100;
+          d.targetY = Math.random() * 100;
+          d.driftTimer = 0;
+        }
+
+        d.driftX += (d.targetX - (d.originX + d.driftX)) * 0.004;
+        d.driftY += (d.targetY - (d.originY + d.driftY)) * 0.004;
+
+        const parallaxX = currentX * 20 * d.size;
+        const parallaxY = currentY * 20 * d.size;
+
+        const twinkle = Math.sin(time * d.twinkleSpeed + d.twinklePhase);
+        const opacity = d.minOpacity + (twinkle + 1) / 2 * (d.maxOpacity - d.minOpacity);
+
+        const px = d.driftX + parallaxX;
+        const py = d.driftY + parallaxY;
+
+        el.style.transform = `translate(${px}px, ${py}px)`;
+        el.style.opacity = Math.max(0, Math.min(1, opacity));
+        el.style.left = `${d.originX}%`;
+        el.style.top = `${d.originY}%`;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  })();
+
+  // ─── Split-layout: click nav to show detail ───
+  (() => {
+    const layout = document.getElementById('split-layout');
+    if (!layout) return;
+
+    const btns = layout.querySelectorAll('.split-btn');
+    const contents = layout.querySelectorAll('.split-content');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = btn.getAttribute('data-target');
+
+        btns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        contents.forEach(c => c.classList.remove('active'));
+        const target = layout.querySelector(`.split-content[data-index="${idx}"]`);
+        if (target) target.classList.add('active');
+      });
+    });
+  })();
 </script>
+
+<style>
+  #dbwarden {
+    animation: section-breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes section-breathe {
+    0%, 100% { border-bottom-color: #1e2e2e; }
+    50% { border-bottom-color: #3a6e5a; }
+  }
+
+  .split-layout {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  .split-nav {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .split-btn {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: var(--color-surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: background 0.2s;
+    color: var(--color-text-muted);
+    font-family: inherit;
+  }
+
+  .split-btn:last-child {
+    border-bottom: none;
+  }
+
+  .split-btn:hover {
+    background: var(--color-bg);
+  }
+
+  .split-btn.active {
+    background: var(--color-bg);
+    color: var(--color-text-head);
+    border-left: 2px solid var(--color-text-dim);
+  }
+
+  .split-panel {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .split-content {
+    display: none;
+  }
+
+  .split-content.active {
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .split-layout {
+      flex-direction: row;
+    }
+
+    .split-nav {
+      width: 160px;
+      border-bottom: none;
+      border-right: 1px solid var(--color-border-subtle);
+    }
+
+    .split-btn {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .split-btn:last-child {
+      border-bottom: none;
+    }
+
+    .split-panel {
+      flex: 1;
+      padding: 1.75rem;
+    }
+  }
+</style>
