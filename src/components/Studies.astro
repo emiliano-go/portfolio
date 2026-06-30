@@ -1,0 +1,444 @@
+---
+interface CareerItem {
+  type: 'career';
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  responsibilities: string[];
+  tags: string[];
+  link?: string;
+}
+
+interface EducationItem {
+  type: 'education';
+  institution: string;
+  degree: string;
+  field: string;
+  period: string;
+  description: string;
+  coursework: string[];
+  tags: string[];
+}
+
+interface CertificationItem {
+  type: 'certification';
+  course: string;
+  platform: string;
+  issuer: string;
+  completed: string;
+  description: string;
+  skills: string[];
+  link?: string;
+}
+
+type StudyItem = CareerItem | EducationItem | CertificationItem;
+
+const careerData: CareerItem[] = [
+  {
+    type: 'career',
+    company: 'Universidad de la Republica, FCEA',
+    role: 'Licenciatura en Estadistica - Perfil Tecnologico',
+    period: '2026 - Current',
+    description: 'Statistics degree with a technology focus, combining mathematical statistics with computational methods, data analysis, and programming for real-world applications.',
+    responsibilities: [
+      'Studying advanced statistical methods: inference, regression, multivariate analysis, and stochastic processes',
+      'Applying computational tools: R, Python, SQL for data analysis and statistical modeling',
+      'Developing data-driven decision frameworks using statistical learning and probability theory',
+      'Building proficiency in experimental design, sampling techniques, and hypothesis testing',
+      'Integrating technology-oriented approaches to solve quantitative problems across domains',
+    ],
+    tags: ['Statistics', 'R', 'Python', 'Data Analysis', 'Probability', 'Machine Learning', 'SQL'],
+  },
+  {
+    type: 'career',
+    company: 'Universidad de la Republica, FING',
+    role: 'Ingenieria en Computacion',
+    period: '2025 - Current',
+    description: 'Computer Engineering program covering algorithms, data structures, software architecture, distributed systems, and computational theory.',
+    responsibilities: [
+      'Studying algorithms, data structures, and computational complexity',
+      'Building software systems with emphasis on architecture, scalability, and reliability',
+      'Learning distributed systems, networking, and concurrent programming',
+      'Working with formal methods, automata theory, and programming language design',
+      'Developing low-level systems knowledge including operating systems and compilers',
+    ],
+    tags: ['Computer Science', 'Algorithms', 'Data Structures', 'Distributed Systems', 'Software Engineering', 'Networking'],
+  },
+];
+
+const educationData: EducationItem[] = [
+  {
+    type: 'education',
+    institution: 'University of Tokyo',
+    degree: 'GCI World 2026',
+    field: 'Data Science and Machine Learning',
+    period: '2026 - Current',
+    description: 'Global collaborative program focused on data science methodologies, machine learning pipelines, and cross-cultural research in data-driven decision making.',
+    coursework: [
+      'Data Science Fundamentals',
+      'Machine Learning & Statistical Modeling',
+      'Data Visualization & Communication',
+      'Research Methods in Data Science',
+      'Cross-Cultural Data Analysis',
+      'Ethics in AI & Data Science',
+    ],
+    tags: ['Data Science', 'Machine Learning', 'Python', 'Statistics', 'Research'],
+  },
+  {
+    type: 'education',
+    institution: 'CoderHouse',
+    degree: 'Course',
+    field: 'Data Analytics',
+    period: 'Jan 2026 - Jul 2026',
+    description: 'Intensive data analytics program covering the full analytics workflow: data extraction, cleaning, exploration, visualization, and insight communication using industry-standard tools.',
+    coursework: [
+      'Introduction to Data Analytics',
+      'Data Cleaning & Preparation with Python',
+      'SQL for Data Analysis',
+      'Statistical Analysis & A/B Testing',
+      'Data Visualization with Tableau & Matplotlib',
+      'Capstone Analytics Project',
+    ],
+    tags: ['Python', 'SQL', 'Tableau', 'Data Visualization', 'Statistics', 'Excel'],
+  },
+];
+
+const certificationData: CertificationItem[] = [
+  {
+    type: 'certification',
+    course: 'HTML, CSS and Javascript for Web Development',
+    platform: 'Coursera',
+    issuer: 'Johns Hopkins University',
+    completed: '2024',
+    description: 'Comprehensive web development foundations covering semantic HTML, responsive CSS layouts, JavaScript interactivity, Ajax requests, and modern front-end development practices.',
+    skills: [
+      'JavaScript',
+      'Web Development',
+      'Web Applications',
+      'Development Environment',
+      'Cascading Style Sheets (CSS)',
+      'Front-End Web Development',
+      'Hypertext Markup Language (HTML)',
+      'Ajax',
+      'Web Development Tools',
+      'Web Design',
+      'Responsive Web Design',
+    ],
+    link: 'https://coursera.org',
+  },
+];
+---
+
+<section id="studies" class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+    <div class="flex items-center gap-4 mb-10">
+      <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+        Studies
+      </span>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <!-- Career -->
+    <div class="flex items-center gap-3 mb-6">
+      <span class="text-[10px] uppercase tracking-[0.12em] text-(--color-accent-dim) font-semibold">Career</span>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      {careerData.map((item, i) => (
+        <button
+          class="study-card group bg-(--color-surface) text-left cursor-pointer transition-all duration-200 hover:bg-(--color-bg) hover:scale-[1.01] border-none w-full relative overflow-hidden"
+          data-modal={`study-modal-career-${i}`}
+          aria-haspopup="dialog"
+        >
+          <div class="absolute left-0 top-0 bottom-0 w-[3px] bg-(--color-accent)"></div>
+          <div class="absolute left-[7px] top-6 w-[9px] h-[9px] rounded-full bg-(--color-accent) border-2 border-(--color-bg)"></div>
+          <div class="pl-7 pr-5 py-5">
+            <p class="text-[10px] font-mono text-(--color-accent-dim) mb-2">{item.period}</p>
+            <h3 class="font-[family-name:var(--font-display)] text-base font-bold uppercase tracking-wide text-(--color-text-head) mb-0.5">
+              {item.company}
+            </h3>
+            <span class="inline-block text-[10px] px-2 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide mb-2">
+              {item.role}
+            </span>
+            <p class="text-[11px] leading-[1.6] text-(--color-text-muted) line-clamp-2">{item.description}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <!-- Education -->
+    <div class="flex items-center gap-3 mb-6 mt-10">
+      <span class="text-[10px] uppercase tracking-[0.12em] font-semibold" style="color: #5a8a9e;">Education</span>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      {educationData.map((item, i) => (
+        <button
+          class="study-card group bg-(--color-surface) text-left cursor-pointer transition-all duration-200 hover:bg-(--color-bg) hover:scale-[1.01] border-none w-full relative"
+          data-modal={`study-modal-edu-${i}`}
+          aria-haspopup="dialog"
+        >
+          <div class="absolute inset-x-0 top-0 h-[3px]" style="background: #5a8a9e;"></div>
+          <div class="p-5 flex flex-col items-center text-center">
+            <div class="w-10 h-10 rounded-full border-2 flex items-center justify-center mb-3" style="border-color: #5a8a9e;">
+              <svg class="w-5 h-5" style="color: #5a8a9e;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head) leading-snug mb-1">
+              {item.institution}
+            </h3>
+            <p class="text-[11px] text-(--color-text-muted) mb-2">{item.degree} - {item.field}</p>
+            <p class="text-[10px] font-mono" style="color: #5a8a9e;">{item.period}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <!-- Certifications -->
+    <div class="flex items-center gap-3 mb-6 mt-10">
+      <span class="text-[10px] uppercase tracking-[0.12em] font-semibold" style="color: #9e8a5a;">Certifications</span>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      {certificationData.map((item, i) => (
+        <button
+          class="study-card group bg-(--color-surface) text-left cursor-pointer transition-all duration-200 hover:bg-(--color-bg) hover:scale-[1.01] border-none w-full relative"
+          data-modal={`study-modal-cert-${i}`}
+          aria-haspopup="dialog"
+        >
+          <div class="absolute right-0 top-0 bottom-0 w-[3px]" style="background: #9e8a5a;"></div>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[9px] uppercase tracking-[0.12em]" style="color: #9e8a5a;">{item.platform}</span>
+              <svg class="w-4 h-4" style="color: #9e8a5a;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head) leading-snug mb-1">
+              {item.course}
+            </h3>
+            <p class="text-[10px] text-(--color-text-dim)">Completed {item.completed}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<!-- Career modals -->
+{careerData.map((item, i) => (
+  <div
+    id={`study-modal-career-${i}`}
+    class="study-modal fixed inset-0 z-50 flex items-center justify-center p-4"
+    style="display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto border border-(--color-border) bg-(--color-surface)">
+      <button
+        class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer z-10"
+        aria-label="Close modal"
+      >
+        ✕
+      </button>
+
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-52 shrink-0 bg-(--color-bg) p-6 md:p-7 flex flex-col gap-4 border-b md:border-b-0 md:border-r border-(--color-border-subtle)">
+          <div>
+            <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-accent-dim)">Career</span>
+            <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head) mt-1">{item.company}</h3>
+          </div>
+          <span class="self-start text-[10px] px-2 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide">{item.role}</span>
+          <p class="text-[10px] font-mono text-(--color-text-dim)">{item.period}</p>
+          <p class="text-xs leading-[1.6] text-(--color-text-muted)">{item.description}</p>
+          <div class="flex flex-wrap gap-2 mt-auto">
+            {item.tags.map(t => (
+              <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="flex-1 p-6 md:p-7">
+          <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-5">Key Areas</h4>
+          <div class="flex flex-col gap-0">
+            {item.responsibilities.map((r, ri) => (
+              <div class="flex gap-4 pb-5 relative">
+                <div class="flex flex-col items-center">
+                  <div class={`w-2.5 h-2.5 rounded-full border-2 bg-(--color-bg) shrink-0 relative z-10 ${ri === 0 ? 'bg-(--color-accent) border-(--color-accent)' : 'border-(--color-accent-dim)'}`}></div>
+                  {ri < item.responsibilities.length - 1 && <div class="w-px flex-1 bg-(--color-border-subtle) -mt-0"></div>}
+                </div>
+                <div class="flex-1 -mt-0.5">
+                  <p class="text-xs leading-[1.6] text-(--color-text-muted)">{r}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+))}
+
+<!-- Education modals -->
+{educationData.map((item, i) => (
+  <div
+    id={`study-modal-edu-${i}`}
+    class="study-modal fixed inset-0 z-50 flex items-center justify-center p-4"
+    style="display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="relative w-full max-w-lg max-h-[85vh] overflow-y-auto border bg-(--color-surface) p-8 md:p-10 text-center"
+      style="border-color: #3a5a6a;"
+    >
+      <button
+        class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer"
+        aria-label="Close modal"
+      >
+        ✕
+      </button>
+
+      <div class="w-16 h-16 rounded-full border-2 mx-auto mb-5 flex items-center justify-center" style="border-color: #5a8a9e;">
+        <svg class="w-8 h-8" style="color: #5a8a9e;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <span class="text-[9px] uppercase tracking-[0.12em]" style="color: #5a8a9e;">Education</span>
+      <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mt-1 mb-1">{item.institution}</h3>
+      <p class="text-sm text-(--color-text-muted) mb-1">{item.degree} - {item.field}</p>
+      <p class="text-[10px] font-mono" style="color: #5a8a9e;">{item.period}</p>
+
+      <div class="h-px bg-(--color-border-subtle) my-6" style="max-width: 160px; margin-left: auto; margin-right: auto;"></div>
+
+      <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-6 text-left">{item.description}</p>
+
+      <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3 text-left">Coursework</h4>
+      <div class="grid grid-cols-2 gap-2 mb-6 text-left">
+        {item.coursework.map(c => (
+          <div class="flex items-center gap-2 text-xs text-(--color-text-muted)">
+            <span class="w-1 h-1 rounded-full shrink-0" style="background: #5a8a9e;"></span>
+            {c}
+          </div>
+        ))}
+      </div>
+
+      <div class="flex flex-wrap gap-2 justify-center">
+        {item.tags.map(t => (
+          <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+))}
+
+<!-- Certification modals -->
+{certificationData.map((item, i) => (
+  <div
+    id={`study-modal-cert-${i}`}
+    class="study-modal fixed inset-0 z-50 flex items-center justify-center p-4"
+    style="display: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      class="relative w-full max-w-md max-h-[85vh] overflow-y-auto border bg-(--color-bg) p-0"
+      style="border-color: #6a5a3a;"
+    >
+      <button
+        class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer z-10"
+        aria-label="Close modal"
+      >
+        ✕
+      </button>
+
+      <div class="p-7 pb-0">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4" style="color: #9e8a5a;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text-[9px] uppercase tracking-[0.12em]" style="color: #9e8a5a;">Certification</span>
+        </div>
+        <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head) mb-1">{item.course}</h3>
+        <p class="text-xs text-(--color-text-muted) mb-1">{item.platform}</p>
+        <p class="text-[10px] text-(--color-text-dim) mb-6">Issued by {item.issuer} - {item.completed}</p>
+      </div>
+
+      <div class="px-7 py-5 border-t border-b" style="border-color: #3a3a2a; background: #0e0e0a;">
+        <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Skills</h4>
+        <div class="flex flex-wrap gap-2">
+          {item.skills.map(s => (
+            <span class="text-[10px] px-2.5 py-1" style="background: #1a1a10; color: #c8b88a; border: 1px solid #3a3a2a; border-radius: 2px;">{s}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="p-7">
+        <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-5">{item.description}</p>
+        {item.link && (
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-[11px] px-4 py-2 border transition-colors duration-200"
+            style="border-color: #9e8a5a; color: #c8b88a;"
+            onmouseover="this.style.background='#1a1a10'"
+            onmouseout="this.style.background='transparent'"
+          >
+            View credential ↗
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+))}
+
+<script>
+  (() => {
+    const modals = document.querySelectorAll('.study-modal');
+    const cards = document.querySelectorAll('.study-card');
+    const body = document.body;
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'flex';
+      body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modal) {
+      modal.style.display = 'none';
+      body.style.overflow = '';
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const target = card.getAttribute('data-modal');
+        if (target) openModal(target);
+      });
+    });
+
+    modals.forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal(modal);
+      });
+
+      const closeBtn = modal.querySelector('.study-modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => closeModal(modal));
+      }
+
+      modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal(modal);
+      });
+    });
+  })();
+</script>
