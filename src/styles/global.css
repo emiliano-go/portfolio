@@ -62,4 +62,20 @@ html.light {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+
+  #i18n-wrapper {
+    opacity: 0;
+  }
+
+  #i18n-wrapper.i18n-show {
+    opacity: 1;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  #i18n-wrapper.i18n-fade {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
 }

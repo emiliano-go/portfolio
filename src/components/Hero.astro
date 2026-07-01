@@ -11,7 +11,7 @@
           id="hero-tag"
           class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mb-4 font-semibold"
         >
-          Backend Engineer · Data Scientist
+          <span data-i18n="hero.tagline">Backend Engineer · Data Scientist</span>
         </p>
 
         <!-- Liquid glass heading -->
@@ -19,20 +19,20 @@
           id="hero-title"
           class="font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide mb-6"
         >
-          <span class="glass-word" style="--i: 0">Building</span><br />
-          <span class="glass-word" style="--i: 1">systems</span>
-          <span class="glass-word" style="--i: 2">that</span><br />
-          <span class="glass-word dim" style="--i: 3">handle</span><br />
-          <span class="glass-word" style="--i: 4">real</span>
-          <span class="glass-word" style="--i: 5">data.</span>
+          <span class="glass-word" style="--i: 0" data-i18n="hero.title.line1">Building</span><br />
+          <span class="glass-word" style="--i: 1" data-i18n="hero.title.line2">systems</span>
+          <span class="glass-word" style="--i: 2" data-i18n="hero.title.line3">that</span><br />
+          <span class="glass-word dim" style="--i: 3" data-i18n="hero.title.line4">handle</span><br />
+          <span class="glass-word" style="--i: 4" data-i18n="hero.title.line5">real</span>
+          <span class="glass-word" style="--i: 5" data-i18n="hero.title.line6">data.</span>
         </h1>
 
         <p
           id="hero-desc"
           class="text-sm leading-relaxed text-(--color-text-muted) max-w-[360px]"
         >
-          Python developer focused on data pipelines, ETL infrastructure, and backend architecture.
-          Based in Montevideo, Uruguay. Open to interesting problems.
+          <span data-i18n="hero.desc">Python developer focused on data pipelines, ETL infrastructure, and backend architecture.
+          Based in Montevideo, Uruguay. Open to interesting problems.</span>
         </p>
       </div>
 
@@ -40,18 +40,18 @@
       <div id="hero-stats" class="flex flex-col gap-0">
         <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
-          <span class="text-xs text-(--color-text-muted)">stars on maintained OSS</span>
+          <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.stars">stars on maintained OSS</span>
         </div>
         <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">5</span>
-          <span class="text-xs text-(--color-text-muted)">packages on PyPI</span>
+          <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.pypi">packages on PyPI</span>
         </div>
         <div class="flex items-baseline justify-between py-4 border-t border-b border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide flex items-center gap-2">
             <span id="dot" class="inline-block w-2 h-2 rounded-full bg-(--color-accent)"></span>
             UY
           </span>
-          <span class="text-xs text-(--color-text-muted)">Montevideo, Uruguay</span>
+          <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.location">Montevideo, Uruguay</span>
         </div>
       </div>
 

@@ -1,10 +1,10 @@
 ---
 const links = [
-  { label: 'projects', href: '/projects' },
-  { label: 'LibreCourseUY', href: '/#librecourseuy' },
-  { label: 'open source', href: '/#oss' },
-  { label: 'about', href: '/#about' },
-  { label: 'blog ↗', href: 'https://blog.emiliano-go.com', external: true },
+  { label: 'projects', href: '/projects', key: 'nav.projects' },
+  { label: 'LibreCourseUY', href: '/#librecourseuy', key: 'nav.librecourse' },
+  { label: 'open source', href: '/#oss', key: 'nav.opensource' },
+  { label: 'about', href: '/#about', key: 'nav.about' },
+  { label: 'blog ↗', href: 'https://blog.emiliano-go.com', external: true, key: 'nav.blog' },
 ];
 ---
 
@@ -14,7 +14,7 @@ const links = [
   style="backdrop-filter: blur(12px);"
 >
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px] flex items-center justify-between py-5">
-    <a href="/" class="font-[family-name:var(--font-display)] text-lg font-bold tracking-widest uppercase text-(--color-text-head)">
+    <a href="/" class="font-[family-name:var(--font-display)] text-lg font-bold tracking-widest uppercase text-(--color-text-head)" data-i18n="nav.logo">
       Emiliano G.O.
     </a>
     <ul class="hidden md:flex gap-7 list-none">
@@ -25,12 +25,23 @@ const links = [
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
             class="nav-link text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+            data-i18n={link.key}
           >
             {link.label}
           </a>
         </li>
       ))}
-      <li>
+      <li class="flex items-center gap-2">
+        <div class="relative">
+          <button id="lang-dropdown-btn" class="flex items-center gap-1 px-2 py-1 border border-(--color-border) rounded text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer">
+            EN <span class="text-[10px]">▾</span>
+          </button>
+          <div id="lang-dropdown-menu" class="absolute right-0 top-full mt-1 min-w-[68px] bg-(--color-bg) border border-(--color-border) rounded shadow-lg opacity-0 pointer-events-none transition-opacity duration-150 z-50">
+            <button data-lang="en" class="block w-full text-left px-3 py-1.5 text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-150 cursor-pointer">EN</button>
+            <button data-lang="es" class="block w-full text-left px-3 py-1.5 text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-150 cursor-pointer">ES</button>
+            <button data-lang="fr" class="block w-full text-left px-3 py-1.5 text-xs tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-150 cursor-pointer">FR</button>
+          </div>
+        </div>
         <button id="theme-toggle-desktop" class="flex items-center px-2 py-1 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer" aria-label="Toggle theme">
           <svg id="sun-icon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           <svg id="moon-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -57,22 +68,32 @@ const links = [
   <ul class="flex flex-col items-center gap-8 pt-16 list-none">
     {links.map((link) => (
       <li>
-        <a
-          href={link.href}
-          target={link.external ? '_blank' : undefined}
-          rel={link.external ? 'noopener noreferrer' : undefined}
-          class="text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
-        >
-          {link.label}
-        </a>
-      </li>
-    ))}
-    <li>
-      <button id="theme-toggle-overlay" class="flex items-center gap-2 text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200 cursor-pointer" aria-label="Toggle theme">
-        <svg id="sun-icon-overlay" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <svg id="moon-icon-overlay" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <span id="theme-label-overlay">Light mode</span>
-      </button>
+          <a
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+            class="text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200"
+            data-i18n={link.key}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li class="flex items-center justify-center gap-4">
+        <div class="relative">
+          <button id="lang-dropdown-btn-overlay" class="flex items-center gap-1 text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200 cursor-pointer">
+            EN <span class="text-sm">▾</span>
+          </button>
+          <div id="lang-dropdown-menu-overlay" class="absolute left-1/2 -translate-x-1/2 top-full mt-1 min-w-[80px] bg-(--color-bg) border border-(--color-border) rounded shadow-lg opacity-0 pointer-events-none transition-opacity duration-150 z-50">
+            <button data-lang="en" class="block w-full text-left px-4 py-2 text-base tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-150 cursor-pointer">EN</button>
+            <button data-lang="es" class="block w-full text-left px-4 py-2 text-base tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-150 cursor-pointer">ES</button>
+            <button data-lang="fr" class="block w-full text-left px-4 py-2 text-base tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-150 cursor-pointer">FR</button>
+          </div>
+        </div>
+        <button id="theme-toggle-overlay" class="flex items-center gap-2 text-lg tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200 cursor-pointer" aria-label="Toggle theme">
+          <svg id="sun-icon-overlay" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="moon-icon-overlay" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
     </li>
   </ul>
 </div>
@@ -131,7 +152,12 @@ const links = [
       document.querySelectorAll('[id^="sun-icon"]').forEach(function(el) { el.classList.toggle('hidden', !isLight); });
       document.querySelectorAll('[id^="moon-icon"]').forEach(function(el) { el.classList.toggle('hidden', isLight); });
       var label = document.getElementById('theme-label-overlay');
-      if (label) label.textContent = isLight ? 'Dark mode' : 'Light mode';
+      if (label) {
+        var lang = document.documentElement.lang || 'en';
+        var all = { en: translations_en, es: translations_es, fr: translations_fr };
+        var dict = all[lang] || all.en;
+        label.textContent = isLight ? (dict['nav.dark'] || 'Dark mode') : (dict['nav.light'] || 'Light mode');
+      }
     }
 
     document.querySelectorAll('[id^="theme-toggle"]').forEach(function(btn) {
@@ -142,6 +168,44 @@ const links = [
     });
 
     updateIcons();
+
+    // Language dropdown
+    function setupLangDropdown(btnId, menuId) {
+      var btn = document.getElementById(btnId);
+      var menu = document.getElementById(menuId);
+      if (!btn || !menu) return;
+
+      var cur = document.documentElement.lang || 'en';
+      btn.childNodes[0].textContent = cur.toUpperCase();
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var open = !menu.classList.contains('opacity-0');
+        document.querySelectorAll('[id^="lang-dropdown-menu"]').forEach(function(m) {
+          m.classList.add('opacity-0', 'pointer-events-none');
+        });
+        if (!open) menu.classList.remove('opacity-0', 'pointer-events-none');
+      });
+
+      menu.querySelectorAll('button').forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var l = opt.getAttribute('data-lang');
+          setLang(l, true);
+          btn.childNodes[0].textContent = l.toUpperCase();
+          menu.classList.add('opacity-0', 'pointer-events-none');
+        });
+      });
+    }
+
+    document.addEventListener('click', function() {
+      document.querySelectorAll('[id^="lang-dropdown-menu"]').forEach(function(m) {
+        m.classList.add('opacity-0', 'pointer-events-none');
+      });
+    });
+
+    setupLangDropdown('lang-dropdown-btn', 'lang-dropdown-menu');
+    setupLangDropdown('lang-dropdown-btn-overlay', 'lang-dropdown-menu-overlay');
   })();
 </script>
 

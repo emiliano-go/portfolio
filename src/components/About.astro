@@ -19,7 +19,7 @@ const stack = [
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
     <div class="flex items-center gap-4 mb-10">
-      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="about.heading">
         About
       </h2>
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -28,26 +28,26 @@ const stack = [
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
 
       <div>
-        <h2 class="font-[family-name:var(--font-display)] text-[44px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-2">
+        <h2 class="font-[family-name:var(--font-display)] text-[44px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-2" data-i18n="about.name" data-i18n-html>
           Emiliano<br />G.O.
         </h2>
-        <p class="text-xs text-(--color-text-dim) mb-8 tracking-wide">Montevideo, Uruguay</p>
-        <p class="text-sm leading-relaxed text-(--color-text-muted) mb-4">
+        <p class="text-xs text-(--color-text-dim) mb-8 tracking-wide" data-i18n="about.location">Montevideo, Uruguay</p>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) mb-4" data-i18n="about.bio.1">
           Backend developer and data scientist. I work mostly in Python: pipelines, APIs, and
           the infrastructure that keeps them running. I care about clean architecture,
           good documentation, and building things that hold up under load.
         </p>
-        <p class="text-sm leading-relaxed text-(--color-text-muted) mb-4">
+        <p class="text-sm leading-relaxed text-(--color-text-muted) mb-4" data-i18n="about.bio.2">
           I learn by building things until they break, then figuring out why. Also run LibreCourseUY,
           an open source organization promoting the OSS ecosystem in Uruguay.
         </p>
-        <p class="text-sm leading-relaxed text-(--color-text-muted)">
+        <p class="text-sm leading-relaxed text-(--color-text-muted)" data-i18n="about.bio.3">
           Arch (btw) :D
         </p>
       </div>
 
       <div>
-        <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Stack</p>
+        <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="about.stack">Stack</p>
         <div class="grid grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
           {stack.map((item) => (
             <div class="flex justify-between items-center px-3 py-2.5 bg-(--color-bg) text-[11px]">
@@ -64,10 +64,10 @@ const stack = [
           class="group block border border-(--color-border-subtle) bg-(--color-surface) hover:bg-(--color-bg) transition-colors duration-200 p-5 mt-5 rounded"
         >
           <div class="flex items-center justify-between mb-1">
-            <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">blog</span>
+            <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="about.blog">blog</span>
             <span class="text-(--color-border) group-hover:text-(--color-text-muted) transition-colors duration-200 text-sm">↗</span>
           </div>
-          <p class="text-sm leading-relaxed text-(--color-text-muted)">
+          <p class="text-sm leading-relaxed text-(--color-text-muted)" data-i18n="about.blog.desc">
             Thoughts on backend, data, and building things.
           </p>
         </a>

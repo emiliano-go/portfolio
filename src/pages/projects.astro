@@ -14,7 +14,7 @@ import Footer from '../components/Footer.astro';
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px] relative z-10">
 
         <div class="flex items-center gap-4 mb-6">
-          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap" data-i18n="projects.featured">
             Featured Project
           </span>
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -23,27 +23,27 @@ import Footer from '../components/Footer.astro';
         <!-- Title + desc on left, terminal on right -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start">
           <div>
-            <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Python Package · PyPI</p>
+            <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3" data-i18n="projects.tag.pypi">Python Package · PyPI</p>
             <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
               DBWarden
             </h1>
-            <p class="text-lg md:text-xl text-(--color-text-bright) mb-6">The SQL-first database toolkit for SQLAlchemy.</p>
-            <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-6">
+            <p class="text-lg md:text-xl text-(--color-text-bright) mb-6" data-i18n="projects.dbwarden.subtitle">The SQL-first database toolkit for SQLAlchemy.</p>
+            <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-6" data-i18n="projects.dbwarden.detail">
               DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
             </p>
             <!-- 2x2 link grid -->
             <div class="grid grid-cols-2 gap-3">
               <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
               <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                <span data-i18n="projects.link.pypi">PyPI</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
               <a href="https://dbwarden.emiliano-go.com/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                Full documentation <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                <span data-i18n="projects.dbwarden.docs">Full documentation</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
               <a href="https://deepwiki.com/emiliano-go/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                DeepWiki <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                <span data-i18n="projects.dbwarden.deepwiki">DeepWiki</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
               </a>
             </div>
           </div>
@@ -52,7 +52,7 @@ import Footer from '../components/Footer.astro';
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
               <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-              <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
+              <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2" data-i18n="projects.terminal">terminal</span>
             </div>
             <div id="terminal-content" class="px-4 py-3 w-full text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[300px] overflow-x-auto whitespace-nowrap"></div>
           </div>
@@ -61,29 +61,29 @@ import Footer from '../components/Footer.astro';
         <!-- Feature grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
           {[
-            { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.' },
-            { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.' },
-            { title: 'Schema snapshots', desc: 'Checksummed JSON after every migration for deterministic diffs.' },
-            { title: 'Column-level diffing', desc: 'Type, nullability, default, and comment changes.' },
-            { title: 'Impact analysis', desc: 'AST-based scan to detect breaking changes before deploy.' },
-            { title: 'Offline mode', desc: 'Export model state, generate migrations anywhere, no DB needed.' },
-            { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.' },
-            { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.' },
+            { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.', key: 'sqlfirst' },
+            { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.', key: 'rollback' },
+            { title: 'Schema snapshots', desc: 'Checksummed JSON after every migration for deterministic diffs.', key: 'snapshot' },
+            { title: 'Column-level diffing', desc: 'Type, nullability, default, and comment changes.', key: 'diffing' },
+            { title: 'Impact analysis', desc: 'AST-based scan to detect breaking changes before deploy.', key: 'impact' },
+            { title: 'Offline mode', desc: 'Export model state, generate migrations anywhere, no DB needed.', key: 'offline' },
+            { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.', key: 'fastapi' },
+            { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.', key: 'dialects' },
           ].map(f => (
             <div class="border border-(--color-border) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
-              <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
-              <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
+              <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1" data-i18n={`projects.feature.${f.key}`}>{f.title}</p>
+              <p class="text-[11px] leading-[1.6] text-(--color-text-muted)" data-i18n={`projects.feature.${f.key}.desc`}>{f.desc}</p>
             </div>
           ))}
         </div>
 
         <!-- Stats bar -->
         <div id="dbwarden-stats" class="flex flex-wrap justify-center gap-6 md:gap-10 py-3 px-3 border border-(--color-border) bg-(--color-surface) rounded">
-          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">stars</span></div>
-          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5">tests</span></div>
-          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5">LOC</span></div>
-          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5">DB dialects</span></div>
-          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5">CLI commands</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.stars">stars</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">829</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.tests">tests</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.loc">LOC</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.dialects">DB dialects</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.cli">CLI commands</span></div>
         </div>
       </div>
     </section>
@@ -93,7 +93,7 @@ import Footer from '../components/Footer.astro';
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
         <div class="flex items-center gap-4 mb-10">
-          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="projects.tag.webauth">
             Python Package
           </span>
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -104,12 +104,12 @@ import Footer from '../components/Footer.astro';
             <div>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">PyPI</p>
               <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-4">schemap</h2>
-              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4" data-i18n="projects.schemap.detail.1">
                 Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.
                 Define your model once, schemap generates Create, Update, Public, and Full schemas automatically,
                 with field-level type mapping, nullability handling, and configurable exclusions.
               </p>
-              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6">
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6" data-i18n="projects.schemap.detail.2" data-i18n-html>
                 Supports <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">AutoBase</code> inheritance and <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">@auto_schema</code> decorator,
                 with built-in TimestampMixin and SoftDeleteMixin. Eliminates repetitive schema boilerplate.
               </p>
@@ -121,7 +121,7 @@ import Footer from '../components/Footer.astro';
                 </div>
                 <div class="flex flex-wrap gap-3 shrink-0">
                   <a href="https://github.com/emiliano-go/schemap" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                    GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                    <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                   </a>
                 </div>
               </div>
@@ -157,7 +157,7 @@ import Footer from '../components/Footer.astro';
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
         <div class="flex items-center gap-4 mb-10">
-          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="projects.pypi.heading">
             PyPI Utilities
           </h2>
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -171,15 +171,15 @@ import Footer from '../components/Footer.astro';
                 <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">seoslug</h3>
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
               </div>
-              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4" data-i18n="projects.seoslug.desc">
                 Deterministic SEO payload generation: canonical URLs, Open Graph, Twitter Cards, and JSON-LD. Same input always produces the same output. Testable, cacheable, predictable.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
                 <a href="https://github.com/emiliano-go/seoslug" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
                 <a href="https://pypi.org/project/seoslug/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  <span data-i18n="projects.link.pypi">PyPI</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
             </div>
@@ -189,16 +189,16 @@ import Footer from '../components/Footer.astro';
                 <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">detrack</h3>
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
               </div>
-              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4" data-i18n="projects.detrack.desc">
                 Strip tracking parameters from URLs. Deterministically. Zero dependencies.
                 60+ default patterns, case-insensitive, pure functions, metadata returned.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
                 <a href="https://github.com/emiliano-go/detrack" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
                 <a href="https://pypi.org/project/detrack/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  <span data-i18n="projects.link.pypi">PyPI</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
             </div>
@@ -208,16 +208,16 @@ import Footer from '../components/Footer.astro';
                 <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">acrresolv</h3>
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
               </div>
-              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4" data-i18n="projects.acrresolv.desc">
                 Acronym resolver for Python. Converts natural language phrases to acronyms.
                 Zero dependencies, CLI and library usage. Being expanded with ML.
               </p>
               <div class="flex flex-wrap gap-2 mt-auto">
                 <a href="https://github.com/emiliano-go/acrresolv" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  GitHub <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
                 <a href="https://pypi.org/project/acrresolv/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-                  PyPI <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  <span data-i18n="projects.link.pypi">PyPI</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
                 </a>
               </div>
             </div>
@@ -231,7 +231,7 @@ import Footer from '../components/Footer.astro';
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
         <div class="flex items-center gap-4 mb-10">
-          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="projects.more.heading">
             More Projects
           </h2>
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -259,8 +259,8 @@ import Footer from '../components/Footer.astro';
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">crxml</h3>
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Rust</span>
               </div>
-              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">PyPI package</p>
-              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="projects.more.crxml.tag">PyPI package</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none" data-i18n="projects.more.crxml.desc" data-i18n-html>
                 Fast streaming parser for Crystal Reports XML exports with Rust acceleration. Streams row-by-row without loading the full document into memory, handling files of any size. Built-in pipeline stages: rename, cast types, filter, and drop fields, all chained with <code class="text-[10px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">|</code> operators for composable transformations. Parallel mode distributes batches across worker processes using Python's multiprocessing, achieving near-linear speedups on multi-core systems. Outputs DataFrames via pandas, CSV files, or lists of dicts. The pandas import is lazy, only loaded when you actually convert, keeping the CLI lightweight.
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
@@ -269,8 +269,8 @@ import Footer from '../components/Footer.astro';
                 ))}
               </div>
               <div class="flex gap-2">
-                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
-                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
+                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.github">GitHub</span> ↗</a>
+                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.pypi">PyPI</span> ↗</a>
               </div>
             </div>
 
@@ -279,8 +279,8 @@ import Footer from '../components/Footer.astro';
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">vigil</h3>
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Prefect</span>
               </div>
-              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Prefect flow</p>
-              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="projects.more.vigil.tag">Prefect flow</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none" data-i18n="projects.more.vigil.desc">
                 Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity via PyGithub, then stores structured records in ClickHouse through dbwarden's migration framework.                 Designed for automated periodic execution: the flow runs on a cron schedule, collects the latest activity since the last run, and inserts it into the warehouse. Structured logging captures each pipeline stage, and errors surface through Prefect's native notification system instead of failing silently. A simple dashboard query gives you a timeline of your open source contribution activity without relying on GitHub's own graphs.
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
@@ -289,7 +289,7 @@ import Footer from '../components/Footer.astro';
                 ))}
               </div>
               <div class="flex gap-2">
-                <a href="https://github.com/emiliano-go/vigil" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+                <a href="https://github.com/emiliano-go/vigil" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.github">GitHub</span> ↗</a>
               </div>
             </div>
 
@@ -298,8 +298,8 @@ import Footer from '../components/Footer.astro';
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</h3>
                 <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">React</span>
               </div>
-              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Web application</p>
-              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="projects.more.mapcreator.tag">Web application</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none" data-i18n="projects.more.mapcreator.desc">
                 Tile-based building map editor built with React and Canvas. Draw multi-floor building layouts with a grid-based editor; place walls, designate rooms, and connect them with doors, stairs, and elevators. Each floor is a separate layer, and the A* pathfinding system can route from any room to any other across floors, automatically selecting stairs or elevators. The canvas renders at 60fps with virtual scrolling for large maps. State is managed entirely through React hooks, making it easy to undo, redo, or export the map data as JSON for use in other tools. No external mapping libraries or APIs required.
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
@@ -308,7 +308,7 @@ import Footer from '../components/Footer.astro';
                 ))}
               </div>
               <div class="flex gap-2">
-                <a href="https://github.com/emiliano-go/mapcreator" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+                <a href="https://github.com/emiliano-go/mapcreator" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.github">GitHub</span> ↗</a>
               </div>
             </div>
           </div>

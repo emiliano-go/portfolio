@@ -127,7 +127,7 @@ const certificationData: CertificationItem[] = [
       'Web Design',
       'Responsive Web Design',
     ],
-    link: 'https://coursera.org',
+    link: 'https://coursera.org/share/8261974f3625debca8e0c844ba570604',
   },
 ];
 ---
@@ -136,7 +136,7 @@ const certificationData: CertificationItem[] = [
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
     <div class="flex items-center gap-4 mb-10">
-      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="studies.heading">
         Studies
       </h2>
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -144,7 +144,7 @@ const certificationData: CertificationItem[] = [
 
     <!-- Career -->
     <div class="flex items-center gap-3 mb-6">
-      <span class="text-[10px] uppercase tracking-[0.12em] text-(--color-accent-dim) font-semibold">Career</span>
+      <span class="text-[10px] uppercase tracking-[0.12em] text-(--color-accent-dim) font-semibold" data-i18n="studies.career">Career</span>
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
@@ -165,7 +165,7 @@ const certificationData: CertificationItem[] = [
               <p class="text-[12px] font-semibold text-(--color-text-bright) mb-0.5">{item.specialization}</p>
             )}
             <p class="text-[11px] text-(--color-text-dim) mb-3">{item.institution}</p>
-            <p class="text-[11px] leading-[1.6] text-(--color-text-muted) line-clamp-2">{item.description}</p>
+            <p class="text-[11px] leading-[1.6] text-(--color-text-muted) line-clamp-2" data-i18n={`studies.career.${i+1}.desc`}>{item.description}</p>
           </div>
         </button>
       ))}
@@ -173,7 +173,7 @@ const certificationData: CertificationItem[] = [
 
     <!-- Education -->
     <div class="flex items-center gap-3 mb-6 mt-10">
-      <span class="text-[10px] uppercase tracking-[0.12em] font-semibold" style="color: #5a8a9e;">Education</span>
+      <span class="text-[10px] uppercase tracking-[0.12em] font-semibold" style="color: #5a8a9e;" data-i18n="studies.education">Education</span>
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
@@ -203,7 +203,7 @@ const certificationData: CertificationItem[] = [
 
     <!-- Certifications -->
     <div class="flex items-center gap-3 mb-6 mt-10">
-      <span class="text-[10px] uppercase tracking-[0.12em] font-semibold" style="color: #9e8a5a;">Certifications</span>
+      <span class="text-[10px] uppercase tracking-[0.12em] font-semibold" style="color: #9e8a5a;" data-i18n="studies.certifications">Certifications</span>
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
@@ -247,6 +247,7 @@ const certificationData: CertificationItem[] = [
       <button
         class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer z-10"
         aria-label="Close modal"
+        data-i18n="studies.close"
       >
         ✕
       </button>
@@ -254,7 +255,7 @@ const certificationData: CertificationItem[] = [
       <div class="flex flex-col md:flex-row">
         <div class="md:w-72 shrink-0 bg-(--color-bg) p-6 md:p-8 flex flex-col gap-4 border-b md:border-b-0 md:border-r border-(--color-border-subtle)">
           <div>
-            <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-accent-dim)">Career</span>
+            <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-accent-dim)" data-i18n="studies.career">Career</span>
             <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mt-2 leading-tight">{item.title}</h3>
             {item.specialization && (
               <p class="text-[13px] font-semibold text-(--color-text-bright) mt-1">{item.specialization}</p>
@@ -263,7 +264,7 @@ const certificationData: CertificationItem[] = [
           </div>
           <div class="h-px bg-(--color-border-subtle)"></div>
           <p class="text-[10px] font-mono text-(--color-accent-dim)">{item.period}</p>
-          <p class="text-xs leading-[1.6] text-(--color-text-muted)">{item.description}</p>
+          <p class="text-xs leading-[1.6] text-(--color-text-muted)" data-i18n={`studies.career.${i+1}.desc`}>{item.description}</p>
           <div class="flex flex-wrap gap-2 mt-auto pt-3 border-t border-(--color-border-subtle)">
             {item.tags.map(t => (
               <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
@@ -272,7 +273,7 @@ const certificationData: CertificationItem[] = [
         </div>
 
         <div class="flex-1 p-6 md:p-8">
-          <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-6 flex items-center gap-2">
+          <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-6 flex items-center gap-2" data-i18n="studies.keyareas">
             <span class="w-4 h-px bg-(--color-accent-dim)"></span>
             Key Areas
           </h4>
@@ -284,7 +285,7 @@ const certificationData: CertificationItem[] = [
                   {ri < item.responsibilities.length - 1 && <div class="w-px flex-1 bg-(--color-border-subtle)"></div>}
                 </div>
                 <div class="flex-1 pb-1">
-                  <p class="text-xs leading-[1.6] text-(--color-text-muted)">{r}</p>
+                  <p class="text-xs leading-[1.6] text-(--color-text-muted)" data-i18n={`studies.career.${i+1}.resp.${ri+1}`}>{r}</p>
                 </div>
               </div>
             ))}
@@ -311,6 +312,7 @@ const certificationData: CertificationItem[] = [
       <button
         class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer"
         aria-label="Close modal"
+        data-i18n="studies.close"
       >
         ✕
       </button>
@@ -321,16 +323,16 @@ const certificationData: CertificationItem[] = [
         </svg>
       </div>
 
-      <span class="text-[9px] uppercase tracking-[0.12em]" style="color: #5a8a9e;">Education</span>
+      <span class="text-[9px] uppercase tracking-[0.12em]" style="color: #5a8a9e;" data-i18n="studies.education">Education</span>
       <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mt-1 mb-1">{item.institution}</h3>
       <p class="text-sm text-(--color-text-muted) mb-1">{item.degree} - {item.field}</p>
       <p class="text-[10px] font-mono" style="color: #5a8a9e;">{item.period}</p>
 
       <div class="h-px bg-(--color-border-subtle) my-6" style="max-width: 160px; margin-left: auto; margin-right: auto;"></div>
 
-      <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-6 text-left">{item.description}</p>
+      <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-6 text-left" data-i18n={`studies.edu.${i+1}.desc`}>{item.description}</p>
 
-      <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3 text-left">Coursework</h4>
+      <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3 text-left" data-i18n="studies.coursework">Coursework</h4>
       <div class="grid grid-cols-2 gap-2 mb-6 text-left">
         {item.coursework.map(c => (
           <div class="flex items-center gap-2 text-xs text-(--color-text-muted)">
@@ -365,6 +367,7 @@ const certificationData: CertificationItem[] = [
       <button
         class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer z-10"
         aria-label="Close modal"
+        data-i18n="studies.close"
       >
         ✕
       </button>
@@ -374,15 +377,15 @@ const certificationData: CertificationItem[] = [
           <svg class="w-4 h-4" style="color: var(--color-gold);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="text-[9px] uppercase tracking-[0.12em]" style="color: var(--color-gold);">Certification</span>
+          <span class="text-[9px] uppercase tracking-[0.12em]" style="color: var(--color-gold);" data-i18n="studies.certifications">Certification</span>
         </div>
         <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head) mb-1">{item.course}</h3>
         <p class="text-xs text-(--color-text-muted) mb-1">{item.platform}</p>
-        <p class="text-[10px] text-(--color-text-dim) mb-6">Issued by {item.issuer} - {item.completed}</p>
+        <p class="text-[10px] text-(--color-text-dim) mb-6" data-i18n="studies.issued">Issued by {item.issuer} - {item.completed}</p>
       </div>
 
       <div class="px-7 py-5 border-t border-b border-(--color-border-subtle) bg-(--color-surface)">
-        <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Skills</h4>
+        <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3" data-i18n="studies.skills">Skills</h4>
         <div class="flex flex-wrap gap-2">
           {item.skills.map(s => (
             <span class="text-[10px] px-2.5 py-1 border rounded-sm" style="border-color: var(--color-gold-dim); background: var(--color-bg); color: var(--color-gold);">{s}</span>
@@ -391,7 +394,7 @@ const certificationData: CertificationItem[] = [
       </div>
 
       <div class="p-7">
-        <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-5">{item.description}</p>
+        <p class="text-xs leading-[1.7] text-(--color-text-muted) mb-5" data-i18n="studies.cert.1.desc">{item.description}</p>
         {item.link && (
           <a
             href={item.link}
@@ -401,6 +404,7 @@ const certificationData: CertificationItem[] = [
             style="border-color: var(--color-gold-dim); color: var(--color-gold);"
             onmouseover="this.style.background='var(--color-surface)'"
             onmouseout="this.style.background='transparent'"
+            data-i18n="studies.cert.1.credential"
           >
             View credential ↗
           </a>

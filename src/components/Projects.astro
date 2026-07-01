@@ -18,7 +18,7 @@ const projects = [
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
 
     <div class="flex items-center gap-4 mb-10">
-      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="projects.heading">
         Projects
       </h2>
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
@@ -35,7 +35,7 @@ const projects = [
                 <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">{p.tag}</p>
               </div>
               <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head) mb-3">{p.name}</h2>
-              <p class="text-xs leading-[1.75] text-(--color-text-muted) mb-5 max-w-[520px]">{p.desc}</p>
+              <p class="text-xs leading-[1.75] text-(--color-text-muted) mb-5 max-w-[520px]" data-i18n="projects.dbwarden.desc">{p.desc}</p>
               <div class="flex flex-wrap items-start justify-between gap-4">
                 <div class="flex flex-wrap gap-2">
                   {p.tags.map(t => (
@@ -56,7 +56,7 @@ const projects = [
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
                 <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">terminal</span>
+                <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2" data-i18n="projects.terminal">terminal</span>
               </div>
               <div id="terminal-content" class="px-4 py-3 w-full text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[300px] overflow-x-auto whitespace-nowrap"></div>
             </div>
@@ -72,14 +72,14 @@ const projects = [
         <div class="p-5 pb-4 flex flex-col w-full">
           <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Python Package</p>
           <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">schemap</h3>
-          <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.</p>
+          <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1" data-i18n="projects.schemap.desc">Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.</p>
           <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-3">
             <div class="flex flex-wrap gap-2">
               {['Pydantic v2', 'SQLAlchemy 2.0'].map(t => (
                 <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
               ))}
             </div>
-            <a href="/projects#schemap" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+            <a href="/projects#schemap" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200" data-i18n="projects.details" data-i18n-html>
               Details <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">→</span>
             </a>
           </div>
@@ -90,7 +90,7 @@ const projects = [
         <div class="p-5 pb-4 flex flex-col w-full">
           <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Prefect Flow</p>
           <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head) mb-2">vigil</h3>
-          <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1">Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity, then stores structured records in ClickHouse.</p>
+          <p class="text-xs leading-[1.7] text-(--color-text-muted) flex-1" data-i18n="projects.vigil.desc">Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity, then stores structured records in ClickHouse.</p>
           <div class="flex flex-wrap items-end justify-between gap-4 mt-auto pt-3">
             <div class="flex flex-wrap gap-2">
               {['Python', 'Prefect', 'PyGithub', 'ClickHouse'].map(t => (
@@ -107,7 +107,7 @@ const projects = [
 
     <!-- View all -->
     <div class="flex justify-center mt-px">
-      <a href="/projects" class="group w-full flex items-center justify-center gap-1.5 text-[13px] px-4 py-3 border border-(--color-border-subtle) bg-(--color-surface) hover:bg-(--color-bg) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+      <a href="/projects" class="group w-full flex items-center justify-center gap-1.5 text-[13px] px-4 py-3 border border-(--color-border-subtle) bg-(--color-surface) hover:bg-(--color-bg) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200" data-i18n="projects.viewall" data-i18n-html>
         View all projects <span class="inline-block transition-transform duration-200 group-hover:translate-x-1">↗</span>
       </a>
     </div>
