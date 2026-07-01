@@ -78,7 +78,7 @@
     background:
       radial-gradient(ellipse 60% 40% at 25% 30%, color-mix(in srgb, var(--color-accent) 12%, transparent) 0%, transparent 100%),
       radial-gradient(ellipse 50% 30% at 75% 60%, color-mix(in srgb, var(--color-text-dim) 8%, transparent) 0%, transparent 100%),
-      radial-gradient(circle 0.7px at 50% 50%, var(--color-text-dim) 0.7px, transparent 0.7px);
+      radial-gradient(circle 0.7px at 50% 50%, var(--color-star) 0.7px, transparent 0.7px);
     background-size: 100% 100%, 100% 100%, 20px 20px;
     pointer-events: none;
   }
@@ -128,6 +128,7 @@
 
   .mouse-indicator {
     animation: mouse-bounce 2.5s ease-in-out infinite;
+    transition: opacity 0.4s ease;
   }
 
   .wheel-line {
@@ -149,6 +150,19 @@
   import { animate } from 'motion';
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hide mouse indicator on scroll
+  let scrollRAF: number | null = null;
+  const indicator = document.querySelector('.mouse-indicator') as HTMLElement | null;
+  const onScroll = () => {
+    if (scrollRAF) return;
+    scrollRAF = requestAnimationFrame(() => {
+      const faded = window.scrollY > 60;
+      if (indicator) indicator.style.opacity = faded ? '0' : '1';
+      scrollRAF = null;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   if (!prefersReduced) {
     animate('#hero-tag', { opacity: [0, 1] }, { duration: 0.5, delay: 0.15, easing: 'ease-out' });

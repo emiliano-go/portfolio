@@ -360,7 +360,7 @@ const certificationData: CertificationItem[] = [
   >
     <div
       class="relative w-full max-w-md max-h-[85vh] overflow-y-auto border bg-(--color-bg) p-0"
-      style="border-color: #6a5a3a;"
+      style="border-color: var(--color-gold-dim);"
     >
       <button
         class="study-modal-close absolute top-4 right-4 w-7 h-7 flex items-center justify-center border border-(--color-border) bg-(--color-bg) text-(--color-text-dim) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200 cursor-pointer z-10"
@@ -371,21 +371,21 @@ const certificationData: CertificationItem[] = [
 
       <div class="p-7 pb-0">
         <div class="flex items-center gap-2 mb-3">
-          <svg class="w-4 h-4" style="color: #9e8a5a;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <svg class="w-4 h-4" style="color: var(--color-gold);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="text-[9px] uppercase tracking-[0.12em]" style="color: #9e8a5a;">Certification</span>
+          <span class="text-[9px] uppercase tracking-[0.12em]" style="color: var(--color-gold);">Certification</span>
         </div>
         <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head) mb-1">{item.course}</h3>
         <p class="text-xs text-(--color-text-muted) mb-1">{item.platform}</p>
         <p class="text-[10px] text-(--color-text-dim) mb-6">Issued by {item.issuer} - {item.completed}</p>
       </div>
 
-      <div class="px-7 py-5 border-t border-b" style="border-color: #3a3a2a; background: #0e0e0a;">
+      <div class="px-7 py-5 border-t border-b border-(--color-border-subtle) bg-(--color-surface)">
         <h4 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Skills</h4>
         <div class="flex flex-wrap gap-2">
           {item.skills.map(s => (
-            <span class="text-[10px] px-2.5 py-1" style="background: #1a1a10; color: #c8b88a; border: 1px solid #3a3a2a; border-radius: 2px;">{s}</span>
+            <span class="text-[10px] px-2.5 py-1 border rounded-sm" style="border-color: var(--color-gold-dim); background: var(--color-bg); color: var(--color-gold);">{s}</span>
           ))}
         </div>
       </div>
@@ -398,8 +398,8 @@ const certificationData: CertificationItem[] = [
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-1.5 text-[11px] px-4 py-2 border transition-colors duration-200"
-            style="border-color: #9e8a5a; color: #c8b88a;"
-            onmouseover="this.style.background='#1a1a10'"
+            style="border-color: var(--color-gold-dim); color: var(--color-gold);"
+            onmouseover="this.style.background='var(--color-surface)'"
             onmouseout="this.style.background='transparent'"
           >
             View credential ↗

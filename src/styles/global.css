@@ -12,6 +12,9 @@
   --color-text-head: #eef6f2;
   --color-accent: #5a9e8a;
   --color-accent-dim: #3a6e5a;
+  --color-star: #6aaa98;
+  --color-gold: #9e8a5a;
+  --color-gold-dim: #6a5a3a;
 }
 
 html.light {
@@ -26,6 +29,9 @@ html.light {
   --color-text-head: #020a08;
   --color-accent: #2a7a62;
   --color-accent-dim: #1a5a4a;
+  --color-star: #1a3a2e;
+  --color-gold: #7a6a3a;
+  --color-gold-dim: #5a4a2a;
 }
 
 @layer base {
