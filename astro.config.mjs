@@ -10,15 +10,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
     build: {
       cssMinify: 'lightningcss',
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules/motion')) {
-              return 'motion';
-            }
-          },
-        },
-      },
     },
   },
 });

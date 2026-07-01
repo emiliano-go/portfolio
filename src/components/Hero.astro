@@ -9,7 +9,7 @@
       <div>
         <p
           id="hero-tag"
-          class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mb-4 font-semibold opacity-0"
+          class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mb-4 font-semibold"
         >
           Backend Engineer · Data Scientist
         </p>
@@ -17,8 +17,7 @@
         <!-- Liquid glass heading -->
         <h1
           id="hero-title"
-          class="font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide opacity-0 mb-6"
-          style="transform: translateY(24px)"
+          class="font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide mb-6"
         >
           <span class="glass-word" style="--i: 0">Building</span><br />
           <span class="glass-word" style="--i: 1">systems</span>
@@ -30,8 +29,7 @@
 
         <p
           id="hero-desc"
-          class="text-sm leading-relaxed text-(--color-text-muted) max-w-[360px] opacity-0"
-          style="transform: translateY(12px)"
+          class="text-sm leading-relaxed text-(--color-text-muted) max-w-[360px]"
         >
           Python developer focused on data pipelines, ETL infrastructure, and backend architecture.
           Based in Montevideo, Uruguay. Open to interesting problems.
@@ -39,7 +37,7 @@
       </div>
 
       <!-- Right: stats -->
-      <div id="hero-stats" class="flex flex-col gap-0 opacity-0">
+      <div id="hero-stats" class="flex flex-col gap-0">
         <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
           <span class="text-xs text-(--color-text-muted)">stars on maintained OSS</span>
@@ -50,7 +48,7 @@
         </div>
         <div class="flex items-baseline justify-between py-4 border-t border-b border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide flex items-center gap-2">
-            <span id="dot" class="inline-block w-2 h-2 rounded-full bg-(--color-accent) opacity-0"></span>
+            <span id="dot" class="inline-block w-2 h-2 rounded-full bg-(--color-accent)"></span>
             UY
           </span>
           <span class="text-xs text-(--color-text-muted)">Montevideo, Uruguay</span>
@@ -144,38 +142,88 @@
     0%, 100% { y1: 6; y2: 12; opacity: 1; }
     50% { y1: 12; y2: 18; opacity: 0.3; }
   }
+
+  /* ── Entrance animations (replacing motion) ── */
+
+  #hero-tag {
+    opacity: 0;
+    animation: hero-fade-in 0.5s ease-out 0.15s forwards;
+  }
+
+  #hero-title {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: hero-slide-up 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+  }
+
+  #hero-desc {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: hero-slide-up-small 0.6s ease-out 0.55s forwards;
+  }
+
+  #hero-stats {
+    opacity: 0;
+    animation: hero-fade-in 0.6s ease-out 0.7s forwards;
+  }
+
+  #dot {
+    opacity: 0;
+    animation:
+      dot-appear 0.4s ease-out 0.9s forwards,
+      dot-pulse 2.8s ease-in-out 1.3s infinite;
+  }
+
+  @keyframes hero-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes hero-slide-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes hero-slide-up-small {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes dot-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #hero-tag,
+    #hero-title,
+    #hero-desc,
+    #hero-stats,
+    #dot {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
 </style>
 
-<script>
-  import { animate } from 'motion';
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Hide mouse indicator on scroll
-  let scrollRAF: number | null = null;
-  const indicator = document.querySelector('.mouse-indicator') as HTMLElement | null;
-  const onScroll = () => {
-    if (scrollRAF) return;
-    scrollRAF = requestAnimationFrame(() => {
-      const faded = window.scrollY > 60;
-      if (indicator) indicator.style.opacity = faded ? '0' : '1';
-      scrollRAF = null;
-    });
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  if (!prefersReduced) {
-    animate('#hero-tag', { opacity: [0, 1] }, { duration: 0.5, delay: 0.15, easing: 'ease-out' });
-    animate('#hero-title', { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0px)'] }, { duration: 0.7, delay: 0.3, easing: [0.25, 0.46, 0.45, 0.94] });
-    animate('#hero-desc', { opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] }, { duration: 0.6, delay: 0.55, easing: 'ease-out' });
-    animate('#hero-stats', { opacity: [0, 1] }, { duration: 0.6, delay: 0.7, easing: 'ease-out' });
-    animate('#dot', { opacity: [0, 1] }, { duration: 0.4, delay: 0.9 }).then(() => {
-      animate('#dot', { opacity: [1, 0.25, 1] }, { duration: 2.8, repeat: Infinity, easing: 'ease-in-out' });
-    });
-  } else {
-    ['#hero-tag', '#hero-title', '#hero-desc', '#hero-stats', '#dot'].forEach((sel) => {
-      const el = document.querySelector(sel) as HTMLElement | null;
-      if (el) { el.style.opacity = '1'; el.style.transform = 'none'; }
-    });
-  }
+<script is:inline>
+  (function() {
+    let raf = null;
+    var indicator = document.querySelector('.mouse-indicator');
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(function() {
+        var faded = window.scrollY > 60;
+        if (indicator) indicator.style.opacity = faded ? '0' : '1';
+        raf = null;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
 </script>

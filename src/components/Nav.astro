@@ -77,73 +77,72 @@ const links = [
   </ul>
 </div>
 
-<script>
-  const nav = document.getElementById('nav')!;
+<script is:inline>
+  (function() {
+    var nav = document.getElementById('nav');
 
-  window.addEventListener('scroll', () => {
-    nav.style.borderBottomColor = window.scrollY > 40
-      ? 'var(--color-border)'
-      : 'var(--color-border-subtle)';
-  }, { passive: true });
+    window.addEventListener('scroll', function() {
+      nav.style.borderBottomColor = window.scrollY > 40
+        ? 'var(--color-border)'
+        : 'var(--color-border-subtle)';
+    }, { passive: true });
 
-  // Hamburger menu toggle
-  const menuBtn = document.getElementById('menu-btn')!;
-  const mobileMenu = document.getElementById('mobile-menu')!;
-  const bars = menuBtn.querySelectorAll('span');
+    var menuBtn = document.getElementById('menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var bars = menuBtn.querySelectorAll('span');
 
-  menuBtn.addEventListener('click', () => {
-    const open = mobileMenu.classList.contains('opacity-100');
-    if (open) {
-      mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-      mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-      bars.forEach(b => { b.style.transform = ''; b.style.backgroundColor = ''; });
-    } else {
-      mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-      mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-      bars[0].style.transform = 'translateY(7px) rotate(45deg)';
-      bars[1].style.transform = 'scaleX(0)';
-      bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-    }
-  });
-
-  // Close menu on link click
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-      mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-      bars.forEach(b => { b.style.transform = ''; b.style.backgroundColor = ''; });
+    menuBtn.addEventListener('click', function() {
+      var open = mobileMenu.classList.contains('opacity-100');
+      if (open) {
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        bars.forEach(function(b) { b.style.transform = ''; b.style.backgroundColor = ''; });
+      } else {
+        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+        bars[0].style.transform = 'translateY(7px) rotate(45deg)';
+        bars[1].style.transform = 'scaleX(0)';
+        bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+      }
     });
-  });
 
-  // Theme toggle
-  function setTheme(light) {
-    const html = document.documentElement;
-    if (light) {
-      html.classList.add('light');
-      localStorage.setItem('theme', 'light');
-    } else {
-      html.classList.remove('light');
-      localStorage.setItem('theme', 'dark');
+    mobileMenu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        bars.forEach(function(b) { b.style.transform = ''; b.style.backgroundColor = ''; });
+      });
+    });
+
+    function setTheme(light) {
+      var html = document.documentElement;
+      if (light) {
+        html.classList.add('light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.remove('light');
+        localStorage.setItem('theme', 'dark');
+      }
+      updateIcons();
     }
+
+    function updateIcons() {
+      var isLight = document.documentElement.classList.contains('light');
+      document.querySelectorAll('[id^="sun-icon"]').forEach(function(el) { el.classList.toggle('hidden', !isLight); });
+      document.querySelectorAll('[id^="moon-icon"]').forEach(function(el) { el.classList.toggle('hidden', isLight); });
+      var label = document.getElementById('theme-label-overlay');
+      if (label) label.textContent = isLight ? 'Dark mode' : 'Light mode';
+    }
+
+    document.querySelectorAll('[id^="theme-toggle"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var isLight = document.documentElement.classList.contains('light');
+        setTheme(!isLight);
+      });
+    });
+
     updateIcons();
-  }
-
-  function updateIcons() {
-    const isLight = document.documentElement.classList.contains('light');
-    document.querySelectorAll('[id^="sun-icon"]').forEach(el => el.classList.toggle('hidden', !isLight));
-    document.querySelectorAll('[id^="moon-icon"]').forEach(el => el.classList.toggle('hidden', isLight));
-    const label = document.getElementById('theme-label-overlay');
-    if (label) label.textContent = isLight ? 'Dark mode' : 'Light mode';
-  }
-
-  document.querySelectorAll('[id^="theme-toggle"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const isLight = document.documentElement.classList.contains('light');
-      setTheme(!isLight);
-    });
-  });
-
-  updateIcons();
+  })();
 </script>
 
 <style>

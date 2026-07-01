@@ -54,7 +54,7 @@ html.light {
     }
   }
 
-  *, *::before, *::after {
+  body, nav, button, a {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 
