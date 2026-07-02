@@ -4,7 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Projects | Emiliano G.O." description="DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.">
+<Layout title="Projects | Emiliano G.O." description="DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.">
   <Nav />
   <main>
 
@@ -251,6 +251,10 @@ import Footer from '../components/Footer.astro';
               <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">03</span>
               <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</span>
             </button>
+            <button class="split-btn" data-target="3" role="tab" aria-selected="false">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">04</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">clickvault</span>
+            </button>
           </div>
 
           <div class="split-panel">
@@ -309,6 +313,25 @@ import Footer from '../components/Footer.astro';
               </div>
               <div class="flex gap-2">
                 <a href="https://github.com/emiliano-go/mapcreator" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.github">GitHub</span> ↗</a>
+              </div>
+            </div>
+
+            <div class="split-content" data-index="3">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">clickvault</h3>
+                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Go</span>
+              </div>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Vault plugin</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
+                HashiCorp Vault database secrets engine plugin for ClickHouse. Generates ephemeral, short-lived ClickHouse users on demand (dynamic secrets) and rotates static role passwords on a schedule. Implements the Vault database plugin SDK, integrating natively with Vault's database secrets engine. All generated ClickHouse DDL is isolated in a dedicated SQL layer, and clustered deployments get <code class="text-[10px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">ON CLUSTER</code> appended automatically - the rest of the plugin never branches on topology.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
+                {['Go', 'Vault', 'ClickHouse', 'Plugin'].map(t => (
+                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/clickvault" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
               </div>
             </div>
           </div>

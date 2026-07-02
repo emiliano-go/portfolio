@@ -8,7 +8,7 @@ Personal portfolio and project showcase. About, open-source contributions, refer
 
 ### Key sections
 
-- **Projects** — DBWarden (SQL-first migration toolkit), schemap (Pydantic v2 schema generator), crxml (Rust-accelerated XML parser), vigil (Prefect GitHub activity monitor), mapcreator (React Canvas map editor).
+- **Projects** — DBWarden (SQL-first migration toolkit), schemap (Pydantic v2 schema generator), clickvault (Vault plugin for ClickHouse), crxml (Rust-accelerated XML parser), vigil (Prefect GitHub activity monitor), mapcreator (React Canvas map editor).
 - **Open Source** — Co-maintainer of FastAPI-boilerplate (2k stars). Documentation, developer experience, plugin architecture.
 - **References** — Professional references with contact details.
 
@@ -20,6 +20,7 @@ Detailed project pages with code examples, feature grids, and links to GitHub/Py
 
 - **DBWarden** — SQL-first migration system for SQLAlchemy. No migration runtime, plain SQL output. Python, 5 DB dialects, rollback, impact analysis, offline mode.
 - **schemap** — Automatic Pydantic v2 schemas from SQLAlchemy 2.0 models. @auto_schema decorator, AutoBase inheritance, TimestampMixin, SoftDeleteMixin.
+- **clickvault** — Vault database secrets engine plugin for ClickHouse. Dynamic secrets, static roles, Go, plugin SDK.
 - **crxml** — Fast streaming Crystal Reports XML parser with Rust extension. Lazy pandas, pipeline stages, parallel mode. PyPI package.
 - **vigil** — Prefect-based GitHub activity monitor. PyGithub + ClickHouse, cron-scheduled, structured logging.
 - **mapcreator** — Tile-based building map editor. React + Canvas, multi-floor, A* pathfinding, JSON export.
