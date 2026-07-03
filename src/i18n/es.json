@@ -174,6 +174,8 @@
   "projects.schemap.detail.2": "Soporta herencia de AutoBase y el decorador @auto_schema, con TimestampMixin y SoftDeleteMixin incorporados. Elimina el boilerplate repetitivo de esquemas.",
   "projects.schemap.file": "schemap.py",
   "projects.pypi.heading": "Utilidades PyPI",
+  "projects.seoslug.subtitle": "Generaci\u00f3n determinista de payloads SEO para Python.",
+  "projects.seoslug.detail": "seoslug es un toolkit SEO determinista y de funci\u00f3n pura para Python que genera payloads SEO completos a partir de dos entradas tipadas. Define tu sitio una vez con SEOConfig (host can\u00f3nico, nombre del sitio, plantilla de t\u00edtulo, URL base) y tu p\u00e1gina con SEOEntity (tipo de entidad, t\u00edtulo, extracto, imagen, marcas de tiempo). La funci\u00f3n build_seo_payload() los fusiona en un diccionario estructurado que se asigna directamente a URLs can\u00f3nicas, etiquetas Open Graph, Twitter Cards y datos estructurados JSON-LD.",
   "projects.seoslug.desc": "Generaci\u00f3n determinista de payloads SEO: URLs can\u00f3nicas, Open Graph, Twitter Cards y JSON-LD. La misma entrada siempre produce la misma salida. Comprobable, cacheable, predecible.",
   "projects.detrack.desc": "Elimina par\u00e1metros de tracking de URLs. De forma determinista. Cero dependencias. M\u00e1s de 60 patrones predeterminados, case-insensitive, funciones puras, devuelve metadatos.",
   "projects.acrresolv.desc": "Resolvedor de acr\u00f3nimos para Python. Convierte frases en lenguaje natural a acr\u00f3nimos. Cero dependencias, uso como CLI y librer\u00eda. En expansi\u00f3n con ML.",

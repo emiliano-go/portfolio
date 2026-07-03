@@ -174,6 +174,8 @@
   "projects.schemap.detail.2": "Supports AutoBase inheritance and @auto_schema decorator, with built-in TimestampMixin and SoftDeleteMixin. Eliminates repetitive schema boilerplate.",
   "projects.schemap.file": "schemap.py",
   "projects.pypi.heading": "PyPI Utilities",
+  "projects.seoslug.subtitle": "Deterministic SEO payload generation for Python.",
+  "projects.seoslug.detail": "seoslug is a deterministic, pure-function SEO toolkit for Python that generates complete SEO payloads from two typed inputs. Define your site once with SEOConfig (canonical host, site name, title template, base URL) and your page with SEOEntity (entity type, title, excerpt, image, timestamps). The single build_seo_payload() function merges them into a structured dict that maps directly to canonical URLs, Open Graph tags, Twitter Cards, and JSON-LD structured data.",
   "projects.seoslug.desc": "Deterministic SEO payload generation: canonical URLs, Open Graph, Twitter Cards, and JSON-LD. Same input always produces the same output. Testable, cacheable, predictable.",
   "projects.detrack.desc": "Strip tracking parameters from URLs. Deterministically. Zero dependencies. 60+ default patterns, case-insensitive, pure functions, metadata returned.",
   "projects.acrresolv.desc": "Acronym resolver for Python. Converts natural language phrases to acronyms. Zero dependencies, CLI and library usage. Being expanded with ML.",
