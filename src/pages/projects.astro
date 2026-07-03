@@ -112,7 +112,7 @@ import Footer from '../components/Footer.astro';
               </div>
               <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4" data-i18n="projects.seoslug.detail.1">
                 Deterministic SEO payload generation with zero unexpected behavior.
-                Same input always produces the same output. Testable, cacheable, predictable — no runtime surprises.
+                Same input always produces the same output. Testable, cacheable, predictable - no runtime surprises.
               </p>
               <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6" data-i18n="projects.seoslug.detail.2" data-i18n-html>
                 Produces canonical URLs, Open Graph tags, Twitter Cards, and JSON-LD structured data through a single <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">build_seo_payload()</code> function.
@@ -132,28 +132,88 @@ import Footer from '../components/Footer.astro';
               </div>
             </div>
             <div class="flex items-center justify-center self-stretch">
-              <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-[10px] leading-none">
-                <div class="border border-(--color-accent-dim)/30 bg-(--color-surface) px-2 py-1.5 rounded text-center">
-                  <div class="text-(--color-text-head) font-semibold">SEOConfig</div>
+              <div class="flex flex-col items-center gap-0 text-[11px] leading-tight">
+                <!-- Input: SEOConfig -->
+                <div class="border border-(--color-accent-dim)/40 bg-(--color-surface) rounded px-4 py-2.5 text-center w-full max-w-[200px] shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
+                  <div class="text-[11px] font-semibold text-(--color-text-head) uppercase tracking-[0.06em]">SEOConfig</div>
+                  <div class="text-[9px] text-(--color-text-dim) mt-1 leading-relaxed">
+                    canonical_host · site_name<br/>
+                    title_template
+                  </div>
                 </div>
-                <span class="text-(--color-accent-dim)">→</span>
-                <div class="border border-(--color-accent-dim)/30 bg-(--color-surface) px-2 py-1.5 rounded text-center">
-                  <div class="text-(--color-text-head) font-semibold">SEOEntity</div>
+                <!-- arrow -->
+                <div class="flex items-center justify-center h-[28px]">
+                  <svg width="20" height="28" viewBox="0 0 20 28" class="text-(--color-accent-dim)" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="10" y1="0" x2="10" y2="20"/>
+                    <polyline points="4,14 10,22 16,14"/>
+                  </svg>
                 </div>
-                <span class="text-(--color-accent-dim)">→</span>
-                <div class="border border-(--color-accent-dim) bg-(--color-accent-dim)/10 px-2 py-1.5 rounded text-center">
-                  <div class="text-(--color-accent) font-semibold">build_seo_payload()</div>
+                <!-- Input: SEOEntity -->
+                <div class="border border-(--color-accent-dim)/40 bg-(--color-surface) rounded px-4 py-2.5 text-center w-full max-w-[200px] shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
+                  <div class="text-[11px] font-semibold text-(--color-text-head) uppercase tracking-[0.06em]">SEOEntity</div>
+                  <div class="text-[9px] text-(--color-text-dim) mt-1 leading-relaxed">
+                    entity_type · title<br/>
+                    excerpt · image
+                  </div>
                 </div>
-                <span class="text-(--color-accent-dim)">→</span>
-                <div class="border border-(--color-border) bg-(--color-surface) px-2 py-1.5 rounded text-center">
-                  <div class="text-(--color-text-muted)">Structured payload</div>
+                <!-- arrow -->
+                <div class="flex items-center justify-center h-[28px]">
+                  <svg width="20" height="28" viewBox="0 0 20 28" class="text-(--color-accent-dim)" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="10" y1="0" x2="10" y2="20"/>
+                    <polyline points="4,14 10,22 16,14"/>
+                  </svg>
                 </div>
-                <span class="text-(--color-accent-dim) text-[14px] leading-none">⤵</span>
-                <div class="flex gap-1">
-                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">Canonical</div>
-                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">OG</div>
-                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">Twitter</div>
-                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">JSON-LD</div>
+                <!-- Process: build_seo_payload -->
+                <div class="border-2 border-(--color-accent-dim) bg-(--color-accent-dim)/8 rounded-lg px-4 py-3 text-center w-full max-w-[220px] shadow-[0_2px_6px_rgba(0,0,0,0.1)] relative">
+                  <div class="flex items-center justify-center gap-2">
+                    <div class="text-[12px] font-semibold text-(--color-accent) uppercase tracking-[0.06em]">build_seo_payload()</div>
+                    <span class="text-[7px] px-1.5 py-[2px] bg-(--color-accent-dim)/15 border border-(--color-accent-dim)/30 text-(--color-accent) rounded uppercase tracking-[0.08em] font-semibold">Deterministic</span>
+                  </div>
+                  <div class="text-[9px] text-(--color-text-muted) mt-1.5 leading-relaxed">
+                    (entity, path, config) → dict<br/>
+                    <span class="text-(--color-text-dim)">Pure function · No side effects · Always reproducible</span>
+                  </div>
+                </div>
+                <!-- arrow -->
+                <div class="flex items-center justify-center h-[28px]">
+                  <svg width="20" height="28" viewBox="0 0 20 28" class="text-(--color-accent-dim)" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="10" y1="0" x2="10" y2="20"/>
+                    <polyline points="4,14 10,22 16,14"/>
+                  </svg>
+                </div>
+                <!-- Output row -->
+                <div class="border border-(--color-border) bg-(--color-surface) rounded px-4 py-2.5 text-center w-full max-w-[220px] shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
+                  <div class="text-[10px] font-semibold text-(--color-text-head) uppercase tracking-[0.06em]">SEO Payload</div>
+                  <div class="text-[9px] text-(--color-text-dim) mt-1">title · description · canonical · meta</div>
+                </div>
+                <!-- fan-out arrows -->
+                <div class="flex items-center justify-center h-[24px] w-full">
+                  <svg width="200" height="24" viewBox="0 0 200 24" class="text-(--color-accent-dim)" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <line x1="100" y1="0" x2="100" y2="8"/>
+                    <line x1="100" y1="8" x2="25" y2="18"/>
+                    <line x1="100" y1="8" x2="72" y2="18"/>
+                    <line x1="100" y1="8" x2="128" y2="18"/>
+                    <line x1="100" y1="8" x2="175" y2="18"/>
+                    <polyline points="20,14 25,22 30,14"/>
+                    <polyline points="67,14 72,22 77,14"/>
+                    <polyline points="123,14 128,22 133,14"/>
+                    <polyline points="170,14 175,22 180,14"/>
+                  </svg>
+                </div>
+                <!-- 4 output targets -->
+                <div class="flex gap-2 w-full max-w-[220px]">
+                  <div class="flex-1 border border-(--color-border) bg-(--color-surface) rounded px-1.5 py-1.5 text-center shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+                    <div class="text-[8px] font-semibold text-(--color-text-head)">Canonical</div>
+                  </div>
+                  <div class="flex-1 border border-(--color-border) bg-(--color-surface) rounded px-1.5 py-1.5 text-center shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+                    <div class="text-[8px] font-semibold text-(--color-text-head)">OG</div>
+                  </div>
+                  <div class="flex-1 border border-(--color-border) bg-(--color-surface) rounded px-1.5 py-1.5 text-center shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+                    <div class="text-[8px] font-semibold text-(--color-text-head)">Twitter</div>
+                  </div>
+                  <div class="flex-1 border border-(--color-border) bg-(--color-surface) rounded px-1.5 py-1.5 text-center shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
+                    <div class="text-[8px] font-semibold text-(--color-text-head)">JSON-LD</div>
+                  </div>
                 </div>
               </div>
             </div>
