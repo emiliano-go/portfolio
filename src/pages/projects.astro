@@ -95,122 +95,137 @@ import Footer from '../components/Footer.astro';
     <section id="seoslug" class="min-h-screen pt-24 pb-6 md:pt-28 md:pb-10 border-b border-(--color-border-subtle) flex flex-col justify-center relative">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px] relative z-10">
 
-        <div class="flex items-center gap-4 mb-6">
+        <div class="flex items-center gap-4 mb-8">
           <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap" data-i18n="projects.tag.webauth">
             Python Package
           </span>
           <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
         </div>
 
-        <!-- Title + desc on left, flowchart on right -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start">
-          <div>
-            <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">PyPI</p>
-            <div class="flex items-end gap-3 mb-3">
-              <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head)">
-                seoslug
-              </h1>
-              <span data-pypi-version="seoslug" class="text-[10px] px-1.5 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded shrink-0">loading</span>
+        <!-- Text section -->
+        <div class="mb-8">
+          <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">PyPI</p>
+          <div class="flex items-end gap-3 mb-4">
+            <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head)">
+              seoslug
+            </h1>
+            <span data-pypi-version="seoslug" class="text-[10px] px-1.5 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded shrink-0">loading</span>
+          </div>
+          <p class="text-lg md:text-xl text-(--color-text-bright) mb-4" data-i18n="projects.seoslug.subtitle">Deterministic SEO payload generation for Python.</p>
+          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[720px] mb-4" data-i18n="projects.seoslug.detail">
+            seoslug is a deterministic, pure-function SEO toolkit for Python that generates complete SEO payloads from two typed inputs. Define your site once with <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">SEOConfig</code> (canonical host, site name, title template, base URL) and your page with <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">SEOEntity</code> (entity type, title, excerpt, image, timestamps). The single <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">build_seo_payload()</code> function merges them into a structured dict that maps directly to canonical URLs, Open Graph tags, Twitter Cards, and JSON-LD structured data.
+          </p>
+          <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[720px] mb-6">
+            Same inputs always produce the same output - no side effects, no randomness, no hidden state. This makes seoslug ideal for static site generators, SSR frameworks, and any build pipeline where SEO metadata must be testable, cacheable, and reproducible across builds. Zero external dependencies at runtime.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap gap-2">
+              {['Python', 'SEO', 'JSON-LD'].map(t => (
+                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+              ))}
             </div>
-            <p class="text-lg md:text-xl text-(--color-text-bright) mb-6" data-i18n="projects.seoslug.subtitle">Deterministic SEO payload generation for Python.</p>
-            <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-6" data-i18n="projects.seoslug.detail">
-              seoslug is a pure-function SEO toolkit that produces canonical URLs, Open Graph tags, Twitter Cards, and JSON-LD structured data from typed inputs. Same inputs always produce the same output - no runtime surprises, no side effects, no hidden state. Built-in <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">SEOConfig</code> and <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">SEOEntity</code> types with zero external dependencies at runtime.
-            </p>
-            <div class="flex flex-wrap items-center gap-3">
-              <div class="flex flex-wrap gap-2">
-                {['Python', 'SEO', 'JSON-LD'].map(t => (
-                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
-                ))}
-              </div>
-              <div class="flex flex-wrap gap-3 shrink-0">
-                <a href="https://github.com/emiliano-go/seoslug" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
-                  <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
-                </a>
-              </div>
+            <div class="flex flex-wrap gap-3 shrink-0">
+              <a href="https://github.com/emiliano-go/seoslug" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+              </a>
             </div>
           </div>
+        </div>
 
-          <!-- Flowchart card -->
-          <div id="seo-flowchart" class="hidden md:block w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-start">
-            <div class="flex flex-col gap-0">
+        <!-- Feature highlights -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-8">
+          {[
+            { title: 'Typed inputs', desc: 'SEOConfig + SEOEntity with validated fields. No raw dicts, no guessing.', key: 'typed' },
+            { title: 'Deterministic by design', desc: 'Same inputs always produce the same payload. Pure function, zero side effects.', key: 'deterministic' },
+            { title: 'Multi-format output', desc: 'Canonical, OG, Twitter Cards, and JSON-LD from a single call.', key: 'multi' },
+          ].map(f => (
+            <div class="border border-(--color-border) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
+              <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
+              <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
+            </div>
+          ))}
+        </div>
 
-              <!-- Main pipeline + outputs -->
-              <div class="flex gap-3 p-3">
+        <!-- Flowchart card - full width -->
+        <div id="seo-flowchart" class="hidden md:block w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-start">
+          <div class="flex flex-col gap-0">
 
-                <!-- Left spine -->
-                <div class="flex flex-col gap-1.5 flex-[2_1_240px] min-w-0">
+            <!-- Main pipeline + outputs -->
+            <div class="flex gap-4 p-4">
 
-                  <div class="text-[8px] uppercase tracking-[0.14em] text-(--color-text-muted) mb-0.5">typed inputs</div>
+              <!-- Left spine -->
+              <div class="flex flex-col gap-1.5 flex-[2_1_280px] min-w-0">
 
-                  <div class="flex gap-1.5">
-                    <div class="seo-node flex-1 cursor-pointer bg-(--color-surface) border border-(--color-accent-dim) rounded px-2 py-1.5 transition-all duration-100" data-seo="config" onclick="seoSelect(this)">
-                      <div class="text-[11px] font-semibold text-(--color-text-head)">SEOConfig</div>
-                      <div class="text-[9px] text-(--color-text-dim) mt-0.5">canonical_host · site_name</div>
-                    </div>
-                    <div class="seo-node flex-1 cursor-pointer bg-(--color-surface) border border-(--color-accent-dim) rounded px-2 py-1.5 transition-all duration-100" data-seo="entity" onclick="seoSelect(this)">
-                      <div class="text-[11px] font-semibold text-(--color-text-head)">SEOEntity</div>
-                      <div class="text-[9px] text-(--color-text-dim) mt-0.5">entity_type · title</div>
-                    </div>
+                <div class="text-[8px] uppercase tracking-[0.14em] text-(--color-text-muted) mb-0.5">typed inputs</div>
+
+                <div class="flex gap-1.5">
+                  <div class="seo-node flex-1 cursor-pointer bg-(--color-surface) border border-(--color-accent-dim) rounded px-2 py-1.5 transition-all duration-100" data-seo="config" onclick="seoSelect(this)">
+                    <div class="text-[11px] font-semibold text-(--color-text-head)">SEOConfig</div>
+                    <div class="text-[9px] text-(--color-text-dim) mt-0.5">canonical_host · site_name</div>
                   </div>
-
-                  <div class="flex justify-center text-(--color-accent-dim) text-[11px] leading-none py-0.5">↓</div>
-
-                  <div class="seo-node cursor-pointer bg-[color-mix(in_srgb,var(--color-accent)_8%,var(--color-surface))] border-2 border-(--color-accent) rounded-lg px-3 py-2 transition-all duration-100" data-seo="build" onclick="seoSelect(this)">
-                    <div class="flex items-center justify-between gap-2">
-                      <div class="text-[12px] font-semibold text-(--color-text-head)"><span class="text-(--color-accent)">ƒ</span> build_seo_payload()</div>
-                      <div class="inline-flex items-center gap-1 text-[9px] text-(--color-accent) border border-(--color-accent) rounded-full px-2 py-[1px] whitespace-nowrap">
-                        <span class="w-1.5 h-1.5 rounded-full bg-(--color-accent) seo-pulse"></span>Deterministic
-                      </div>
-                    </div>
-                    <div class="text-[9.5px] text-(--color-text-dim) mt-1">pure function - same inputs → same output dict</div>
-                  </div>
-
-                  <div class="flex justify-center text-(--color-accent-dim) text-[11px] leading-none py-0.5">↓</div>
-
-                  <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100" data-seo="payload" onclick="seoSelect(this)">
-                    <div class="text-[11px] font-semibold text-(--color-text-head)">SEO Payload</div>
-                    <div class="text-[9px] text-(--color-text-dim) mt-0.5">title · description · canonical · meta</div>
-                  </div>
-
-                  <div class="text-[9px] text-(--color-text-muted) mt-0.5">↳ maps to 4 output formats →</div>
-                </div>
-
-                <!-- Right panel: outputs -->
-                <div class="flex flex-col gap-1.5 flex-1 min-w-0 max-w-[220px]">
-                  <div class="text-[8px] uppercase tracking-[0.14em] text-(--color-text-muted) mb-0.5">SEO outputs · 4</div>
-
-                  <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="canonical" onclick="seoSelect(this)">
-                    <div class="text-[11px] font-semibold text-(--color-text-head)">Canonical</div>
-                    <div class="text-[9px] text-(--color-text-muted) truncate">&lt;link rel="canonical"&gt;</div>
-                  </div>
-
-                  <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="og" onclick="seoSelect(this)">
-                    <div class="text-[11px] font-semibold text-(--color-text-head)">OG</div>
-                    <div class="text-[9px] text-(--color-text-muted) truncate">&lt;meta property="og:…"&gt;</div>
-                  </div>
-
-                  <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="twitter" onclick="seoSelect(this)">
-                    <div class="text-[11px] font-semibold text-(--color-text-head)">Twitter Card</div>
-                    <div class="text-[9px] text-(--color-text-muted) truncate">&lt;meta name="twitter:…"&gt;</div>
-                  </div>
-
-                  <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="jsonld" onclick="seoSelect(this)">
-                    <div class="text-[11px] font-semibold text-(--color-text-head)">JSON-LD</div>
-                    <div class="text-[9px] text-(--color-text-muted) truncate">&lt;script type="ld+json"&gt;</div>
+                  <div class="seo-node flex-1 cursor-pointer bg-(--color-surface) border border-(--color-accent-dim) rounded px-2 py-1.5 transition-all duration-100" data-seo="entity" onclick="seoSelect(this)">
+                    <div class="text-[11px] font-semibold text-(--color-text-head)">SEOEntity</div>
+                    <div class="text-[9px] text-(--color-text-dim) mt-0.5">entity_type · title</div>
                   </div>
                 </div>
+
+                <div class="flex justify-center text-(--color-accent-dim) text-[11px] leading-none py-0.5">↓</div>
+
+                <div class="seo-node cursor-pointer bg-[color-mix(in_srgb,var(--color-accent)_8%,var(--color-surface))] border-2 border-(--color-accent) rounded-lg px-3 py-2 transition-all duration-100" data-seo="build" onclick="seoSelect(this)">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="text-[12px] font-semibold text-(--color-text-head)"><span class="text-(--color-accent)">ƒ</span> build_seo_payload()</div>
+                    <div class="inline-flex items-center gap-1 text-[9px] text-(--color-accent) border border-(--color-accent) rounded-full px-2 py-[1px] whitespace-nowrap">
+                      <span class="w-1.5 h-1.5 rounded-full bg-(--color-accent) seo-pulse"></span>Deterministic
+                    </div>
+                  </div>
+                  <div class="text-[9.5px] text-(--color-text-dim) mt-1">pure function - same inputs → same output dict</div>
+                </div>
+
+                <div class="flex justify-center text-(--color-accent-dim) text-[11px] leading-none py-0.5">↓</div>
+
+                <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100" data-seo="payload" onclick="seoSelect(this)">
+                  <div class="text-[11px] font-semibold text-(--color-text-head)">SEO Payload</div>
+                  <div class="text-[9px] text-(--color-text-dim) mt-0.5">title · description · canonical · meta</div>
+                </div>
+
+                <div class="text-[9px] text-(--color-text-muted) mt-0.5">↳ maps to 4 output formats →</div>
               </div>
 
-              <!-- Detail panel -->
-              <div id="seo-detail" class="border-t border-(--color-border-subtle) px-3 py-2 flex flex-col gap-1.5">
-                <div class="flex items-center gap-2">
-                  <div id="seo-det-name" class="text-[12px] font-semibold text-(--color-accent)">build_seo_payload()</div>
-                  <div id="seo-det-kind" class="text-[8.5px] uppercase tracking-[0.06em] text-(--color-text-muted) border border-(--color-border-subtle) rounded px-1.5 py-[1px]">Process</div>
+              <!-- Right panel: outputs -->
+              <div class="flex flex-col gap-1.5 flex-1 min-w-0 max-w-[260px]">
+                <div class="text-[8px] uppercase tracking-[0.14em] text-(--color-text-muted) mb-0.5">SEO outputs · 4</div>
+
+                <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="canonical" onclick="seoSelect(this)">
+                  <div class="text-[11px] font-semibold text-(--color-text-head)">Canonical</div>
+                  <div class="text-[9px] text-(--color-text-muted) truncate">&lt;link rel="canonical"&gt;</div>
                 </div>
-                <div id="seo-det-desc" class="text-[11px] leading-[1.55] text-(--color-text-dim) max-w-[74ch]">Pure function that merges site-level config with page-level data into a deterministic SEO payload. Same inputs always produce the same output dict - no side effects, no randomness.</div>
-                <div id="seo-det-code" class="bg-(--color-surface) border border-(--color-border-subtle) rounded px-2 py-1 text-[10px] font-mono text-(--color-text-dim) overflow-x-auto whitespace-pre">build_seo_payload(entity, "/path", config) → dict</div>
-                <div id="seo-det-fields" class="flex flex-wrap gap-1"></div>
+
+                <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="og" onclick="seoSelect(this)">
+                  <div class="text-[11px] font-semibold text-(--color-text-head)">OG</div>
+                  <div class="text-[9px] text-(--color-text-muted) truncate">&lt;meta property="og:…"&gt;</div>
+                </div>
+
+                <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="twitter" onclick="seoSelect(this)">
+                  <div class="text-[11px] font-semibold text-(--color-text-head)">Twitter Card</div>
+                  <div class="text-[9px] text-(--color-text-muted) truncate">&lt;meta name="twitter:…"&gt;</div>
+                </div>
+
+                <div class="seo-node cursor-pointer bg-(--color-surface) border border-(--color-border) rounded px-2 py-1.5 transition-all duration-100 flex flex-col gap-0.5" style="border-left:3px solid var(--color-accent-dim)" data-seo="jsonld" onclick="seoSelect(this)">
+                  <div class="text-[11px] font-semibold text-(--color-text-head)">JSON-LD</div>
+                  <div class="text-[9px] text-(--color-text-muted) truncate">&lt;script type="ld+json"&gt;</div>
+                </div>
               </div>
+            </div>
+
+            <!-- Detail panel -->
+            <div id="seo-detail" class="border-t border-(--color-border-subtle) px-4 py-3 flex flex-col gap-1.5">
+              <div class="flex items-center gap-2">
+                <div id="seo-det-name" class="text-[12px] font-semibold text-(--color-accent)">build_seo_payload()</div>
+                <div id="seo-det-kind" class="text-[8.5px] uppercase tracking-[0.06em] text-(--color-text-muted) border border-(--color-border-subtle) rounded px-1.5 py-[1px]">Process</div>
+              </div>
+              <div id="seo-det-desc" class="text-[11px] leading-[1.55] text-(--color-text-dim) max-w-[74ch]">Pure function that merges site-level config with page-level data into a deterministic SEO payload. Same inputs always produce the same output dict - no side effects, no randomness.</div>
+              <div id="seo-det-code" class="bg-(--color-surface) border border-(--color-border-subtle) rounded px-2 py-1 text-[10px] font-mono text-(--color-text-dim) overflow-x-auto whitespace-pre">build_seo_payload(entity, "/path", config) → dict</div>
+              <div id="seo-det-fields" class="flex flex-wrap gap-1"></div>
             </div>
           </div>
         </div>
