@@ -131,54 +131,29 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
             </div>
-            <div class="flex items-start self-stretch">
-              <div class="w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-stretch">
-                <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
-                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
-                  <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">seoslug flow</span>
+            <div class="flex items-center justify-center self-stretch">
+              <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-[10px] leading-none">
+                <div class="border border-(--color-accent-dim)/30 bg-(--color-surface) px-2 py-1.5 rounded text-center">
+                  <div class="text-(--color-text-head) font-semibold">SEOConfig</div>
                 </div>
-                <div class="px-4 py-5 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) flex flex-col items-center gap-3">
-                  <!-- SEOConfig -->
-                  <div class="border border-(--color-accent-dim)/30 bg-(--color-surface) px-3 py-2 rounded text-center w-full max-w-[200px]">
-                    <div class="text-[10px] uppercase tracking-[0.08em] text-(--color-text-dim)">SEOConfig</div>
-                    <div class="text-(--color-text-head) font-semibold">Project setup</div>
-                  </div>
-                  <span class="text-(--color-accent-dim) text-sm">↓</span>
-                  <!-- SEOEntity -->
-                  <div class="border border-(--color-accent-dim)/30 bg-(--color-surface) px-3 py-2 rounded text-center w-full max-w-[200px]">
-                    <div class="text-[10px] uppercase tracking-[0.08em] text-(--color-text-dim)">SEOEntity</div>
-                    <div class="text-(--color-text-head) font-semibold">Page content</div>
-                  </div>
-                  <span class="text-(--color-accent-dim) text-sm">↓</span>
-                  <!-- build_seo_payload -->
-                  <div class="border border-(--color-accent-dim) bg-(--color-accent-dim)/10 px-3 py-2 rounded text-center w-full max-w-[200px]">
-                    <div class="text-[10px] uppercase tracking-[0.08em] text-(--color-text-dim)">build_seo_payload()</div>
-                    <div class="text-(--color-accent) font-semibold">Deterministic merge</div>
-                  </div>
-                  <span class="text-(--color-accent-dim) text-sm">↓</span>
-                  <!-- Output container -->
-                  <div class="border border-(--color-border) bg-(--color-surface) px-3 py-2 rounded text-center w-full max-w-[200px]">
-                    <div class="text-[10px] uppercase tracking-[0.08em] text-(--color-text-dim)">Structured payload</div>
-                    <div class="text-(--color-text-muted) text-[10px]">dict · title · meta · links</div>
-                  </div>
-                  <span class="text-(--color-accent-dim) text-sm">↓</span>
-                  <!-- Render targets -->
-                  <div class="flex gap-1.5 w-full">
-                    <div class="flex-1 border border-(--color-border) px-2 py-1.5 rounded text-center">
-                      <div class="text-[9px] text-(--color-text-dim)">Canonical</div>
-                    </div>
-                    <div class="flex-1 border border-(--color-border) px-2 py-1.5 rounded text-center">
-                      <div class="text-[9px] text-(--color-text-dim)">OG</div>
-                    </div>
-                    <div class="flex-1 border border-(--color-border) px-2 py-1.5 rounded text-center">
-                      <div class="text-[9px] text-(--color-text-dim)">Twitter</div>
-                    </div>
-                    <div class="flex-1 border border-(--color-border) px-2 py-1.5 rounded text-center">
-                      <div class="text-[9px] text-(--color-text-dim)">JSON-LD</div>
-                    </div>
-                  </div>
+                <span class="text-(--color-accent-dim)">→</span>
+                <div class="border border-(--color-accent-dim)/30 bg-(--color-surface) px-2 py-1.5 rounded text-center">
+                  <div class="text-(--color-text-head) font-semibold">SEOEntity</div>
+                </div>
+                <span class="text-(--color-accent-dim)">→</span>
+                <div class="border border-(--color-accent-dim) bg-(--color-accent-dim)/10 px-2 py-1.5 rounded text-center">
+                  <div class="text-(--color-accent) font-semibold">build_seo_payload()</div>
+                </div>
+                <span class="text-(--color-accent-dim)">→</span>
+                <div class="border border-(--color-border) bg-(--color-surface) px-2 py-1.5 rounded text-center">
+                  <div class="text-(--color-text-muted)">Structured payload</div>
+                </div>
+                <span class="text-(--color-accent-dim) text-[14px] leading-none">⤵</span>
+                <div class="flex gap-1">
+                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">Canonical</div>
+                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">OG</div>
+                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">Twitter</div>
+                  <div class="border border-(--color-border) px-1.5 py-1 rounded text-center text-[8px] text-(--color-text-dim)">JSON-LD</div>
                 </div>
               </div>
             </div>
