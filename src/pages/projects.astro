@@ -24,9 +24,12 @@ import Footer from '../components/Footer.astro';
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start">
           <div>
             <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3" data-i18n="projects.tag.pypi">Python Package · PyPI</p>
-            <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-3">
-              DBWarden
-            </h1>
+            <div class="flex items-end gap-3 mb-3">
+              <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head)">
+                DBWarden
+              </h1>
+              <span data-pypi-version="dbwarden" class="text-[10px] px-1.5 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded shrink-0">loading</span>
+            </div>
             <p class="text-lg md:text-xl text-(--color-text-bright) mb-6" data-i18n="projects.dbwarden.subtitle">The SQL-first database toolkit for SQLAlchemy.</p>
             <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-6" data-i18n="projects.dbwarden.detail">
               DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
@@ -84,6 +87,79 @@ import Footer from '../components/Footer.astro';
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">31K+</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.loc">LOC</span></div>
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.dialects">DB dialects</span></div>
           <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5" data-i18n="projects.stat.cli">CLI commands</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── seoslug ─── -->
+    <section id="seoslug" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+
+        <div class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="projects.tag.webauth">
+            Python Package
+          </span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="border border-(--color-border-subtle) bg-(--color-surface) p-6 md:p-8 transition-all duration-300 hover:scale-[1.01] hover:bg-(--color-bg)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">PyPI</p>
+              <div class="flex items-end gap-3 mb-4">
+                <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold uppercase tracking-wide text-(--color-text-head)">seoslug</h2>
+                <span data-pypi-version="seoslug" class="text-[10px] px-1.5 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded shrink-0">loading</span>
+              </div>
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4" data-i18n="projects.seoslug.detail.1">
+                Deterministic SEO payload generation with zero unexpected behavior.
+                Same input always produces the same output. Testable, cacheable, predictable — no runtime surprises.
+              </p>
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-6" data-i18n="projects.seoslug.detail.2" data-i18n-html>
+                Produces canonical URLs, Open Graph tags, Twitter Cards, and JSON-LD structured data through a single <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">build_seo_payload()</code> function.
+                Built-in <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">SEOConfig</code> and <code class="text-[11px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">SEOEntity</code> types, zero external dependencies at runtime.
+              </p>
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-wrap gap-2">
+                  {['Python', 'SEO', 'JSON-LD'].map(t => (
+                    <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+                  ))}
+                </div>
+                <div class="flex flex-wrap gap-3 shrink-0">
+                  <a href="https://github.com/emiliano-go/seoslug" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                    <span data-i18n="projects.link.github">GitHub</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-start self-stretch">
+              <div class="w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-stretch">
+                <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
+                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                  <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+                  <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">seoslug.py</span>
+                </div>
+                <div class="px-4 py-3 text-[11px] leading-[1.9] font-mono text-(--color-text-muted) overflow-x-auto">
+                  <div><span class="text-(--color-text-dim)">from</span> seoslug <span class="text-(--color-text-dim)">import</span> build_seo_payload, SEOConfig, SEOEntity</div>
+                  <div>&nbsp;</div>
+                  <div>config = SEOConfig(</div>
+                  <div>    canonical_host=<span class="text-(--color-accent-dim)">"example.com"</span>,</div>
+                  <div>    site_name=<span class="text-(--color-accent-dim)">"Example"</span>,</div>
+                  <div>    title_template=<span class="text-(--color-accent-dim)">"{"{"}title{"}"} - Example"</span>,</div>
+                  <div>)</div>
+                  <div>&nbsp;</div>
+                  <div>entity = SEOEntity(</div>
+                  <div>    entity_type=<span class="text-(--color-accent-dim)">"post"</span>,</div>
+                  <div>    title=<span class="text-(--color-accent-dim)">"Hello World"</span>,</div>
+                  <div>    excerpt=<span class="text-(--color-accent-dim)">"My first post."</span>,</div>
+                  <div>)</div>
+                  <div>&nbsp;</div>
+                  <div>payload = build_seo_payload(entity, <span class="text-(--color-accent-dim)">"/hello-world"</span>, config)</div>
+                  <div><span class="text-(--color-text-dim)"># payload.render_html() -> full &lt;head&gt; block</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -577,6 +653,19 @@ import Footer from '../components/Footer.astro';
     }
 
     animate();
+  })();
+
+  // ─── PyPI version badges ───
+  (() => {
+    const badges = document.querySelectorAll('[data-pypi-version]');
+    badges.forEach(el => {
+      const pkg = el.getAttribute('data-pypi-version');
+      if (!pkg) return;
+      fetch(`https://pypi.org/pypi/${encodeURIComponent(pkg)}/json`)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => { el.textContent = `v${data.info.version}`; })
+        .catch(() => { el.textContent = 'PyPI'; });
+    });
   })();
 
   // ─── Split-layout: click nav to show detail ───
