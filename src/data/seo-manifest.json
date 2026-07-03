@@ -1,0 +1,74 @@
+{
+  "/": {
+    "title": "Emiliano G.O. - Backend Engineer & Data Scientist",
+    "canonical": "https://emiliano-go.com/",
+    "robots": "index,follow",
+    "og": {
+      "type": "website",
+      "title": "Emiliano G.O. - Backend Engineer & Data Scientist",
+      "description": "Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay.",
+      "url": "https://emiliano-go.com/",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image:width": 1200,
+      "image:height": 630,
+      "site_name": "Emiliano G.O.",
+      "locale": "en_US"
+    },
+    "twitter": {
+      "card": "summary_large_image",
+      "title": "Emiliano G.O. - Backend Engineer & Data Scientist",
+      "description": "Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "site": "@emiliano_gando"
+    },
+    "description": "Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay.",
+    "schema_jsonld": {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Emiliano G.O. - Backend Engineer & Data Scientist",
+      "url": "https://emiliano-go.com/",
+      "description": "Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Emiliano Gandini Outeda"
+      }
+    }
+  },
+  "/projects/": {
+    "title": "Projects - Emiliano G.O.",
+    "canonical": "https://emiliano-go.com/projects/",
+    "robots": "index,follow",
+    "og": {
+      "type": "website",
+      "title": "Projects - Emiliano G.O.",
+      "description": "DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "url": "https://emiliano-go.com/projects/",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image:width": 1200,
+      "image:height": 630,
+      "site_name": "Emiliano G.O.",
+      "locale": "en_US"
+    },
+    "twitter": {
+      "card": "summary_large_image",
+      "title": "Projects - Emiliano G.O.",
+      "description": "DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "site": "@emiliano_gando"
+    },
+    "description": "DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+    "schema_jsonld": {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Projects - Emiliano G.O.",
+      "url": "https://emiliano-go.com/projects/",
+      "description": "DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Emiliano Gandini Outeda"
+      }
+    }
+  }
+}

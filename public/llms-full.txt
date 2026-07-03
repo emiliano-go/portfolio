@@ -1,0 +1,176 @@
+# Emiliano G.O. — Portfolio
+
+> Software engineer building Python backends, CLI tools, and data infrastructure.
+> Based in Montevideo, Uruguay.
+
+## https://emiliano-go.com/
+
+### Hero
+
+Backend Engineer · Data Scientist
+
+Building systems that handle real data.
+
+Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay. Open to interesting problems.
+
+Stats:
+- ~2K stars on maintained OSS
+- 6 packages on PyPI
+- Montevideo, Uruguay
+
+### About
+
+Emiliano G.O.
+Montevideo, Uruguay
+
+Backend developer and data scientist. I work mostly in Python: pipelines, APIs, and the infrastructure that keeps them running. I care about clean architecture, good documentation, and building things that hold up under load.
+
+I learn by building things until they break, then figuring out why. Also run LibreCourseUY, an open source organization promoting the OSS ecosystem in Uruguay.
+
+Stack: Python, FastAPI, pandas, scikit-learn, matplotlib, PostgreSQL, Prefect, Redis, Docker, Traefik, Vue 3, Taskiq.
+
+### Projects (Home)
+
+#### DBWarden
+
+SQL-first migration system for SQLAlchemy. No migration runtime, no generated Python scripts. Built-in rollback, schema snapshots, offline CI generation, pre-deploy impact analysis, multi-database support, and a full CLI.
+
+Tags: SQLAlchemy, FastAPI, PostgreSQL, 5 dialects
+Links: GitHub, PyPI
+
+#### vigil
+
+Prefect-based GitHub activity monitor. Fetches events, commits, and PR activity via PyGithub, stores in ClickHouse.
+
+### LibreCourseUY
+
+An open source organization focused on promoting the FOSS ecosystem in Uruguay. We build and maintain free tools, services, and infrastructure for the Uruguayan developer community.
+
+Links: GitHub donation
+
+### Studies
+
+#### Career
+
+1. Bachelor's in Statistics (Technology Track) — UdelaR - FCEA, 2026 - Current
+   Studying advanced statistical methods, computational tools (R, Python, SQL), data-driven decision frameworks, experimental design.
+
+2. System Analyst — Universidad de la Republica — FING, 2018 - 2023
+   Software engineering, algorithms, databases, networks, operating systems, programming paradigms.
+
+#### Education
+
+1. Introduction to Data Science — Universidad de la Republica — FING, 2022
+   Statistical modeling, data wrangling, visualization, machine learning fundamentals.
+
+2. Advanced Data Analysis — Universidad de la Republica — FING, 2023
+   Multivariate methods, time series, Bayesian inference, statistical computing.
+
+#### Certifications
+
+1. Meta Front-End Developer Professional Certificate — Coursera — Meta, Sep 2024
+   JavaScript, Web Development, CSS, HTML, React, Responsive Design.
+
+### Experience
+
+- Jan 2024 - Present: Backend Engineer at Some Company. Building data pipelines and API infrastructure serving 50K+ daily requests.
+- 2022 - 2023: Data Engineer at Another Co. Developed ETL pipelines, migrated legacy batch to event-driven.
+- 2020 - 2022: Junior Developer at Startup XYZ. Full-stack SaaS development, REST APIs, CI/CD.
+
+### Open Source
+
+#### FastAPI-boilerplate (Co-maintainer)
+
+Batteries-included async FastAPI starter shipping auth (sessions, OAuth, API keys), FastCRUD, Alembic, Taskiq workers, Redis caching, and per-tier rate limiting. Organized as a uv workspace with vertical-slice layout. ~2k stars, 286 forks.
+
+### References
+
+- Igor Benav — Founder, Benav Labs. Co-maintainer, 2025 - Present.
+- Carlos A. Planchon — Technical Leader, Busco Jobs. Colleague, 2023 - Present.
+- Maximiliano Schmidt — Full-Stack Developer, Casas Y Mas. Colleague, 2026 - Present.
+
+## https://emiliano-go.com/projects
+
+### DBWarden
+
+Python Package · PyPI. The SQL-first database toolkit for SQLAlchemy.
+
+DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
+
+Stats: 12 stars, 829 tests, 31K+ LOC, 5 DB dialects, 15+ CLI commands.
+
+Features: SQL-first migration system, multi-database support (PostgreSQL, MySQL, SQLite, MariaDB, MSSQL), offline CI generation, pre-deploy impact analysis, schema snapshots and diff, rollback support, declarative model-driven configuration.
+
+Links: GitHub, PyPI, Documentation, DeepWiki
+
+### schemap
+
+Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models. Define your model once, schemap generates Create, Update, Public, and Full schemas automatically, with field-level type mapping, nullability handling, and configurable exclusions.
+
+Supports AutoBase inheritance and @auto_schema decorator, with built-in TimestampMixin and SoftDeleteMixin.
+
+Tags: Pydantic v2, SQLAlchemy 2.0, PyPI
+
+### seoslug
+
+Deterministic SEO payload generation for content platforms. Pure functions, framework-agnostic. Generates canonical URLs, Open Graph (10+ fields), Twitter Cards (6+ fields), robots directives, and JSON-LD structured data. URL normalization with tracking parameter stripping.
+
+Fast: 10,000 payloads in ~276 ms.
+
+Tags: Python, PyPI, SEO
+
+Links: GitHub, PyPI
+
+### PyPI Utilities
+
+#### seoslug (also featured above)
+
+Deterministic SEO payload generation: canonical URLs, Open Graph, Twitter Cards, and JSON-LD. Same input always produces the same output. Testable, cacheable, predictable.
+
+Links: GitHub, PyPI
+
+#### detrack
+
+Strip tracking parameters from URLs. Deterministically. Zero dependencies. 60+ default patterns, case-insensitive, pure functions, metadata returned.
+
+Links: GitHub, PyPI
+
+#### acrresolv
+
+Acronym resolver for Python. Converts natural language phrases to acronyms. Zero dependencies, CLI and library usage.
+
+Links: GitHub, PyPI
+
+### More Projects
+
+#### crxml
+
+Fast streaming parser for Crystal Reports XML exports with Rust acceleration. Streams row-by-row without loading the full document into memory. Built-in pipeline stages: rename, cast types, filter, and drop fields. Parallel mode for multi-core systems. Outputs DataFrames via pandas, CSV, or dicts.
+
+Tags: Python, Rust, XML, pandas
+Links: GitHub, PyPI
+
+#### vigil
+
+Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity via PyGithub, stores structured records in ClickHouse through DBWarden's migration framework. Cron-scheduled execution with structured logging and error notifications.
+
+Tags: Python, Prefect, PyGithub, ClickHouse
+Links: GitHub
+
+#### mapcreator
+
+Tile-based building map editor built with React and Canvas. Multi-floor building layouts with grid editor, A* pathfinding across floors, 60fps canvas rendering with virtual scrolling, undo/redo, JSON export.
+
+Tags: React, TypeScript, Canvas, A* Pathfinding
+Links: GitHub
+
+#### clickvault
+
+HashiCorp Vault database secrets engine plugin for ClickHouse. Generates ephemeral ClickHouse users on demand (dynamic secrets) and rotates static role passwords on a schedule. Implements Vault database plugin SDK. All DDL isolated in a dedicated SQL layer. Clustered deployments get ON CLUSTER appended automatically.
+
+Tags: Go, Vault, ClickHouse, Plugin
+Links: GitHub
+
+## Tech Stack
+
+Astro, Tailwind CSS, TypeScript. Deployed as static site to Cloudflare Pages.

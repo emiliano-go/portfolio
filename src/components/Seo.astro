@@ -1,0 +1,42 @@
+---
+import seoManifest from '../data/seo-manifest.json';
+
+export interface Props {
+  route?: string;
+  fallbackTitle?: string;
+}
+
+const { route = Astro.url.pathname, fallbackTitle = 'Emiliano G.O.' } = Astro.props;
+const seo = (seoManifest as Record<string, any>)[route];
+---
+
+{seo ? (
+  <>
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+    <meta name="robots" content={seo.robots} />
+    <meta property="og:type" content={seo.og.type} />
+    <meta property="og:title" content={seo.og.title} />
+    <meta property="og:description" content={seo.og.description} />
+    <meta property="og:url" content={seo.og.url} />
+    <meta property="og:image" content={seo.og.image} />
+    <meta property="og:image:width" content={seo.og['image:width']} />
+    <meta property="og:image:height" content={seo.og['image:height']} />
+    <meta property="og:site_name" content={seo.og.site_name} />
+    <meta property="og:locale" content={seo.og.locale} />
+    <meta name="twitter:card" content={seo.twitter.card} />
+    <meta name="twitter:title" content={seo.twitter.title} />
+    <meta name="twitter:description" content={seo.twitter.description} />
+    <meta name="twitter:image" content={seo.twitter.image} />
+    <meta name="twitter:site" content={seo.twitter.site} />
+    {seo.schema_jsonld && (
+      <script type="application/ld+json" set:html={JSON.stringify(seo.schema_jsonld)} />
+    )}
+  </>
+) : (
+  <>
+    <title>{fallbackTitle}</title>
+    <meta name="robots" content="index,follow" />
+  </>
+)}
