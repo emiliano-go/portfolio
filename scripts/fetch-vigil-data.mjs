@@ -137,6 +137,19 @@ async function main() {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([period, total]) => ({ period, total }));
 
+  const repoWeekMap = {};
+  for (const c of myCommits) {
+    repoWeekMap[c.repo] = (repoWeekMap[c.repo] || 0) + 1;
+  }
+  let mostActiveRepoWeek = null;
+  let mostActiveRepoWeekTotal = 0;
+  for (const [repo, total] of Object.entries(repoWeekMap)) {
+    if (total > mostActiveRepoWeekTotal) {
+      mostActiveRepoWeek = repo;
+      mostActiveRepoWeekTotal = total;
+    }
+  }
+
   const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
 
   const output = {
@@ -164,6 +177,8 @@ async function main() {
       mostActiveRepoTotal: myMostActiveRepoTotal,
       busiestDay: myBusiestDay,
       busiestDayTotal: myBusiestDayTotal,
+      mostActiveRepoWeek,
+      mostActiveRepoWeekTotal,
     },
     lastWeekHourly,
     lastWeekDaily,

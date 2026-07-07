@@ -46,9 +46,9 @@ const maxDaily = Math.max(...lastWeekDaily.map(d => d.total), 1);
         {myStats.busiestDayTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.busiestDayTotal} commits</span> : null}
       </div>
       <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
-        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.mostActiveRepo">most active repo</span>
-        <span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title={myStats.mostActiveRepo}>{myStats.mostActiveRepo ?? '-'}</span>
-        {myStats.mostActiveRepoTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.mostActiveRepoTotal} commits</span> : null}
+        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.mostActiveRepoWeek">repo (last 7d)</span>
+        <span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title={myStats.mostActiveRepoWeek}>{myStats.mostActiveRepoWeek ?? '-'}</span>
+        {myStats.mostActiveRepoWeekTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.mostActiveRepoWeekTotal} commits</span> : null}
       </div>
     </div>
 

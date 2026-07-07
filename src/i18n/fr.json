@@ -122,7 +122,7 @@
   "vigil.overview.totalCommits": "commits totaux",
   "vigil.overview.streak": "serie",
   "vigil.overview.busiestDay": "jour le plus actif",
-  "vigil.overview.mostActiveRepo": "repo le plus actif",
+  "vigil.overview.mostActiveRepoWeek": "repo (7 derniers j)",
   "vigil.hourlyChart": "Commits par heure (7 derniers j)",
   "vigil.updated": "Mis \u00e0 jour",
 
