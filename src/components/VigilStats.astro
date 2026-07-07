@@ -1,24 +1,8 @@
 ---
-let vigilData = { latestCommit: null, myStats: null, lastWeekHourly: [], lastWeekDaily: [], hourLabels: [], privateRepos: [], fetchedAt: '' };
-try {
-  const mod = await import('../data/vigil-data.json');
-  vigilData = mod.default || mod;
-} catch {}
-
-const { myStats, lastWeekHourly, lastWeekDaily } = vigilData;
-
-const hourlyTotals = Array(24).fill(0);
-for (const day of lastWeekHourly) {
-  for (let h = 0; h < 24; h++) {
-    hourlyTotals[h] += day[h];
-  }
-}
-const maxHourly = Math.max(...hourlyTotals, 1);
-const maxDaily = Math.max(...lastWeekDaily.map(d => d.total), 1);
+// loaded client-side via /vigil-data
 ---
 
-{myStats && (
-<section class="py-16 border-b border-(--color-border-subtle)">
+<section class="py-16 border-b border-(--color-border-subtle)" id="vigil-section">
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
     <div class="flex items-center gap-4 mb-10">
       <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="vigil.heading">
@@ -30,73 +14,98 @@ const maxDaily = Math.max(...lastWeekDaily.map(d => d.total), 1);
       </a>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">
-      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
-        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.totalCommits">total commits</span>
-        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{myStats.totalCommits?.toLocaleString() ?? '-'}</span>
-      </div>
-      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
-        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.streak">streak</span>
-        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{myStats.streak ?? '-'}</span>
-        {myStats.streak > 0 ? <span class="text-xs text-(--color-text-muted)">consecutive days</span> : null}
-      </div>
-      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
-        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.busiestDay">busiest day</span>
-        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{myStats.busiestDay ?? '-'}</span>
-        {myStats.busiestDayTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.busiestDayTotal} commits</span> : null}
-      </div>
-      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
-        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.mostActiveRepoWeek">repo (last 7d)</span>
-        <span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title={myStats.mostActiveRepoWeek}>{myStats.mostActiveRepoWeek ?? '-'}</span>
-        {myStats.mostActiveRepoWeekTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.mostActiveRepoWeekTotal} commits</span> : null}
-      </div>
+    <div id="vigil-root">
+      <div class="text-center py-12 text-sm text-(--color-text-dim)">Loading stats...</div>
     </div>
-
-    {lastWeekDaily.length > 0 && (
-    <div class="mb-8">
-      <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Daily commits (last 7 days)</h3>
-      <div class="flex gap-[3px] h-24">
-        {lastWeekDaily.map(d => (
-          <div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">
-            <div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style={`height: ${(d.total / maxDaily) * 100}%`}>
-              <div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm transition-all duration-300 group-hover:bg-(--color-accent-dim)"></div>
-            </div>
-            <div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">
-              {new Date(d.period).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} - {d.total}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-    )}
-
-    <div>
-      <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3" data-i18n="vigil.hourlyChart">Hourly commits (last 7 days)</h3>
-      <div class="flex gap-[2px] h-28">
-        {hourlyTotals.map((total, h) => (
-          <div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">
-            <div
-              class="w-full rounded-t-sm transition-all duration-300"
-              style={`height: ${(total / maxHourly) * 100}%; background: color-mix(in srgb, var(--color-accent) ${Math.round((total / maxHourly) * 60 + 20)}%, transparent)`}
-            >
-              <div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200" style="background: var(--color-accent)"></div>
-            </div>
-            <div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">
-              {String(h).padStart(2, '0')}:00 - {total}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">
-        <span>00</span><span>04</span><span>08</span><span>12</span><span>16</span><span>20</span><span>23</span>
-      </div>
-    </div>
-
-    {vigilData.fetchedAt && (
-    <p class="text-[9px] text-(--color-text-dim) mt-4 text-right">
-      <span data-i18n="vigil.updated">Updated</span><span>&nbsp;</span><time datetime={vigilData.fetchedAt} class="vigil-timeago">{vigilData.fetchedAt}</time>
-    </p>
-    )}
   </div>
 </section>
-)}
+
+<script is:inline>
+(async function() {
+  var root = document.getElementById('vigil-root');
+  if (!root) return;
+
+  var data;
+  try {
+    data = await fetch('/vigil-data').then(function(r) { if (!r.ok) throw new Error(); return r.json(); });
+  } catch { data = null; }
+  if (!data || !data.myStats) { root.innerHTML = '<div class="text-center py-12 text-sm text-(--color-text-dim)">Stats unavailable</div>'; return; }
+
+  var s = data.myStats;
+  var lastWeekDaily = data.lastWeekDaily || [];
+  var lastWeekHourly = data.lastWeekHourly || [];
+  var fetchedAt = data.fetchedAt || '';
+
+  var hourlyTotals = Array(24).fill(0);
+  for (var day = 0; day < lastWeekHourly.length; day++) {
+    for (var h = 0; h < 24; h++) {
+      hourlyTotals[h] += (lastWeekHourly[day] && lastWeekHourly[day][h]) || 0;
+    }
+  }
+  var maxHourly = Math.max.apply(null, hourlyTotals.concat([1]));
+  var maxDaily = Math.max.apply(null, lastWeekDaily.map(function(d) { return d.total; }).concat([1]));
+
+  function ago(iso) {
+    var now = Date.now();
+    var then = new Date(iso.endsWith('Z') ? iso : iso + 'Z').getTime();
+    var diff = now - then;
+    if (diff < 60000) return 'just now';
+    var mins = Math.floor(diff / 60000);
+    if (mins < 60) return mins + 'm ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    var days = Math.floor(hrs / 24);
+    if (days < 7) return days + 'd ago';
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function dayLabel(period) {
+    return new Date(period + 'Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  var html = '';
+
+  html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">';
+  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">total commits</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.totalCommits ? s.totalCommits.toLocaleString() : '-') + '</span></div>';
+  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">streak</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.streak ?? '-') + '</span>' + (s.streak > 0 ? '<span class="text-xs text-(--color-text-muted)">consecutive days</span>' : '') + '</div>';
+  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">busiest day</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.busiestDay || '-') + '</span>' + (s.busiestDayTotal ? '<span class="text-xs text-(--color-text-muted)">' + s.busiestDayTotal + ' commits</span>' : '') + '</div>';
+  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">repo (last 7d)</span><span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title="' + (s.mostActiveRepoWeek || '') + '">' + (s.mostActiveRepoWeek || '-') + '</span>' + (s.mostActiveRepoWeekTotal ? '<span class="text-xs text-(--color-text-muted)">' + s.mostActiveRepoWeekTotal + ' commits</span>' : '') + '</div>';
+  html += '</div>';
+
+  if (lastWeekDaily.length > 0) {
+    html += '<div class="mb-8"><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Daily commits (last 7 days)</h3><div class="flex gap-[3px] h-24">';
+    for (var i = 0; i < lastWeekDaily.length; i++) {
+      var d = lastWeekDaily[i];
+      var pct = (d.total / maxDaily) * 100;
+      html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
+      html += '<div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style="height:' + pct + '%"><div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm"></div></div>';
+      html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + dayLabel(d.period) + ' - ' + d.total + '</div>';
+      html += '</div>';
+    }
+    html += '</div></div>';
+  }
+
+  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 7 days)</h3><div class="flex gap-[2px] h-28">';
+  for (var h = 0; h < 24; h++) {
+    var t = hourlyTotals[h];
+    var pct = (t / maxHourly) * 100;
+    var opacity = Math.round((t / maxHourly) * 60 + 20);
+    html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
+    html += '<div class="w-full rounded-t-sm" style="height:' + pct + '%;background:color-mix(in srgb, var(--color-accent) ' + opacity + '%,transparent)"><div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200"></div></div>';
+    html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + String(h).padStart(2, '0') + ':00 - ' + t + '</div>';
+    html += '</div>';
+  }
+  html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide"><span>00</span><span>04</span><span>08</span><span>12</span><span>16</span><span>20</span><span>23</span></div></div>';
+
+  if (fetchedAt) {
+    html += '<p class="text-[9px] text-(--color-text-dim) mt-4 text-right">Updated<span>&nbsp;</span><time datetime="' + fetchedAt + '">' + ago(fetchedAt) + '</time></p>';
+  }
+
+  root.innerHTML = html;
+
+  var times = root.querySelectorAll('time');
+  for (var i = 0; i < times.length; i++) {
+    times[i].textContent = ago(times[i].getAttribute('datetime'));
+  }
+})();
+</script>

@@ -1,12 +1,5 @@
 ---
-let vigilData = { latestCommit: null };
-try {
-  const mod = await import('../data/vigil-data.json');
-  vigilData = mod.default || mod;
-} catch {}
-const latest = vigilData?.latestCommit || null;
-const isPrivateRepo = latest && (vigilData?.privateRepos || []).includes(latest.repo);
-const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim() : '';
+// vigil data now loaded client-side via /vigil-data
 ---
 
 <section class="hero-section relative min-h-screen flex items-center border-b border-(--color-border-subtle) overflow-hidden">
@@ -46,19 +39,13 @@ const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim()
 
       <!-- Right: stats -->
       <div id="hero-stats" class="flex flex-col gap-0">
-        {latest && (
-        <div class="flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
+        <div id="hero-commit-line" class="hidden flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
           <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide">
             <span data-i18n="hero.latestCommit">Latest commit made in:</span>
-            {isPrivateRepo ? (
-            <span data-i18n="hero.privateRepo">a private repo</span>
-            ) : (
-            <span title={latestTitle}>{latest.repo}</span>
-            )}
+            <span id="hero-commit-repo">a private repo</span>
           </span>
-          <time datetime={latest.committed_at} class="text-[10px] text-(--color-text-dim) whitespace-nowrap vigil-timeago">{latest.committed_at}</time>
+          <time id="hero-commit-time" class="text-[10px] text-(--color-text-dim) whitespace-nowrap"></time>
         </div>
-        )}
         <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
           <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.stars">stars on maintained OSS</span>
@@ -249,8 +236,6 @@ const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim()
   })();
 
   (function() {
-    var els = document.querySelectorAll('.vigil-timeago');
-    if (!els.length) return;
     function ago(iso) {
       var now = Date.now();
       var then = new Date(iso.endsWith('Z') ? iso : iso + 'Z').getTime();
@@ -265,6 +250,24 @@ const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim()
       if (days < 30) return Math.floor(days / 7) + 'w ago';
       return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     }
+
+    fetch('/vigil-data').then(function(r) {
+      if (!r.ok) throw new Error();
+      return r.json();
+    }).then(function(data) {
+      var line = document.getElementById('hero-commit-line');
+      if (!line) return;
+      var commit = data && data.latestCommit;
+      if (!commit) return;
+      var isPrivate = data.privateRepos && data.privateRepos.indexOf(commit.repo) !== -1;
+      document.getElementById('hero-commit-repo').textContent = isPrivate ? 'a private repo' : commit.repo;
+      var time = document.getElementById('hero-commit-time');
+      time.setAttribute('datetime', commit.committed_at);
+      time.textContent = ago(commit.committed_at);
+      line.classList.remove('hidden');
+    }).catch(function() {});
+
+    var els = document.querySelectorAll('.vigil-timeago');
     for (var i = 0; i < els.length; i++) {
       els[i].textContent = ago(els[i].getAttribute('datetime'));
     }

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "NODE_OPTIONS='--no-deprecation' astro dev",
-    "build": "NODE_OPTIONS='--no-deprecation' node scripts/fetch-vigil-data.mjs && NODE_OPTIONS='--no-deprecation' astro build",
+    "build": "NODE_OPTIONS='--no-deprecation' astro build",
     "preview": "NODE_OPTIONS='--no-deprecation' astro preview",
     "astro": "astro"
   },
