@@ -39,12 +39,14 @@
 
       <!-- Right: stats -->
       <div id="hero-stats" class="flex flex-col gap-0">
-        <div id="hero-commit-line" class="hidden flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
-          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide">
+        <div id="hero-commit-line" class="flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
+          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide flex items-center gap-2">
             <span data-i18n="hero.latestCommit">Latest commit made in:</span>
-            <span id="hero-commit-repo">a private repo</span>
+            <span id="hero-commit-repo-skeleton" class="inline-block h-3 w-36 bg-(--color-text-dim)/10 rounded animate-pulse align-middle"></span>
+            <span id="hero-commit-repo" class="hidden">a private repo</span>
           </span>
-          <time id="hero-commit-time" class="text-[10px] text-(--color-text-dim) whitespace-nowrap"></time>
+          <span id="hero-commit-time-skeleton" class="inline-block h-3 w-16 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+          <time id="hero-commit-time" class="hidden text-[10px] text-(--color-text-dim) whitespace-nowrap"></time>
         </div>
         <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
@@ -255,16 +257,20 @@
       if (!r.ok) throw new Error();
       return r.json();
     }).then(function(data) {
-      var line = document.getElementById('hero-commit-line');
-      if (!line) return;
       var commit = data && data.latestCommit;
       if (!commit) return;
+      var repoEl = document.getElementById('hero-commit-repo');
+      var repoSkel = document.getElementById('hero-commit-repo-skeleton');
+      var timeEl = document.getElementById('hero-commit-time');
+      var timeSkel = document.getElementById('hero-commit-time-skeleton');
       var isPrivate = data.privateRepos && data.privateRepos.indexOf(commit.repo) !== -1;
-      document.getElementById('hero-commit-repo').textContent = isPrivate ? 'a private repo' : commit.repo;
-      var time = document.getElementById('hero-commit-time');
-      time.setAttribute('datetime', commit.committed_at);
-      time.textContent = ago(commit.committed_at);
-      line.classList.remove('hidden');
+      repoEl.textContent = isPrivate ? 'a private repo' : commit.repo;
+      repoEl.classList.remove('hidden');
+      if (repoSkel) repoSkel.remove();
+      timeEl.setAttribute('datetime', commit.committed_at);
+      timeEl.textContent = ago(commit.committed_at);
+      timeEl.classList.remove('hidden');
+      if (timeSkel) timeSkel.remove();
     }).catch(function() {});
 
     var els = document.querySelectorAll('.vigil-timeago');
