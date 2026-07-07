@@ -23,9 +23,8 @@ export async function onRequest(context) {
 
   try {
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const commitsP = get('/commits?limit=50');
-    const [latestCommit, repos, authors, overview, daily] = await Promise.all([
-      commitsP.then(r => r[0] || null),
+
+    const [repos, authors, overview, daily] = await Promise.all([
       get('/repos'), get('/stats/authors'), get('/stats/overview'), get('/stats/daily'),
     ]);
 
@@ -34,13 +33,17 @@ export async function onRequest(context) {
     for (const a of authors) authorTotals[a.author_login] = (authorTotals[a.author_login] || 0) + a.total;
     const knownBots = /\[bot\]$/;
     const sorted = Object.entries(authorTotals).filter(([l]) => !knownBots.test(l) && l !== '').sort(([,a],[,b]) => b - a);
-    const myLogin = sorted[0]?.[0] || latestCommit?.author_login || 'emiliano-go';
+    const myLogin = sorted[0]?.[0] || 'emiliano-go';
 
-    let myLatestCommit = latestCommit;
+    let myLatestCommit = null;
     try {
-      const myCommits = await get('/commits?limit=100');
-      myLatestCommit = myCommits.find(c => c.author_login === myLogin) || latestCommit;
+      [myLatestCommit] = await get(`/commits?author_login=${encodeURIComponent(myLogin)}&limit=1`);
     } catch {}
+    if (!myLatestCommit) {
+      try {
+        [myLatestCommit] = await get('/commits?limit=1');
+      } catch {}
+    }
 
     const myTotalCommits = overview?.total_commits ?? 0;
     const myAuthorRows = authors.filter(a => a.author_login === myLogin);
@@ -94,11 +97,7 @@ export async function onRequest(context) {
         repo: myLatestCommit.repo, sha: myLatestCommit.sha,
         author_login: myLatestCommit.author_login, message: myLatestCommit.message,
         committed_at: ensureZ(myLatestCommit.committed_at), is_merge: myLatestCommit.is_merge,
-      } : (latestCommit ? {
-        repo: latestCommit.repo, sha: latestCommit.sha,
-        author_login: latestCommit.author_login, message: latestCommit.message,
-        committed_at: ensureZ(latestCommit.committed_at), is_merge: latestCommit.is_merge,
-      } : null),
+      } : null,
       myStats: {
         login: myLogin, totalCommits: myTotalCommits, streak, totalRepos: myRepos.size,
         mostActiveRepo: myMostActiveRepo, mostActiveRepoTotal: myMostActiveRepoTotal,
