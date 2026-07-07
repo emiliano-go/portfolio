@@ -24,9 +24,9 @@ export async function onRequest(context) {
   try {
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const commitsP = get('/commits?limit=50');
-    const [latestCommit, repos, authors] = await Promise.all([
+    const [latestCommit, repos, authors, overview] = await Promise.all([
       commitsP.then(r => r[0] || null),
-      get('/repos'), get('/stats/authors'),
+      get('/repos'), get('/stats/authors'), get('/stats/overview'),
     ]);
 
     const privateRepos = repos.filter(r => r.private).map(r => r.full_name);
@@ -42,8 +42,8 @@ export async function onRequest(context) {
       myLatestCommit = myCommits.find(c => c.author_login === myLogin) || latestCommit;
     } catch {}
 
+    const myTotalCommits = overview?.total_commits ?? 0;
     const myAuthorRows = authors.filter(a => a.author_login === myLogin);
-    const myTotalCommits = myAuthorRows.reduce((s, a) => s + a.total, 0);
     const myRepos = new Set(myAuthorRows.map(a => a.repo));
     let myMostActiveRepo = null, myMostActiveRepoTotal = 0;
     for (const a of myAuthorRows) {
