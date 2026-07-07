@@ -4,10 +4,9 @@ import path from 'path';
 const outputPath = path.resolve('src/data/vigil-data.json');
 const empty = () => ({
   latestCommit: null,
-  overview: null,
-  hourly: [],
-  weekly: { total: [], by_repo: [] },
+  myStats: null,
   lastWeekHourly: Array.from({ length: 7 }, () => Array(24).fill(0)),
+  lastWeekDaily: [],
   hourLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   privateRepos: [],
   fetchedAt: new Date().toISOString(),
@@ -47,19 +46,15 @@ async function main() {
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   let latestCommit = null;
-  let overview = null;
-  let hourly = [];
-  let weekly = { total: [], by_repo: [] };
   let repos = [];
-  let lastWeekHourly = Array.from({ length: 7 }, () => Array(24).fill(0));
+  let authors = [];
+  let range = [];
 
   try {
-    [latestCommit, overview, hourly, weekly, repos] = await Promise.all([
+    [latestCommit, repos, authors] = await Promise.all([
       get('/commits?limit=1').then(r => r[0] || null),
-      get('/stats/overview'),
-      get('/stats/hourly'),
-      get('/stats/weekly'),
       get('/repos'),
+      get('/stats/authors'),
     ]);
   } catch (e) {
     console.warn('[vigil] Initial fetch failed:', e.message);
@@ -67,25 +62,75 @@ async function main() {
 
   const privateRepos = repos.filter(r => r.private).map(r => r.full_name);
 
+  const myLogin = latestCommit?.author_login || 'emiliano-go';
+
+  const myAuthorRows = authors.filter(a => a.author_login === myLogin);
+  const myTotalCommits = myAuthorRows.reduce((s, a) => s + a.total, 0);
+  const myRepos = new Set(myAuthorRows.map(a => a.repo));
+  let myMostActiveRepo = null;
+  let myMostActiveRepoTotal = 0;
+  for (const a of myAuthorRows) {
+    if (a.total > myMostActiveRepoTotal) {
+      myMostActiveRepo = a.repo;
+      myMostActiveRepoTotal = a.total;
+    }
+  }
+
   try {
     const since = weekAgo.toISOString();
-    const range = await get(`/stats/activity-range?since=${encodeURIComponent(since)}`);
-    for (const c of range) {
-      const d = new Date(c.committed_at);
-      const day = d.getUTCDay();
-      const hour = d.getUTCHours();
-      lastWeekHourly[day][hour]++;
-    }
+    range = await get(`/stats/activity-range?since=${encodeURIComponent(since)}`);
   } catch (e) {
     console.warn('[vigil] Activity-range fetch failed:', e.message);
   }
 
+  const myCommits = range.filter(c => c.author_login === myLogin);
+
+  const lastWeekHourly = Array.from({ length: 7 }, () => Array(24).fill(0));
+  const dailyMap = {};
+  let myBusiestDay = null;
+  let myBusiestDayTotal = 0;
+
+  for (const c of myCommits) {
+    const d = new Date(c.committed_at);
+    const day = d.getUTCDay();
+    const hour = d.getUTCHours();
+    lastWeekHourly[day][hour]++;
+
+    const dayKey = c.committed_at.slice(0, 10);
+    dailyMap[dayKey] = (dailyMap[dayKey] || 0) + 1;
+  }
+
+  for (const [day, total] of Object.entries(dailyMap)) {
+    if (total > myBusiestDayTotal) {
+      myBusiestDay = day;
+      myBusiestDayTotal = total;
+    }
+  }
+
+  const lastWeekDaily = Object.entries(dailyMap)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([period, total]) => ({ period, total }));
+
   const output = {
-    latestCommit,
-    overview,
-    hourly,
-    weekly,
+    latestCommit: latestCommit ? {
+      repo: latestCommit.repo,
+      sha: latestCommit.sha,
+      author_login: latestCommit.author_login,
+      message: latestCommit.message,
+      committed_at: latestCommit.committed_at,
+      is_merge: latestCommit.is_merge,
+    } : null,
+    myStats: {
+      login: myLogin,
+      totalCommits: myTotalCommits,
+      totalRepos: myRepos.size,
+      mostActiveRepo: myMostActiveRepo,
+      mostActiveRepoTotal: myMostActiveRepoTotal,
+      busiestDay: myBusiestDay,
+      busiestDayTotal: myBusiestDayTotal,
+    },
     lastWeekHourly,
+    lastWeekDaily,
     hourLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     privateRepos,
     fetchedAt: new Date().toISOString(),
@@ -93,9 +138,11 @@ async function main() {
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
-  console.log('[vigil] Data written to src/data/vigil-data.json');
+  console.log(`[vigil] Data written for ${myLogin}: ${myTotalCommits} commits`);
 }
 
 main().catch(err => {
   console.warn('[vigil] Fatal:', err.message);
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify(empty(), null, 2));
 });

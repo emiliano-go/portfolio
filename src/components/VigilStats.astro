@@ -1,20 +1,11 @@
 ---
-let vigilData = { latestCommit: null, overview: null, lastWeekHourly: [], hourLabels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], weekly: { total: [], by_repo: [] }, fetchedAt: '' };
+let vigilData = { latestCommit: null, myStats: null, lastWeekHourly: [], lastWeekDaily: [], hourLabels: [], privateRepos: [], fetchedAt: '' };
 try {
   const mod = await import('../data/vigil-data.json');
   vigilData = mod.default || mod;
 } catch {}
 
-const { overview, lastWeekHourly, hourLabels, weekly } = vigilData;
-
-const totals = {
-  commits: overview?.total_commits ?? null,
-  repos: overview?.total_repos ?? null,
-  busiestDay: overview?.busiest_day?.period ?? null,
-  busiestDayTotal: overview?.busiest_day?.total ?? null,
-  activeRepo: overview?.most_active_repo?.repo ?? null,
-  activeRepoTotal: overview?.most_active_repo?.total ?? null,
-};
+const { myStats, lastWeekHourly, lastWeekDaily } = vigilData;
 
 const hourlyTotals = Array(24).fill(0);
 for (const day of lastWeekHourly) {
@@ -23,12 +14,10 @@ for (const day of lastWeekHourly) {
   }
 }
 const maxHourly = Math.max(...hourlyTotals, 1);
-
-const weeklyTotals = weekly?.total?.slice(0, 12)?.reverse() || [];
-const maxWeekly = Math.max(...weeklyTotals.map(w => w.total), 1);
+const maxDaily = Math.max(...lastWeekDaily.map(d => d.total), 1);
 ---
 
-{overview && (
+{myStats && (
 <section class="py-16 border-b border-(--color-border-subtle)">
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
     <div class="flex items-center gap-4 mb-10">
@@ -38,40 +27,38 @@ const maxWeekly = Math.max(...weeklyTotals.map(w => w.total), 1);
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <!-- Overview cards -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">
       <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
         <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.totalCommits">total commits</span>
-        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{totals.commits?.toLocaleString() ?? '-'}</span>
+        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{myStats.totalCommits?.toLocaleString() ?? '-'}</span>
       </div>
       <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
         <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.totalRepos">repos</span>
-        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{totals.repos ?? '-'}</span>
+        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{myStats.totalRepos ?? '-'}</span>
       </div>
       <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
         <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.busiestDay">busiest day</span>
-        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{totals.busiestDay ?? '-'}</span>
-        {totals.busiestDayTotal && <span class="text-xs text-(--color-text-muted)">{totals.busiestDayTotal} commits</span>}
+        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{myStats.busiestDay ?? '-'}</span>
+        {myStats.busiestDayTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.busiestDayTotal} commits</span> : null}
       </div>
       <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
         <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.mostActiveRepo">most active repo</span>
-        <span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title={totals.activeRepo}>{totals.activeRepo ?? '-'}</span>
-        {totals.activeRepoTotal && <span class="text-xs text-(--color-text-muted)">{totals.activeRepoTotal} commits</span>}
+        <span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title={myStats.mostActiveRepo}>{myStats.mostActiveRepo ?? '-'}</span>
+        {myStats.mostActiveRepoTotal ? <span class="text-xs text-(--color-text-muted)">{myStats.mostActiveRepoTotal} commits</span> : null}
       </div>
     </div>
 
-    <!-- Weekly bar chart -->
-    {weeklyTotals.length > 0 && (
+    {lastWeekDaily.length > 0 && (
     <div class="mb-8">
-      <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Weekly commits</h3>
+      <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Daily commits (last 7 days)</h3>
       <div class="flex items-end gap-[3px] h-24">
-        {weeklyTotals.map(w => (
+        {lastWeekDaily.map(d => (
           <div class="flex-1 flex flex-col items-center gap-1 group relative">
-            <div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style={`height: ${(w.total / maxWeekly) * 100}%`}>
+            <div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style={`height: ${(d.total / maxDaily) * 100}%`}>
               <div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm transition-all duration-300 group-hover:bg-(--color-accent-dim)"></div>
             </div>
             <div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">
-              {new Date(w.period).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {w.total}
+              {new Date(d.period).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} - {d.total}
             </div>
           </div>
         ))}
@@ -79,7 +66,6 @@ const maxWeekly = Math.max(...weeklyTotals.map(w => w.total), 1);
     </div>
     )}
 
-    <!-- Hourly bar chart -->
     <div>
       <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3" data-i18n="vigil.hourlyChart">Hourly commits (last 7 days)</h3>
       <div class="flex items-end gap-[2px] h-28">
