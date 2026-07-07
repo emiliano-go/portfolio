@@ -24,9 +24,9 @@ export async function onRequest(context) {
   try {
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const commitsP = get('/commits?limit=50');
-    const [latestCommit, repos, authors, overview] = await Promise.all([
+    const [latestCommit, repos, authors, overview, daily] = await Promise.all([
       commitsP.then(r => r[0] || null),
-      get('/repos'), get('/stats/authors'), get('/stats/overview'),
+      get('/repos'), get('/stats/authors'), get('/stats/overview'), get('/stats/daily'),
     ]);
 
     const privateRepos = repos.filter(r => r.private).map(r => r.full_name);
@@ -62,28 +62,30 @@ export async function onRequest(context) {
       streak = s.current_streak ?? 0;
     } catch {}
 
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    const lastWeekDaily = (daily?.total || [])
+      .filter(function(d) { return d.period >= sevenDaysAgo; })
+      .sort(function(a, b) { return a.period.localeCompare(b.period); });
+    let myBusiestDay = null, myBusiestDayTotal = 0;
+    for (var i = 0; i < lastWeekDaily.length; i++) {
+      if (lastWeekDaily[i].total > myBusiestDayTotal) {
+        myBusiestDay = lastWeekDaily[i].period;
+        myBusiestDayTotal = lastWeekDaily[i].total;
+      }
+    }
+
     const repoWeekMap = {};
     const lastWeekHourly = Array.from({ length: 7 }, () => Array(24).fill(0));
-    const dailyMap = {};
-    let myBusiestDay = null, myBusiestDayTotal = 0;
     let mostActiveRepoWeek = null, mostActiveRepoWeekTotal = 0;
 
     for (const c of myCommits) {
       const d = new Date(c.committed_at);
       lastWeekHourly[d.getUTCDay()][d.getUTCHours()]++;
-      const dayKey = c.committed_at.slice(0, 10);
-      dailyMap[dayKey] = (dailyMap[dayKey] || 0) + 1;
       repoWeekMap[c.repo] = (repoWeekMap[c.repo] || 0) + 1;
-    }
-
-    for (const [day, total] of Object.entries(dailyMap)) {
-      if (total > myBusiestDayTotal) { myBusiestDay = day; myBusiestDayTotal = total; }
     }
     for (const [repo, total] of Object.entries(repoWeekMap)) {
       if (total > mostActiveRepoWeekTotal) { mostActiveRepoWeek = repo; mostActiveRepoWeekTotal = total; }
     }
-
-    const lastWeekDaily = Object.entries(dailyMap).sort(([a],[b]) => a.localeCompare(b)).map(([period, total]) => ({ period, total }));
 
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
 
