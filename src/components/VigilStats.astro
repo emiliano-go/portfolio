@@ -83,6 +83,7 @@
   var fetchedAt = data.fetchedAt || '';
 
   var maxHourly = Math.max.apply(null, lastWeekHourly.concat([1]));
+  var hourLabels = data.hourLabels || [];
   var maxDaily = Math.max.apply(null, lastWeekDaily.map(function(d) { return d.total; }).concat([1]));
 
   function ago(iso) {
@@ -125,7 +126,7 @@
     html += '</div></div>';
   }
 
-  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (all time)</h3><div class="flex gap-[2px] h-28">';
+  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 24h)</h3><div class="flex gap-[2px] h-28">';
   for (var h = 0; h < 24; h++) {
     var t = lastWeekHourly[h];
     var pct = (t / maxHourly) * 100;
@@ -135,7 +136,13 @@
     html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + String(h).padStart(2, '0') + ':00 - ' + t + '</div>';
     html += '</div>';
   }
-  html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide"><span>00</span><span>04</span><span>08</span><span>12</span><span>16</span><span>20</span><span>23</span></div></div>';
+  html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">';
+  for (var li = 0; li < 24; li++) {
+    if (li === 0 || li === 6 || li === 12 || li === 18 || li === 23) {
+      html += '<span>' + (hourLabels[li] || '--') + '</span>';
+    }
+  }
+  html += '</div></div>';
 
   if (fetchedAt) {
     html += '<p class="text-[9px] text-(--color-text-dim) mt-4 text-right">Updated<span>&nbsp;</span><time datetime="' + fetchedAt + '">' + ago(fetchedAt) + '</time></p>';

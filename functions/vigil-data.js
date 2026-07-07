@@ -6,7 +6,7 @@ export async function onRequest(context) {
   const empty = () => ({
     latestCommit: null, myStats: null,
     lastWeekHourly: Array(24).fill(0),
-    lastWeekDaily: [], hourLabels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    lastWeekDaily: [], hourLabels: Array(24).fill('--'),
     privateRepos: [], fetchedAt: new Date().toISOString(),
   });
 
@@ -65,15 +65,6 @@ export async function onRequest(context) {
       streak = s.current_streak ?? 0;
     } catch {}
 
-    let hourlyRows = [];
-    try {
-      hourlyRows = await get('/stats/hourly');
-    } catch {}
-    const lastWeekHourly = Array(24).fill(0);
-    for (var i = 0; i < hourlyRows.length; i++) {
-      lastWeekHourly[hourlyRows[i].hour] += hourlyRows[i].total;
-    }
-
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     const lastWeekDaily = (daily?.total || [])
       .filter(function(d) { return d.period >= sevenDaysAgo; })
@@ -87,14 +78,25 @@ export async function onRequest(context) {
     }
 
     const repoWeekMap = {};
-    const lastWeekHourly = Array.from({ length: 7 }, () => Array(24).fill(0));
     let mostActiveRepoWeek = null, mostActiveRepoWeekTotal = 0;
 
-    for (const c of myCommits) {
-      const d = new Date(c.committed_at);
-      lastWeekHourly[d.getUTCDay()][d.getUTCHours()]++;
+    // Compute last-24h hourly distribution, aligned so current hour is at index 23
+    var currentHour = new Date().getUTCHours();
+    var dayAgo = Date.now() - 24 * 60 * 60 * 1000;
+    var last24hHourly = Array(24).fill(0);
+    for (var ci = 0; ci < myCommits.length; ci++) {
+      var c = myCommits[ci];
+      var d = new Date(c.committed_at);
+      if (d.getTime() < dayAgo) continue;
+      var pos = (d.getUTCHours() - currentHour - 1 + 48) % 24;
+      last24hHourly[pos]++;
       repoWeekMap[c.repo] = (repoWeekMap[c.repo] || 0) + 1;
     }
+    var hourLabels24 = Array(24);
+    for (var hi = 0; hi < 24; hi++) {
+      hourLabels24[hi] = String((currentHour + 1 + hi) % 24).padStart(2, '0');
+    }
+
     for (const [repo, total] of Object.entries(repoWeekMap)) {
       if (total > mostActiveRepoWeekTotal) { mostActiveRepoWeek = repo; mostActiveRepoWeekTotal = total; }
     }
@@ -113,8 +115,9 @@ export async function onRequest(context) {
         busiestDay: myBusiestDay, busiestDayTotal: myBusiestDayTotal,
         mostActiveRepoWeek, mostActiveRepoWeekTotal,
       },
-      lastWeekHourly, lastWeekDaily,
-      hourLabels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+      lastWeekHourly: last24hHourly,
+      lastWeekDaily,
+      hourLabels: hourLabels24,
       privateRepos, fetchedAt: new Date().toISOString(),
     };
 
