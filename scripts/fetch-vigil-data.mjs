@@ -46,13 +46,15 @@ async function main() {
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   let latestCommit = null;
+  let myLatestCommit = null;
   let repos = [];
   let authors = [];
   let range = [];
 
   try {
+    const commits = get('/commits?limit=50');
     [latestCommit, repos, authors] = await Promise.all([
-      get('/commits?limit=1').then(r => r[0] || null),
+      commits.then(r => r[0] || null),
       get('/repos'),
       get('/stats/authors'),
     ]);
@@ -62,7 +64,23 @@ async function main() {
 
   const privateRepos = repos.filter(r => r.private).map(r => r.full_name);
 
-  const myLogin = latestCommit?.author_login || 'emiliano-go';
+  const authorTotals = {};
+  for (const a of authors) {
+    authorTotals[a.author_login] = (authorTotals[a.author_login] || 0) + a.total;
+  }
+  const knownBots = /\[bot\]$/;
+  const sortedAuthors = Object.entries(authorTotals)
+    .filter(([login]) => !knownBots.test(login) && login !== '')
+    .sort(([, a], [, b]) => b - a);
+  const myLogin = sortedAuthors[0]?.[0] || latestCommit?.author_login || 'emiliano-go';
+
+  try {
+    const myCommits = await get(`/commits?limit=100`);
+    myLatestCommit = myCommits.find(c => c.author_login === myLogin) || latestCommit;
+  } catch (e) {
+    console.warn('[vigil] My-commits fetch failed:', e.message);
+    myLatestCommit = latestCommit;
+  }
 
   const myAuthorRows = authors.filter(a => a.author_login === myLogin);
   const myTotalCommits = myAuthorRows.reduce((s, a) => s + a.total, 0);
@@ -112,14 +130,21 @@ async function main() {
     .map(([period, total]) => ({ period, total }));
 
   const output = {
-    latestCommit: latestCommit ? {
+    latestCommit: myLatestCommit ? {
+      repo: myLatestCommit.repo,
+      sha: myLatestCommit.sha,
+      author_login: myLatestCommit.author_login,
+      message: myLatestCommit.message,
+      committed_at: myLatestCommit.committed_at,
+      is_merge: myLatestCommit.is_merge,
+    } : (latestCommit ? {
       repo: latestCommit.repo,
       sha: latestCommit.sha,
       author_login: latestCommit.author_login,
       message: latestCommit.message,
       committed_at: latestCommit.committed_at,
       is_merge: latestCommit.is_merge,
-    } : null,
+    } : null),
     myStats: {
       login: myLogin,
       totalCommits: myTotalCommits,
