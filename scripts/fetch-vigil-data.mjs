@@ -103,6 +103,14 @@ async function main() {
 
   const myCommits = range.filter(c => c.author_login === myLogin);
 
+  let streak = 0;
+  try {
+    const s = await get(`/stats/streak/${encodeURIComponent(myLogin)}`);
+    streak = s.current_streak ?? 0;
+  } catch (e) {
+    console.warn('[vigil] Streak fetch failed:', e.message);
+  }
+
   const lastWeekHourly = Array.from({ length: 7 }, () => Array(24).fill(0));
   const dailyMap = {};
   let myBusiestDay = null;
@@ -129,25 +137,28 @@ async function main() {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([period, total]) => ({ period, total }));
 
+  const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
+
   const output = {
     latestCommit: myLatestCommit ? {
       repo: myLatestCommit.repo,
       sha: myLatestCommit.sha,
       author_login: myLatestCommit.author_login,
       message: myLatestCommit.message,
-      committed_at: myLatestCommit.committed_at,
+      committed_at: ensureZ(myLatestCommit.committed_at),
       is_merge: myLatestCommit.is_merge,
     } : (latestCommit ? {
       repo: latestCommit.repo,
       sha: latestCommit.sha,
       author_login: latestCommit.author_login,
       message: latestCommit.message,
-      committed_at: latestCommit.committed_at,
+      committed_at: ensureZ(latestCommit.committed_at),
       is_merge: latestCommit.is_merge,
     } : null),
     myStats: {
       login: myLogin,
       totalCommits: myTotalCommits,
+      streak,
       totalRepos: myRepos.size,
       mostActiveRepo: myMostActiveRepo,
       mostActiveRepoTotal: myMostActiveRepoTotal,

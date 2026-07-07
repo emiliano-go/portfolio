@@ -120,7 +120,7 @@
 
   "vigil.heading": "GitHub Activity",
   "vigil.overview.totalCommits": "total commits",
-  "vigil.overview.totalRepos": "repos",
+  "vigil.overview.streak": "streak",
   "vigil.overview.busiestDay": "busiest day",
   "vigil.overview.mostActiveRepo": "most active repo",
   "vigil.hourlyChart": "Hourly commits (last 7 days)",

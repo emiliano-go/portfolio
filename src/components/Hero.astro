@@ -48,7 +48,7 @@ const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim()
       <div id="hero-stats" class="flex flex-col gap-0">
         {latest && (
         <div class="flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
-          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide truncate max-w-[220px]">
+          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide">
             <span data-i18n="hero.latestCommit">Latest commit made in:</span>
             {isPrivateRepo ? (
             <span data-i18n="hero.privateRepo">a private repo</span>
@@ -253,7 +253,7 @@ const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim()
     if (!els.length) return;
     function ago(iso) {
       var now = Date.now();
-      var then = new Date(iso).getTime();
+      var then = new Date(iso.endsWith('Z') ? iso : iso + 'Z').getTime();
       var diff = now - then;
       if (diff < 60000) return 'just now';
       var mins = Math.floor(diff / 60000);

@@ -1,11 +1,6 @@
 {
   "latestCommit": null,
-  "overview": null,
-  "hourly": [],
-  "weekly": {
-    "total": [],
-    "by_repo": []
-  },
+  "myStats": null,
   "lastWeekHourly": [
     [
       0,
@@ -190,6 +185,7 @@
       0
     ]
   ],
+  "lastWeekDaily": [],
   "hourLabels": [
     "Sun",
     "Mon",
@@ -200,5 +196,5 @@
     "Sat"
   ],
   "privateRepos": [],
-  "fetchedAt": "2026-07-07T17:33:59.431Z"
+  "fetchedAt": "2026-07-07T18:44:30.219Z"
 }
