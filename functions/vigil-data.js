@@ -79,21 +79,18 @@ export async function onRequest(context) {
       if (total > mostActiveRepoWeekTotal) { mostActiveRepoWeek = repo; mostActiveRepoWeekTotal = total; }
     }
 
-    // Last 24h hourly: fetch raw commits, bin by hoursAgo, align current hour at index 23
+    // Last 24h hourly: bin myCommits (from activity-range) by hoursAgo
     var last24hHourly = Array(24).fill(0);
-    try {
-      var recent = await get(`/commits?author_login=${encodeURIComponent(myLogin)}&limit=1000`);
-      var nowMs = Date.now();
-      var cutoff = nowMs - 24 * 60 * 60 * 1000;
-      for (var ri = 0; ri < recent.length; ri++) {
-        var d = new Date(recent[ri].committed_at + 'Z');
-        var t = d.getTime();
-        if (t < cutoff) continue;
-        var hoursAgo = Math.floor((nowMs - t) / 3600000);
-        if (hoursAgo > 23) continue;
-        last24hHourly[23 - hoursAgo]++;
-      }
-    } catch {}
+    var nowMs = Date.now();
+    var cutoff24h = nowMs - 24 * 60 * 60 * 1000;
+    for (var ri = 0; ri < myCommits.length; ri++) {
+      var d = new Date(myCommits[ri].committed_at + 'Z');
+      var t = d.getTime();
+      if (t < cutoff24h) continue;
+      var hoursAgo = Math.floor((nowMs - t) / 3600000);
+      if (hoursAgo > 23) continue;
+      last24hHourly[23 - hoursAgo]++;
+    }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
     var currentHour = new Date().getUTCHours();
     var hourLabels24 = Array(24);
