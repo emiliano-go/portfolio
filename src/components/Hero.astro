@@ -48,11 +48,14 @@ const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim()
       <div id="hero-stats" class="flex flex-col gap-0">
         {latest && (
         <div class="flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
-          {isPrivateRepo ? (
-          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide truncate max-w-[180px]" data-i18n="hero.privateRepo">in a private repo</span>
-          ) : (
-          <span class="text-[10px] font-mono text-(--color-accent-dim) truncate max-w-[180px] tracking-wide" title={latestTitle}>{latest.repo}</span>
-          )}
+          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide truncate max-w-[220px]">
+            <span data-i18n="hero.latestCommit">Latest commit made in:</span>
+            {isPrivateRepo ? (
+            <span data-i18n="hero.privateRepo">a private repo</span>
+            ) : (
+            <span title={latestTitle}>{latest.repo}</span>
+            )}
+          </span>
           <time datetime={latest.committed_at} class="text-[10px] text-(--color-text-dim) whitespace-nowrap vigil-timeago">{latest.committed_at}</time>
         </div>
         )}
