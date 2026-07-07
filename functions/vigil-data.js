@@ -83,14 +83,30 @@ export async function onRequest(context) {
     // Compute last-24h hourly distribution, aligned so current hour is at index 23
     var currentHour = new Date().getUTCHours();
     var dayAgo = Date.now() - 24 * 60 * 60 * 1000;
-    var last24hHourly = Array(24).fill(0);
+    var rawHourly = null;
+    try {
+      rawHourly = await get(`/stats/hourly/authors?author_login=${encodeURIComponent(myLogin)}`);
+    } catch {}
+    // Always compute weekly-repo map from activity-range
     for (var ci = 0; ci < myCommits.length; ci++) {
-      var c = myCommits[ci];
-      var d = new Date(c.committed_at);
-      if (d.getTime() < dayAgo) continue;
-      var pos = (d.getUTCHours() - currentHour - 1 + 48) % 24;
-      last24hHourly[pos]++;
-      repoWeekMap[c.repo] = (repoWeekMap[c.repo] || 0) + 1;
+      repoWeekMap[myCommits[ci].repo] = (repoWeekMap[myCommits[ci].repo] || 0) + 1;
+    }
+
+    var last24hHourly;
+    if (rawHourly && rawHourly.length > 0) {
+      last24hHourly = Array(24).fill(0);
+      for (var ri = 0; ri < rawHourly.length; ri++) {
+        last24hHourly[rawHourly[ri].hour] += rawHourly[ri].total;
+      }
+    } else {
+      // fallback: bin from activity-range
+      last24hHourly = Array(24).fill(0);
+      for (var ci = 0; ci < myCommits.length; ci++) {
+        var d = new Date(myCommits[ci].committed_at);
+        if (d.getTime() < dayAgo) continue;
+        var pos = (d.getUTCHours() - currentHour - 1 + 48) % 24;
+        last24hHourly[pos]++;
+      }
     }
     var hourLabels24 = Array(24);
     for (var hi = 0; hi < 24; hi++) {
