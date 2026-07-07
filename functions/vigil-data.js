@@ -69,52 +69,36 @@ export async function onRequest(context) {
     const lastWeekDaily = (daily?.total || [])
       .filter(function(d) { return d.period >= sevenDaysAgo; })
       .sort(function(a, b) { return a.period.localeCompare(b.period); });
-    let myBusiestDay = null, myBusiestDayTotal = 0;
-    for (var i = 0; i < lastWeekDaily.length; i++) {
-      if (lastWeekDaily[i].total > myBusiestDayTotal) {
-        myBusiestDay = lastWeekDaily[i].period;
-        myBusiestDayTotal = lastWeekDaily[i].total;
-      }
-    }
-
     const repoWeekMap = {};
     let mostActiveRepoWeek = null, mostActiveRepoWeekTotal = 0;
 
-    // Compute last-24h hourly distribution, aligned so current hour is at index 23
-    var currentHour = new Date().getUTCHours();
-    var dayAgo = Date.now() - 24 * 60 * 60 * 1000;
-    var rawHourly = null;
-    try {
-      rawHourly = await get(`/stats/hourly/authors?author_login=${encodeURIComponent(myLogin)}`);
-    } catch {}
-    // Always compute weekly-repo map from activity-range
     for (var ci = 0; ci < myCommits.length; ci++) {
       repoWeekMap[myCommits[ci].repo] = (repoWeekMap[myCommits[ci].repo] || 0) + 1;
     }
-
-    var last24hHourly;
-    if (rawHourly && rawHourly.length > 0) {
-      last24hHourly = Array(24).fill(0);
-      for (var ri = 0; ri < rawHourly.length; ri++) {
-        last24hHourly[rawHourly[ri].hour] += rawHourly[ri].total;
-      }
-    } else {
-      // fallback: bin from activity-range
-      last24hHourly = Array(24).fill(0);
-      for (var ci = 0; ci < myCommits.length; ci++) {
-        var d = new Date(myCommits[ci].committed_at);
-        if (d.getTime() < dayAgo) continue;
-        var pos = (d.getUTCHours() - currentHour - 1 + 48) % 24;
-        last24hHourly[pos]++;
-      }
-    }
-    var hourLabels24 = Array(24);
-    for (var hi = 0; hi < 24; hi++) {
-      hourLabels24[hi] = String((currentHour + 1 + hi) % 24).padStart(2, '0');
-    }
-
     for (const [repo, total] of Object.entries(repoWeekMap)) {
       if (total > mostActiveRepoWeekTotal) { mostActiveRepoWeek = repo; mostActiveRepoWeekTotal = total; }
+    }
+
+    // Last 24h hourly: fetch raw commits, bin by hoursAgo, align current hour at index 23
+    var last24hHourly = Array(24).fill(0);
+    try {
+      var recent = await get(`/commits?author_login=${encodeURIComponent(myLogin)}&limit=1000`);
+      var nowMs = Date.now();
+      var cutoff = nowMs - 24 * 60 * 60 * 1000;
+      for (var ri = 0; ri < recent.length; ri++) {
+        var d = new Date(recent[ri].committed_at + 'Z');
+        var t = d.getTime();
+        if (t < cutoff) continue;
+        var hoursAgo = Math.floor((nowMs - t) / 3600000);
+        if (hoursAgo > 23) continue;
+        last24hHourly[23 - hoursAgo]++;
+      }
+    } catch {}
+    var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
+    var currentHour = new Date().getUTCHours();
+    var hourLabels24 = Array(24);
+    for (var hi = 0; hi < 24; hi++) {
+      hourLabels24[hi] = String((currentHour + hi + 2) % 24).padStart(2, '0');
     }
 
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
@@ -128,10 +112,10 @@ export async function onRequest(context) {
       myStats: {
         login: myLogin, totalCommits: myTotalCommits, streak, totalRepos: myRepos.size,
         mostActiveRepo: myMostActiveRepo, mostActiveRepoTotal: myMostActiveRepoTotal,
-        busiestDay: myBusiestDay, busiestDayTotal: myBusiestDayTotal,
         mostActiveRepoWeek, mostActiveRepoWeekTotal,
       },
       lastWeekHourly: last24hHourly,
+      last24hTotal,
       lastWeekDaily,
       hourLabels: hourLabels24,
       privateRepos, fetchedAt: new Date().toISOString(),
