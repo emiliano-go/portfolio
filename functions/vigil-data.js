@@ -5,7 +5,7 @@ export async function onRequest(context) {
 
   const empty = () => ({
     latestCommit: null, myStats: null,
-    lastWeekHourly: Array.from({ length: 7 }, () => Array(24).fill(0)),
+    lastWeekHourly: Array(24).fill(0),
     lastWeekDaily: [], hourLabels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
     privateRepos: [], fetchedAt: new Date().toISOString(),
   });
@@ -64,6 +64,15 @@ export async function onRequest(context) {
       const s = await get(`/stats/streak/${encodeURIComponent(myLogin)}`);
       streak = s.current_streak ?? 0;
     } catch {}
+
+    let hourlyRows = [];
+    try {
+      hourlyRows = await get('/stats/hourly');
+    } catch {}
+    const lastWeekHourly = Array(24).fill(0);
+    for (var i = 0; i < hourlyRows.length; i++) {
+      lastWeekHourly[hourlyRows[i].hour] += hourlyRows[i].total;
+    }
 
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     const lastWeekDaily = (daily?.total || [])

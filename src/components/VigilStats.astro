@@ -82,13 +82,7 @@
   var lastWeekHourly = data.lastWeekHourly || [];
   var fetchedAt = data.fetchedAt || '';
 
-  var hourlyTotals = Array(24).fill(0);
-  for (var day = 0; day < lastWeekHourly.length; day++) {
-    for (var h = 0; h < 24; h++) {
-      hourlyTotals[h] += (lastWeekHourly[day] && lastWeekHourly[day][h]) || 0;
-    }
-  }
-  var maxHourly = Math.max.apply(null, hourlyTotals.concat([1]));
+  var maxHourly = Math.max.apply(null, lastWeekHourly.concat([1]));
   var maxDaily = Math.max.apply(null, lastWeekDaily.map(function(d) { return d.total; }).concat([1]));
 
   function ago(iso) {
@@ -131,9 +125,9 @@
     html += '</div></div>';
   }
 
-  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 7 days)</h3><div class="flex gap-[2px] h-28">';
+  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (all time)</h3><div class="flex gap-[2px] h-28">';
   for (var h = 0; h < 24; h++) {
-    var t = hourlyTotals[h];
+    var t = lastWeekHourly[h];
     var pct = (t / maxHourly) * 100;
     var opacity = Math.round((t / maxHourly) * 60 + 20);
     html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
