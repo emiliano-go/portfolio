@@ -25,4 +25,7 @@ jobs:
           context: .
           push: true
           provenance: false
+          build-args: |
+            VIGIL_API_KEY=${{ secrets.VIGIL_API_KEY }}
+            VIGIL_API_BASE_URL=${{ secrets.VIGIL_API_BASE_URL }}
           tags: ghcr.io/emiliano-go/${{ github.event.repository.name }}:latest
