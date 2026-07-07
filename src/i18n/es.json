@@ -22,6 +22,7 @@
   "hero.title.line5": "datos",
   "hero.title.line6": "reales.",
   "hero.desc": "Desarrollador Python especializado en pipelines de datos, infraestructura ETL y arquitectura backend. Con base en Montevideo, Uruguay. Abierto a problemas interesantes.",
+  "hero.privateRepo": "en un repo privado",
   "hero.stat.stars": "estrellas en OSS mantenido",
   "hero.stat.pypi": "paquetes en PyPI",
   "hero.stat.location": "Montevideo, Uruguay",
@@ -115,6 +116,14 @@
   "oss.desc.2": "Me enfoco en la calidad de la documentaci\u00f3n y en mantener el proyecto ergon\u00f3mico para quienes construyen servicios FastAPI reales. Nombrado co-mantenedor en",
   "oss.desc.2.link": "v0.18.0, la reestructuraci\u00f3n con plugins",
   "oss.desc.3": "Mis contribuciones apuntan a la experiencia del desarrollador: abstracciones m\u00e1s limpias, menos boilerplate y un c\u00f3digo m\u00e1s f\u00e1cil de extender. Comprometido con una superficie de contribuci\u00f3n donde a\u00f1adir cosas nuevas sea sencillo.",
+
+  "vigil.heading": "Actividad de GitHub",
+  "vigil.overview.totalCommits": "commits totales",
+  "vigil.overview.totalRepos": "repos",
+  "vigil.overview.busiestDay": "dia mas activo",
+  "vigil.overview.mostActiveRepo": "repo mas activo",
+  "vigil.hourlyChart": "Commits por hora (ult. 7 dias)",
+  "vigil.updated": "Actualizado",
 
   "refs.heading": "Referencias",
   "refs.linkedin": "LinkedIn",

@@ -22,6 +22,7 @@
   "hero.title.line5": "des donn\u00e9es",
   "hero.title.line6": "r\u00e9elles.",
   "hero.desc": "D\u00e9veloppeur Python sp\u00e9cialis\u00e9 dans les pipelines de donn\u00e9es, l'infrastructure ETL et l'architecture backend. Bas\u00e9 \u00e0 Montevideo, Uruguay. Ouvert aux probl\u00e8mes int\u00e9ressants.",
+  "hero.privateRepo": "dans un repo priv\u00e9",
   "hero.stat.stars": "\u00e9toiles sur l'OSS maintenu",
   "hero.stat.pypi": "paquets sur PyPI",
   "hero.stat.location": "Montevideo, Uruguay",
@@ -115,6 +116,14 @@
   "oss.desc.2": "Je me concentre sur la qualit\u00e9 de la documentation et sur le maintien de l'ergonomie du projet pour ceux qui construisent des services FastAPI r\u00e9els. Nomm\u00e9 co-mainteneur dans",
   "oss.desc.2.link": "v0.18.0, la restructuration avec plugins",
   "oss.desc.3": "Mes contributions visent l'exp\u00e9rience d\u00e9veloppeur: des abstractions plus propres, moins de boilerplate et un code plus facile \u00e0 \u00e9tendre. Engag\u00e9 pour une surface de contribution o\u00f9 ajouter de nouvelles fonctionnalit\u00e9s reste simple.",
+
+  "vigil.heading": "Activit\u00e9 GitHub",
+  "vigil.overview.totalCommits": "commits totaux",
+  "vigil.overview.totalRepos": "depots",
+  "vigil.overview.busiestDay": "jour le plus actif",
+  "vigil.overview.mostActiveRepo": "repo le plus actif",
+  "vigil.hourlyChart": "Commits par heure (7 derniers j)",
+  "vigil.updated": "Mis \u00e0 jour",
 
   "refs.heading": "R\u00e9f\u00e9rences",
   "refs.linkedin": "LinkedIn",

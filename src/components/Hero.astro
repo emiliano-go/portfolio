@@ -1,4 +1,12 @@
 ---
+let vigilData = { latestCommit: null };
+try {
+  const mod = await import('../data/vigil-data.json');
+  vigilData = mod.default || mod;
+} catch {}
+const latest = vigilData?.latestCommit || null;
+const isPrivateRepo = latest && (vigilData?.privateRepos || []).includes(latest.repo);
+const latestTitle = latest?.message ? latest.message.replace(/\n.*$/, '').trim() : '';
 ---
 
 <section class="hero-section relative min-h-screen flex items-center border-b border-(--color-border-subtle) overflow-hidden">
@@ -38,6 +46,16 @@
 
       <!-- Right: stats -->
       <div id="hero-stats" class="flex flex-col gap-0">
+        {latest && (
+        <div class="flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
+          {isPrivateRepo ? (
+          <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide truncate max-w-[180px]" data-i18n="hero.privateRepo">in a private repo</span>
+          ) : (
+          <span class="text-[10px] font-mono text-(--color-accent-dim) truncate max-w-[180px] tracking-wide" title={latestTitle}>{latest.repo}</span>
+          )}
+          <time datetime={latest.committed_at} class="text-[10px] text-(--color-text-dim) whitespace-nowrap vigil-timeago">{latest.committed_at}</time>
+        </div>
+        )}
         <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
           <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.stars">stars on maintained OSS</span>
@@ -225,5 +243,27 @@
       });
     }
     window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  (function() {
+    var els = document.querySelectorAll('.vigil-timeago');
+    if (!els.length) return;
+    function ago(iso) {
+      var now = Date.now();
+      var then = new Date(iso).getTime();
+      var diff = now - then;
+      if (diff < 60000) return 'just now';
+      var mins = Math.floor(diff / 60000);
+      if (mins < 60) return mins + 'm ago';
+      var hrs = Math.floor(mins / 60);
+      if (hrs < 24) return hrs + 'h ago';
+      var days = Math.floor(hrs / 24);
+      if (days < 7) return days + 'd ago';
+      if (days < 30) return Math.floor(days / 7) + 'w ago';
+      return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+    for (var i = 0; i < els.length; i++) {
+      els[i].textContent = ago(els[i].getAttribute('datetime'));
+    }
   })();
 </script>

@@ -1,0 +1,112 @@
+---
+let vigilData = { latestCommit: null, overview: null, lastWeekHourly: [], hourLabels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], weekly: { total: [], by_repo: [] }, fetchedAt: '' };
+try {
+  const mod = await import('../data/vigil-data.json');
+  vigilData = mod.default || mod;
+} catch {}
+
+const { overview, lastWeekHourly, hourLabels, weekly } = vigilData;
+
+const totals = {
+  commits: overview?.total_commits ?? null,
+  repos: overview?.total_repos ?? null,
+  busiestDay: overview?.busiest_day?.period ?? null,
+  busiestDayTotal: overview?.busiest_day?.total ?? null,
+  activeRepo: overview?.most_active_repo?.repo ?? null,
+  activeRepoTotal: overview?.most_active_repo?.total ?? null,
+};
+
+const hourlyTotals = Array(24).fill(0);
+for (const day of lastWeekHourly) {
+  for (let h = 0; h < 24; h++) {
+    hourlyTotals[h] += day[h];
+  }
+}
+const maxHourly = Math.max(...hourlyTotals, 1);
+
+const weeklyTotals = weekly?.total?.slice(0, 12)?.reverse() || [];
+const maxWeekly = Math.max(...weeklyTotals.map(w => w.total), 1);
+---
+
+{overview && (
+<section class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+    <div class="flex items-center gap-4 mb-10">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="vigil.heading">
+        GitHub Activity
+      </h2>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <!-- Overview cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">
+      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
+        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.totalCommits">total commits</span>
+        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{totals.commits?.toLocaleString() ?? '-'}</span>
+      </div>
+      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
+        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.totalRepos">repos</span>
+        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{totals.repos ?? '-'}</span>
+      </div>
+      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
+        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.busiestDay">busiest day</span>
+        <span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">{totals.busiestDay ?? '-'}</span>
+        {totals.busiestDayTotal && <span class="text-xs text-(--color-text-muted)">{totals.busiestDayTotal} commits</span>}
+      </div>
+      <div class="bg-(--color-surface) p-4 flex flex-col gap-1">
+        <span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)" data-i18n="vigil.overview.mostActiveRepo">most active repo</span>
+        <span class="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-text-head) truncate" title={totals.activeRepo}>{totals.activeRepo ?? '-'}</span>
+        {totals.activeRepoTotal && <span class="text-xs text-(--color-text-muted)">{totals.activeRepoTotal} commits</span>}
+      </div>
+    </div>
+
+    <!-- Weekly bar chart -->
+    {weeklyTotals.length > 0 && (
+    <div class="mb-8">
+      <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Weekly commits</h3>
+      <div class="flex items-end gap-[3px] h-24">
+        {weeklyTotals.map(w => (
+          <div class="flex-1 flex flex-col items-center gap-1 group relative">
+            <div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style={`height: ${(w.total / maxWeekly) * 100}%`}>
+              <div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm transition-all duration-300 group-hover:bg-(--color-accent-dim)"></div>
+            </div>
+            <div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">
+              {new Date(w.period).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {w.total}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    )}
+
+    <!-- Hourly bar chart -->
+    <div>
+      <h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3" data-i18n="vigil.hourlyChart">Hourly commits (last 7 days)</h3>
+      <div class="flex items-end gap-[2px] h-28">
+        {hourlyTotals.map((total, h) => (
+          <div class="flex-1 flex flex-col items-center gap-1 group relative">
+            <div
+              class="w-full rounded-t-sm transition-all duration-300"
+              style={`height: ${(total / maxHourly) * 100}%; background: color-mix(in srgb, var(--color-accent) ${Math.round((total / maxHourly) * 60 + 20)}%, transparent)`}
+            >
+              <div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200" style="background: var(--color-accent)"></div>
+            </div>
+            <div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">
+              {String(h).padStart(2, '0')}:00 - {total}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">
+        <span>00</span><span>04</span><span>08</span><span>12</span><span>16</span><span>20</span><span>23</span>
+      </div>
+    </div>
+
+    {vigilData.fetchedAt && (
+    <p class="text-[9px] text-(--color-text-dim) mt-4 text-right">
+      <span data-i18n="vigil.updated">Updated</span> <time datetime={vigilData.fetchedAt} class="vigil-timeago">{vigilData.fetchedAt}</time>
+    </p>
+    )}
+  </div>
+</section>
+)}
