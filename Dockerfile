@@ -8,11 +8,17 @@ ENV VIGIL_API_BASE_URL=$VIGIL_API_BASE_URL
 
 WORKDIR /app
 
+RUN apk add --no-cache python3 py3-pip
+
 COPY package*.json ./
 RUN npm ci
 
+RUN python3 -m pip install --no-cache-dir seoslug==2.3.0
+
 COPY . .
+RUN python3 scripts/generate_seo.py
 RUN npm run build
+RUN python3 -m seoslug validate-html dist/index.html dist/projects/index.html dist/404.html --strict
 
 
 # Runtime stage

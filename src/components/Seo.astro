@@ -4,10 +4,12 @@ import seoManifest from '../data/seo-manifest.json';
 export interface Props {
   route?: string;
   fallbackTitle?: string;
+  fallbackDescription?: string;
 }
 
-const { route = Astro.url.pathname, fallbackTitle = 'Emiliano G.O.' } = Astro.props;
+const { route = Astro.url.pathname, fallbackTitle = 'Emiliano G.O.', fallbackDescription } = Astro.props;
 const seo = (seoManifest as Record<string, any>)[route];
+const localeAlternates = Array.isArray(seo?.og?.['locale:alternate']) ? seo.og['locale:alternate'] : [];
 ---
 
 {seo ? (
@@ -21,15 +23,18 @@ const seo = (seoManifest as Record<string, any>)[route];
     <meta property="og:description" content={seo.og.description} />
     <meta property="og:url" content={seo.og.url} />
     <meta property="og:image" content={seo.og.image} />
+    {seo.og['image:alt'] && <meta property="og:image:alt" content={seo.og['image:alt']} />}
     <meta property="og:image:width" content={seo.og['image:width']} />
     <meta property="og:image:height" content={seo.og['image:height']} />
     <meta property="og:site_name" content={seo.og.site_name} />
     <meta property="og:locale" content={seo.og.locale} />
+    {localeAlternates.map((locale: string) => <meta property="og:locale:alternate" content={locale} />)}
     <meta name="twitter:card" content={seo.twitter.card} />
     <meta name="twitter:title" content={seo.twitter.title} />
     <meta name="twitter:description" content={seo.twitter.description} />
     <meta name="twitter:image" content={seo.twitter.image} />
     <meta name="twitter:site" content={seo.twitter.site} />
+    {seo.twitter.creator && <meta name="twitter:creator" content={seo.twitter.creator} />}
     {seo.schema_jsonld && (
       <script type="application/ld+json" set:html={JSON.stringify(seo.schema_jsonld)} />
     )}
@@ -37,6 +42,7 @@ const seo = (seoManifest as Record<string, any>)[route];
 ) : (
   <>
     <title>{fallbackTitle}</title>
+    {fallbackDescription && <meta name="description" content={fallbackDescription} />}
     <meta name="robots" content="index,follow" />
   </>
 )}

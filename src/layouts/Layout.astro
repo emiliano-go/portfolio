@@ -10,6 +10,14 @@ import es from '../i18n/es.json';
 import fr from '../i18n/fr.json';
 import Seo from '../components/Seo.astro';
 
+export interface Props {
+  route?: string;
+  title?: string;
+  description?: string;
+}
+
+const { route, title, description } = Astro.props;
+
 const url = Astro.url;
 const slug = url.pathname === '/' ? 'index' : url.pathname.replace(/^\//, '').replace(/\/$/, '') || 'index';
 
@@ -24,7 +32,7 @@ const frScript = `var translations_fr = ${JSON.stringify(fr)};`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <ClientRouter />
-    <Seo route={Astro.url.pathname} />
+    <Seo route={route ?? Astro.url.pathname} fallbackTitle={title} fallbackDescription={description} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
