@@ -79,16 +79,23 @@ export async function onRequest(context) {
       if (total > mostActiveRepoWeekTotal) { mostActiveRepoWeek = repo; mostActiveRepoWeekTotal = total; }
     }
 
-    // Last 24h hourly: bin myCommits (from activity-range) by hoursAgo
+    // Last 24h hourly: bin by UTC hour start so it matches activity-range grouping
     var last24hHourly = Array(24).fill(0);
-    var nowMs = Date.now();
-    var cutoff24h = nowMs - 24 * 60 * 60 * 1000;
-    for (var ri = 0; ri < myCommits.length; ri++) {
-      var d = new Date(myCommits[ri].committed_at + 'Z');
-      var t = d.getTime();
-      if (t < cutoff24h) continue;
-      var hoursAgo = Math.floor((nowMs - t) / 3600000);
-      if (hoursAgo > 23) continue;
+    var now = new Date();
+    var since24h = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    var activity24h = [];
+    try {
+      activity24h = await get(`/stats/activity-range?since=${encodeURIComponent(since24h.toISOString())}&until=${encodeURIComponent(now.toISOString())}`);
+    } catch {}
+
+    var currentHourStart = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours());
+    for (var ri = 0; ri < activity24h.length; ri++) {
+      var c = activity24h[ri];
+      if (c.author_login !== myLogin) continue;
+      var d = new Date(c.committed_at + 'Z');
+      var commitHourStart = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours());
+      var hoursAgo = (currentHourStart - commitHourStart) / 3600000;
+      if (hoursAgo < 0 || hoursAgo > 23) continue;
       last24hHourly[23 - hoursAgo]++;
     }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);

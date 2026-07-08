@@ -133,7 +133,7 @@
     var opacity = Math.round((t / maxHourly) * 50 + 50);
     html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
     html += '<div class="w-full rounded-t-sm" style="height:' + pct + '%;background:color-mix(in srgb, var(--color-accent) ' + opacity + '%,transparent)"><div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200"></div></div>';
-    html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + String(h).padStart(2, '0') + ':00 - ' + t + '</div>';
+    html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + (hourLabels[h] || '--') + ':00 - ' + t + '</div>';
     html += '</div>';
   }
   html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">';
