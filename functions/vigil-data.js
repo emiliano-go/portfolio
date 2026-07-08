@@ -83,6 +83,9 @@ export async function onRequest(context) {
     var now = new Date();
     var untilHour = new Date(now);
     untilHour.setUTCMinutes(0, 0, 0);
+    if (now.getUTCMinutes() || now.getUTCSeconds() || now.getUTCMilliseconds()) {
+      untilHour.setUTCHours(untilHour.getUTCHours() + 1);
+    }
     var sinceHour = new Date(untilHour.getTime() - 24 * 60 * 60 * 1000);
     var hourlyRange = [];
     try {
