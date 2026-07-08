@@ -113,7 +113,9 @@ export async function onRequest(context) {
       var activityRows24h = await get(`/stats/activity-range?since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
       var privateRepoSet = new Set(privateRepos);
       for (var ai = 0; ai < activityRows24h.length; ai++) {
-        var repo = activityRows24h[ai] && activityRows24h[ai].repo;
+        var row = activityRows24h[ai];
+        var repo = row && row.repo;
+        if (!row || row.author_login !== myLogin) continue;
         if (repo && !privateRepoSet.has(repo)) ossCommits24h++;
       }
     } catch {}
