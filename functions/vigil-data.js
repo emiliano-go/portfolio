@@ -108,38 +108,30 @@ export async function onRequest(context) {
     }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
 
-    var unique24hMyCommits = [];
-    var seen24h = new Set();
     var privateRepoSet = new Set(privateRepos);
-    var hourIndexByPeriod = {};
-    for (var hi = 0; hi < last24hPeriods.length; hi++) {
-      hourIndexByPeriod[last24hPeriods[hi]] = hi;
-    }
+    var activityRows24h = [];
     try {
-      var activityRows24h = await get(`/stats/activity-range?since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
+      activityRows24h = await get(`/stats/activity-range?since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
       for (var ai = 0; ai < activityRows24h.length; ai++) {
         var row = activityRows24h[ai];
-        var repo = row && row.repo;
         if (!row || row.author_login !== myLogin) continue;
-        var key = repo + '|' + row.sha;
-        if (seen24h.has(key)) continue;
-        seen24h.add(key);
-        unique24hMyCommits.push(row);
 
         var committedAt = new Date((String(row.committed_at).endsWith('Z') || String(row.committed_at).includes('+')) ? row.committed_at : row.committed_at + 'Z');
         committedAt.setUTCMinutes(0, 0, 0);
         var period = committedAt.toISOString().replace('.000Z', 'Z');
-        var idx = hourIndexByPeriod[period];
-        if (idx !== undefined) last24hHourly[idx]++;
+
+        for (var hi = 0; hi < last24hPeriods.length; hi++) {
+          if (last24hPeriods[hi] === period) {
+            last24hHourly[hi]++;
+            break;
+          }
+        }
       }
     } catch {}
 
+    var unique24hMyCommits = activityRows24h.filter(function(row) { return row && row.author_login === myLogin; });
     last24hTotal = unique24hMyCommits.length;
-    var ossCommits24h = 0;
-    for (var oi = 0; oi < unique24hMyCommits.length; oi++) {
-      var ossRepo = unique24hMyCommits[oi] && unique24hMyCommits[oi].repo;
-      if (ossRepo && !privateRepoSet.has(ossRepo)) ossCommits24h++;
-    }
+    var ossCommits24h = unique24hMyCommits.filter(function(row) { return row && row.repo && !privateRepoSet.has(row.repo); }).length;
 
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
 
