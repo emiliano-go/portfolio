@@ -200,7 +200,7 @@
   "projects.more.mapcreator.desc": "\u00c9diteur de plans de b\u00e2timents bas\u00e9 sur des tuiles construit avec React et Canvas. Cr\u00e9ez des layouts de b\u00e2timents multi-\u00e9tages avec un \u00e9diteur grille; placez des murs, d\u00e9signez des pi\u00e8ces et connectez-les avec des portes, escaliers et ascenseurs. Chaque \u00e9tage est une couche s\u00e9par\u00e9e, et le syst\u00e8me de pathfinding A* peut router d'une pi\u00e8ce \u00e0 une autre \u00e0 travers les \u00e9tages. Le canvas rend \u00e0 60fps avec scrolling virtuel pour les grandes cartes. L'\u00e9tat est g\u00e9r\u00e9 enti\u00e8rement avec les hooks React.",
   "projects.more.mapcreator.tag": "Application web",
 
-  "meta.default.title": "Emiliano G.O. \u2014 Ing\u00e9nieur Backend & Data Scientist",
+  "meta.default.title": "Emiliano G.O. > Ing\u00e9nieur Backend & Data Scientist",
   "meta.default.desc": "D\u00e9veloppeur Python sp\u00e9cialis\u00e9 dans les pipelines de donn\u00e9es, l'infrastructure ETL et l'architecture backend. Bas\u00e9 \u00e0 Montevideo, Uruguay.",
   "meta.sitename": "Emiliano G.O.",
   "meta.ld.name": "Emiliano Gandini Outeda",

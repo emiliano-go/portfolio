@@ -200,7 +200,7 @@
   "projects.more.mapcreator.desc": "Editor de mapas de edificios basado en tiles construido con React y Canvas. Crea layouts de edificios multi-piso con un editor basado en cuadr\u00edcula; coloca paredes, designa habitaciones y con\u00e9ctalas con puertas, escaleras y ascensores. Cada piso es una capa separada, y el sistema de pathfinding A* puede rutear de cualquier habitaci\u00f3n a otra a trav\u00e9s de los pisos. El canvas renderiza a 60fps con scrolling virtual para mapas grandes. El estado se maneja \u00edntegramente con hooks de React, facilitando undo, redo y exportaci\u00f3n a JSON.",
   "projects.more.mapcreator.tag": "Aplicaci\u00f3n web",
 
-  "meta.default.title": "Emiliano G.O. \u2014 Ingeniero Backend & Cient\u00edfico de Datos",
+  "meta.default.title": "Emiliano G.O. > Ingeniero Backend & Cient\u00edfico de Datos",
   "meta.default.desc": "Desarrollador Python enfocado en pipelines de datos, infraestructura ETL y arquitectura backend. Con base en Montevideo, Uruguay.",
   "meta.sitename": "Emiliano G.O.",
   "meta.ld.name": "Emiliano Gandini Outeda",
