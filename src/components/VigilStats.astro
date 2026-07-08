@@ -122,11 +122,11 @@
   html += '</div>';
 
   if (lastWeekDaily.length > 0) {
-    html += '<div class="mb-8"><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Daily commits (last 7 days)</h3><div class="flex gap-[3px] h-24">';
+    html += '<div class="mb-8"><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Daily commits (last 7 days)</h3><div class="flex gap-[3px] h-24 border-b border-(--color-border-subtle)">';
     for (var i = 0; i < lastWeekDaily.length; i++) {
       var d = lastWeekDaily[i];
       var pct = (d.total / maxDaily) * 100;
-      html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
+      html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full border-b border-(--color-border-subtle)/50">';
       html += '<div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style="height:' + pct + '%"><div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm"></div></div>';
       html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + dayLabel(d.period) + ' - ' + d.total + '</div>';
       html += '</div>';
