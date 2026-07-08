@@ -79,27 +79,27 @@ export async function onRequest(context) {
       if (total > mostActiveRepoWeekTotal) { mostActiveRepoWeek = repo; mostActiveRepoWeekTotal = total; }
     }
 
-    // Last 24h hourly: bin by UTC hour-of-day to match the grouped query output
-    var last24hHourly = Array(24).fill(0);
+    // Last 24h hourly: use the zero-filled hourly range endpoint
     var now = new Date();
-    var since24h = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-    var activity24h = [];
+    var untilHour = new Date(now);
+    untilHour.setUTCMinutes(0, 0, 0);
+    var sinceHour = new Date(untilHour.getTime() - 24 * 60 * 60 * 1000);
+    var hourlyRange = [];
     try {
-      activity24h = await get(`/stats/activity-range?since=${encodeURIComponent(since24h.toISOString())}&until=${encodeURIComponent(now.toISOString())}`);
+      hourlyRange = await get(`/stats/hourly/authors/range?author_login=${encodeURIComponent(myLogin)}&since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
     } catch {}
 
-    for (var ri = 0; ri < activity24h.length; ri++) {
-      var c = activity24h[ri];
-      if (c.author_login !== myLogin) continue;
-      var d = new Date(c.committed_at + 'Z');
-      if (d.getTime() < since24h.getTime() || d.getTime() > now.getTime()) continue;
-      last24hHourly[d.getUTCHours()]++;
+    var last24hHourly = hourlyRange.map(function(row) { return row.total; });
+    var hourLabels24 = hourlyRange.map(function(row) {
+      var p = String(row.period);
+      var d = new Date((p.endsWith('Z') || p.includes('+')) ? p : p + 'Z');
+      return String(d.getUTCHours()).padStart(2, '0');
+    });
+    while (last24hHourly.length < 25) {
+      last24hHourly.push(0);
+      hourLabels24.push('--');
     }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
-    var hourLabels24 = Array(24);
-    for (var hi = 0; hi < 24; hi++) {
-      hourLabels24[hi] = String(hi).padStart(2, '0');
-    }
 
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
 

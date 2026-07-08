@@ -127,7 +127,7 @@
   }
 
   html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 24h)</h3><div class="flex gap-[2px] h-28">';
-  for (var h = 0; h < 24; h++) {
+  for (var h = 0; h < lastWeekHourly.length; h++) {
     var t = lastWeekHourly[h];
     var pct = (t / maxHourly) * 100;
     var opacity = Math.round((t / maxHourly) * 50 + 50);
@@ -137,8 +137,16 @@
     html += '</div>';
   }
   html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">';
-  for (var li = 0; li < 24; li++) {
-    if (li === 0 || li === 6 || li === 12 || li === 18 || li === 23) {
+  var labelSlots = {};
+  if (lastWeekHourly.length > 0) {
+    labelSlots[0] = true;
+    labelSlots[Math.floor((lastWeekHourly.length - 1) / 4)] = true;
+    labelSlots[Math.floor((lastWeekHourly.length - 1) / 2)] = true;
+    labelSlots[Math.floor(((lastWeekHourly.length - 1) * 3) / 4)] = true;
+    labelSlots[lastWeekHourly.length - 1] = true;
+  }
+  for (var li = 0; li < lastWeekHourly.length; li++) {
+    if (labelSlots[li]) {
       html += '<span>' + (hourLabels[li] || '--') + '</span>';
     }
   }
