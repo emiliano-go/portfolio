@@ -102,9 +102,10 @@ export async function onRequest(context) {
       var d = new Date((p.endsWith('Z') || p.includes('+')) ? p : p + 'Z');
       return String(d.getUTCHours()).padStart(2, '0');
     });
-    while (last24hHourly.length < 25) {
+    while (last24hHourly.length < 24) {
       last24hHourly.push(0);
       hourLabels24.push('--');
+      last24hPeriods.push('--');
     }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
 
