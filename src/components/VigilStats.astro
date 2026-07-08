@@ -134,13 +134,13 @@
     html += '</div></div>';
   }
 
-  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 24h)</h3><div class="flex gap-[2px] h-28">';
+  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 24h)</h3><div class="flex gap-[2px] h-28 border-b border-(--color-border-subtle)">';
   for (var h = 0; h < lastWeekHourly.length; h++) {
     var t = lastWeekHourly[h];
     var label = hourLabel(lastHourPeriods[h] || '');
     var pct = (t / maxHourly) * 100;
     var opacity = Math.round((t / maxHourly) * 50 + 50);
-    html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
+    html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full border-b border-(--color-border-subtle)/50">';
     html += '<div class="w-full rounded-t-sm" style="height:' + pct + '%;background:color-mix(in srgb, var(--color-accent) ' + opacity + '%,transparent)"><div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200"></div></div>';
     html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + label + ':00 - ' + t + '</div>';
     html += '</div>';
