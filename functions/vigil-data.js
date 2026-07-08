@@ -92,7 +92,7 @@ export async function onRequest(context) {
       hourlyRange = await get(`/stats/hourly/authors/range?author_login=${encodeURIComponent(myLogin)}&since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
     } catch {}
 
-    var last24hHourly = hourlyRange.map(function(row) { return row.total; });
+    var last24hHourly = hourlyRange.map(function() { return 0; });
     var last24hPeriods = hourlyRange.map(function(row) {
       var p = String(row.period);
       return (p.endsWith('Z') || p.includes('+')) ? p : p + 'Z';
@@ -108,17 +108,38 @@ export async function onRequest(context) {
     }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
 
-    var ossCommits24h = 0;
+    var unique24hMyCommits = [];
+    var seen24h = new Set();
+    var privateRepoSet = new Set(privateRepos);
+    var hourIndexByPeriod = {};
+    for (var hi = 0; hi < last24hPeriods.length; hi++) {
+      hourIndexByPeriod[last24hPeriods[hi]] = hi;
+    }
     try {
       var activityRows24h = await get(`/stats/activity-range?since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
-      var privateRepoSet = new Set(privateRepos);
       for (var ai = 0; ai < activityRows24h.length; ai++) {
         var row = activityRows24h[ai];
         var repo = row && row.repo;
         if (!row || row.author_login !== myLogin) continue;
-        if (repo && !privateRepoSet.has(repo)) ossCommits24h++;
+        var key = repo + '|' + row.sha;
+        if (seen24h.has(key)) continue;
+        seen24h.add(key);
+        unique24hMyCommits.push(row);
+
+        var committedAt = new Date((String(row.committed_at).endsWith('Z') || String(row.committed_at).includes('+')) ? row.committed_at : row.committed_at + 'Z');
+        committedAt.setUTCMinutes(0, 0, 0);
+        var period = committedAt.toISOString().replace('.000Z', 'Z');
+        var idx = hourIndexByPeriod[period];
+        if (idx !== undefined) last24hHourly[idx]++;
       }
     } catch {}
+
+    last24hTotal = unique24hMyCommits.length;
+    var ossCommits24h = 0;
+    for (var oi = 0; oi < unique24hMyCommits.length; oi++) {
+      var ossRepo = unique24hMyCommits[oi] && unique24hMyCommits[oi].repo;
+      if (ossRepo && !privateRepoSet.has(ossRepo)) ossCommits24h++;
+    }
 
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
 
