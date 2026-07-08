@@ -108,6 +108,16 @@ export async function onRequest(context) {
     }
     var last24hTotal = last24hHourly.reduce(function(a, b) { return a + b; }, 0);
 
+    var ossCommits24h = 0;
+    try {
+      var activityRows24h = await get(`/stats/activity-range?since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
+      var privateRepoSet = new Set(privateRepos);
+      for (var ai = 0; ai < activityRows24h.length; ai++) {
+        var repo = activityRows24h[ai] && activityRows24h[ai].repo;
+        if (repo && !privateRepoSet.has(repo)) ossCommits24h++;
+      }
+    } catch {}
+
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
 
     const output = {
@@ -123,6 +133,7 @@ export async function onRequest(context) {
       },
       lastWeekHourly: last24hHourly,
       last24hTotal,
+      ossCommits24h,
       last24hPeriods,
       lastWeekDaily,
       hourLabels: hourLabels24,
