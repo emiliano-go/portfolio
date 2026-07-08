@@ -80,6 +80,7 @@
   var s = data.myStats;
   var lastWeekDaily = data.lastWeekDaily || [];
   var lastWeekHourly = data.lastWeekHourly || [];
+  var lastHourPeriods = data.last24hPeriods || [];
   var fetchedAt = data.fetchedAt || '';
 
   var maxHourly = Math.max.apply(null, lastWeekHourly.concat([1]));
@@ -102,6 +103,13 @@
 
   function dayLabel(period) {
     return new Date(period + 'Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  var hourFormatter = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', hour12: false });
+
+  function hourLabel(period) {
+    if (!period) return '--';
+    return hourFormatter.format(new Date(period));
   }
 
   var html = '';
@@ -129,11 +137,12 @@
   html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 24h)</h3><div class="flex gap-[2px] h-28">';
   for (var h = 0; h < lastWeekHourly.length; h++) {
     var t = lastWeekHourly[h];
+    var label = hourLabel(lastHourPeriods[h] || '');
     var pct = (t / maxHourly) * 100;
     var opacity = Math.round((t / maxHourly) * 50 + 50);
     html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full">';
     html += '<div class="w-full rounded-t-sm" style="height:' + pct + '%;background:color-mix(in srgb, var(--color-accent) ' + opacity + '%,transparent)"><div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200"></div></div>';
-    html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + (hourLabels[h] || '--') + ':00 - ' + t + '</div>';
+    html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + label + ':00 - ' + t + '</div>';
     html += '</div>';
   }
   html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">';
@@ -147,7 +156,7 @@
   }
   for (var li = 0; li < lastWeekHourly.length; li++) {
     if (labelSlots[li]) {
-      html += '<span>' + (hourLabels[li] || '--') + '</span>';
+      html += '<span>' + hourLabel(lastHourPeriods[li] || '') + '</span>';
     }
   }
   html += '</div></div>';

@@ -93,6 +93,10 @@ export async function onRequest(context) {
     } catch {}
 
     var last24hHourly = hourlyRange.map(function(row) { return row.total; });
+    var last24hPeriods = hourlyRange.map(function(row) {
+      var p = String(row.period);
+      return (p.endsWith('Z') || p.includes('+')) ? p : p + 'Z';
+    });
     var hourLabels24 = hourlyRange.map(function(row) {
       var p = String(row.period);
       var d = new Date((p.endsWith('Z') || p.includes('+')) ? p : p + 'Z');
@@ -119,6 +123,7 @@ export async function onRequest(context) {
       },
       lastWeekHourly: last24hHourly,
       last24hTotal,
+      last24hPeriods,
       lastWeekDaily,
       hourLabels: hourLabels24,
       privateRepos, fetchedAt: new Date().toISOString(),
