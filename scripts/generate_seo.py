@@ -55,14 +55,14 @@ def make_entity(title: str, description: str, entity_type: str = "page") -> SEOE
 ROUTES: list[tuple[str, str, str, str, SEOOverrides | None]] = [
     (
         "/",
-        "Emiliano G.O. - Backend Engineer & Data Scientist",
+        "Emiliano G.O. > Backend Engineer & Data Scientist",
         "Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay.",
         "home",
         SEOOverrides(twitter_creator="@emiliano_gando"),
     ),
     (
         "/projects/",
-        "Projects - Emiliano G.O.",
+        "Projects > Emiliano G.O.",
         "DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
         "page",
         SEOOverrides(twitter_creator="@emiliano_gando"),
