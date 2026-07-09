@@ -71,7 +71,8 @@ export async function onRequest(context) {
     } catch {}
 
     const lastWeekDaily = (daily?.total || [])
-      .sort(function(a, b) { return a.period.localeCompare(b.period); });
+      .sort(function(a, b) { return a.period.localeCompare(b.period); })
+      .slice(-7);
     const repoWeekMap = {};
     let mostActiveRepoWeek = null, mostActiveRepoWeekTotal = 0;
 
