@@ -16,7 +16,7 @@ const stack = [
 ---
 
 <section id="about" class="py-16 border-b border-(--color-border-subtle)">
-  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
 
     <div class="flex items-center gap-4 mb-10">
       <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="about.heading">
@@ -28,7 +28,7 @@ const stack = [
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
 
       <div>
-        <h2 class="font-[family-name:var(--font-display)] text-[44px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-2" data-i18n="about.name" data-i18n-html>
+        <h2 class="font-[family-name:var(--font-display)] text-[clamp(28px,6vw,44px)] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-2" data-i18n="about.name" data-i18n-html>
           Emiliano<br />G.O.
         </h2>
         <p class="text-xs text-(--color-text-dim) mb-8 tracking-wide" data-i18n="about.location">Montevideo, Uruguay</p>
@@ -50,9 +50,9 @@ const stack = [
         <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="about.stack">Stack</p>
         <div class="grid grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
           {stack.map((item) => (
-            <div class="flex justify-between items-center px-3 py-2.5 bg-(--color-bg) text-[11px]">
-              <span class="text-(--color-text-muted)">{item.name}</span>
-              <span class="text-(--color-text-dim) text-[10px]">{item.cat}</span>
+            <div class="flex justify-between items-center gap-2 px-2 py-2.5 bg-(--color-bg) text-[11px]">
+              <span class="text-(--color-text-muted) truncate min-w-0">{item.name}</span>
+              <span class="text-(--color-text-dim) text-[10px] shrink-0">{item.cat}</span>
             </div>
           ))}
         </div>

@@ -3,7 +3,7 @@
 ---
 
 <section class="hero-section relative min-h-screen flex items-center border-b border-(--color-border-subtle) overflow-hidden">
-  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px] relative z-10">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
 
       <!-- Left: headline -->
@@ -18,7 +18,7 @@
         <!-- Liquid glass heading -->
         <h1
           id="hero-title"
-          class="font-[family-name:var(--font-display)] text-[clamp(44px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide mb-6"
+          class="font-[family-name:var(--font-display)] text-[clamp(28px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide mb-6"
         >
           <span class="glass-word" style="--i: 0" data-i18n="hero.title.line1">Building</span><br />
           <span class="glass-word" style="--i: 1" data-i18n="hero.title.line2">systems</span>
@@ -39,7 +39,7 @@
 
       <!-- Right: stats -->
       <div id="hero-stats" class="flex flex-col gap-0">
-        <div id="hero-commit-line" class="flex items-baseline justify-between py-2 border-t border-(--color-border-subtle) hero-commit-line">
+        <div id="hero-commit-line" class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-2 border-t border-(--color-border-subtle) hero-commit-line">
           <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide flex items-center gap-2">
             <span data-i18n="hero.latestCommit">Latest commit made in:</span>
             <span id="hero-commit-repo-skeleton" class="inline-block h-3 w-36 bg-(--color-text-dim)/10 rounded animate-pulse align-middle"></span>
@@ -48,15 +48,15 @@
           <span id="hero-commit-time-skeleton" class="inline-block h-3 w-16 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
           <time id="hero-commit-time" class="hidden text-[10px] text-(--color-text-dim) whitespace-nowrap"></time>
         </div>
-        <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
           <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.stars">stars on maintained OSS</span>
         </div>
-        <div class="flex items-baseline justify-between py-4 border-t border-(--color-border-subtle)">
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">6</span>
           <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.pypi">packages on PyPI</span>
         </div>
-        <div class="flex items-baseline justify-between py-4 border-t border-b border-(--color-border-subtle)">
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 border-t border-b border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide flex items-center gap-2">
             <span id="dot" class="inline-block w-2 h-2 rounded-full bg-(--color-accent)"></span>
             UY

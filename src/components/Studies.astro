@@ -133,7 +133,7 @@ const certificationData: CertificationItem[] = [
 ---
 
 <section id="studies" class="py-16 border-b border-(--color-border-subtle)">
-  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-[320px]">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
 
     <div class="flex items-center gap-4 mb-10">
       <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="studies.heading">
@@ -148,7 +148,7 @@ const certificationData: CertificationItem[] = [
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(min(280px,100%), 1fr));">
       {careerData.map((item, i) => (
         <button
           class="study-card p-0 group bg-(--color-surface) text-left cursor-pointer transition-all duration-200 hover:bg-(--color-bg) hover:scale-[1.01] border-none w-full relative overflow-hidden"
@@ -177,7 +177,7 @@ const certificationData: CertificationItem[] = [
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(min(280px,100%), 1fr));">
       {educationData.map((item, i) => (
         <button
           class="study-card p-0 group bg-(--color-surface) text-left cursor-pointer transition-all duration-200 hover:bg-(--color-bg) hover:scale-[1.01] border-none w-full relative"
@@ -207,7 +207,7 @@ const certificationData: CertificationItem[] = [
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <div class="grid gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)" style="grid-template-columns: repeat(auto-fit, minmax(min(280px,100%), 1fr));">
       {certificationData.map((item, i) => (
         <button
           class="study-card p-0 group bg-(--color-surface) text-left cursor-pointer transition-all duration-200 hover:bg-(--color-bg) hover:scale-[1.01] border-none w-full relative"
@@ -306,7 +306,7 @@ const certificationData: CertificationItem[] = [
     aria-modal="true"
   >
     <div
-      class="relative w-full max-w-lg max-h-[85vh] overflow-y-auto border bg-(--color-surface) p-8 md:p-10 text-center"
+      class="relative w-full max-w-lg max-h-[85vh] overflow-y-auto border bg-(--color-surface) p-5 sm:p-8 md:p-10 text-center"
       style="border-color: #3a5a6a;"
     >
       <button
