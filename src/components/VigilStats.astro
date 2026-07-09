@@ -77,99 +77,119 @@
   } catch { data = null; }
   if (!data || !data.myStats) { root.innerHTML = '<div class="text-center py-12 text-sm text-(--color-text-dim)">Stats unavailable</div>'; return; }
 
-  var s = data.myStats;
-  var lastWeekDaily = data.lastWeekDaily || [];
-  var lastWeekHourly = data.lastWeekHourly || [];
-  var lastHourPeriods = data.last24hPeriods || [];
-  var fetchedAt = data.fetchedAt || '';
-
-  var maxHourly = Math.max.apply(null, lastWeekHourly.concat([1]));
-  var hourLabels = data.hourLabels || [];
-  var maxDaily = Math.max.apply(null, lastWeekDaily.map(function(d) { return d.total; }).concat([1]));
-
-  function ago(iso) {
-    var now = Date.now();
-    var then = new Date(iso.endsWith('Z') ? iso : iso + 'Z').getTime();
-    var diff = now - then;
-    if (diff < 60000) return 'just now';
-    var mins = Math.floor(diff / 60000);
-    if (mins < 60) return mins + 'm ago';
-    var hrs = Math.floor(mins / 60);
-    if (hrs < 24) return hrs + 'h ago';
-    var days = Math.floor(hrs / 24);
-    if (days < 7) return days + 'd ago';
-    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  var lang = document.documentElement.lang || 'en';
+  var allDicts = typeof translations_en !== 'undefined' ? { en: translations_en, es: translations_es, fr: translations_fr } : null;
+  function t(key, fallback) {
+    if (allDicts) {
+      var dict = allDicts[lang] || allDicts.en;
+      return dict[key] || fallback;
+    }
+    return fallback;
   }
 
-  function dayLabel(period) {
-    return new Date(period + 'Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-  }
+  function render() {
+    lang = document.documentElement.lang || 'en';
 
-  var hourFormatter = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+    var s = data.myStats;
+    var lastWeekDaily = data.lastWeekDaily || [];
+    var last24hHourly = data.last24hHourly || [];
+    var lastHourPeriods = data.last24hPeriods || [];
+    var fetchedAt = data.fetchedAt || '';
 
-  function hourLabel(period) {
-    if (!period) return '--';
-    return hourFormatter.format(new Date(period));
-  }
+    var maxHourly = Math.max.apply(null, last24hHourly.concat([1]));
+    var hourLabels = data.hourLabels || [];
+    var maxDaily = Math.max.apply(null, lastWeekDaily.map(function(d) { return d.total; }).concat([1]));
 
-  var html = '';
+    function ago(iso) {
+      var now = Date.now();
+      var then = new Date(iso.endsWith('Z') ? iso : iso + 'Z').getTime();
+      var diff = now - then;
+      if (diff < 60000) return t('vigil.justNow', 'just now');
+      var mins = Math.floor(diff / 60000);
+      if (mins < 60) return mins + 'm ' + t('vigil.ago', 'ago');
+      var hrs = Math.floor(mins / 60);
+      if (hrs < 24) return hrs + 'h ' + t('vigil.ago', 'ago');
+      var days = Math.floor(hrs / 24);
+      if (days < 7) return days + 'd ' + t('vigil.ago', 'ago');
+      return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-US' : lang === 'es' ? 'es-UY' : 'fr-FR', { month: 'short', day: 'numeric' });
+    }
 
-  html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">';
-  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">total commits</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.totalCommits ? s.totalCommits.toLocaleString() : '-') + '</span></div>';
-  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">streak</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.streak ?? '-') + '</span>' + (s.streak > 0 ? '<span class="text-xs text-(--color-text-muted)">consecutive days</span>' : '') + '</div>';
-  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">commits (24h)</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (data.last24hTotal != null ? data.last24hTotal.toLocaleString() : '-') + '</span></div>';
-  html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">OSS commits (24h)</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (data.ossCommits24h != null ? data.ossCommits24h.toLocaleString() : '-') + '</span></div>';
-  html += '</div>';
+    function dayLabel(period) {
+      return new Date(period + 'Z').toLocaleDateString(lang === 'en' ? 'en-US' : lang === 'es' ? 'es-UY' : 'fr-FR', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
 
-  if (lastWeekDaily.length > 0) {
-    html += '<div class="mb-8"><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Daily commits (last 7 days)</h3><div class="flex gap-[3px] h-24 border-b border-(--color-border-subtle)">';
-    for (var i = 0; i < lastWeekDaily.length; i++) {
-      var d = lastWeekDaily[i];
-      var pct = (d.total / maxDaily) * 100;
+    var hourFormatter = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : lang === 'es' ? 'es-UY' : 'fr-FR', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+    function hourLabel(period) {
+      if (!period) return '--';
+      return hourFormatter.format(new Date(period));
+    }
+
+    var html = '';
+
+    html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">';
+    html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">' + t('vigil.overview.totalCommits', 'total commits') + '</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.totalCommits ? s.totalCommits.toLocaleString() : '-') + '</span></div>';
+    html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">' + t('vigil.overview.streak', 'streak') + '</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (s.streak ?? '-') + '</span>' + (s.streak > 0 ? '<span class="text-xs text-(--color-text-muted)"> ' + t('vigil.overview.consecutiveDays', 'consecutive days') + '</span>' : '') + '</div>';
+    html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">' + t('vigil.overview.commits24h', 'commits (24h)') + '</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (data.last24hTotal != null ? data.last24hTotal.toLocaleString() : '-') + '</span></div>';
+    html += '<div class="bg-(--color-surface) p-4 flex flex-col gap-1"><span class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">' + t('vigil.overview.ossCommits24h', 'OSS commits (24h)') + '</span><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">' + (data.ossCommits24h != null ? data.ossCommits24h.toLocaleString() : '-') + '</span></div>';
+    html += '</div>';
+
+    if (lastWeekDaily.length > 0) {
+      html += '<div class="mb-8"><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">' + t('vigil.dailyChart', 'Daily commits (last 7 days)') + '</h3><div class="flex gap-[3px] h-24 border-b border-(--color-border-subtle)">';
+      for (var i = 0; i < lastWeekDaily.length; i++) {
+        var d = lastWeekDaily[i];
+        var pct = (d.total / maxDaily) * 100;
+        html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full border-b border-(--color-border-subtle)/50">';
+        html += '<div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style="height:' + pct + '%"><div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm"></div></div>';
+        html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + dayLabel(d.period) + ' - ' + d.total + '</div>';
+        html += '</div>';
+      }
+      html += '</div></div>';
+    }
+
+    html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">' + t('vigil.hourlyChart', 'Hourly commits (last 24h)') + '</h3><div class="flex gap-[2px] h-28 border-b border-(--color-border-subtle)">';
+    for (var h = 0; h < last24hHourly.length; h++) {
+      var t2 = last24hHourly[h];
+      var label = hourLabel(lastHourPeriods[h] || '');
+      var pct = (t2 / maxHourly) * 100;
+      var opacity = Math.round((t2 / maxHourly) * 50 + 50);
       html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full border-b border-(--color-border-subtle)/50">';
-      html += '<div class="w-full bg-(--color-accent-dim)/30 rounded-t-sm" style="height:' + pct + '%"><div class="w-full h-full bg-(--color-accent-dim)/60 rounded-t-sm"></div></div>';
-      html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + dayLabel(d.period) + ' - ' + d.total + '</div>';
+      html += '<div class="w-full rounded-t-sm" style="height:' + pct + '%;background:color-mix(in srgb, var(--color-accent) ' + opacity + '%,transparent)"><div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200"></div></div>';
+      html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + label + ' - ' + t2 + '</div>';
       html += '</div>';
     }
+    html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">';
+    var labelSlots = {};
+    if (last24hHourly.length > 0) {
+      labelSlots[0] = true;
+      labelSlots[Math.floor((last24hHourly.length - 1) / 4)] = true;
+      labelSlots[Math.floor((last24hHourly.length - 1) / 2)] = true;
+      labelSlots[Math.floor(((last24hHourly.length - 1) * 3) / 4)] = true;
+      labelSlots[last24hHourly.length - 1] = true;
+    }
+    for (var li = 0; li < last24hHourly.length; li++) {
+      if (labelSlots[li]) {
+        html += '<span>' + hourLabel(lastHourPeriods[li] || '') + '</span>';
+      }
+    }
     html += '</div></div>';
-  }
 
-  html += '<div><h3 class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">Hourly commits (last 24h)</h3><div class="flex gap-[2px] h-28 border-b border-(--color-border-subtle)">';
-  for (var h = 0; h < lastWeekHourly.length; h++) {
-    var t = lastWeekHourly[h];
-    var label = hourLabel(lastHourPeriods[h] || '');
-    var pct = (t / maxHourly) * 100;
-    var opacity = Math.round((t / maxHourly) * 50 + 50);
-    html += '<div class="flex-1 flex flex-col items-center justify-end gap-1 group relative h-full border-b border-(--color-border-subtle)/50">';
-    html += '<div class="w-full rounded-t-sm" style="height:' + pct + '%;background:color-mix(in srgb, var(--color-accent) ' + opacity + '%,transparent)"><div class="w-full h-full rounded-t-sm opacity-0 group-hover:opacity-40 transition-opacity duration-200"></div></div>';
-    html += '<div class="absolute bottom-full mb-1 hidden group-hover:block bg-(--color-bg) border border-(--color-border-subtle) px-2 py-1 text-[10px] text-(--color-text-muted) whitespace-nowrap z-10 rounded">' + label + ' - ' + t + '</div>';
-    html += '</div>';
-  }
-  html += '</div><div class="flex justify-between mt-2 text-[9px] text-(--color-text-dim) tracking-wide">';
-  var labelSlots = {};
-  if (lastWeekHourly.length > 0) {
-    labelSlots[0] = true;
-    labelSlots[Math.floor((lastWeekHourly.length - 1) / 4)] = true;
-    labelSlots[Math.floor((lastWeekHourly.length - 1) / 2)] = true;
-    labelSlots[Math.floor(((lastWeekHourly.length - 1) * 3) / 4)] = true;
-    labelSlots[lastWeekHourly.length - 1] = true;
-  }
-  for (var li = 0; li < lastWeekHourly.length; li++) {
-    if (labelSlots[li]) {
-      html += '<span>' + hourLabel(lastHourPeriods[li] || '') + '</span>';
+    if (fetchedAt) {
+      html += '<p class="text-[9px] text-(--color-text-dim) mt-4 text-right">' + t('vigil.updated', 'Updated') + '<span>&nbsp;</span><time datetime="' + fetchedAt + '">' + ago(fetchedAt) + '</time></p>';
+    }
+
+    root.innerHTML = html;
+
+    var times = root.querySelectorAll('time');
+    for (var i = 0; i < times.length; i++) {
+      times[i].textContent = ago(times[i].getAttribute('datetime'));
     }
   }
-  html += '</div></div>';
 
-  if (fetchedAt) {
-    html += '<p class="text-[9px] text-(--color-text-dim) mt-4 text-right">Updated<span>&nbsp;</span><time datetime="' + fetchedAt + '">' + ago(fetchedAt) + '</time></p>';
-  }
+  render();
 
-  root.innerHTML = html;
-
-  var times = root.querySelectorAll('time');
-  for (var i = 0; i < times.length; i++) {
-    times[i].textContent = ago(times[i].getAttribute('datetime'));
-  }
+  document.addEventListener('langchange', function() {
+    render();
+  });
 })();
 </script>

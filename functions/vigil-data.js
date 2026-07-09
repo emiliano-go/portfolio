@@ -5,7 +5,7 @@ export async function onRequest(context) {
 
   const empty = () => ({
     latestCommit: null, myStats: null,
-    lastWeekHourly: Array(24).fill(0),
+    last24hHourly: Array(24).fill(0),
     lastWeekDaily: [], hourLabels: Array(24).fill('--'),
     privateRepos: [], fetchedAt: new Date().toISOString(),
   });
@@ -24,8 +24,8 @@ export async function onRequest(context) {
   try {
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
-    const [repos, authors, overview, daily] = await Promise.all([
-      get('/repos'), get('/stats/authors'), get('/stats/overview'), get('/stats/daily'),
+    const [repos, authors, overview] = await Promise.all([
+      get('/repos'), get('/stats/authors'), get('/stats/overview'),
     ]);
 
     const privateRepos = repos.filter(r => r.private).map(r => r.full_name);
@@ -34,6 +34,11 @@ export async function onRequest(context) {
     const knownBots = /\[bot\]$/;
     const sorted = Object.entries(authorTotals).filter(([l]) => !knownBots.test(l) && l !== '').sort(([,a],[,b]) => b - a);
     const myLogin = sorted[0]?.[0] || 'emiliano-go';
+
+    let daily = { total: [] };
+    try {
+      daily = await get(`/stats/daily/authors?author_login=${encodeURIComponent(myLogin)}&days=7`);
+    } catch {}
 
     let myLatestCommit = null;
     try {
@@ -65,9 +70,7 @@ export async function onRequest(context) {
       streak = s.current_streak ?? 0;
     } catch {}
 
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     const lastWeekDaily = (daily?.total || [])
-      .filter(function(d) { return d.period >= sevenDaysAgo; })
       .sort(function(a, b) { return a.period.localeCompare(b.period); });
     const repoWeekMap = {};
     let mostActiveRepoWeek = null, mostActiveRepoWeekTotal = 0;
@@ -92,7 +95,7 @@ export async function onRequest(context) {
       hourlyRange = await get(`/stats/hourly/authors/range?author_login=${encodeURIComponent(myLogin)}&since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
     } catch {}
 
-    var last24hHourly = hourlyRange.map(function() { return 0; });
+    var last24hHourly = hourlyRange.map(function(row) { return row.total; });
     var last24hPeriods = hourlyRange.map(function(row) {
       var p = String(row.period);
       return (p.endsWith('Z') || p.includes('+')) ? p : p + 'Z';
@@ -113,25 +116,9 @@ export async function onRequest(context) {
     var activityRows24h = [];
     try {
       activityRows24h = await get(`/stats/activity-range?since=${encodeURIComponent(sinceHour.toISOString())}&until=${encodeURIComponent(untilHour.toISOString())}`);
-      for (var ai = 0; ai < activityRows24h.length; ai++) {
-        var row = activityRows24h[ai];
-        if (!row || row.author_login !== myLogin) continue;
-
-        var committedAt = new Date((String(row.committed_at).endsWith('Z') || String(row.committed_at).includes('+')) ? row.committed_at : row.committed_at + 'Z');
-        committedAt.setUTCMinutes(0, 0, 0);
-        var period = committedAt.toISOString().replace('.000Z', 'Z');
-
-        for (var hi = 0; hi < last24hPeriods.length; hi++) {
-          if (last24hPeriods[hi] === period) {
-            last24hHourly[hi]++;
-            break;
-          }
-        }
-      }
     } catch {}
 
     var unique24hMyCommits = activityRows24h.filter(function(row) { return row && row.author_login === myLogin; });
-    last24hTotal = unique24hMyCommits.length;
     var ossCommits24h = unique24hMyCommits.filter(function(row) { return row && row.repo && !privateRepoSet.has(row.repo); }).length;
 
     const ensureZ = s => s && !s.endsWith('Z') ? s + 'Z' : s;
@@ -147,7 +134,7 @@ export async function onRequest(context) {
         mostActiveRepo: myMostActiveRepo, mostActiveRepoTotal: myMostActiveRepoTotal,
         mostActiveRepoWeek, mostActiveRepoWeekTotal,
       },
-      lastWeekHourly: last24hHourly,
+      last24hHourly: last24hHourly,
       last24hTotal,
       ossCommits24h,
       last24hPeriods,
