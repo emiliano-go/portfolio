@@ -14,7 +14,7 @@
   "nav.lang.es": "ES",
   "nav.lang.fr": "FR",
 
-  "hero.tagline": "Backend Engineer \u00b7 Data Scientist",
+  "hero.tagline": "Backend Engineer \u00b7 Data Engineer",
   "hero.title.line1": "Building",
   "hero.title.line2": "systems",
   "hero.title.line3": "that",
@@ -31,7 +31,7 @@
   "about.heading": "About",
   "about.name": "Emiliano<br>G.O.",
   "about.location": "Montevideo, Uruguay",
-  "about.bio.1": "Backend developer and data scientist. I work mostly in Python: pipelines, APIs, and the infrastructure that keeps them running. I care about clean architecture, good documentation, and building things that hold up under load.",
+  "about.bio.1": "Backend developer and data engineer. I work mostly in Python: pipelines, APIs, and the infrastructure that keeps them running. I care about clean architecture, good documentation, and building things that hold up under load.",
   "about.bio.2": "I learn by building things until they break, then figuring out why. Also run LibreCourseUY, an open source organization promoting the OSS ecosystem in Uruguay.",
   "about.bio.3": "Arch (btw) :D",
   "about.stack": "Stack",
