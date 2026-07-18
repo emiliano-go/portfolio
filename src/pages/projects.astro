@@ -251,9 +251,17 @@ import Footer from '../components/Footer.astro';
                 for (var i = 0; i < 6; i++) {
                   var angle = Math.random() * 360;
                   var rad = angle * Math.PI / 180;
-                  var delay = Math.random() * 3;
-                  var dur = 1.2 + Math.random() * 0.8;
-                  html += '<div class="shield-bullet" style="--angle:' + angle + 'deg;--dx:' + Math.cos(rad).toFixed(2) + ';--dy:' + Math.sin(rad).toFixed(2) + ';animation-delay:' + delay + 's;animation-duration:' + dur + 's"></div>';
+                  var dist = 55 + Math.random() * 30;
+                  var ax = -(Math.cos(rad) * dist).toFixed(1);
+                  var ay = -(Math.sin(rad) * dist).toFixed(1);
+                  var reflectAngle = 180 + angle + (Math.random() * 80 - 40);
+                  var reflectRad = reflectAngle * Math.PI / 180;
+                  var reflectDist = 40 + Math.random() * 35;
+                  var rx = (Math.cos(reflectRad) * reflectDist).toFixed(1);
+                  var ry = (Math.sin(reflectRad) * reflectDist).toFixed(1);
+                  var delay = (Math.random() * 4).toFixed(2);
+                  var dur = (1.6 + Math.random() * 0.8).toFixed(2);
+                  html += '<div class="shield-bullet" style="--ax:' + ax + 'px;--ay:' + ay + 'px;--rx:' + rx + 'px;--ry:' + ry + 'px;animation-delay:' + delay + 's;animation-duration:' + dur + 's"></div>';
                 }
                 c.insertAdjacentHTML('beforeend', html);
               })();
@@ -308,22 +316,25 @@ import Footer from '../components/Footer.astro';
       /* ─── Shield ─── */
       .shield-bullet {
         position: absolute;
-        width: 5px;
-        height: 5px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: #e91e63;
+        box-shadow: 0 0 6px #e91e63, 0 0 12px rgba(233,30,99,0.4);
         left: 50%;
         top: 50%;
-        margin-left: -2.5px;
-        margin-top: -2.5px;
+        margin-left: -3px;
+        margin-top: -3px;
         animation: shield-deflect ease-out infinite;
         opacity: 0;
       }
       @keyframes shield-deflect {
-        0% { transform: translate(0, 0) scale(1); opacity: 1; }
-        15% { opacity: 1; }
-        30% { transform: translate(calc(var(--dx) * 35px), calc(var(--dy) * 35px)) scale(0.6); opacity: 0.8; }
-        100% { transform: translate(calc(var(--dx) * 70px), calc(var(--dy) * 70px)) scale(0.2); opacity: 0; }
+        0% { transform: translate(var(--ax), var(--ay)) scale(0.6); opacity: 0; }
+        10% { opacity: 1; }
+        40% { transform: translate(0, 0) scale(1); opacity: 1; }
+        48% { transform: translate(0, 0) scale(0.85); }
+        55% { transform: translate(calc(var(--rx) * 0.35), calc(var(--ry) * 0.35)) scale(0.7); opacity: 0.9; }
+        100% { transform: translate(var(--rx), var(--ry)) scale(0.2); opacity: 0; }
       }
 
       /* ─── Typing effect ─── */
