@@ -175,6 +175,211 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
+    <!-- ─── Local-first Tools ─── -->
+    <section id="local-tools" class="py-20 md:py-24 border-b border-(--color-border-subtle) relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background: radial-gradient(ellipse at 20% 50%, var(--color-accent) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, #e91e63 0%, transparent 60%);"></div>
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 relative z-10">
+
+        <div class="flex items-center gap-4 mb-12">
+          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap" data-i18n="projects.local.heading">
+            Local-first Tools
+          </h2>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- heard ─── Voice → Text → Action ─── -->
+          <div class="border border-(--color-border) bg-(--color-surface) p-8 flex flex-col relative group hover:border-(--color-accent-dim)/40 transition-colors duration-500">
+            <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-(--color-accent-dim) to-transparent opacity-30 group-hover:opacity-60 transition-opacity duration-700"></div>
+
+            <!-- Waveform visualizer -->
+            <div class="h-20 mb-5 flex items-end gap-[3px] overflow-hidden" id="heard-waveform">
+              <script>
+              (function() {
+                var container = document.getElementById('heard-waveform');
+                if (!container) return;
+                var html = '';
+                for (var i = 0; i < 24; i++) {
+                  var delay = (Math.random() * 2).toFixed(2);
+                  var dur = (0.4 + Math.random() * 0.6).toFixed(2);
+                  html += '<div class="wave-bar" style="animation-delay:' + delay + 's;animation-duration:' + dur + 's"></div>';
+                }
+                container.innerHTML = html;
+              })();
+              </script>
+            </div>
+
+            <div class="flex items-center gap-2 mb-3">
+              <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">heard</h3>
+              <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded">v0.1.0</span>
+            </div>
+            <span data-repo="emiliano-go/voxd" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-3 self-start"></span>
+
+            <!-- Typing animation line -->
+            <div class="font-mono text-[11px] text-(--color-accent) mb-4 h-5 overflow-hidden">
+              <span class="typing-text" data-text="$ say 'open firefox'"></span>
+            </div>
+
+            <p class="text-[12px] leading-[1.8] text-(--color-text-muted) flex-1 mb-5" data-i18n="projects.heard.detail">
+              Hold left Shift, speak, release. Speech-to-text via on-device Whisper → intent resolved by a Needle 26M function-call model → dispatched to a tool handler. Tools: launch apps, media control, volume, window actions, workspace switching, system queries. Fully local-first, no cloud dependency.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag-accent" data-i18n="projects.tag.ai">AI-powered</span>
+              <span class="tag">Python</span>
+              <span class="tag">Whisper</span>
+              <span class="tag">Linux</span>
+              <span class="tag">evdev</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="https://github.com/emiliano-go/voxd" target="_blank" rel="noopener noreferrer" class="text-[10px] px-3 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>GitHub</span> ↗</a>
+            </div>
+          </div>
+
+          <!-- trustsight ─── Shield ─── -->
+          <div class="border border-(--color-border) bg-(--color-surface) p-8 flex flex-col relative group hover:border-(--color-accent-dim)/40 transition-colors duration-500">
+            <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#e91e63] to-transparent opacity-30 group-hover:opacity-60 transition-opacity duration-700"></div>
+
+            <!-- Shield animation -->
+            <div class="h-20 mb-5 flex items-center justify-center relative overflow-hidden" id="shield-container">
+              <div class="shield-icon text-3xl select-none relative z-10" id="shield-icon">🛡</div>
+              <script>
+              (function() {
+                var c = document.getElementById('shield-container');
+                if (!c) return;
+                var html = '';
+                for (var i = 0; i < 6; i++) {
+                  var angle = Math.random() * 360;
+                  var rad = angle * Math.PI / 180;
+                  var delay = Math.random() * 3;
+                  var dur = 1.2 + Math.random() * 0.8;
+                  html += '<div class="shield-bullet" style="--angle:' + angle + 'deg;--dx:' + Math.cos(rad).toFixed(2) + ';--dy:' + Math.sin(rad).toFixed(2) + ';animation-delay:' + delay + 's;animation-duration:' + dur + 's"></div>';
+                }
+                c.insertAdjacentHTML('beforeend', html);
+              })();
+              </script>
+            </div>
+
+            <div class="flex items-center gap-2 mb-3">
+              <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">trustsight</h3>
+              <span data-pypi-version="trustsight" class="text-[10px] px-2 py-[3px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded">loading</span>
+            </div>
+            <span data-repo="emiliano-go/trustsight" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-3 self-start"></span>
+
+            <div class="font-mono text-[11px] text-[#e91e63] mb-4 h-5 overflow-hidden">
+              <span class="typing-text" data-text="$ trustsight diff yay-bin"></span>
+            </div>
+
+            <p class="text-[12px] leading-[1.8] text-(--color-text-muted) flex-1 mb-5" data-i18n="projects.trustsight.detail">
+              Run it before yay -Syu. Clones AUR repos, generates structured PKGBUILD diffs between versions, and applies 11 detection rules (curl pipe bash, checksum disabled, base64 decode, etc.). Scores packages 0–100 with configurable severity weights, tracks novelty via SQLite, and optionally produces an LLM verdict via OpenAI or Ollama. Published on PyPI.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag-accent" data-i18n="projects.tag.ai">AI-powered</span>
+              <span class="tag">Python</span>
+              <span class="tag">Arch Linux</span>
+              <span class="tag">Security</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="https://github.com/emiliano-go/trustsight" target="_blank" rel="noopener noreferrer" class="text-[10px] px-3 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.github">GitHub</span> ↗</a>
+              <a href="https://pypi.org/project/trustsight/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-3 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span data-i18n="projects.link.pypi">PyPI</span> ↗</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <style is:global>
+      /* ─── Waveform bars ─── */
+      .wave-bar {
+        flex: 1;
+        background: linear-gradient(to top, var(--color-accent-dim), var(--color-accent));
+        border-radius: 2px 2px 0 0;
+        animation: wave-pulse ease-in-out infinite;
+        transform-origin: bottom;
+        min-height: 4px;
+      }
+      @keyframes wave-pulse {
+        0%, 100% { transform: scaleY(0.15); opacity: 0.3; }
+        50% { transform: scaleY(1); opacity: 1; }
+      }
+
+      /* ─── Shield ─── */
+      .shield-bullet {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #e91e63;
+        left: 50%;
+        top: 50%;
+        margin-left: -2.5px;
+        margin-top: -2.5px;
+        animation: shield-deflect ease-out infinite;
+        opacity: 0;
+      }
+      @keyframes shield-deflect {
+        0% { transform: translate(0, 0) scale(1); opacity: 1; }
+        15% { opacity: 1; }
+        30% { transform: translate(calc(var(--dx) * 35px), calc(var(--dy) * 35px)) scale(0.6); opacity: 0.8; }
+        100% { transform: translate(calc(var(--dx) * 70px), calc(var(--dy) * 70px)) scale(0.2); opacity: 0; }
+      }
+
+      /* ─── Typing effect ─── */
+      .typing-text {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 1px solid transparent;
+      }
+      .typing-text.typing {
+        border-right-color: currentColor;
+        animation: cursor-blink 0.8s step-end infinite;
+      }
+      @keyframes cursor-blink {
+        50% { border-right-color: transparent; }
+      }
+
+      /* ─── Tag styles (bigger) ─── */
+      .tag {
+        font-size: 10px;
+        padding: 3px 8px;
+        border: 1px solid var(--color-border);
+        color: var(--color-text-dim);
+        letter-spacing: 0.05em;
+        border-radius: 3px;
+      }
+      .tag-accent {
+        font-size: 10px;
+        padding: 3px 8px;
+        border: 1px solid var(--color-accent-dim);
+        color: var(--color-accent);
+        letter-spacing: 0.05em;
+        border-radius: 3px;
+      }
+    </style>
+    <script>
+    (function() {
+      document.querySelectorAll('.typing-text').forEach(function(el) {
+        var text = el.getAttribute('data-text');
+        if (!text) return;
+        var i = 0;
+        function type() {
+          if (i <= text.length) {
+            el.textContent = text.substring(0, i);
+            i++;
+            if (i <= text.length) { setTimeout(type, 50 + Math.random() * 30); }
+            else { el.classList.add('typing'); }
+          }
+        }
+        setTimeout(type, 600);
+      });
+    })();
+    </script>
+
+    <!-- ─── PyPI Utilities ─── -->
+
     <!-- ─── PyPI Utilities ─── -->
     <section id="pypi-utils" class="py-16 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
@@ -192,7 +397,7 @@ import Footer from '../components/Footer.astro';
             <div class="p-6 flex flex-col">
               <div class="flex items-center gap-2 mb-2">
                 <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">schemap</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
+                <span class="tag">Python</span>
               </div>
               <span data-repo="emiliano-go/schemap" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4" data-i18n="projects.schemap.desc">
@@ -211,7 +416,7 @@ import Footer from '../components/Footer.astro';
             <div class="p-6 flex flex-col">
               <div class="flex items-center gap-2 mb-2">
                 <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">detrack</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
+                <span class="tag">Python</span>
               </div>
               <span data-repo="emiliano-go/detrack" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4" data-i18n="projects.detrack.desc">
@@ -231,7 +436,7 @@ import Footer from '../components/Footer.astro';
             <div class="p-6 flex flex-col">
               <div class="flex items-center gap-2 mb-2">
                 <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">acrresolv</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Python</span>
+                <span class="tag">Python</span>
               </div>
               <span data-repo="emiliano-go/acrresolv" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4" data-i18n="projects.acrresolv.desc">
@@ -287,7 +492,7 @@ import Footer from '../components/Footer.astro';
             <div class="split-content active" data-index="0">
               <div class="flex items-center gap-2.5 mb-3">
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">crxml</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Rust</span>
+                <span class="tag">Rust</span>
               </div>
               <span data-repo="emiliano-go/crxml" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="projects.more.crxml.tag">PyPI package</p>
@@ -296,7 +501,7 @@ import Footer from '../components/Footer.astro';
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['Python', 'Rust', 'XML', 'pandas'].map(t => (
-                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                  <span class="tag">{t}</span>
                 ))}
               </div>
               <div class="flex gap-2">
@@ -308,7 +513,7 @@ import Footer from '../components/Footer.astro';
             <div class="split-content" data-index="1">
               <div class="flex items-center gap-2.5 mb-3">
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">vigil</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Prefect</span>
+                <span class="tag">Prefect</span>
               </div>
               <span data-repo="emiliano-go/vigil" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="projects.more.vigil.tag">Prefect flow</p>
@@ -317,7 +522,7 @@ import Footer from '../components/Footer.astro';
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['Python', 'Prefect', 'PyGithub', 'ClickHouse'].map(t => (
-                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                  <span class="tag">{t}</span>
                 ))}
               </div>
               <div class="flex gap-2">
@@ -328,7 +533,7 @@ import Footer from '../components/Footer.astro';
             <div class="split-content" data-index="2">
               <div class="flex items-center gap-2.5 mb-3">
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">React</span>
+                <span class="tag">React</span>
               </div>
               <span data-repo="emiliano-go/mapcreator" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4" data-i18n="projects.more.mapcreator.tag">Web application</p>
@@ -337,7 +542,7 @@ import Footer from '../components/Footer.astro';
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['React', 'TypeScript', 'Canvas', 'A* Pathfinding'].map(t => (
-                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                  <span class="tag">{t}</span>
                 ))}
               </div>
               <div class="flex gap-2">
@@ -348,7 +553,7 @@ import Footer from '../components/Footer.astro';
             <div class="split-content" data-index="3">
               <div class="flex items-center gap-2.5 mb-3">
                 <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">clickvault</h3>
-                <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">Go</span>
+                <span class="tag">Go</span>
               </div>
               <span data-repo="emiliano-go/clickvault" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
               <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Vault plugin</p>
@@ -357,7 +562,7 @@ import Footer from '../components/Footer.astro';
               </p>
               <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
                 {['Go', 'Vault', 'ClickHouse', 'Plugin'].map(t => (
-                  <span class="text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide">{t}</span>
+                  <span class="tag">{t}</span>
                 ))}
               </div>
               <div class="flex gap-2">
