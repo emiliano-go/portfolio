@@ -5,11 +5,27 @@ export interface Props {
   route?: string;
   fallbackTitle?: string;
   fallbackDescription?: string;
+  lang?: string;
 }
 
-const { route = Astro.url.pathname, fallbackTitle = 'Emiliano G.O.', fallbackDescription } = Astro.props;
+const { route = Astro.url.pathname, fallbackTitle = 'Emiliano G.O.', fallbackDescription, lang } = Astro.props;
 const seo = (seoManifest as Record<string, any>)[route];
-const localeAlternates = Array.isArray(seo?.og?.['locale:alternate']) ? seo.og['locale:alternate'] : [];
+
+const LANG_CONFIGS: Record<string, { label: string; locale: string }> = {
+  en: { label: 'en', locale: 'en_US' },
+  es: { label: 'es', locale: 'es_ES' },
+  fr: { label: 'fr', locale: 'fr_FR' },
+};
+
+// Build hreflang alternates from current route
+const routeLang = lang ?? 'en';
+const basePath = '/' + routeLang;
+const routeSuffix = route.startsWith(basePath) ? route.slice(basePath.length) || '/' : route;
+const altLinks = Object.entries(LANG_CONFIGS).map(([code, cfg]) => ({
+  code: code,
+  href: 'https://emiliano-go.com/' + code + routeSuffix,
+  locale: cfg.locale,
+}));
 ---
 
 {seo ? (
@@ -18,6 +34,11 @@ const localeAlternates = Array.isArray(seo?.og?.['locale:alternate']) ? seo.og['
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
     <meta name="robots" content={seo.robots} />
+    <!-- hreflang alternates -->
+    {altLinks.map((alt) => (
+      <link rel="alternate" hreflang={alt.code} href={alt.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={'https://emiliano-go.com' + routeSuffix} />
     <meta property="og:type" content={seo.og.type} />
     <meta property="og:title" content={seo.og.title} />
     <meta property="og:description" content={seo.og.description} />
@@ -28,7 +49,9 @@ const localeAlternates = Array.isArray(seo?.og?.['locale:alternate']) ? seo.og['
     <meta property="og:image:height" content={seo.og['image:height']} />
     <meta property="og:site_name" content={seo.og.site_name} />
     <meta property="og:locale" content={seo.og.locale} />
-    {localeAlternates.map((locale: string) => <meta property="og:locale:alternate" content={locale} />)}
+    {Array.isArray(seo.og['locale:alternate']) && seo.og['locale:alternate'].map((locale: string) => (
+      <meta property="og:locale:alternate" content={locale} />
+    ))}
     <meta name="twitter:card" content={seo.twitter.card} />
     <meta name="twitter:title" content={seo.twitter.title} />
     <meta name="twitter:description" content={seo.twitter.description} />

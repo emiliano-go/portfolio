@@ -32,7 +32,7 @@ const pageDesc = description ?? t('meta.default.desc');
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
     <ClientRouter />
-    <Seo route={route ?? Astro.url.pathname} fallbackTitle={title} fallbackDescription={description} extra={{ lang }} />
+    <Seo route={route ?? Astro.url.pathname} fallbackTitle={title} fallbackDescription={description} lang={lang} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

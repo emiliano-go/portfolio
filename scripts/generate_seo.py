@@ -1,4 +1,4 @@
-"""Pre-build: generates SEO JSON manifest for the portfolio using seoslug."""
+"""Pre-build: generates SEO JSON manifest for all language routes using seoslug."""
 from __future__ import annotations
 
 import json
@@ -20,7 +20,13 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SITE_URL = "https://emiliano-go.com"
 SITE_NAME = "Emiliano G.O."
 
-SEO_CONFIG = SEOConfig(
+LOCALES: dict[str, str] = {
+    "en": "en_US",
+    "es": "es_ES",
+    "fr": "fr_FR",
+}
+
+BASE_CONFIG = SEOConfig(
     canonical_host="emiliano-go.com",
     public_base_url=SITE_URL,
     url_policy=URLPolicy(
@@ -38,8 +44,6 @@ SEO_CONFIG = SEOConfig(
     ),
     default_robots=Robots(index=True, follow=True),
     publisher_name="Emiliano Gandini Outeda",
-    locale="en_US",
-    locale_alternate=["es_ES", "fr_FR"],
     twitter_site="@emiliano_gando",
 )
 
@@ -55,7 +59,7 @@ def make_entity(title: str, description: str, entity_type: str = "page") -> SEOE
 ROUTES: list[tuple[str, str, str, str, SEOOverrides | None]] = [
     (
         "/",
-        "Emiliano G.O. > Backend Engineer & Data Scientist",
+        "Emiliano G.O. > Backend Engineer & Data Engineer",
         "Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay.",
         "home",
         SEOOverrides(twitter_creator="@emiliano_gando"),
@@ -77,12 +81,34 @@ ROUTES: list[tuple[str, str, str, str, SEOOverrides | None]] = [
 ]
 
 
+def build_lang_config(lang: str) -> SEOConfig:
+    locale = LOCALES[lang]
+    alternates = [v for k, v in LOCALES.items() if k != lang]
+    return SEOConfig(
+        canonical_host=BASE_CONFIG.canonical_host,
+        public_base_url=BASE_CONFIG.public_base_url,
+        url_policy=BASE_CONFIG.url_policy,
+        site_name=BASE_CONFIG.site_name,
+        title_template=BASE_CONFIG.title_template,
+        default_og_image=BASE_CONFIG.default_og_image,
+        default_robots=BASE_CONFIG.default_robots,
+        publisher_name=BASE_CONFIG.publisher_name,
+        locale=locale,
+        locale_alternate=alternates,
+        twitter_site=BASE_CONFIG.twitter_site,
+    )
+
+
 def main() -> int:
     manifest: dict[str, dict] = {}
-    for route, title, description, entity_type, overrides in ROUTES:
-        entity = make_entity(title, description, entity_type)
-        payload = build_seo_payload(entity, route, SEO_CONFIG, overrides)
-        manifest[route] = payload.to_dict()
+
+    for lang in ("en", "es", "fr"):
+        config = build_lang_config(lang)
+        for route, title, description, entity_type, overrides in ROUTES:
+            lang_route = f"/{lang}{route}"
+            entity = make_entity(title, description, entity_type)
+            payload = build_seo_payload(entity, lang_route, config, overrides)
+            manifest[lang_route] = payload.to_dict()
 
     output = PROJECT_ROOT / "src" / "data" / "seo-manifest.json"
     output.write_text(json.dumps(manifest, indent=2, ensure_ascii=False))
