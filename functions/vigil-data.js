@@ -145,7 +145,7 @@ export async function onRequest(context) {
     };
 
     return new Response(JSON.stringify(output), {
-      headers: { 'content-type': 'application/json', 'cache-control': 'no-cache' },
+      headers: { 'content-type': 'application/json', 'cache-control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=60' },
     });
   } catch (e) {
     return new Response(JSON.stringify(empty()), {

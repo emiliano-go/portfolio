@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import Projects from '../../components/Projects.astro';
+import VigilStats from '../../components/VigilStats.astro';
+import LibreCourse from '../../components/LibreCourse.astro';
+import Studies from '../../components/Studies.astro';
+import Experience from '../../components/Experience.astro';
+import OpenSource from '../../components/OpenSource.astro';
+import About from '../../components/About.astro';
+import References from '../../components/References.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang}>
+  <Nav lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <About lang={lang} />
+    <Projects lang={lang} />
+    <VigilStats lang={lang} />
+    <Studies lang={lang} />
+    <!-- <Experience lang={lang} /> -->
+    <LibreCourse lang={lang} />
+    <OpenSource lang={lang} />
+    <References lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

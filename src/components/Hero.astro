@@ -1,5 +1,7 @@
 ---
 // vigil data now loaded client-side via /vigil-data
+import { createT } from '../i18n';
+const t = createT(Astro.props.lang);
 ---
 
 <section class="hero-section relative min-h-screen flex items-center border-b border-(--color-border-subtle) overflow-hidden">
@@ -12,7 +14,7 @@
           id="hero-tag"
           class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mb-4 font-semibold"
         >
-          <span data-i18n="hero.tagline">Backend Engineer · Data Engineer</span>
+          <span>{t("hero.tagline")}</span>
         </p>
 
         <!-- Liquid glass heading -->
@@ -20,20 +22,19 @@
           id="hero-title"
           class="font-[family-name:var(--font-display)] text-[clamp(28px,5.5vw,72px)] font-bold uppercase leading-[0.92] tracking-wide mb-6"
         >
-          <span class="glass-word" style="--i: 0" data-i18n="hero.title.line1">Building</span><br />
-          <span class="glass-word" style="--i: 1" data-i18n="hero.title.line2">systems</span>
-          <span class="glass-word" style="--i: 2" data-i18n="hero.title.line3">that</span><br />
-          <span class="glass-word dim" style="--i: 3" data-i18n="hero.title.line4">handle</span><br />
-          <span class="glass-word" style="--i: 4" data-i18n="hero.title.line5">real</span>
-          <span class="glass-word" style="--i: 5" data-i18n="hero.title.line6">data.</span>
+          <span class="glass-word" style="--i: 0">{t("hero.title.line1")}</span><br />
+          <span class="glass-word" style="--i: 1">{t("hero.title.line2")}</span>
+          <span class="glass-word" style="--i: 2">{t("hero.title.line3")}</span><br />
+          <span class="glass-word dim" style="--i: 3">{t("hero.title.line4")}</span><br />
+          <span class="glass-word" style="--i: 4">{t("hero.title.line5")}</span>
+          <span class="glass-word" style="--i: 5">{t("hero.title.line6")}</span>
         </h1>
 
         <p
           id="hero-desc"
           class="text-sm leading-relaxed text-(--color-text-muted) max-w-[360px]"
         >
-          <span data-i18n="hero.desc">Python developer focused on data pipelines, ETL infrastructure, and backend architecture.
-          Based in Montevideo, Uruguay. Open to interesting problems.</span>
+          <span>{t("hero.desc")}</span>
         </p>
       </div>
 
@@ -41,7 +42,7 @@
       <div id="hero-stats" class="flex flex-col gap-0">
         <div id="hero-commit-line" class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-2 border-t border-(--color-border-subtle) hero-commit-line">
           <span class="text-[10px] font-mono text-(--color-text-dim) tracking-wide flex items-center gap-2">
-            <span data-i18n="hero.latestCommit">Latest commit made in:</span>
+            <span>{t("hero.latestCommit")}</span>
             <span id="hero-commit-repo-skeleton" class="inline-block h-3 w-36 bg-(--color-text-dim)/10 rounded animate-pulse align-middle"></span>
             <span id="hero-commit-repo" class="hidden">a private repo</span>
           </span>
@@ -50,18 +51,18 @@
         </div>
         <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">~2K</span>
-          <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.stars">stars on maintained OSS</span>
+          <span class="text-xs text-(--color-text-muted)">{t("hero.stat.stars")}</span>
         </div>
         <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 border-t border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide">6</span>
-          <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.pypi">packages on PyPI</span>
+          <span class="text-xs text-(--color-text-muted)">{t("hero.stat.pypi")}</span>
         </div>
         <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 py-4 border-t border-b border-(--color-border-subtle)">
           <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-(--color-text-head) tracking-wide flex items-center gap-2">
             <span id="dot" class="inline-block w-2 h-2 rounded-full bg-(--color-accent)"></span>
             UY
           </span>
-          <span class="text-xs text-(--color-text-muted)" data-i18n="hero.stat.location">Montevideo, Uruguay</span>
+          <span class="text-xs text-(--color-text-muted)">{t("hero.stat.location")}</span>
         </div>
       </div>
 

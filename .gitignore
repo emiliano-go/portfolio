@@ -2,4 +2,5 @@
 /node_modules
 /.astro
 /dist
+/public/i18n
 .env

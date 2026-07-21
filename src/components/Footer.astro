@@ -1,10 +1,11 @@
 ---
+import { createT } from "../i18n";
+const t = createT(Astro.props.lang);
 ---
 <footer class="py-6 border-t border-(--color-border-subtle)">
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 flex justify-between items-center">
-    <span class="text-[11px] text-(--color-text-dim)" data-i18n="footer.copyright">emiliano-go.com</span>
-    <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="text-[11px] text-(--color-text-dim) hover:text-(--color-text-muted) transition-colors duration-200" data-i18n="footer.github" data-i18n-html>
-      github.com/emiliano-go <span class="inline-block">↗</span>
-    </a>
+    <span class="text-[11px] text-(--color-text-dim)">{t("footer.copyright")}</span>
+    <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="text-[11px] text-(--color-text-dim) hover:text-(--color-text-muted) transition-colors duration-200" data-i18n-html set:html={t("footer.github")}>
+
   </div>
 </footer>

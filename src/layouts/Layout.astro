@@ -5,43 +5,42 @@ import '@fontsource/barlow-condensed/latin-600.css';
 import '@fontsource/barlow-condensed/latin-700.css';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import en from '../i18n/en.json';
-import es from '../i18n/es.json';
-import fr from '../i18n/fr.json';
+import { createT } from '../i18n';
 import Seo from '../components/Seo.astro';
 
 export interface Props {
+  lang: string;
   route?: string;
   title?: string;
   description?: string;
 }
 
-const { route, title, description } = Astro.props;
+const { lang, route, title, description } = Astro.props;
+const t = createT(lang);
 
 const url = Astro.url;
 const slug = url.pathname === '/' ? 'index' : url.pathname.replace(/^\//, '').replace(/\/$/, '') || 'index';
-
-const enScript = `var translations_en = ${JSON.stringify(en)};`;
-const esScript = `var translations_es = ${JSON.stringify(es)};`;
-const frScript = `var translations_fr = ${JSON.stringify(fr)};`;
+const pageTitle = title ?? t('meta.default.title');
+const pageDesc = description ?? t('meta.default.desc');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
     <ClientRouter />
-    <Seo route={route ?? Astro.url.pathname} fallbackTitle={title} fallbackDescription={description} />
+    <Seo route={route ?? Astro.url.pathname} fallbackTitle={title} fallbackDescription={description} extra={{ lang }} />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
-    <link rel="dns-prefetch" href="https://blog.emiliano-go.com" />
+    <link rel="preconnect" href="https://blog.emiliano-go.com" />
     <link rel="prefetch" href="/projects" />
     <script>
       (function() {
@@ -52,127 +51,10 @@ const frScript = `var translations_fr = ${JSON.stringify(fr)};`;
         }
       })();
     </script>
-    <script set:html={enScript}></script>
-    <script set:html={esScript}></script>
-    <script set:html={frScript}></script>
   </head>
   <body class="bg-(--color-bg) font-[family-name:var(--font-body)] text-(--color-text-base) antialiased">
-    <div id="i18n-wrapper">
+    <div id="i18n-wrapper" class="i18n-show">
       <slot />
     </div>
-    <script>
-      (function() {
-        var stored = localStorage.getItem('lang');
-        var browser = (navigator.language || '').slice(0, 2);
-        var lang = stored || (browser === 'es' || browser === 'fr' ? browser : 'en');
-
-        document.documentElement.lang = lang;
-
-        var elements = document.querySelectorAll('[data-i18n]');
-        var all = { en: translations_en, es: translations_es, fr: translations_fr };
-        var dict = all[lang] || all.en;
-
-        for (var i = 0; i < elements.length; i++) {
-          var el = elements[i];
-          var key = el.getAttribute('data-i18n');
-          var val = dict[key];
-          if (val !== undefined) {
-            if (el.hasAttribute('data-i18n-html')) {
-              el.innerHTML = val;
-            } else {
-              el.textContent = val;
-            }
-          }
-        }
-
-        // Update title and meta description
-        var metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc && dict['meta.default.desc']) {
-          metaDesc.content = dict['meta.default.desc'];
-        }
-        var titleEl = document.querySelector('title');
-        if (titleEl && dict['meta.default.title']) {
-          titleEl.textContent = dict['meta.default.title'];
-        }
-
-        var wrapper = document.getElementById('i18n-wrapper');
-        if (wrapper) {
-          wrapper.classList.add('i18n-show');
-        }
-
-        // Sync dropdown button text after lang init
-        var dd = document.getElementById('lang-dropdown-btn');
-        if (dd) dd.childNodes[0].textContent = lang.toUpperCase();
-        var ddo = document.getElementById('lang-dropdown-btn-overlay');
-        if (ddo) ddo.childNodes[0].textContent = lang.toUpperCase();
-      })();
-
-      function setLang(lang, animate) {
-        var wrapper = document.getElementById('i18n-wrapper');
-        if (!wrapper) return;
-
-        function swap() {
-          document.documentElement.lang = lang;
-          localStorage.setItem('lang', lang);
-
-          var elements = document.querySelectorAll('[data-i18n]');
-          var all = { en: translations_en, es: translations_es, fr: translations_fr };
-          var dict = all[lang] || all.en;
-
-          for (var i = 0; i < elements.length; i++) {
-            var el = elements[i];
-            var key = el.getAttribute('data-i18n');
-            var val = dict[key];
-            if (val !== undefined) {
-              if (el.hasAttribute('data-i18n-html')) {
-                el.innerHTML = val;
-              } else {
-                el.textContent = val;
-              }
-            }
-          }
-
-          var label = document.getElementById('theme-label-overlay');
-          if (label) {
-            var isLight = document.documentElement.classList.contains('light');
-            label.textContent = isLight ? (dict['nav.dark'] || 'Dark mode') : (dict['nav.light'] || 'Light mode');
-          }
-
-          document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: lang } }));
-
-          // Sync dropdown button text
-          var dd = document.getElementById('lang-dropdown-btn');
-          if (dd) dd.childNodes[0].textContent = lang.toUpperCase();
-          var ddo = document.getElementById('lang-dropdown-btn-overlay');
-          if (ddo) ddo.childNodes[0].textContent = lang.toUpperCase();
-
-          // Update meta description for i18n
-          var metaDesc = document.querySelector('meta[name="description"]');
-          if (metaDesc && dict['meta.default.desc']) {
-            metaDesc.content = dict['meta.default.desc'];
-          }
-          var titleEl = document.querySelector('title');
-          if (titleEl && dict['meta.default.title']) {
-            titleEl.textContent = dict['meta.default.title'];
-          }
-        }
-
-        if (animate) {
-          wrapper.classList.remove('i18n-show');
-          wrapper.classList.add('i18n-fade');
-          setTimeout(function() {
-            swap();
-            wrapper.classList.remove('i18n-fade');
-            wrapper.classList.add('i18n-show');
-          }, 180);
-        } else {
-          swap();
-          wrapper.classList.remove('i18n-fade');
-          wrapper.classList.add('i18n-show');
-        }
-      }
-
-      window.setLang = setLang;
-    </script>
   </body>
 </html>

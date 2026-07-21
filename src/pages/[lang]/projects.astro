@@ -1,0 +1,1124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { createT } from '../../i18n';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const t = createT(lang!);
+---
+
+<Layout lang={lang} title="Projects | Emiliano G.O." description="DBWarden, schemap, and other Python packages - database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.">
+  <Nav lang={lang} />
+  <main>
+
+    <!-- ─── DBWarden — Dedicated Section ─── -->
+    <section id="dbwarden" class="min-h-screen pt-24 pb-6 md:pt-28 md:pb-10 border-b border-(--color-border-subtle) flex flex-col justify-center relative" style="background: var(--color-bg);">
+      <div id="dbwarden-stars" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 relative z-10">
+
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap">{t("projects.featured")}</span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <!-- Title + desc on left, terminal on right -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start">
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">{t("projects.tag.pypi")}</p>
+            <div class="flex items-end gap-3 mb-3">
+              <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head)">
+                DBWarden
+              </h1>
+              <span data-pypi-version="dbwarden" class="text-[10px] px-1.5 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded shrink-0">loading</span>
+            </div>
+            <span data-repo="emiliano-go/DBWarden" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-3 self-start"></span>
+            <p class="text-lg md:text-xl text-(--color-text-bright) mb-6">{t("projects.dbwarden.subtitle")}</p>
+            <p class="text-[13px] leading-[1.8] text-(--color-text-muted) max-w-[640px] mb-6">{t("projects.dbwarden.detail")}</p>
+            <!-- 2x2 link grid -->
+            <div class="grid grid-cols-2 gap-3">
+              <a href="https://github.com/emiliano-go/DBWarden" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                <span>{t("projects.link.github")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+              </a>
+              <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                <span>{t("projects.link.pypi")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+              </a>
+              <a href="https://dbwarden.emiliano-go.com/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                <span>{t("projects.dbwarden.docs")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+              </a>
+              <a href="https://deepwiki.com/emiliano-go/DBWarden/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-1.5 text-[13px] px-4 py-2.5 border border-(--color-border) rounded hover:border-(--color-accent-dim) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                <span>{t("projects.dbwarden.deepwiki")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+              </a>
+            </div>
+          </div>
+          <div id="dbwarden-terminal" class="hidden md:block w-full border border-(--color-border) rounded bg-(--color-bg) overflow-hidden self-start">
+            <div class="flex items-center gap-1.5 px-3 py-2 border-b border-(--color-border-subtle)">
+              <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+              <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+              <span class="w-2 h-2 rounded-full bg-(--color-text-dim)"></span>
+              <span class="text-[9px] text-(--color-text-dim) tracking-wide ml-2">{t("projects.terminal")}</span>
+            </div>
+            <div id="terminal-content" class="px-4 py-3 w-full text-[11px] leading-[1.9] font-mono text-(--color-text-muted) h-[300px] overflow-x-auto whitespace-nowrap"></div>
+          </div>
+        </div>
+
+        <!-- Feature grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+          {[
+            { title: 'SQL-first', desc: 'Migrations are plain SQL. No runtime required.', key: 'sqlfirst' },
+            { title: 'Rollback included', desc: 'Every migration carries upgrade + rollback SQL.', key: 'rollback' },
+            { title: 'Schema snapshots', desc: 'Checksummed JSON after every migration for deterministic diffs.', key: 'snapshot' },
+            { title: 'Column-level diffing', desc: 'Type, nullability, default, and comment changes.', key: 'diffing' },
+            { title: 'Impact analysis', desc: 'AST-based scan to detect breaking changes before deploy.', key: 'impact' },
+            { title: 'Offline mode', desc: 'Export model state, generate migrations anywhere, no DB needed.', key: 'offline' },
+            { title: 'FastAPI integration', desc: 'Startup validation, health checks, runtime lifecycle.', key: 'fastapi' },
+            { title: '5 DB dialects', desc: 'PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse.', key: 'dialects' },
+          ].map(f => (
+            <div class="border border-(--color-border) bg-(--color-surface) p-4 transition-all duration-200 hover:bg-(--color-bg)">
+              <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1" data-i18n={`projects.feature.${f.key}`}>{f.title}</p>
+              <p class="text-[11px] leading-[1.6] text-(--color-text-muted)" data-i18n={`projects.feature.${f.key}.desc`}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Stats bar -->
+        <div id="dbwarden-stats" class="flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-10 py-3 px-3 border border-(--color-border) bg-(--color-surface) rounded">
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">12</span><span class="text-xs text-(--color-text-dim) ml-1.5">{t("projects.stat.stars")}</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">1,131</span><span class="text-xs text-(--color-text-dim) ml-1.5">{t("projects.stat.tests")}</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">51K</span><span class="text-xs text-(--color-text-dim) ml-1.5">{t("projects.stat.loc")}</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">5</span><span class="text-xs text-(--color-text-dim) ml-1.5">{t("projects.stat.dialects")}</span></div>
+          <div><span class="font-[family-name:var(--font-display)] text-2xl font-bold text-(--color-text-head)">15+</span><span class="text-xs text-(--color-text-dim) ml-1.5">{t("projects.stat.cli")}</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── seoslug ─── -->
+    <section id="seoslug" class="min-h-screen pt-24 pb-6 md:pt-28 md:pb-10 border-b border-(--color-border-subtle) flex flex-col justify-center relative">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 relative z-10">
+
+        <div class="flex items-center gap-4 mb-8">
+          <span class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-accent) whitespace-nowrap">{t("projects.tag.webauth")}</span>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <!-- Two-column grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- ─── Left column: title + description + flowchart + detail panel ─── -->
+          <div class="flex flex-col gap-5">
+
+            <!-- Title and description -->
+            <div>
+              <p class="text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">PyPI</p>
+              <div class="flex items-end gap-3 mb-4">
+                <h1 class="font-[family-name:var(--font-display)] text-[44px] md:text-[56px] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head)">
+                  seoslug
+                </h1>
+                <span data-pypi-version="seoslug" class="text-[10px] px-1.5 py-[2px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded shrink-0">loading</span>
+              </div>
+              <span data-repo="emiliano-go/seoslug" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-3 self-start"></span>
+              <p class="text-lg md:text-xl text-(--color-text-bright) mb-4">{t("projects.seoslug.subtitle")}</p>
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted) mb-4">{t("projects.seoslug.detail")}</p>
+              <p class="text-[13px] leading-[1.8] text-(--color-text-muted)">
+                Same inputs always produce the same output - no side effects, no randomness, no hidden state. This makes seoslug ideal for static site generators, SSR frameworks, and any build pipeline where SEO metadata must be testable, cacheable, and reproducible across builds. Zero external dependencies at runtime.
+              </p>
+              <div class="flex flex-wrap gap-2 mt-5">
+                {['Python', 'SEO', 'JSON-LD'].map(t => (
+                  <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-muted) tracking-wide">{t}</span>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ─── Right column: feature cards + tags + links ─── -->
+          <div class="flex flex-col gap-4">
+
+            <!-- Feature highlights -->
+            <div class="flex flex-col gap-2">
+              {[
+                { title: 'Typed inputs', desc: 'SEOConfig + SEOEntity with validated fields. No raw dicts, no guessing.', key: 'typed' },
+                { title: 'Deterministic by design', desc: 'Same inputs always produce the same payload. Pure function, zero side effects.', key: 'deterministic' },
+                { title: 'Multi-format output', desc: 'Canonical, OG, Twitter Cards, and JSON-LD from a single call.', key: 'multi' },
+                { title: 'SSG-first', desc: 'Pre-generate SEO at build time. Works with Astro, Next.js, Hugo, Jekyll.', key: 'ssg' },
+                { title: 'Zero runtime deps', desc: 'Standard library only. No external packages required at runtime.', key: 'nodeps' },
+                { title: 'Fully typed', desc: 'Complete type hints, MyPy and Pyright compatible out of the box.', key: 'typed' },
+              ].map(f => (
+                <div class="border border-(--color-border) bg-(--color-surface) p-3 md:p-4 transition-all duration-200 hover:bg-(--color-bg)">
+                  <p class="text-[11px] font-semibold text-(--color-text-bright) uppercase tracking-wide mb-1">{f.title}</p>
+                  <p class="text-[11px] leading-[1.6] text-(--color-text-muted)">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+                <a href="https://seoslug.emiliano-go.com" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                  <span>Docs</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+                <a href="https://github.com/emiliano-go/seoslug" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                  <span>{t("projects.link.github")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+                <a href="https://pypi.org/project/seoslug/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 text-[13px] md:text-[11px] px-3 py-1.5 border border-(--color-border) rounded hover:border-(--color-text-muted) text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">
+                  <span>{t("projects.link.pypi")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── Local-first Tools ─── -->
+    <section id="local-tools" class="py-20 md:py-24 border-b border-(--color-border-subtle) relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background: radial-gradient(ellipse at 20% 50%, var(--color-accent) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, var(--color-text-dim) 0%, transparent 60%);"></div>
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 relative z-10">
+
+        <div class="flex items-center gap-4 mb-12">
+          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">{t("projects.local.heading")}</h2>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- heard ─── Voice → Text → Action ─── -->
+          <div class="local-card border border-(--color-border) bg-(--color-surface) p-8 flex flex-col relative group transition-colors duration-500">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">heard</h3>
+                <span class="text-[10px] px-2 py-[3px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded">v0.1.0</span>
+              </div>
+
+              <!-- Voice → text indicator -->
+              <div class="local-anim local-anim-heard" aria-hidden="true">
+                <div class="heard-waveform" id="heard-waveform">
+                  <script>
+                  (function() {
+                    var container = document.getElementById('heard-waveform');
+                    if (!container) return;
+                    var html = '';
+                    var envelope = [0.22, 0.38, 0.7, 0.46, 0.88, 0.58, 0.96, 0.42, 0.74, 0.34, 0.52, 0.25];
+                    for (var i = 0; i < envelope.length; i++) {
+                      var delay = (i * 0.11).toFixed(2);
+                      var dur = (1.3 + (i % 5) * 0.18).toFixed(2);
+                      var low = Math.max(0.08, envelope[i] * 0.22).toFixed(2);
+                      html += '<div class="wave-bar" style="--low:' + low + ';--high:' + envelope[i] + ';animation-delay:' + delay + 's;animation-duration:' + dur + 's"></div>';
+                    }
+                    container.innerHTML = html;
+                  })();
+                  </script>
+                </div>
+                <div class="heard-text-line"></div>
+              </div>
+            </div>
+            <span data-repo="emiliano-go/voxd" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-3 self-start"></span>
+
+            <!-- Typing animation line -->
+            <div class="font-mono text-[11px] text-(--color-accent) mb-4 h-5 overflow-hidden">
+              <span class="typing-text" data-text="$ say 'open firefox'"></span>
+            </div>
+
+            <p class="text-[12px] leading-[1.8] text-(--color-text-muted) flex-1 mb-5">{t("projects.heard.detail")}</p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag-accent">{t("projects.tag.ai")}</span>
+              <span class="tag">Python</span>
+              <span class="tag">Whisper</span>
+              <span class="tag">Linux</span>
+              <span class="tag">evdev</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="https://github.com/emiliano-go/voxd" target="_blank" rel="noopener noreferrer" class="text-[10px] px-3 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>GitHub</span> ↗</a>
+            </div>
+          </div>
+
+          <!-- trustsight ─── Shield ─── -->
+          <div class="local-card border border-(--color-border) bg-(--color-surface) p-8 flex flex-col relative group transition-colors duration-500">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">trustsight</h3>
+                <span data-pypi-version="trustsight" class="text-[10px] px-2 py-[3px] border border-(--color-accent-dim) text-(--color-accent) tracking-wide rounded">loading</span>
+              </div>
+
+              <!-- Arch deflection indicator -->
+              <div class="local-anim local-anim-shield" id="shield-container" aria-hidden="true">
+                <div class="arch-mark">
+                  <svg viewBox="0 0 128 128" aria-hidden="true"><path d="M64 10c-5.1 12.5-8.2 20.6-13.9 32.8 3.5 3.7 7.8 8 14.9 13-7.6-3.1-12.8-6.3-16.7-9.7-7.5 15.7-19.3 38.6-43.3 80.9 18.8-10.9 33.4-17.6 47-20.1-.6-2.6-1-5.4-1-8.3l.1-2.2c.5-10.3 5.6-18.2 11.5-17.7 5.9.5 10.4 9.3 9.9 19.6-.2 3-.7 5.8-1.7 8.3 13.5 2.3 28.2 9.1 47.2 20.4-3.7-6.8-7-12.9-10.2-18.8-5-3.9-10.3-9-21.1-14.5 7.4 1.9 12.8 4.2 17 6.8C81.3 59.2 73.3 37.9 64 10Z"/></svg>
+                </div>
+                <script>
+                (function() {
+                  var c = document.getElementById('shield-container');
+                  if (!c) return;
+                  var impactX = 71;
+                  var rows = [
+                    { sy: -18, iy: -10, ex: -10, ey: -42, delay: 0.1 },
+                    { sy: 0, iy: 0, ex: -12, ey: 28, delay: 1.0 },
+                    { sy: 19, iy: 10, ex: -8, ey: -28, delay: 1.9 }
+                  ];
+                  var html = '';
+                  for (var i = 0; i < rows.length; i++) {
+                    var r = rows[i];
+                    var out = Math.atan2(r.ey - r.iy, r.ex - impactX) * 180 / Math.PI;
+                    html += '<div class="shield-bullet" style="--sy:' + r.sy + 'px;--iy:' + r.iy + 'px;--ex:' + r.ex + 'px;--ey:' + r.ey + 'px;--in-rot:0deg;--out-rot:' + out.toFixed(1) + 'deg;animation-delay:' + r.delay + 's"><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 2.2h20.5c5.3 0 9.4 1.4 11.5 3.8-2.1 2.4-6.2 3.8-11.5 3.8H1Z"/><path d="M7 2.2v7.6"/><path d="M10 6h11"/></svg></div><div class="shield-impact" style="--iy:' + r.iy + 'px;animation-delay:' + r.delay + 's"></div><div class="ricochet-spark" style="--iy:' + r.iy + 'px;animation-delay:' + r.delay + 's"></div>';
+                  }
+                  c.insertAdjacentHTML('beforeend', html);
+                })();
+                </script>
+              </div>
+            </div>
+            <span data-repo="emiliano-go/trustsight" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-3 self-start"></span>
+
+            <div class="font-mono text-[11px] text-(--color-accent) mb-4 h-5 overflow-hidden">
+              <span class="typing-text" data-text="$ trustsight diff yay-bin"></span>
+            </div>
+
+            <p class="text-[12px] leading-[1.8] text-(--color-text-muted) flex-1 mb-5">{t("projects.trustsight.detail")}</p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag-accent">{t("projects.tag.ai")}</span>
+              <span class="tag">Python</span>
+              <span class="tag">Arch Linux</span>
+              <span class="tag">Security</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="https://github.com/emiliano-go/trustsight" target="_blank" rel="noopener noreferrer" class="text-[10px] px-3 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>{t("projects.link.github")}</span> ↗</a>
+              <a href="https://pypi.org/project/trustsight/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-3 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>{t("projects.link.pypi")}</span> ↗</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <style is:global>
+      .local-card {
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+      }
+      .local-card:hover {
+        border-color: color-mix(in srgb, var(--color-accent-dim) 38%, var(--color-border));
+      }
+      .local-anim {
+        width: 218px;
+        height: 55px;
+        border: 1px solid var(--color-border-subtle);
+        background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+        border-radius: 6px;
+        flex: 0 0 auto;
+        overflow: hidden;
+        opacity: 0.85;
+      }
+
+      /* ─── Waveform bars ─── */
+      .local-anim-heard {
+        position: relative;
+      }
+      .heard-waveform {
+        height: 100%;
+        display: flex;
+        align-items: end;
+        gap: 3px;
+        box-sizing: border-box;
+        padding: 8px 13px 16px;
+      }
+      .wave-bar {
+        flex: 1;
+        height: 100%;
+        background: var(--color-text-dim);
+        border-radius: 2px 2px 0 0;
+        animation: wave-pulse ease-in-out infinite;
+        transform-origin: bottom;
+        min-height: 0;
+        opacity: 0.7;
+      }
+      .heard-text-line {
+        position: absolute;
+        left: 13px;
+        bottom: 7px;
+        width: 82px;
+        height: 1px;
+        margin: 0;
+        background: var(--color-accent-dim);
+        transform-origin: left;
+        animation: text-line-resolve 2.4s ease-in-out infinite;
+        opacity: 0.65;
+      }
+      @keyframes wave-pulse {
+        0%, 100% { transform: scaleY(var(--low)); opacity: 0.35; }
+        18% { transform: scaleY(calc(var(--high) * 0.55)); opacity: 0.55; }
+        42% { transform: scaleY(var(--high)); opacity: 0.82; }
+        67% { transform: scaleY(calc(var(--high) * 0.38)); opacity: 0.48; }
+      }
+      @keyframes text-line-resolve {
+        0%, 35% { transform: scaleX(0.25); opacity: 0.25; }
+        60%, 100% { transform: scaleX(1); opacity: 0.75; }
+      }
+
+      /* ─── Shield ─── */
+      .local-anim-shield {
+        position: relative;
+      }
+      .arch-mark {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 42px;
+        height: 42px;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        opacity: 1;
+      }
+      .arch-mark path {
+        fill: var(--color-text-dim);
+      }
+      .shield-bullet {
+        position: absolute;
+        width: 34px;
+        height: 12px;
+        left: 0;
+        top: 50%;
+        margin-left: -17px;
+        margin-top: -6px;
+        animation: shield-deflect 2.35s linear infinite;
+        opacity: 0;
+        transform-origin: 50% 50%;
+      }
+      .shield-bullet svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .shield-bullet path:first-child {
+        fill: var(--color-text-dim);
+      }
+      .shield-bullet path:last-child {
+        fill: none;
+        stroke: var(--color-bg);
+        stroke-width: 1;
+        stroke-linecap: round;
+      }
+      .ricochet-spark {
+        position: absolute;
+        left: 88px;
+        top: 50%;
+        width: 14px;
+        height: 14px;
+        margin-left: -7px;
+        margin-top: -7px;
+        transform: translateY(var(--iy)) scale(0.2);
+        opacity: 0;
+        animation: ricochet-spark 2.35s linear infinite;
+        pointer-events: none;
+      }
+      .shield-impact {
+        position: absolute;
+        left: 88px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin-left: -10px;
+        margin-top: -10px;
+        border: 1px solid var(--color-accent-dim);
+        border-radius: 999px;
+        opacity: 0;
+        transform: translateY(var(--iy)) scale(0.25);
+        animation: shield-impact 2.35s linear infinite;
+        pointer-events: none;
+      }
+      .ricochet-spark::before,
+      .ricochet-spark::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 12px;
+        height: 1px;
+        background: var(--color-accent-dim);
+        transform-origin: left center;
+      }
+      .ricochet-spark::before { transform: rotate(-24deg); }
+      .ricochet-spark::after { transform: rotate(34deg); }
+      @keyframes shield-deflect {
+        0% { transform: translate(-28px, var(--sy)) rotate(var(--in-rot)) scale(0.86); opacity: 0; }
+        8% { opacity: 0.78; }
+        29.8% { transform: translate(71px, var(--iy)) rotate(var(--in-rot)) scale(0.94); opacity: 0.78; }
+        30% { transform: translate(71px, var(--iy)) rotate(var(--out-rot)) scale(0.9); opacity: 0.78; }
+        55% { transform: translate(var(--ex), var(--ey)) rotate(var(--out-rot)) scale(0.72); opacity: 0; }
+        100% { transform: translate(var(--ex), var(--ey)) rotate(var(--out-rot)) scale(0.72); opacity: 0; }
+      }
+      @keyframes ricochet-spark {
+        0%, 28.8% { opacity: 0; transform: translateY(var(--iy)) scale(0.15); }
+        30% { opacity: 0.95; transform: translateY(var(--iy)) scale(1); }
+        35% { opacity: 0; transform: translateY(var(--iy)) scale(1.35); }
+        100% { opacity: 0; transform: translateY(var(--iy)) scale(0.15); }
+      }
+      @keyframes shield-impact {
+        0%, 28.8% { opacity: 0; transform: translateY(var(--iy)) scale(0.25); }
+        30% { opacity: 0.7; transform: translateY(var(--iy)) scale(0.55); }
+        38% { opacity: 0; transform: translateY(var(--iy)) scale(1.15); }
+        100% { opacity: 0; transform: translateY(var(--iy)) scale(0.25); }
+      }
+
+      /* ─── Typing effect ─── */
+      .typing-text {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 1px solid transparent;
+      }
+      .typing-text.typing {
+        border-right-color: currentColor;
+        animation: cursor-blink 0.8s step-end infinite;
+      }
+      @keyframes cursor-blink {
+        50% { border-right-color: transparent; }
+      }
+
+      /* ─── Tag styles (bigger) ─── */
+      .tag {
+        font-size: 10px;
+        padding: 3px 8px;
+        border: 1px solid var(--color-border);
+        color: var(--color-text-dim);
+        letter-spacing: 0.05em;
+        border-radius: 3px;
+      }
+      .tag-accent {
+        font-size: 10px;
+        padding: 3px 8px;
+        border: 1px solid var(--color-accent-dim);
+        color: var(--color-accent);
+        letter-spacing: 0.05em;
+        border-radius: 3px;
+      }
+    </style>
+    <script>
+    (function() {
+      document.querySelectorAll('.typing-text').forEach(function(el) {
+        var text = el.getAttribute('data-text');
+        if (!text) return;
+        var i = 0;
+        function type() {
+          if (i <= text.length) {
+            el.textContent = text.substring(0, i);
+            i++;
+            if (i <= text.length) { setTimeout(type, 50 + Math.random() * 30); }
+            else { el.classList.add('typing'); }
+          }
+        }
+        setTimeout(type, 600);
+      });
+    })();
+    </script>
+
+    <!-- ─── PyPI Utilities ─── -->
+
+    <!-- ─── PyPI Utilities ─── -->
+    <section id="pypi-utils" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+
+        <div class="flex items-center gap-4 mb-10">
+          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">{t("projects.pypi.heading")}</h2>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="border border-(--color-border-subtle) bg-(--color-surface)">
+          <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-(--color-border-subtle)">
+            <!-- schemap -->
+            <div class="p-6 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">schemap</h3>
+                <span class="tag">Python</span>
+              </div>
+              <span data-repo="emiliano-go/schemap" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">{t("projects.schemap.desc")}</p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <a href="https://github.com/emiliano-go/schemap" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  <span>{t("projects.link.github")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+                <a href="https://pypi.org/project/schemap/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  <span>{t("projects.link.pypi")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+              </div>
+            </div>
+            <!-- detrack -->
+            <div class="p-6 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">detrack</h3>
+                <span class="tag">Python</span>
+              </div>
+              <span data-repo="emiliano-go/detrack" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">{t("projects.detrack.desc")}</p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <a href="https://github.com/emiliano-go/detrack" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  <span>{t("projects.link.github")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+                <a href="https://pypi.org/project/detrack/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  <span>{t("projects.link.pypi")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+              </div>
+            </div>
+            <!-- acrresolv -->
+            <div class="p-6 flex flex-col">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wide text-(--color-text-head)">acrresolv</h3>
+                <span class="tag">Python</span>
+              </div>
+              <span data-repo="emiliano-go/acrresolv" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[11px] leading-[1.7] text-(--color-text-muted) flex-1 mb-4">{t("projects.acrresolv.desc")}</p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                <a href="https://github.com/emiliano-go/acrresolv" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  <span>{t("projects.link.github")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+                <a href="https://pypi.org/project/acrresolv/" target="_blank" rel="noopener noreferrer" class="group text-[10px] px-2 py-[3px] border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+                  <span>{t("projects.link.pypi")}</span> <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── More Projects ─── -->
+    <section id="more-projects" class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+
+        <div class="flex items-center gap-4 mb-10">
+          <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">{t("projects.more.heading")}</h2>
+          <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="split-layout" id="split-layout">
+          <div class="split-nav" role="tablist">
+            <button class="split-btn active" data-target="0" role="tab" aria-selected="true">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">01</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">crxml</span>
+            </button>
+            <button class="split-btn" data-target="1" role="tab" aria-selected="false">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">02</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">vigil</span>
+            </button>
+            <button class="split-btn" data-target="2" role="tab" aria-selected="false">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">03</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</span>
+            </button>
+            <button class="split-btn" data-target="3" role="tab" aria-selected="false">
+              <span class="text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">04</span>
+              <span class="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-(--color-text-head)">clickvault</span>
+            </button>
+          </div>
+
+          <div class="split-panel">
+            <div class="split-content active" data-index="0">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">crxml</h3>
+                <span class="tag">Rust</span>
+              </div>
+              <span data-repo="emiliano-go/crxml" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("projects.more.crxml.tag")}</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none" data-i18n-html set:html={t("projects.more.crxml.desc")}>
+
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
+                {['Python', 'Rust', 'XML', 'pandas'].map(t => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/crxml" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>{t("projects.link.github")}</span> ↗</a>
+                <a href="https://pypi.org/project/crxml/" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>{t("projects.link.pypi")}</span> ↗</a>
+              </div>
+            </div>
+
+            <div class="split-content" data-index="1">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">vigil</h3>
+                <span class="tag">Prefect</span>
+              </div>
+              <span data-repo="emiliano-go/vigil" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("projects.more.vigil.tag")}</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">{t("projects.more.vigil.desc")}</p>
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
+                {['Python', 'Prefect', 'PyGithub', 'ClickHouse'].map(t => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/vigil" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>{t("projects.link.github")}</span> ↗</a>
+              </div>
+            </div>
+
+            <div class="split-content" data-index="2">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">mapcreator</h3>
+                <span class="tag">React</span>
+              </div>
+              <span data-repo="emiliano-go/mapcreator" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("projects.more.mapcreator.tag")}</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">{t("projects.more.mapcreator.desc")}</p>
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
+                {['React', 'TypeScript', 'Canvas', 'A* Pathfinding'].map(t => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/mapcreator" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200"><span>{t("projects.link.github")}</span> ↗</a>
+              </div>
+            </div>
+
+            <div class="split-content" data-index="3">
+              <div class="flex items-center gap-2.5 mb-3">
+                <h3 class="font-[family-name:var(--font-display)] text-xl md:text-2xl font-bold uppercase tracking-wide text-(--color-text-head)">clickvault</h3>
+                <span class="tag">Go</span>
+              </div>
+              <span data-repo="emiliano-go/clickvault" class="repo-badge text-[9px] px-1.5 py-[2px] border border-(--color-border) text-(--color-text-dim) tracking-wide rounded inline-block mb-2 self-start"></span>
+              <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Vault plugin</p>
+              <p class="text-[12px] md:text-[13px] leading-[1.8] text-(--color-text-muted) flex-1 max-w-none">
+                HashiCorp Vault database secrets engine plugin for ClickHouse. Generates ephemeral, short-lived ClickHouse users on demand (dynamic secrets) and rotates static role passwords on a schedule. Implements the Vault database plugin SDK, integrating natively with Vault's database secrets engine. All generated ClickHouse DDL is isolated in a dedicated SQL layer, and clustered deployments get <code class="text-[10px] px-1 py-[1px] bg-(--color-bg) border border-(--color-border-subtle) rounded">ON CLUSTER</code> appended automatically - the rest of the plugin never branches on topology.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mt-auto mb-4">
+                {['Go', 'Vault', 'ClickHouse', 'Plugin'].map(t => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+              <div class="flex gap-2">
+                <a href="https://github.com/emiliano-go/clickvault" target="_blank" rel="noopener noreferrer" class="text-[10px] px-2.5 py-1.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>
+
+<script>
+  (() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      const content = document.getElementById('terminal-content');
+      if (content) {
+        content.innerHTML = `
+          <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden init</div>
+          <div class="terminal-line">Initialized DBWarden project structure</div>
+          <div class="terminal-line">Created migrations directory</div>
+          <div class="terminal-line">Created dbwarden.py</div>
+          <div class="terminal-line"><span class="text-(--color-accent-dim)">$</span> dbwarden migrate</div>
+          <div class="terminal-line">[DBWarden] Applying migrations...</div>
+          <div class="terminal-line">[DBWarden] All migrations applied. Pending: 0</div>
+          <div class="terminal-line" style="margin-top:4px"><span style="color:var(--color-accent-dim);animation:terminal-blink 1s step-end infinite">▊</span></div>`;
+      }
+      return;
+    }
+
+    // ─── Terminal typing (multi-session with clear) ───
+    const content = document.getElementById('terminal-content');
+    if (content) {
+      const sessions = [
+        [
+          { cmd: 'dbwarden init', output: ['Initialized DBWarden project structure', 'Created migrations directory', 'Created dbwarden.py'] },
+          { cmd: 'dbwarden config', output: ['  Primary (sqlite)     sqlite:///./app.db', '  Migrations:          migrations/primary'] },
+          { cmd: 'dbwarden make-migrations "create users table"', output: ['Generated changes:', '  + CREATE TABLE users', '  + CREATE TABLE posts', 'Created: primary__0001_create_core_tables.sql'] },
+        ],
+        [
+          { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied (42ms)'] },
+          { cmd: 'dbwarden status', output: ['  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
+          { cmd: 'dbwarden check', output: ['  CREATE TABLE users          SAFE', '  CREATE TABLE posts          SAFE', '  Result: 2 SAFE, 0 WARN'] },
+        ],
+        [
+          { cmd: 'dbwarden history', output: ['  V0001  create_core_tables  2025-01-15'] },
+          { cmd: 'dbwarden rollback --count 1', output: ['[DBWarden] Rolling back primary__0001...', '[DBWarden] Rollback complete'] },
+          { cmd: 'dbwarden migrate', output: ['[DBWarden] Applying primary__0001_create_core_tables...', '[DBWarden] Migration applied (35ms)'] },
+          { cmd: 'dbwarden status', output: ['  Applied:  1', '  Pending:  0', '  Status:   up-to-date'] },
+        ],
+      ];
+
+      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+      function typeChars(parent, text, base, range) {
+        return new Promise(resolve => {
+          let i = 0;
+          function next() {
+            if (i >= text.length) { resolve(); return; }
+            const span = document.createElement('span');
+            span.textContent = text[i];
+            parent.appendChild(span);
+            i++;
+            setTimeout(next, base + Math.random() * range);
+          }
+          next();
+        });
+      }
+
+      function addCmdLine() {
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+        const prompt = document.createElement('span');
+        prompt.className = 'text-(--color-accent-dim)';
+        prompt.textContent = '$';
+        line.appendChild(prompt);
+        content.appendChild(line);
+        return line;
+      }
+
+      function addOutputLine(text) {
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+        line.textContent = text;
+        content.appendChild(line);
+      }
+
+      (async () => {
+        await sleep(400);
+
+        while (true) {
+          for (const block of sessions) {
+            for (let i = 0; i < block.length; i++) {
+              const entry = block[i];
+              const isLast = i === block.length - 1;
+
+              const cmdLine = addCmdLine();
+              await typeChars(cmdLine, ' ' + entry.cmd, 50, 70);
+              await sleep(300 + Math.random() * 250);
+
+              for (const out of entry.output) {
+                await sleep(120 + Math.random() * 80);
+                addOutputLine(out);
+              }
+
+              if (isLast) {
+                await sleep(1000 + Math.random() * 1000);
+              } else {
+                await sleep(800 + Math.random() * 400);
+              }
+            }
+
+            const clearLine = addCmdLine();
+            await typeChars(clearLine, ' clear', 50, 70);
+            await sleep(2000);
+            content.innerHTML = '';
+            await sleep(600);
+          }
+
+          const cursorLine = document.createElement('div');
+          cursorLine.className = 'terminal-line';
+          const cursor = document.createElement('span');
+          cursor.textContent = '▊';
+          cursor.style.color = 'var(--color-accent-dim)';
+          cursor.style.animation = 'terminal-blink 1s step-end infinite';
+          cursorLine.appendChild(cursor);
+          content.appendChild(cursorLine);
+          await sleep(1500 + Math.random() * 500);
+          content.innerHTML = '';
+          await sleep(500);
+        }
+      })();
+    }
+
+  })();
+
+
+
+  // ─── Twinkling stars with mouse parallax ───
+  (() => {
+    const container = document.getElementById('dbwarden-stars');
+    if (!container) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const stars = [];
+    const minDist = 3;
+    const maxStars = 220;
+
+    for (let i = 0; i < maxStars; i++) {
+      let placed = false;
+      for (let attempt = 0; attempt < 80; attempt++) {
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        if (!stars.some(s => Math.hypot(s.x - x, s.y - y) < minDist)) {
+          stars.push({ x, y });
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) break;
+    }
+
+    for (const pos of stars) {
+      const star = document.createElement('span');
+      const size = 1 + Math.random() * 1.5;
+      star.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: var(--color-star);
+        border-radius: 50%;
+        left: ${pos.x}%;
+        top: ${pos.y}%;
+        opacity: 0;
+        transform: translateZ(0);
+      `;
+      container.appendChild(star);
+      const driftTargetX = Math.random() * 100;
+      const driftTargetY = Math.random() * 100;
+      star.__data = {
+        twinkleSpeed: 0.6 + Math.random() * 1.5,
+        twinklePhase: Math.random() * Math.PI * 2,
+        minOpacity: 0,
+        maxOpacity: 0.3 + Math.random() * 0.5,
+        size: size,
+        originX: pos.x,
+        originY: pos.y,
+        driftX: 0,
+        driftY: 0,
+        targetX: driftTargetX,
+        targetY: driftTargetY,
+        driftTimer: 0,
+      };
+    }
+
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+      mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+    });
+
+    function animate() {
+      currentX += (mouseX - currentX) * 0.04;
+      currentY += (mouseY - currentY) * 0.04;
+
+      const time = Date.now() / 1000;
+      const dt = 1/60;
+
+      const starEls = container.children;
+      for (let i = 0; i < starEls.length; i++) {
+        const el = starEls[i];
+        const d = el.__data;
+
+        d.driftTimer += dt;
+        if (d.driftTimer > 3 + Math.random() * 4) {
+          d.targetX = Math.random() * 100;
+          d.targetY = Math.random() * 100;
+          d.driftTimer = 0;
+        }
+
+        d.driftX += (d.targetX - (d.originX + d.driftX)) * 0.004;
+        d.driftY += (d.targetY - (d.originY + d.driftY)) * 0.004;
+
+        const parallaxX = currentX * 20 * d.size;
+        const parallaxY = currentY * 20 * d.size;
+
+        const twinkle = Math.sin(time * d.twinkleSpeed + d.twinklePhase);
+        const opacity = d.minOpacity + (twinkle + 1) / 2 * (d.maxOpacity - d.minOpacity);
+
+        const px = d.driftX + parallaxX;
+        const py = d.driftY + parallaxY;
+
+        el.style.transform = `translate(${px}px, ${py}px)`;
+        el.style.opacity = Math.max(0, Math.min(1, opacity));
+        el.style.left = `${d.originX}%`;
+        el.style.top = `${d.originY}%`;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  })();
+
+  // ─── PyPI version badges ───
+  (() => {
+    const badges = document.querySelectorAll('[data-pypi-version]');
+    badges.forEach(el => {
+      const pkg = el.getAttribute('data-pypi-version');
+      if (!pkg) return;
+      fetch(`https://pypi.org/pypi/${encodeURIComponent(pkg)}/json`)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => { el.textContent = `v${data.info.version}`; })
+        .catch(() => { el.textContent = 'PyPI'; });
+    });
+  })();
+
+  // ─── Repo badges: fetch latest commits ───
+  const BADGE_ATTR = 'data-repo';
+  const badgeEls = document.querySelectorAll(`.repo-badge[${BADGE_ATTR}]`);
+  if (badgeEls.length > 0) {
+    const repos = [...new Set(Array.from(badgeEls).map(el => el.getAttribute(BADGE_ATTR)).filter(Boolean))];
+    fetch(`/repo-activity?repos=${repos.join(',')}`)
+      .then(r => r.json())
+      .then(data => {
+        const timeago = function(dateStr) {
+          const now = Date.now();
+          const d = new Date(dateStr);
+          const diff = now - d.getTime();
+          if (diff < 60000) return 'now';
+          const mins = Math.floor(diff / 60000);
+          if (mins < 60) return mins + ' min' + (mins === 1 ? '' : 's') + ' ago';
+          const hrs = Math.floor(diff / 3600000);
+          if (hrs < 24) return hrs + ' hour' + (hrs === 1 ? '' : 's') + ' ago';
+          const days = Math.floor(diff / 86400000);
+          if (days < 30) return days + ' day' + (days === 1 ? '' : 's') + ' ago';
+          const months = Math.floor(days / 30);
+          if (months < 12) return months + ' month' + (months === 1 ? '' : 's') + ' ago';
+          const years = Math.floor(months / 12);
+          return years + ' year' + (years === 1 ? '' : 's') + ' ago';
+        };
+        badgeEls.forEach(el => {
+          const repo = el.getAttribute(BADGE_ATTR);
+          const info = data[repo];
+          if (info) {
+            const t = timeago(info.committed_at);
+            el.textContent = 'Last commit made by: ' + info.author_login + ', ' + t;
+          } else {
+            el.textContent = 'no activity';
+          }
+        });
+      })
+      .catch(() => {
+        badgeEls.forEach(el => { el.textContent = ''; });
+      });
+  }
+
+  // ─── Split-layout: click nav to show detail ───
+  (() => {
+    const layout = document.getElementById('split-layout');
+    if (!layout) return;
+
+    const btns = layout.querySelectorAll('.split-btn');
+    const contents = layout.querySelectorAll('.split-content');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = btn.getAttribute('data-target');
+
+        btns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        contents.forEach(c => c.classList.remove('active'));
+        const target = layout.querySelector(`.split-content[data-index="${idx}"]`);
+        if (target) target.classList.add('active');
+      });
+    });
+  })();
+</script>
+
+<style>
+  #seoslug {
+    animation: section-breathe 4s ease-in-out infinite;
+  }
+
+  #dbwarden {
+    animation: section-breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes section-breathe {
+    0%, 100% { border-bottom-color: #1e2e2e; }
+    50% { border-bottom-color: #3a6e5a; }
+  }
+
+  .split-layout {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  .split-nav {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .split-btn {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: var(--color-surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: background 0.2s;
+    color: var(--color-text-muted);
+    font-family: inherit;
+  }
+
+  .split-btn:last-child {
+    border-bottom: none;
+  }
+
+  .split-btn:hover {
+    background: var(--color-bg);
+  }
+
+  .split-btn.active {
+    background: var(--color-bg);
+    color: var(--color-text-head);
+    border-left: 2px solid var(--color-text-dim);
+  }
+
+  .split-panel {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .split-content {
+    display: none;
+  }
+
+  .split-content.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  @media (min-width: 768px) {
+    .split-layout {
+      flex-direction: row;
+    }
+
+    .split-nav {
+      width: 160px;
+      border-bottom: none;
+      border-right: 1px solid var(--color-border-subtle);
+    }
+
+    .split-btn {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .split-btn:last-child {
+      border-bottom: none;
+    }
+
+    .split-panel {
+      flex: 1;
+      height: 400px;
+      padding: 1.75rem;
+      overflow-y: auto;
+    }
+  }
+</style>
