@@ -7,10 +7,8 @@ const t = createT(lang);
 const links = [
   { href: '/' + lang + '/#about', key: 'nav.about' },
   { href: '/' + lang + '/#engineering', key: 'nav.engineering' },
-  { href: '/' + lang + '/#work', key: 'nav.work' },
   { href: '/' + lang + '/projects', key: 'nav.projects' },
   { href: '/' + lang + '/#studies', key: 'nav.studies' },
-  { href: '/' + lang + '/#activity', key: 'nav.activity' },
   { href: 'https://github.com/emiliano-go', external: true, key: 'nav.github' },
 ];
 
@@ -98,17 +96,6 @@ const langOptions = [
       <button id="a11y-btn-mobile" class="text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200 cursor-pointer" aria-label="Accessibility settings">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="4.5" r="2.5"/><path d="M12 7v5m0 0l-3 7m3-7l3 7M6 10.5h12"/></svg>
       </button>
-      <div id="a11y-dd-mobile" class="hidden fixed bottom-20 left-4 right-4 bg-(--color-bg) border border-(--color-border) shadow-lg z-50 p-3">
-        <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Accessibility</p>
-        <button id="a11y-toggle-contrast-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
-          <span>High contrast</span>
-          <span id="a11y-contrast-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
-        </button>
-        <button id="a11y-toggle-font-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
-          <span>Larger text</span>
-          <span id="a11y-font-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
-        </button>
-      </div>
       <button
         id="menu-btn"
         class="flex flex-col gap-1.5 p-2 cursor-pointer relative z-10"
@@ -125,6 +112,18 @@ const langOptions = [
     </div>
   </div>
 </nav>
+
+<div id="a11y-dd-mobile" class="hidden fixed bottom-20 left-4 right-4 bg-(--color-bg) border border-(--color-border) shadow-lg z-50 p-3">
+  <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Accessibility</p>
+  <button id="a11y-toggle-contrast-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
+    <span>High contrast</span>
+    <span id="a11y-contrast-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
+  </button>
+  <button id="a11y-toggle-font-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
+    <span>Larger text</span>
+    <span id="a11y-font-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
+  </button>
+</div>
 
 <div id="mobile-menu" class="md:hidden fixed inset-0 z-40 pt-20 opacity-0 pointer-events-none transition-opacity duration-300 bg-(--color-bg)" inert>
   <button id="menu-close" class="absolute top-6 right-[7.5%] md:hidden text-(--color-text-muted) hover:text-(--color-text-bright) text-2xl cursor-pointer" aria-label={t("a11y.menu.close")}>✕</button>
@@ -163,9 +162,8 @@ const langOptions = [
 </header>
 
 <script is:inline>
-(function() {
-  var nav = document.getElementById('nav');
-  var curLang = document.documentElement.lang || 'en';
+if (!window.__astroNavInit) {
+window.__astroNavInit = true;
 
   function currentPath() {
     var p = location.pathname;
@@ -173,7 +171,6 @@ const langOptions = [
     return m ? (m[2] || '/') : p;
   }
 
-  var desktopDD = document.getElementById('lang-dd-desk');
   function retargetLangLinks(root) {
     if (!root) return;
     var cp = currentPath();
@@ -181,51 +178,64 @@ const langOptions = [
       a.href = '/' + a.getAttribute('data-lang') + cp;
     });
   }
-  retargetLangLinks(desktopDD);
 
-  var mobileLinks = document.getElementById('mobile-lang-links');
-  retargetLangLinks(mobileLinks);
-  if (mobileLinks) {
-    mobileLinks.querySelectorAll('a').forEach(function(a) {
-      if (a.getAttribute('data-lang') === curLang) a.style.fontWeight = 'bold';
-    });
+  function updateIcons() {
+    var isLight = document.documentElement.classList.contains('light');
+    document.querySelectorAll('[id^="sun-icon"]').forEach(function(el) { el.classList.toggle('hidden', !isLight); });
+    document.querySelectorAll('[id^="moon-icon"]').forEach(function(el) { el.classList.toggle('hidden', isLight); });
   }
 
-  var ddWrap = document.getElementById('lang-dd-wrap');
-  var ddBtn = document.getElementById('lang-dd-btn');
-  if (ddWrap && ddBtn && desktopDD) {
-    var setDD = function(open) {
-      desktopDD.classList.toggle('opacity-100', open);
-      desktopDD.classList.toggle('pointer-events-auto', open);
-      desktopDD.classList.toggle('opacity-0', !open);
-      desktopDD.classList.toggle('pointer-events-none', !open);
-      ddBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) desktopDD.removeAttribute('inert');
-      else { desktopDD.setAttribute('inert', ''); }
-    };
-    ddBtn.addEventListener('click', function() {
-      setDD(ddBtn.getAttribute('aria-expanded') !== 'true');
-    });
-    ddWrap.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') { setDD(false); ddBtn.focus(); }
-    });
-    ddWrap.addEventListener('focusout', function(e) {
-      if (!ddWrap.contains(e.relatedTarget)) setDD(false);
-    });
+  function setTheme(light) {
+    if (light) {
+      document.documentElement.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+    }
+    updateIcons();
   }
 
-  window.addEventListener('scroll', function() {
-    nav.style.borderBottomColor = window.scrollY > 40
-      ? 'var(--color-border)'
-      : 'var(--color-border-subtle)';
-  }, { passive: true });
+  function updateDots() {
+    var c = document.documentElement.getAttribute('data-contrast') === 'high';
+    var f = document.documentElement.getAttribute('data-fontsize');
+    var d1 = document.getElementById('a11y-contrast-dot');
+    var d2 = document.getElementById('a11y-font-dot');
+    var d1m = document.getElementById('a11y-contrast-dot-m');
+    var d2m = document.getElementById('a11y-font-dot-m');
+    if (d1) d1.style.background = c ? 'var(--color-accent)' : 'var(--color-border)';
+    if (d2) d2.style.background = f ? 'var(--color-accent)' : 'var(--color-border)';
+    if (d1m) d1m.style.background = c ? 'var(--color-accent)' : 'var(--color-border)';
+    if (d2m) d2m.style.background = f ? 'var(--color-accent)' : 'var(--color-border)';
+  }
 
-  var menuBtn = document.getElementById('menu-btn');
-  var mobileMenu = document.getElementById('mobile-menu');
-  var menuClose = document.getElementById('menu-close');
-  var bars = menuBtn ? menuBtn.querySelectorAll('span') : [];
+  function saveA11y() {
+    localStorage.setItem('a11y', JSON.stringify({
+      contrast: document.documentElement.getAttribute('data-contrast') || 'normal',
+      fontsize: document.documentElement.getAttribute('data-fontsize') || 'normal'
+    }));
+  }
+
+  function toggleContrast() {
+    var el = document.documentElement;
+    if (el.getAttribute('data-contrast') === 'high') el.removeAttribute('data-contrast');
+    else el.setAttribute('data-contrast', 'high');
+    saveA11y(); updateDots();
+  }
+
+  function toggleFont() {
+    var el = document.documentElement;
+    if (el.getAttribute('data-fontsize')) el.removeAttribute('data-fontsize');
+    else el.setAttribute('data-fontsize', 'large');
+    saveA11y(); updateDots();
+  }
 
   function setMenu(open) {
+    var menuBtn = document.getElementById('menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var menuClose = document.getElementById('menu-close');
+    if (!menuBtn || !mobileMenu) return;
+    var bars = menuBtn.querySelectorAll('span');
     mobileMenu.classList.toggle('opacity-100', open);
     mobileMenu.classList.toggle('pointer-events-auto', open);
     mobileMenu.classList.toggle('opacity-0', !open);
@@ -234,7 +244,6 @@ const langOptions = [
     menuBtn.setAttribute('aria-label', menuBtn.getAttribute(open ? 'data-label-close' : 'data-label-open'));
     if (open) mobileMenu.removeAttribute('inert');
     else mobileMenu.setAttribute('inert', '');
-
     if (open) {
       bars[0].style.transform = 'translateY(7px) rotate(45deg)';
       bars[1].style.transform = 'scaleX(0)';
@@ -245,133 +254,164 @@ const langOptions = [
     }
   }
 
-  if (menuBtn) {
-    menuBtn.addEventListener('click', function() {
-      setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
-    });
+  function setDesktopDD(open) {
+    var desktopDD = document.getElementById('lang-dd-desk');
+    var ddBtn = document.getElementById('lang-dd-btn');
+    if (!desktopDD || !ddBtn) return;
+    desktopDD.classList.toggle('opacity-100', open);
+    desktopDD.classList.toggle('pointer-events-auto', open);
+    desktopDD.classList.toggle('opacity-0', !open);
+    desktopDD.classList.toggle('pointer-events-none', !open);
+    ddBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) desktopDD.removeAttribute('inert');
+    else desktopDD.setAttribute('inert', '');
   }
 
-  if (menuClose) {
-    menuClose.addEventListener('click', function() {
-      setMenu(false);
-      menuBtn.focus();
-    });
-  }
+  // Single delegated click handler for ALL interactive elements
+  document.addEventListener('click', function(e) {
+    var t = e.target;
 
-  if (mobileMenu) {
-    mobileMenu.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', function() { setMenu(false); });
-    });
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && menuBtn && menuBtn.getAttribute('aria-expanded') === 'true') {
-      setMenu(false);
-      menuBtn.focus();
-    }
-  });
-
-  function setTheme(light) {
-    var html = document.documentElement;
-    if (light) {
-      html.classList.add('light');
-      localStorage.setItem('theme', 'light');
-    } else {
-      html.classList.remove('light');
-      localStorage.setItem('theme', 'dark');
-    }
-    updateIcons();
-  }
-
-  function updateIcons() {
-    var isLight = document.documentElement.classList.contains('light');
-    document.querySelectorAll('[id^="sun-icon"]').forEach(function(el) { el.classList.toggle('hidden', !isLight); });
-    document.querySelectorAll('[id^="moon-icon"]').forEach(function(el) { el.classList.toggle('hidden', isLight); });
-  }
-
-  document.querySelectorAll('[id^="theme-toggle"]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
+    // Theme toggle (any)
+    if (t.closest('[id^="theme-toggle"]')) {
       setTheme(!document.documentElement.classList.contains('light'));
-    });
-  });
-
-  updateIcons();
-
-  function setupA11y() {
-    function updateDots() {
-      var c = document.documentElement.getAttribute('data-contrast') === 'high';
-      var f = document.documentElement.getAttribute('data-fontsize');
-      var d1 = document.getElementById('a11y-contrast-dot');
-      var d2 = document.getElementById('a11y-font-dot');
-      var d1m = document.getElementById('a11y-contrast-dot-m');
-      var d2m = document.getElementById('a11y-font-dot-m');
-      if (d1) d1.style.background = c ? 'var(--color-accent)' : 'var(--color-border)';
-      if (d2) d2.style.background = f ? 'var(--color-accent)' : 'var(--color-border)';
-      if (d1m) d1m.style.background = c ? 'var(--color-accent)' : 'var(--color-border)';
-      if (d2m) d2m.style.background = f ? 'var(--color-accent)' : 'var(--color-border)';
-    }
-    function save() {
-      localStorage.setItem('a11y', JSON.stringify({
-        contrast: document.documentElement.getAttribute('data-contrast') || 'normal',
-        fontsize: document.documentElement.getAttribute('data-fontsize') || 'normal'
-      }));
-    }
-    function toggleContrast() {
-      var el = document.documentElement;
-      if (el.getAttribute('data-contrast') === 'high') el.removeAttribute('data-contrast');
-      else el.setAttribute('data-contrast', 'high');
-      save(); updateDots();
-    }
-    function toggleFont() {
-      var el = document.documentElement;
-      if (el.getAttribute('data-fontsize')) el.removeAttribute('data-fontsize');
-      else el.setAttribute('data-fontsize', 'large');
-      save(); updateDots();
+      return;
     }
 
-    var btn = document.getElementById('a11y-btn');
-    var dd = document.getElementById('a11y-dd');
-    if (btn && dd) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
+    // Desktop language dropdown button
+    if (t.closest('#lang-dd-btn')) {
+      e.stopPropagation();
+      var ddBtn = document.getElementById('lang-dd-btn');
+      setDesktopDD(ddBtn.getAttribute('aria-expanded') !== 'true');
+      return;
+    }
+
+    // Desktop language dropdown: click outside closes
+    var ddWrap = document.getElementById('lang-dd-wrap');
+    if (ddWrap && !ddWrap.contains(t)) {
+      setDesktopDD(false);
+    }
+
+    // Desktop a11y button
+    if (t.closest('#a11y-btn')) {
+      e.stopPropagation();
+      var btn = document.getElementById('a11y-btn');
+      var dd = document.getElementById('a11y-dd');
+      if (btn && dd) {
         var open = dd.style.opacity === '1';
         dd.style.opacity = open ? '0' : '1';
         dd.style.pointerEvents = open ? 'none' : 'auto';
         btn.setAttribute('aria-expanded', open ? 'false' : 'true');
-      });
-      document.addEventListener('click', function(e) {
-        if (!btn.contains(e.target) && !dd.contains(e.target)) {
-          dd.style.opacity = '0'; dd.style.pointerEvents = 'none';
-          btn.setAttribute('aria-expanded', 'false');
-        }
-      });
+      }
+      return;
     }
 
+    // Desktop a11y: click outside closes
+    var a11yDd = document.getElementById('a11y-dd');
+    var a11yBtn = document.getElementById('a11y-btn');
+    if (a11yBtn && a11yDd && !a11yBtn.contains(t) && !a11yDd.contains(t)) {
+      a11yDd.style.opacity = '0';
+      a11yDd.style.pointerEvents = 'none';
+      a11yBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    // Mobile a11y button
+    if (t.closest('#a11y-btn-mobile')) {
+      var ddM = document.getElementById('a11y-dd-mobile');
+      if (ddM) ddM.classList.toggle('hidden');
+      return;
+    }
+
+    // Mobile a11y: click outside closes
     var btnM = document.getElementById('a11y-btn-mobile');
-    var ddM = document.getElementById('a11y-dd-mobile');
-    if (btnM && ddM) {
-      btnM.addEventListener('click', function() {
-        ddM.classList.toggle('hidden');
-      });
-      document.addEventListener('click', function(e) {
-        if (!btnM.contains(e.target) && !ddM.contains(e.target)) ddM.classList.add('hidden');
-      });
+    var ddM2 = document.getElementById('a11y-dd-mobile');
+    if (btnM && ddM2 && !btnM.contains(t) && !ddM2.contains(t)) {
+      ddM2.classList.add('hidden');
     }
 
-    var tc = document.getElementById('a11y-toggle-contrast');
-    var tf = document.getElementById('a11y-toggle-font');
-    if (tc) tc.addEventListener('click', toggleContrast);
-    if (tf) tf.addEventListener('click', toggleFont);
+    // A11y toggle buttons
+    if (t.closest('#a11y-toggle-contrast') || t.closest('#a11y-toggle-contrast-m')) {
+      toggleContrast();
+      return;
+    }
+    if (t.closest('#a11y-toggle-font') || t.closest('#a11y-toggle-font-m')) {
+      toggleFont();
+      return;
+    }
 
-    var tcM = document.getElementById('a11y-toggle-contrast-m');
-    var tfM = document.getElementById('a11y-toggle-font-m');
-    if (tcM) tcM.addEventListener('click', toggleContrast);
-    if (tfM) tfM.addEventListener('click', toggleFont);
+    // Mobile menu open
+    if (t.closest('#menu-btn')) {
+      var menuBtn = document.getElementById('menu-btn');
+      setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+      return;
+    }
 
-    updateDots();
+    // Mobile menu close
+    if (t.closest('#menu-close')) {
+      var menuBtn2 = document.getElementById('menu-btn');
+      setMenu(false);
+      if (menuBtn2) menuBtn2.focus();
+      return;
+    }
+  });
+
+  // Mobile menu links close the menu
+  document.getElementById('mobile-menu')?.addEventListener('click', function(e) {
+    if (e.target.closest('a')) setMenu(false);
+  });
+
+  // Keyboard: Escape closes things
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var menuBtn = document.getElementById('menu-btn');
+      if (menuBtn && menuBtn.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        menuBtn.focus();
+      }
+      var ddBtn = document.getElementById('lang-dd-btn');
+      if (ddBtn && ddBtn.getAttribute('aria-expanded') === 'true') {
+        setDesktopDD(false);
+        ddBtn.focus();
+      }
+      var a11yDd = document.getElementById('a11y-dd');
+      var a11yBtn = document.getElementById('a11y-btn');
+      if (a11yBtn && a11yDd && a11yBtn.getAttribute('aria-expanded') === 'true') {
+        a11yDd.style.opacity = '0';
+        a11yDd.style.pointerEvents = 'none';
+        a11yBtn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Scroll: nav border
+  window.addEventListener('scroll', function() {
+    var nav = document.getElementById('nav');
+    if (nav) nav.style.borderBottomColor = window.scrollY > 40 ? 'var(--color-border)' : 'var(--color-border-subtle)';
+  }, { passive: true });
+
+  // Language dropdown focusout
+  var ddWrap = document.getElementById('lang-dd-wrap');
+  if (ddWrap) {
+    ddWrap.addEventListener('focusout', function(e) {
+      if (!ddWrap.contains(e.relatedTarget)) setDesktopDD(false);
+    });
   }
-  setupA11y();
-})();
+
+  // State updates that run on every page load
+  document.addEventListener('astro:page-load', function() {
+    var desktopDD = document.getElementById('lang-dd-desk');
+    retargetLangLinks(desktopDD);
+    var mobileLinks = document.getElementById('mobile-lang-links');
+    retargetLangLinks(mobileLinks);
+    var curLang = document.documentElement.lang || 'en';
+    if (mobileLinks) {
+      mobileLinks.querySelectorAll('a').forEach(function(a) {
+        a.style.fontWeight = a.getAttribute('data-lang') === curLang ? 'bold' : '';
+      });
+    }
+    updateIcons();
+    updateDots();
+  });
+}
 </script>
 
 <style>

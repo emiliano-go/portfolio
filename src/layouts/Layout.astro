@@ -42,13 +42,13 @@ const pageDesc = description ?? t('meta.default.desc');
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <link rel="preconnect" href="https://blog.emiliano-go.com" />
     <link rel="prefetch" href={`/${lang}/projects`} />
-    <script>
+    <script is:inline>
       (function() {
         var stored = localStorage.getItem('theme');
         var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         if (stored === 'light' || (!stored && prefersLight)) {
           document.documentElement.classList.add('light');
-        } else if (!stored) {
+        } else {
           document.documentElement.classList.remove('light');
         }
         var a11y = localStorage.getItem('a11y');
@@ -59,6 +59,26 @@ const pageDesc = description ?? t('meta.default.desc');
             if (s.fontsize) document.documentElement.setAttribute('data-fontsize', s.fontsize);
           } catch(e) {}
         }
+        if (!window.__astroThemeInit) {
+          window.__astroThemeInit = true;
+          document.addEventListener('astro:page-load', function() {
+            var stored = localStorage.getItem('theme');
+            var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (stored === 'light' || (!stored && prefersLight)) {
+              document.documentElement.classList.add('light');
+            } else {
+              document.documentElement.classList.remove('light');
+            }
+            var a11y = localStorage.getItem('a11y');
+            if (a11y) {
+              try {
+                var s = JSON.parse(a11y);
+                if (s.contrast === 'high') document.documentElement.setAttribute('data-contrast', 'high');
+                if (s.fontsize) document.documentElement.setAttribute('data-fontsize', s.fontsize);
+              } catch(e) {}
+            }
+          });
+        }
       })();
     </script>
   </head>
@@ -67,7 +87,5 @@ const pageDesc = description ?? t('meta.default.desc');
     <div id="i18n-wrapper" class="i18n-show">
       <slot />
     </div>
-  </body>
-</html>
   </body>
 </html>

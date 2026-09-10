@@ -67,6 +67,8 @@ const t = createT(Astro.props.lang);
 </section>
 
 <script is:inline>
+  if (!window.__astroHeroInit) {
+  window.__astroHeroInit = true;
   (function() {
     var el = document.getElementById('hero-scroll');
     if (el) {
@@ -155,6 +157,7 @@ const t = createT(Astro.props.lang);
       })
       .catch(function() {});
   })();
+  }
 </script>
 
 <style>
