@@ -3,8 +3,9 @@ import { createT } from '../i18n';
 const t = createT(Astro.props.lang);
 ---
 
-<section class="relative min-h-[100svh] pt-24 pb-12 flex items-center border-b border-(--color-border-subtle)">
-  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+<section class="relative min-h-[100svh] pt-24 pb-12 flex items-center">
+  <canvas id="hero-ascii" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 relative z-10">
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <!-- Left: hero content -->
@@ -70,6 +71,74 @@ const t = createT(Astro.props.lang);
   if (!window.__astroHeroInit) {
   window.__astroHeroInit = true;
   (function() {
+    var canvas = document.getElementById('hero-ascii');
+    if (canvas && canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var fontSize = 10;
+      var cellW = fontSize * 0.62;
+      var cellH = fontSize;
+      var cols, rows, dims, phases;
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function resize() {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.scale(dpr, dpr);
+        cols = Math.ceil(rect.width / cellW);
+        rows = Math.ceil(rect.height / cellH);
+        dims = [];
+        phases = [];
+        for (var i = 0; i < cols * rows; i++) {
+          dims[i] = 0.2 + Math.random() * 0.8;
+          phases[i] = Math.random() * Math.PI * 2;
+        }
+      }
+
+      var chars = '/\\|_-~=+<>{}[]()#*^:.';
+
+      function draw(time) {
+        var w = canvas.width / dpr;
+        var h = canvas.height / dpr;
+        ctx.clearRect(0, 0, w, h);
+        var isLight = document.documentElement.classList.contains('light');
+        var color = isLight ? '40,50,70' : '140,160,180';
+        var baseAlpha = isLight ? 0.25 : 0.3;
+        ctx.font = fontSize + 'px monospace';
+        ctx.textBaseline = 'top';
+        var t = time * 0.001;
+        var idx = 0;
+        for (var r = 0; r < rows; r++) {
+          var rowFade = r / rows > 0.7 ? 1 - Math.pow((r / rows - 0.7) / 0.3, 2) : 1;
+          for (var c = 0; c < cols; c++) {
+            var wave = Math.sin(t * 0.3 + phases[idx]);
+            var ci = Math.floor((wave * 0.5 + 0.5) * chars.length) % chars.length;
+            var fadeAlpha = Math.abs(wave);
+            ctx.fillStyle = 'rgba(' + color + ',' + (baseAlpha * dims[idx] * fadeAlpha * rowFade) + ')';
+            ctx.fillText(chars[ci], c * cellW, r * cellH);
+            idx++;
+          }
+        }
+      }
+
+      var raf;
+      function loop(time) {
+        draw(time);
+        if (!reducedMotion) raf = requestAnimationFrame(loop);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      if (reducedMotion) {
+        draw(0);
+      } else {
+        raf = requestAnimationFrame(loop);
+      }
+    }
+
     var el = document.getElementById('hero-scroll');
     if (el) {
       setTimeout(function() { el.style.transition = 'opacity 0.4s ease'; el.style.opacity = '1'; }, 1500);
@@ -161,6 +230,10 @@ const t = createT(Astro.props.lang);
 </script>
 
 <style>
+  #hero-ascii {
+    -webkit-mask-image: radial-gradient(ellipse 65% 65% at 30% 50%, transparent 0%, black 80%);
+    mask-image: radial-gradient(ellipse 65% 65% at 30% 50%, transparent 0%, black 80%);
+  }
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(4px); }
