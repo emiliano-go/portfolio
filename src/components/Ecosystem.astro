@@ -1,0 +1,97 @@
+---
+import { createT } from '../i18n';
+const t = createT(Astro.props.lang);
+
+const ecosystem = [
+  {
+    name: 'dbwarden-harness',
+    desc: 'Black-box validation harness for releases',
+    tag: 'Python · Testing',
+  },
+  {
+    name: 'wlite',
+    desc: 'CLI and bindings (C++, Rust, Python, Go, Zig) for libwlite',
+    tag: 'Multi-language · SQLite',
+  },
+  {
+    name: 'libwlite',
+    desc: 'C library for SQLite schema management',
+    tag: 'C · SQLite',
+  },
+  {
+    name: 'dbwarden-redis',
+    desc: 'Redis-backed distributed migration locking',
+    tag: 'Python · Redis',
+  },
+  {
+    name: 'dbwarden-fastapi',
+    desc: 'FastAPI sessions, health checks, migration routes',
+    tag: 'Python · FastAPI',
+  },
+  {
+    name: 'dbwarden-ch-rbac',
+    desc: 'ClickHouse role-based access control',
+    tag: 'Python · ClickHouse',
+  },
+  {
+    name: 'dbwarden-pgsql-types',
+    desc: 'PostgreSQL custom types: ENUMs, domains, composites',
+    tag: 'Python · PostgreSQL',
+  },
+  {
+    name: 'dbwarden-pgsql-rbac',
+    desc: 'PostgreSQL roles, grants, row-level security',
+    tag: 'Python · PostgreSQL',
+  },
+  {
+    name: 'dbwarden-pgsql-extensions',
+    desc: 'PostgreSQL extension management',
+    tag: 'Python · PostgreSQL',
+  },
+  {
+    name: 'dbwarden-plugin-template',
+    desc: 'Template for building DBWarden plugins',
+    tag: 'Python · Scaffolding',
+  },
+  {
+    name: 'dbwarden-seeds',
+    desc: 'Seed data management across environments',
+    tag: 'Python · Data',
+  },
+  {
+    name: 'dbwarden-sandbox',
+    desc: 'Sandbox testing against temporary databases',
+    tag: 'Python · Testing',
+  },
+];
+---
+
+<section id="ecosystem" class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+
+    <div class="flex items-center gap-4 mb-10">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">{t("ecosystem.heading")}</h2>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <p class="text-xs leading-relaxed text-(--color-text-muted) mb-8 max-w-[540px]">
+      {t("ecosystem.intro")}
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
+      {ecosystem.map((p) => (
+        <a
+          href={`https://github.com/dbwarden-org/${p.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-(--color-bg) p-4 hover:bg-(--color-surface) transition-colors duration-200 group"
+        >
+          <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">{p.tag}</p>
+          <h3 class="font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright) mb-1 group-hover:text-(--color-accent) transition-colors duration-200">{p.name}</h3>
+          <p class="text-[11px] leading-relaxed text-(--color-text-muted)">{p.desc}</p>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

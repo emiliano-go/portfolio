@@ -2,10 +2,19 @@
 import { createT } from "../i18n";
 const t = createT(Astro.props.lang);
 ---
-<footer class="py-6 border-t border-(--color-border-subtle)">
-  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 flex justify-between items-center">
-    <span class="text-[11px] text-(--color-text-dim)">{t("footer.copyright")}</span>
-    <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="text-[11px] text-(--color-text-dim) hover:text-(--color-text-muted) transition-colors duration-200" data-i18n-html set:html={t("footer.github")} />
-
+<footer class="py-8 border-t border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div>
+        <p class="text-sm text-(--color-text-head) mb-1">Emiliano G.O.</p>
+        <p class="text-[11px] font-mono text-(--color-text-dim)">Systems / Backend / Data Engineering</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">LinkedIn ↗</a>
+        <a href="https://blog.emiliano-go.com" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-200">Blog ↗</a>
+      </div>
+    </div>
+    <p class="text-[10px] font-mono text-(--color-text-dim) mt-6">{t("footer.copyright")}</p>
   </div>
 </footer>

@@ -1,6 +1,8 @@
 ---
 import '@fontsource/inter/latin-400.css';
 import '@fontsource/inter/latin-500.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
 import '@fontsource/barlow-condensed/latin-600.css';
 import '@fontsource/barlow-condensed/latin-700.css';
 import { ClientRouter } from 'astro:transitions';
@@ -29,8 +31,6 @@ const pageDesc = description ?? t('meta.default.desc');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Title and description are emitted by the Seo component below, which falls
-         back to the title/description props when a route has no manifest entry. -->
     <ClientRouter />
     <Seo route={route ?? Astro.url.pathname} fallbackTitle={pageTitle} fallbackDescription={pageDesc} lang={lang} />
 
@@ -44,10 +44,20 @@ const pageDesc = description ?? t('meta.default.desc');
     <link rel="prefetch" href={`/${lang}/projects`} />
     <script>
       (function() {
-        const stored = localStorage.getItem('theme');
-        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        var stored = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         if (stored === 'light' || (!stored && prefersLight)) {
           document.documentElement.classList.add('light');
+        } else if (!stored) {
+          document.documentElement.classList.remove('light');
+        }
+        var a11y = localStorage.getItem('a11y');
+        if (a11y) {
+          try {
+            var s = JSON.parse(a11y);
+            if (s.contrast === 'high') document.documentElement.setAttribute('data-contrast', 'high');
+            if (s.fontsize) document.documentElement.setAttribute('data-fontsize', s.fontsize);
+          } catch(e) {}
         }
       })();
     </script>
@@ -57,5 +67,7 @@ const pageDesc = description ?? t('meta.default.desc');
     <div id="i18n-wrapper" class="i18n-show">
       <slot />
     </div>
+  </body>
+</html>
   </body>
 </html>

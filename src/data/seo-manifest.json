@@ -78,7 +78,7 @@
     "og": {
       "type": "website",
       "title": "Projects | Emiliano G.O.",
-      "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
       "url": "https://emiliano-go.com/projects/",
       "image": "https://emiliano-go.com/og-image.png",
       "image:width": 1200,
@@ -94,20 +94,20 @@
     "twitter": {
       "card": "summary_large_image",
       "title": "Projects | Emiliano G.O.",
-      "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "creator": "@emiliano_gando"
     },
-    "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+    "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Projects | Emiliano G.O.",
         "url": "https://emiliano-go.com/projects/",
-        "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+        "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
         "image": "https://emiliano-go.com/og-image.png",
         "publisher": {
           "@type": "Organization",
@@ -135,12 +135,12 @@
     ]
   },
   "/404/": {
-    "title": "404 — Page Not Found",
+    "title": "404 , Page Not Found",
     "canonical": "https://emiliano-go.com/404/",
     "robots": "noindex,nofollow",
     "og": {
       "type": "website",
-      "title": "404 — Page Not Found",
+      "title": "404 , Page Not Found",
       "description": "Page not found.",
       "url": "https://emiliano-go.com/404/",
       "image": "https://emiliano-go.com/og-image.png",
@@ -156,7 +156,7 @@
     },
     "twitter": {
       "card": "summary_large_image",
-      "title": "404 — Page Not Found",
+      "title": "404 , Page Not Found",
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
@@ -166,7 +166,7 @@
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404 — Page Not Found",
+      "name": "404 , Page Not Found",
       "url": "https://emiliano-go.com/404/",
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
@@ -255,7 +255,7 @@
     "og": {
       "type": "website",
       "title": "Projects | Emiliano G.O.",
-      "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
       "url": "https://emiliano-go.com/en/projects/",
       "image": "https://emiliano-go.com/og-image.png",
       "image:width": 1200,
@@ -271,20 +271,20 @@
     "twitter": {
       "card": "summary_large_image",
       "title": "Projects | Emiliano G.O.",
-      "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "creator": "@emiliano_gando"
     },
-    "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+    "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Projects | Emiliano G.O.",
         "url": "https://emiliano-go.com/en/projects/",
-        "description": "DBWarden, schemap, and other Python packages — database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
+        "description": "DBWarden, schemap, and other Python packages , database tooling, ETL utilities, and open source projects by Emiliano Gandini Outeda.",
         "image": "https://emiliano-go.com/og-image.png",
         "publisher": {
           "@type": "Organization",
@@ -312,12 +312,12 @@
     ]
   },
   "/en/404/": {
-    "title": "404 — Page Not Found",
+    "title": "404 , Page Not Found",
     "canonical": "https://emiliano-go.com/en/404/",
     "robots": "noindex,nofollow",
     "og": {
       "type": "website",
-      "title": "404 — Page Not Found",
+      "title": "404 , Page Not Found",
       "description": "Page not found.",
       "url": "https://emiliano-go.com/en/404/",
       "image": "https://emiliano-go.com/og-image.png",
@@ -333,7 +333,7 @@
     },
     "twitter": {
       "card": "summary_large_image",
-      "title": "404 — Page Not Found",
+      "title": "404 , Page Not Found",
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
@@ -343,7 +343,7 @@
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404 — Page Not Found",
+      "name": "404 , Page Not Found",
       "url": "https://emiliano-go.com/en/404/",
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
@@ -432,7 +432,7 @@
     "og": {
       "type": "website",
       "title": "Proyectos | Emiliano G.O.",
-      "description": "DBWarden, schemap y otros paquetes Python — herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap y otros paquetes Python , herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
       "url": "https://emiliano-go.com/es/projects/",
       "image": "https://emiliano-go.com/og-image.png",
       "image:width": 1200,
@@ -448,20 +448,20 @@
     "twitter": {
       "card": "summary_large_image",
       "title": "Proyectos | Emiliano G.O.",
-      "description": "DBWarden, schemap y otros paquetes Python — herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap y otros paquetes Python , herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "creator": "@emiliano_gando"
     },
-    "description": "DBWarden, schemap y otros paquetes Python — herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
+    "description": "DBWarden, schemap y otros paquetes Python , herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Proyectos | Emiliano G.O.",
         "url": "https://emiliano-go.com/es/projects/",
-        "description": "DBWarden, schemap y otros paquetes Python — herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
+        "description": "DBWarden, schemap y otros paquetes Python , herramientas de bases de datos, utilidades ETL y proyectos de código abierto de Emiliano Gandini Outeda.",
         "image": "https://emiliano-go.com/og-image.png",
         "publisher": {
           "@type": "Organization",
@@ -489,12 +489,12 @@
     ]
   },
   "/es/404/": {
-    "title": "404 — Página no encontrada",
+    "title": "404 , Página no encontrada",
     "canonical": "https://emiliano-go.com/es/404/",
     "robots": "noindex,nofollow",
     "og": {
       "type": "website",
-      "title": "404 — Página no encontrada",
+      "title": "404 , Página no encontrada",
       "description": "Página no encontrada.",
       "url": "https://emiliano-go.com/es/404/",
       "image": "https://emiliano-go.com/og-image.png",
@@ -510,7 +510,7 @@
     },
     "twitter": {
       "card": "summary_large_image",
-      "title": "404 — Página no encontrada",
+      "title": "404 , Página no encontrada",
       "description": "Página no encontrada.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
@@ -520,7 +520,7 @@
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404 — Página no encontrada",
+      "name": "404 , Página no encontrada",
       "url": "https://emiliano-go.com/es/404/",
       "description": "Página no encontrada.",
       "image": "https://emiliano-go.com/og-image.png",
@@ -609,7 +609,7 @@
     "og": {
       "type": "website",
       "title": "Projets | Emiliano G.O.",
-      "description": "DBWarden, schemap et autres paquets Python — outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap et autres paquets Python , outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
       "url": "https://emiliano-go.com/fr/projects/",
       "image": "https://emiliano-go.com/og-image.png",
       "image:width": 1200,
@@ -625,20 +625,20 @@
     "twitter": {
       "card": "summary_large_image",
       "title": "Projets | Emiliano G.O.",
-      "description": "DBWarden, schemap et autres paquets Python — outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
+      "description": "DBWarden, schemap et autres paquets Python , outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "creator": "@emiliano_gando"
     },
-    "description": "DBWarden, schemap et autres paquets Python — outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
+    "description": "DBWarden, schemap et autres paquets Python , outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Projets | Emiliano G.O.",
         "url": "https://emiliano-go.com/fr/projects/",
-        "description": "DBWarden, schemap et autres paquets Python — outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
+        "description": "DBWarden, schemap et autres paquets Python , outils de base de données, utilitaires ETL et projets open source par Emiliano Gandini Outeda.",
         "image": "https://emiliano-go.com/og-image.png",
         "publisher": {
           "@type": "Organization",
@@ -666,12 +666,12 @@
     ]
   },
   "/fr/404/": {
-    "title": "404 — Page non trouvée",
+    "title": "404 , Page non trouvée",
     "canonical": "https://emiliano-go.com/fr/404/",
     "robots": "noindex,nofollow",
     "og": {
       "type": "website",
-      "title": "404 — Page non trouvée",
+      "title": "404 , Page non trouvée",
       "description": "Page non trouvée.",
       "url": "https://emiliano-go.com/fr/404/",
       "image": "https://emiliano-go.com/og-image.png",
@@ -687,7 +687,7 @@
     },
     "twitter": {
       "card": "summary_large_image",
-      "title": "404 — Page non trouvée",
+      "title": "404 , Page non trouvée",
       "description": "Page non trouvée.",
       "image": "https://emiliano-go.com/og-image.png",
       "image:alt": "Emiliano G.O. - portfolio preview card",
@@ -697,7 +697,7 @@
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404 — Page non trouvée",
+      "name": "404 , Page non trouvée",
       "url": "https://emiliano-go.com/fr/404/",
       "description": "Page non trouvée.",
       "image": "https://emiliano-go.com/og-image.png",

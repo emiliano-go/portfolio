@@ -1,0 +1,145 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'rypipe' } },
+    { params: { lang: 'es', project: 'rypipe' } },
+    { params: { lang: 'fr', project: 'rypipe' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/rypipe'} title="rypipe | Emiliano G.O." description="Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">DATA · INGESTION FRAMEWORK</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">rypipe</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Extracted from the original crxml execution engine and generalized into a reusable data-processing framework.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Rust 1.78+</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Python 3.10+</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">PyO3</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Apache Arrow</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">mmap</span>
+        </div>
+
+        <div class="arch-diagram mb-6">Format Adapter (Splitter + RecordParser)
+                    │
+                    ▼
+            ┌───────┴───────┐
+            ▼               ▼
+       Single-thread    Parallel Engine
+            │               │
+            │         Memory-mapped file
+            │         Split at row boundaries
+            │         Parse chunks on threads
+            │               │
+            ▼               ▼
+        Execution Plan (fused stages)
+            │
+            ├── Rename
+            ├── Drop
+            ├── Cast
+            └── Filter
+                    │
+                    ▼
+              Arrow / DataFrame</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/rypipe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://rypipe.emiliano-go.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Docs ↗</a>
+          <a href="https://pypi.org/project/rypipe/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
+          <a href={`/${lang}/work/crxml`} class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">crxml case study →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is rypipe -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">What is rypipe</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-4">rypipe is a <strong class="text-(--color-text-bright)">reusable ingestion framework</strong>, not a single-format parser. It separates format-specific parsing from format-agnostic execution. Add a new format by implementing two small traits: <code class="font-mono text-(--color-accent)">Splitter</code> and <code class="font-mono text-(--color-accent)">RecordParser</code>.</p>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">rypipe itself does <strong class="text-(--color-text-bright)">not</strong> ship parsers. Those live in separate adapter packages. Install the engine plus the adapters you need. The framework handles parallel scheduling, memory-bounded execution, query pushdown, and a chainable pipeline API.</p>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Parsing row-oriented byte streams into columnar formats (Apache Arrow) usually requires writing a full engine per format. Each format gets its own parallel scheduler, memory manager, and execution infrastructure. The result is duplicated effort and inconsistent performance characteristics across formats.</p>
+      </div>
+    </section>
+
+    <!-- Constraints -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Constraints</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Bounded memory: cannot load entire files into RAM</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Parallel execution must scale linearly with cores</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Pipeline stages must fuse into the parse loop (no Python round-trip)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Adapter API must be minimal: two traits, not a full engine</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Two-trait adapter model</h3>
+            <p class="text-xs text-(--color-text-muted)">Adding a new format requires implementing <code class="font-mono text-(--color-accent)">Splitter</code> and <code class="font-mono text-(--color-accent)">RecordParser</code>. The engine handles everything else.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Predicate-first evaluation</h3>
+            <p class="text-xs text-(--color-text-muted)">Filters push down into the Rust parse loop. Rows that fail are rejected before any Python object is created.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Layout prediction via memcmp</h3>
+            <p class="text-xs text-(--color-text-muted)">Predicts row structure from byte patterns, skipping column discovery when schema is known.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Zero-copy Arrow export</h3>
+            <p class="text-xs text-(--color-text-muted)">Data moves from parse buffers directly into Arrow arrays without intermediate copies.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Origin -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Origin</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">rypipe was originally developed as the ingestion engine for <a href={`/${lang}/work/crxml`} class="text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">crxml</a>, a Crystal Reports XML adapter. The engine's design, performance characteristics, and API were shaped by real-world production use with crxml. crxml is the reference adapter that proved this model: complex nested schemas, large files, parallel processing, and advanced filtering.</p>
+      </div>
+    </section>
+
+    <!-- Tradeoffs -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Tradeoffs</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Adapters must be written per format (not a universal parser)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Rust core adds build complexity vs. pure Python</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Schema must be known upfront for maximum throughput</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

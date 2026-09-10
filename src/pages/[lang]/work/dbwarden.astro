@@ -1,0 +1,288 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'dbwarden' } },
+    { params: { lang: 'es', project: 'dbwarden' } },
+    { params: { lang: 'fr', project: 'dbwarden' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/dbwarden'} title="DBWarden | Emiliano G.O." description="Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">DATABASE INFRASTRUCTURE</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">DBWarden</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Your models are the source code. SQL is the output.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Python 3.12+</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">SQLAlchemy 2.0</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">PostgreSQL</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">MySQL</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">MariaDB</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">SQLite</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">ClickHouse</span>
+        </div>
+
+        <div class="arch-diagram mb-6 text-[10px]">SQLAlchemy Models
+                    │
+                    ▼
+            Model Discovery & Import
+                    │
+                    ▼
+          ┌─────────┴─────────┐
+          ▼                   ▼
+    Table/Column         Snapshot Load
+     Metadata           (.schema.json)
+          │                   │
+          └─────────┬─────────┘
+                    ▼
+              Schema Diff
+                    │
+        ┌───────────┼───────────┐
+        ▼           ▼           ▼
+    Type/Null    Rename       Constraint
+     Changes    Detection      Changes
+        │           │           │
+        └───────────┼───────────┘
+                    ▼
+           Statement Ordering
+                    │
+          ┌─────────┴─────────┐
+          ▼                   ▼
+      Upgrade SQL         Rollback SQL
+          │                   │
+          └─────────┬─────────┘
+                    ▼
+           Migration File + .plan.json
+                    │
+                    ▼
+            Verification Gate</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/dbwarden-org/dbwarden" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://docs.dbwarden.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Docs ↗</a>
+          <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
+          <a href="https://harness.dbwarden.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Harness ↗</a>
+          <a href="https://github.com/dbwarden-org/dbwarden-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Harness source ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Schema management tools fall into two camps. Imperative tools have you author <em>changes</em>: revision scripts that describe how to get from one schema version to the next. Declarative tools have you author the <em>desired state</em> and derive the changes for you. Most imperative tools ask you to maintain two representations of your schema: your ORM models and your migration files. When they drift, you find out at deploy time.</p>
+      </div>
+    </section>
+
+    <!-- Workflow -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Workflow</h2>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-accent) mt-0.5">01</span>
+            <div>
+              <p class="text-sm font-medium text-(--color-text-head)">Point at existing models</p>
+              <p class="text-xs text-(--color-text-muted)">dbwarden reads your SQLAlchemy models as the single source of truth.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-accent) mt-0.5">02</span>
+            <div>
+              <p class="text-sm font-medium text-(--color-text-head)">make-migrations</p>
+              <p class="text-xs text-(--color-text-muted)">Generates a baseline schema or diffs against the current database state.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-accent) mt-0.5">03</span>
+            <div>
+              <p class="text-sm font-medium text-(--color-text-head)">Commit generated SQL</p>
+              <p class="text-xs text-(--color-text-muted)">Plain SQL files: reviewable, committable, executable anywhere.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-accent) mt-0.5">04</span>
+            <div>
+              <p class="text-sm font-medium text-(--color-text-head)">migrate</p>
+              <p class="text-xs text-(--color-text-muted)">Applies pending migrations with convergence verification.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-accent) mt-0.5">05</span>
+            <div>
+              <p class="text-sm font-medium text-(--color-text-head)">Optional: impact analysis, offline mode, plugins</p>
+              <p class="text-xs text-(--color-text-muted)">AST-based breaking change detection, CI without a database, seeds/RBAC/FastAPI integration.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Constraints -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Constraints</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>No migration runtime to install or version</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>No generated Python scripts that quietly do the wrong thing</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>No schema drift discovered in production</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Migrations that can be generated in CI without a database connection</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">SQL-first output</h3>
+            <p class="text-xs text-(--color-text-muted)">Migrations are plain SQL files. No runtime, no generated Python. Reviewable, committable, executable anywhere.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Deterministic diff</h3>
+            <p class="text-xs text-(--color-text-muted)">Same models + same snapshot = same migration. Always. No hidden state, no ordering dependencies.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Strict rollback contract</h3>
+            <p class="text-xs text-(--color-text-muted)">Every migration carries upgrade + rollback SQL. Placeholder rollback refused by default.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Plugin architecture</h3>
+            <p class="text-xs text-(--color-text-muted)">8 official plugins for seeds, RBAC, FastAPI, sandbox testing, and PostgreSQL/ClickHouse extensions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test harness -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Test harness</h2>
+        <p class="text-xs text-(--color-text-muted) mb-4">dbwarden Test Harness is a standalone black-box validation suite. It installs dbwarden as a consumer, invokes its public CLI, creates disposable real database instances via Testcontainers, and verifies the compiled SQL produces the correct schema. This is not a unit test suite; it is a release certification boundary.</p>
+        <div class="proof-panel max-w-[400px]">
+          <div class="label">Harness coverage</div>
+          <div class="item"><span class="key">PyPI installation</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">CLI contract</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">5 DB providers</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">Migration application</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">Constraint enforcement</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">Regeneration silence</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">Rollback/recovery</span><span class="val-pass">PASS</span></div>
+          <div class="item"><span class="key">Plugin discovery</span><span class="val-pass">PASS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ecosystem: wlite + libwlite -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Ecosystem</h2>
+
+        <div class="space-y-8">
+          <!-- wlite -->
+          <div class="border-l-2 border-(--color-accent-muted) pl-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <h3 class="text-sm font-medium text-(--color-text-head)">wlite</h3>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">CLI + bindings</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">C++</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Rust</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Python</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Go</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">C#</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Zig</span>
+            </div>
+            <p class="text-xs text-(--color-text-muted) mb-2">Declarative SQLite schema management without the Python overhead. Same philosophy as dbwarden, stripped to what SQLite and C can do alone.</p>
+            <a href="https://github.com/dbwarden-org/wlite" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">GitHub ↗</a>
+          </div>
+
+          <!-- libwlite -->
+          <div class="border-l-2 border-(--color-accent-muted) pl-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <h3 class="text-sm font-medium text-(--color-text-head)">libwlite</h3>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">C library</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">C11</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">SQLite3</span>
+            </div>
+            <p class="text-xs text-(--color-text-muted) mb-2">dbwarden's SQLite3 engine extracted as a standalone C library. Parses .wlite model files, manages SQLite databases, compares schemas, generates migrations. The core runtime for wlite.</p>
+            <a href="https://github.com/dbwarden-org/libwlite" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">GitHub ↗</a>
+          </div>
+
+          <!-- dbwarden-harness -->
+          <div class="border-l-2 border-(--color-accent-muted) pl-4">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <h3 class="text-sm font-medium text-(--color-text-head)">dbwarden-harness</h3>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Test suite</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Python</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Docker</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 border border-(--color-border) text-(--color-text-dim)">Testcontainers</span>
+            </div>
+            <p class="text-xs text-(--color-text-muted) mb-2">Standalone black-box validation suite. PyPI installation checks, CLI contract checks, real migration application across all 5 DB providers, rollback/recovery, and plugin discovery.</p>
+            <a href="https://github.com/dbwarden-org/dbwarden-harness" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">DB backends</div>
+            <div class="item"><span class="val-neutral text-lg">5</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">CLI commands</div>
+            <div class="item"><span class="val-neutral text-lg">14</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Plugins</div>
+            <div class="item"><span class="val-neutral text-lg">8</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Harnessed</div>
+            <div class="item"><span class="val-pass">FULL</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tradeoffs -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Tradeoffs</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Requires SQLAlchemy 2.0+ (not compatible with legacy models)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Schema compilation adds a build step vs. runtime migration</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Declarative approach means less control over migration ordering</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

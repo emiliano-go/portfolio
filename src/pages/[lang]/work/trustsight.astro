@@ -1,0 +1,167 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'trustsight' } },
+    { params: { lang: 'es', project: 'trustsight' } },
+    { params: { lang: 'fr', project: 'trustsight' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/trustsight'} title="TrustSight | Emiliano G.O." description="Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">SECURITY · STATIC ANALYSIS</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">TrustSight</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Python 3.11+</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Arch Linux</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">SQLite</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">OpenAI / Ollama</span>
+        </div>
+
+        <div class="arch-diagram mb-6">PKGBUILD / diff → Static analysis → Evidence + coverage → Risk assessment → Verdict</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/trustsight" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://docs.trustsight.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Docs ↗</a>
+          <a href="https://trustsight.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">trustsight.org ↗</a>
+          <a href="https://pypi.org/project/trustsight/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
+          <a href="https://github.com/emiliano-go/trustsight-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Harness ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">AUR package updates are reviewed by humans reading PKGBUILD diffs. This process is slow, inconsistent, and misses structural attacks: piped shell scripts, checksum disabling, typosquatting, obfuscated commands, and maintainer takeovers. There is no automated tool that produces evidence without executing the package.</p>
+      </div>
+    </section>
+
+    <!-- Security model -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Security model</h2>
+        <div class="proof-panel max-w-[400px]">
+          <div class="label">Invariants</div>
+          <div class="item"><span class="key">PKGBUILD execution</span><span class="val-pass">BLOCKED</span></div>
+          <div class="item"><span class="key">Arbitrary network</span><span class="val-pass">BLOCKED</span></div>
+          <div class="item"><span class="key">System modification</span><span class="val-pass">BLOCKED</span></div>
+          <div class="item"><span class="key">Coverage loss</span><span class="val-neutral">EXPLICIT</span></div>
+          <div class="item"><span class="key">Incomplete analysis</span><span class="val-fail">FAIL-CLOSED</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detection categories -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Detection categories</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Command injection</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Piped shell scripts, obfuscated commands, build-environment tampering (LD_PRELOAD, etc.)</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Supply chain</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Checksum disabled, source URL swaps, unpinned build deps, GPG verification removed</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Typosquatting</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Package-name and source-URL edit-distance against known forge domains and popular packages</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Maintainer signals</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Untrusted takeover, orphan hijacking, stale package revived, accelerated release cadence</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Novelty detection</h3>
+            <p class="text-[11px] text-(--color-text-muted)">First-seen URLs and maintainers against signed seed database (~180K source URLs, ~36K maintainer identities)</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Sabotage payloads</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Fork bombs, disk wiping, permission sabotage, coin miners; distinguishes build sandbox from system context</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Encoding attacks</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Unicode bidi overrides, homoglyph codepoints, reviewer-directed instruction templates</p>
+          </div>
+          <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
+            <h3 class="text-xs font-medium text-(--color-text-head) mb-1">IOC matching</h3>
+            <p class="text-[11px] text-(--color-text-muted)">Known-bad indicators against signed, federated baselines from the release channel</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Static analysis only</h3>
+            <p class="text-xs text-(--color-text-muted)">Never executes PKGBUILDs, never fetches URLs, runs before makepkg. The tool is a SAST tool by design.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Evidence, not proof</h3>
+            <p class="text-xs text-(--color-text-muted)">Every finding is traceable to a specific diff line, URL, or novelty record. The output is a structured evidence report, not a gate.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Signed baselines</h3>
+            <p class="text-xs text-(--color-text-muted)">Novelty seed and IOC baselines ship as signed GitHub release assets. Verified against pinned distribution key on import.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Configurable dependency depth</h3>
+            <p class="text-xs text-(--color-text-muted)">AUR dependencies are analyzed as packages in their own right, to a configurable depth. Coverage gaps are explicit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Verification</h2>
+        <p class="text-xs text-(--color-text-muted) mb-4">TrustSight includes an adversarial measurement harness that turns "an LLM found N bypasses" into a reproducible, auditable, cost-tracked measurement against a pinned build.</p>
+        <div class="proof-panel max-w-[400px]">
+          <div class="label">Harness statuses</div>
+          <div class="item"><span class="key">detected</span><span class="val-pass">rule fired</span></div>
+          <div class="item"><span class="key">partial_evasion</span><span class="val-neutral">another rule caught it</span></div>
+          <div class="item"><span class="key">fail_closed_catch</span><span class="val-fail">coverage gap blocked UNFLAGGED</span></div>
+          <div class="item"><span class="key">bypass</span><span class="val-fail">TrustSight returned UNFLAGGED</span></div>
+          <div class="item"><span class="key">behavior_lost</span><span class="val-neutral">attack chain not proven</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What it cannot see -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">What it cannot see</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Malicious upstream release tarballs (audits PKGBUILD, not binaries)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Deliberately unremarkable attacks (no diff signal = invisible)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Runtime attacks (tool never executes anything)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Zero-day structural attacks (pattern-based, calibrated against corpus)</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

@@ -1,0 +1,111 @@
+---
+import { createT } from '../i18n';
+const t = createT(Astro.props.lang);
+
+const projects = [
+  {
+    id: 'dbwarden',
+    num: '01',
+    category: 'DATABASE INFRASTRUCTURE',
+    name: 'DBWarden',
+    desc: 'Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models.',
+    diagram: 'Models → IR → Diff → SQL → Verification',
+    facts: ['5+ databases', 'Rollback generation', 'Convergence testing', 'Release-boundary harness'],
+    links: [
+      { label: 'GitHub', href: 'https://github.com/dbwarden-org/dbwarden' },
+      { label: 'Docs', href: 'https://docs.dbwarden.org' },
+    ],
+  },
+  {
+    id: 'trustsight',
+    num: '02',
+    category: 'SECURITY · STATIC ANALYSIS',
+    name: 'TrustSight',
+    desc: 'Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.',
+    diagram: 'Diff → Static analysis → Evidence + coverage → Risk assessment → Verdict',
+    facts: ['~200 detection rules', 'Signed IOC baselines', 'Configurable depth', 'Adversarial harness'],
+    links: [
+      { label: 'GitHub', href: 'https://github.com/emiliano-go/trustsight' },
+      { label: 'Docs', href: 'https://docs.trustsight.org' },
+    ],
+  },
+  {
+    id: 'rypipe',
+    num: '03',
+    category: 'DATA · INGESTION FRAMEWORK',
+    name: 'rypipe',
+    desc: 'Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.',
+    diagram: 'Format Adapter → Splitter / Parser → Execution Plan → Parallel Engine → Arrow',
+    facts: ['Framework', 'Bounded memory', 'Pipeline fusion', 'Zero-copy Arrow'],
+    links: [
+      { label: 'GitHub', href: 'https://github.com/emiliano-go/rypipe' },
+      { label: 'Docs', href: 'https://rypipe.emiliano-go.com' },
+    ],
+  },
+  {
+    id: 'more',
+    num: '→',
+    category: '',
+    name: 'More projects',
+    desc: 'crxml, ClickVault, heard, schemap, seoslug, and more.',
+    diagram: '',
+    facts: [],
+    links: [
+      { label: 'View all', href: '/projects' },
+    ],
+  },
+];
+---
+
+<section id="work" class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+
+    <div class="flex items-center gap-4 mb-10">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">{t("work.heading")}</h2>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <div class="flex flex-col gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
+      {projects.map((p) => {
+        const isMore = p.id === 'more';
+        const href = isMore ? `/${Astro.props.lang}/projects` : `/${Astro.props.lang}/work/${p.id}`;
+        return (
+          <a href={href} class:list={[
+            "p-5 sm:p-7 group block transition-colors duration-200",
+            isMore ? "bg-(--color-surface) hover:bg-(--color-bg)" : "bg-(--color-bg) hover:bg-(--color-surface)"
+          ]}>
+            <div class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
+              <div class="lg:w-48 shrink-0">
+                <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-text-dim)">{p.num}</span>
+                {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] text-(--color-text-dim) mt-1 mb-1">{p.category}</p>}
+                <h3 class:list={[
+                  "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-colors duration-200",
+                  isMore ? "text-xl text-(--color-text-muted) group-hover:text-(--color-text-bright) mt-1" : "text-2xl md:text-3xl text-(--color-text-head) group-hover:text-(--color-accent)"
+                ]}>{p.name}</h3>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4 max-w-[480px]">{p.desc}</p>
+                {p.diagram && <div class="arch-diagram mb-4 text-[10px]">{p.diagram}</div>}
+                {p.facts.length > 0 && (
+                  <div class="flex flex-wrap items-center gap-2 mb-4">
+                    {p.facts.map(f => (
+                      <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">{f}</span>
+                    ))}
+                  </div>
+                )}
+                <div class="flex flex-wrap gap-3">
+                  {p.links.map(link => (
+                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) group-hover:text-(--color-text-bright) group-hover:border-(--color-text-muted) transition-colors duration-200">
+                      {link.label} <span class="text-[8px]" aria-hidden="true">{isMore ? '→' : '↗'}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

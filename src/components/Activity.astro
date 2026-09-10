@@ -1,0 +1,163 @@
+---
+import { createT } from '../i18n';
+const t = createT(Astro.props.lang);
+---
+
+<section id="activity" class="py-16 border-b border-(--color-border-subtle)">
+  <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+
+    <div class="flex items-center gap-4 mb-10">
+      <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) whitespace-nowrap">{t("activity.heading")}</h2>
+      <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
+    </div>
+
+    <!-- Recent commits -->
+    <div class="mb-8">
+      <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("activity.recent")}</p>
+      <div id="activity-commits" class="space-y-0">
+        <div class="flex items-center gap-2 py-2 border-b border-(--color-border-subtle)">
+          <span class="inline-block h-3 w-24 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+          <span class="inline-block h-3 w-48 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+        </div>
+        <div class="flex items-center gap-2 py-2 border-b border-(--color-border-subtle)">
+          <span class="inline-block h-3 w-20 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+          <span class="inline-block h-3 w-40 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+        </div>
+        <div class="flex items-center gap-2 py-2">
+          <span class="inline-block h-3 w-28 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+          <span class="inline-block h-3 w-36 bg-(--color-text-dim)/10 rounded animate-pulse"></span>
+        </div>
+      </div>
+      <p id="activity-commits-time" class="text-[9px] font-mono text-(--color-text-dim) mt-3 opacity-0">{t("activity.updated")} <span id="activity-commits-ago"></span></p>
+    </div>
+
+    <!-- Language breakdown -->
+    <div>
+      <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-3">{t("activity.languages")}</p>
+      <div id="activity-languages" class="space-y-2">
+        <div class="h-3 bg-(--color-text-dim)/10 rounded animate-pulse"></div>
+        <div class="h-3 bg-(--color-text-dim)/10 rounded animate-pulse w-3/4"></div>
+        <div class="h-3 bg-(--color-text-dim)/10 rounded animate-pulse w-1/2"></div>
+      </div>
+      <p class="text-[9px] font-mono text-(--color-text-dim) mt-3 italic">{t("activity.lang.note")}</p>
+    </div>
+
+  </div>
+</section>
+
+<script is:inline>
+(function() {
+  function ago(iso) {
+    if (!iso) return '';
+    var now = Date.now();
+    var then = new Date(iso.endsWith('Z') ? iso : iso + 'Z').getTime();
+    var diff = now - then;
+    if (diff < 0) return '';
+    if (diff < 60000) return 'just now';
+    var mins = Math.floor(diff / 60000);
+    if (mins < 60) return mins + 'm ago';
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    var days = Math.floor(hrs / 24);
+    if (days < 7) return days + 'd ago';
+    if (days < 30) return Math.floor(days / 7) + 'w ago';
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function renderCommits(data) {
+    var container = document.getElementById('activity-commits');
+    var timeEl = document.getElementById('activity-commits-time');
+    var agoEl = document.getElementById('activity-commits-ago');
+    if (!container) return;
+
+    if (!data || !data.commits || data.commits.length === 0) {
+      container.innerHTML = '<p class="text-xs text-(--color-text-dim)">' + (data && data.error || 'Activity temporarily unavailable') + '</p>';
+      return;
+    }
+
+    var html = '';
+    var commits = data.commits.slice(0, 3);
+    for (var i = 0; i < commits.length; i++) {
+      var c = commits[i];
+      var repo = c.repo || '';
+      var msg = (c.message || '').split('\n')[0];
+      var date = c.date || '';
+      var url = c.url || ('https://github.com/emiliano-go/' + repo + '/commit/' + (c.sha || ''));
+
+      html += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 py-2.5 border-b border-(--color-border-subtle) hover:bg-(--color-surface) transition-colors duration-150 -mx-2 px-2">';
+      html += '<span class="font-[family-name:var(--font-mono)] text-[11px] text-(--color-accent) shrink-0 w-24 truncate">' + repo + '</span>';
+      html += '<span class="font-[family-name:var(--font-mono)] text-[11px] text-(--color-text-muted) flex-1 truncate">' + msg + '</span>';
+      html += '<span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-text-dim) shrink-0 whitespace-nowrap">' + (date ? ago(date) : '') + '</span>';
+      html += '</a>';
+    }
+    container.innerHTML = html;
+
+    if (timeEl && agoEl && commits[0]) {
+      var firstDate = commits[0].date;
+      if (firstDate) {
+        agoEl.textContent = ago(firstDate);
+        timeEl.style.opacity = '1';
+      }
+    }
+  }
+
+  function renderLanguages(data) {
+    var container = document.getElementById('activity-languages');
+    if (!container) return;
+
+    var languages = data.languages || [];
+    if (!Array.isArray(languages) || languages.length === 0) {
+      container.innerHTML = '<p class="text-[10px] font-mono text-(--color-text-dim)">No language data</p>';
+      return;
+    }
+
+    var total = 0;
+    for (var i = 0; i < languages.length; i++) {
+      total += languages[i].size || 0;
+    }
+    if (total === 0) {
+      container.innerHTML = '<p class="text-[10px] font-mono text-(--color-text-dim)">No language data</p>';
+      return;
+    }
+
+    var html = '<div class="relative"><div class="flex h-2 rounded-sm overflow-hidden bg-(--color-border-subtle)">';
+    for (var i = 0; i < languages.length; i++) {
+      var lang = languages[i];
+      var name = lang.name || 'Other';
+      var bytes = lang.size || 0;
+      var pct = (bytes / total) * 100;
+      if (pct < 1 && i >= 5) break;
+      var color = lang.color || '#5ba3a8';
+      html += '<div class="lang-seg h-full cursor-default" data-lang="' + name + '" data-pct="' + Math.round(pct) + '" style="width:' + pct + '%;background:' + color + '"></div>';
+    }
+    html += '</div><div id="lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-[9px] font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-150"></div></div>';
+    container.innerHTML = html;
+
+    var tip = document.getElementById('lang-tooltip');
+    var segs = container.querySelectorAll('.lang-seg');
+    for (var j = 0; j < segs.length; j++) {
+      segs[j].addEventListener('mouseenter', function(e) {
+        tip.textContent = this.dataset.lang + ' ' + this.dataset.pct + '%';
+        var rect = this.getBoundingClientRect();
+        var parent = container.getBoundingClientRect();
+        tip.style.left = (rect.left - parent.left + rect.width / 2) + 'px';
+        tip.style.transform = 'translateX(-50%)';
+        tip.style.opacity = '1';
+      });
+      segs[j].addEventListener('mouseleave', function() {
+        tip.style.opacity = '0';
+      });
+    }
+  }
+
+  fetch('/api/katib?endpoint=commits')
+    .then(function(r) { return r.json(); })
+    .then(function(data) { renderCommits(data); renderLanguages(data); })
+    .catch(function() {
+      var c = document.getElementById('activity-commits');
+      if (c) c.innerHTML = '<p class="text-xs text-(--color-text-dim)">Activity temporarily unavailable</p>';
+      var l = document.getElementById('activity-languages');
+      if (l) l.innerHTML = '<p class="text-xs text-(--color-text-dim)">Language data unavailable</p>';
+    });
+})();
+</script>
