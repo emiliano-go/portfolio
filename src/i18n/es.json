@@ -92,6 +92,9 @@
   "a11y.lang": "Idioma",
   "a11y.linkedin": "Perfil de LinkedIn de {name}",
   "a11y.loading": "Cargando",
+  "page404.title": "404 — Página no encontrada",
+  "page404.sub": "Página no encontrada.",
+  "page404.back": "Volver al inicio",
   "refs.heading": "Referencias",
   "refs.linkedin": "LinkedIn"
 }

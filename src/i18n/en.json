@@ -98,6 +98,9 @@
   "a11y.lang": "Language",
   "a11y.linkedin": "LinkedIn profile of {name}",
   "a11y.loading": "Loading",
+  "page404.title": "404 — Page Not Found",
+  "page404.sub": "Page not found.",
+  "page404.back": "Back home",
   "refs.heading": "References",
   "refs.linkedin": "LinkedIn"
 }
