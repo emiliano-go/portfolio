@@ -35,6 +35,8 @@
   "engineering.principle.evidence.title": "Mostrar evidencia",
   "engineering.principle.evidence.desc": "Las afirmaciones sin mediciones son marketing. Mostrar los datos.",
   "work.heading": "Proyectos",
+  "projects.page.title": "Proyectos | Emiliano G.O.",
+  "projects.page.desc": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
   "ecosystem.heading": "Ecosistema DBWarden",
   "ecosystem.intro": "El proyecto DBWarden creció hasta convertirse en un ecosistema completo: motor de migración central, bindings para múltiples lenguajes, plugins para cada característica importante de bases de datos, y un harness de validación.",
   "opensource.heading": "Código Abierto",

@@ -41,6 +41,8 @@
   "engineering.principle.evidence.title": "Show evidence",
   "engineering.principle.evidence.desc": "Claims without measurements are marketing. Show the data.",
   "work.heading": "Projects",
+  "projects.page.title": "Projects | Emiliano G.O.",
+  "projects.page.desc": "Open source packages, tools, and experiments by Emiliano G.O.",
   "ecosystem.heading": "DBWarden Ecosystem",
   "ecosystem.intro": "The DBWarden project grew into a full ecosystem: core migration engine, language bindings, plugins for every major database feature, and a validation harness.",
   "opensource.heading": "Open Source",
