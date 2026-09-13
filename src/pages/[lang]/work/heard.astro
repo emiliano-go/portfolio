@@ -1,0 +1,135 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'heard' } },
+    { params: { lang: 'es', project: 'heard' } },
+    { params: { lang: 'fr', project: 'heard' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/heard'} title="heard | Emiliano G.O." description="Voice-controlled tooling daemon for Linux. Hold Shift, speak, release.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">VOICE · LINUX DAEMON</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">heard</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Voice-controlled tooling daemon for Linux. Hold Shift, speak, release.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Deployed on real hardware with systemd, single-instance flock, unix-socket IPC, and a GNOME Shell extension.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Python 3.13+</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">faster-whisper</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">MiniLM</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">evdev</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Linux</span>
+        </div>
+
+        <div class="arch-diagram mb-6">PTT (evdev) → Whisper STT → Embedding classifier (MiniLM)
+                  │                              │
+                  │                    Needle LLM fallback
+                  │                              │
+                  ▼                              ▼
+            Intent resolution ──→ Tool dispatch
+                                      │
+                    ┌─────────┬───────┼───────┬─────────┐
+                    ▼         ▼       ▼       ▼         ▼
+                 Media    Volume   Windows  Hyprland  Custom
+                 control  control  manage   layout    handler</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/heard" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Voice assistants on Linux are either cloud-dependent, privacy-invasive, or too generic. There is no lightweight, offline, intent-based voice interface for developer tooling that runs entirely on local hardware.</p>
+      </div>
+    </section>
+
+    <!-- Why it's hard -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Why it's hard</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Voice-to-intent on Linux requires: real-time PTT capture without X11/Wayland dependency, offline STT that runs on consumer hardware, a classifier that maps spoken phrases to tool invocations across two languages, and a security model that prevents arbitrary command execution via voice. The two-stage classification (MiniLM centroids → Needle LLM fallback) must complete in &lt;500ms to feel responsive.</p>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Architecture</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Push-to-talk via evdev</h3>
+            <p class="text-xs text-(--color-text-muted)">Captures raw keyboard events directly. No X11/Wayland dependency. Works across all desktop environments.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Two-stage classification</h3>
+            <p class="text-xs text-(--color-text-muted)">MiniLM embedding centroids for fast local intent matching. Falls back to Needle LLM for ambiguous or novel commands. Bilingual EN/ES classifier with measured accuracy.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Shell allowlist</h3>
+            <p class="text-xs text-(--color-text-muted)">Tool handlers use a strict allowlist for shell commands. Arbitrary command execution is blocked by design.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">System integration</h3>
+            <p class="text-xs text-(--color-text-muted)">Systemd unit with single-instance flock. Unix-socket IPC. JSONL event log. GNOME Shell extension for visual feedback. Daemon mode for background operation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Test count</div>
+            <div class="item"><span class="val-neutral text-lg">299</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Test lines</div>
+            <div class="item"><span class="val-neutral text-lg">2,458</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Source lines</div>
+            <div class="item"><span class="val-neutral text-lg">4,399</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Status</div>
+            <div class="item"><span class="val-pass">DEPLOYED</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tradeoffs -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Tradeoffs</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Linux-only (evdev dependency)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Requires local STT model download on first run</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Bilingual classifier accuracy varies by accent and noise level</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

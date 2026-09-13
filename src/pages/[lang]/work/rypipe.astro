@@ -82,6 +82,14 @@ const { lang } = Astro.params;
       </div>
     </section>
 
+    <!-- Why it's hard -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Why it's hard</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Each new data format usually requires writing a full engine: parallel scheduler, memory manager, execution infrastructure. rypipe's difficulty is separating format-specific parsing (two small traits) from format-agnostic execution (parallel scheduling, bounded memory, query pushdown, zero-copy Arrow export) while maintaining throughput at memory bandwidth. The adapter contract test suite verifies that any adapter produces identical output across single-thread, parallel, and bounded execution modes.</p>
+      </div>
+    </section>
+
     <!-- Constraints -->
     <section class="py-12 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
@@ -137,6 +145,31 @@ const { lang } = Astro.params;
           <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Rust core adds build complexity vs. pure Python</li>
           <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Schema must be known upfront for maximum throughput</li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Test count</div>
+            <div class="item"><span class="val-neutral text-lg">319</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Documentation</div>
+            <div class="item"><span class="val-neutral text-lg">13K lines</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Throughput</div>
+            <div class="item"><span class="val-neutral text-lg">4.2 GB/s</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Published</div>
+            <div class="item"><span class="val-pass">PyPI + crates.io</span></div>
+          </div>
+        </div>
       </div>
     </section>
 

@@ -1,0 +1,136 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'clickvault' } },
+    { params: { lang: 'es', project: 'clickvault' } },
+    { params: { lang: 'fr', project: 'clickvault' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/clickvault'} title="ClickVault | Emiliano G.O." description="HashiCorp Vault database secrets engine plugin for ClickHouse.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">SECURITY · VAULT PLUGIN</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">ClickVault</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic credentials, password rotation, cluster-aware DDL.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Creates short-lived ClickHouse users on demand and rotates passwords on a schedule. Handles cluster-aware DDL with ON CLUSTER insertion.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Go 1.26+</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Vault SDK</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">ClickHouse</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Database secrets</span>
+        </div>
+
+        <div class="arch-diagram mb-6">Vault API request
+                  │
+                  ▼
+          ClickVault Plugin
+                  │
+        ┌─────────┼─────────┐
+        ▼         ▼         ▼
+    Dynamic    Static    Rotate
+    credentials  roles   credentials
+        │         │         │
+        └─────────┼─────────┘
+                  ▼
+        ClickHouse cluster
+        (ON CLUSTER DDL)</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/clickvault" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">ClickHouse lacks native dynamic credential support in Vault's database secrets engine. Teams managing ClickHouse clusters need short-lived credentials and automated password rotation without manual intervention.</p>
+      </div>
+    </section>
+
+    <!-- Why it's hard -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Why it's hard</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">ClickHouse clusters use distributed DDL (ON CLUSTER) which most Vault plugins don't handle. Dynamic user creation must be atomic: if grants fail, the partially-created user must be cleaned up. Password rotation must work across replicated and non-replicated engines. The plugin must implement Vault's <code class="font-mono text-(--color-accent)">dbplugin.Database</code> interface correctly while handling ClickHouse-specific syntax differences.</p>
+      </div>
+    </section>
+
+    <!-- Security model -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Security model</h2>
+        <div class="proof-panel max-w-[400px]">
+          <div class="label">Invariants</div>
+          <div class="item"><span class="key">SQL injection</span><span class="val-pass">BLOCKED</span></div>
+          <div class="item"><span class="key">Concurrent access</span><span class="val-pass">MUTEX</span></div>
+          <div class="item"><span class="key">Partial creation</span><span class="val-pass">CLEANUP</span></div>
+          <div class="item"><span class="key">Username collision</span><span class="val-pass">GUARDED</span></div>
+          <div class="item"><span class="key">TLS support</span><span class="val-pass">YES</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Cluster-aware DDL</h3>
+            <p class="text-xs text-(--color-text-muted)">ON CLUSTER insertion ensures DDL propagates across the ClickHouse cluster. Handles both Replicated and non-Replicated engine tables.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Privilege verification</h3>
+            <p class="text-xs text-(--color-text-muted)">Connection verification checks that the service account has the required privileges before accepting configuration.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Cleanup on failure</h3>
+            <p class="text-xs text-(--color-text-muted)">If user creation partially succeeds (e.g., grants fail), the plugin cleans up the partially-created user to avoid orphaned accounts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Source lines</div>
+            <div class="item"><span class="val-neutral text-lg">1,017</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Test lines</div>
+            <div class="item"><span class="val-neutral text-lg">979</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Codecov</div>
+            <div class="item"><span class="val-pass">85.4%</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">CI enforced</div>
+            <div class="item"><span class="val-pass">YES</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

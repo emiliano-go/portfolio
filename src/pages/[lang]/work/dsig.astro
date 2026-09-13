@@ -1,0 +1,146 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'dsig' } },
+    { params: { lang: 'es', project: 'dsig' } },
+    { params: { lang: 'fr', project: 'dsig' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/dsig'} title="dsig | Emiliano G.O." description="GPG message signing for Vencord / Vesktop. Authorship attestation.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">SECURITY · CRYPTOGRAPHY</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">dsig</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">GPG message signing for Vencord / Vesktop. Authorship attestation for every message.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Signs Discord messages with your GPG key. Verifies authorship, prevents impersonation. Compact (113-char) and invisible footer formats.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">TypeScript</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">GPG / OpenPGP</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Vencord</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Discord</span>
+        </div>
+
+        <div class="arch-diagram mb-6">Message composition
+                  │
+                  ▼
+          Canonicalize (NFC, CRLF→LF, whitespace)
+                  │
+                  ▼
+          OpenPGP v4 signature (SHA-256/384/512)
+                  │
+                  ▼
+          Encode to invisible characters
+          (U+200B, U+200C, U+2060, U+2062)
+                  │
+                  ▼
+          Append to message footer
+          (compact 113-char or invisible)</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/dsig" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Discord has no native message signing. Anyone can impersonate anyone by copying their display name and avatar. There is no cryptographic way to verify that a message was actually written by the claimed author.</p>
+      </div>
+    </section>
+
+    <!-- Threat model -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Threat model</h2>
+        <div class="proof-panel max-w-[400px]">
+          <div class="label">Invariants</div>
+          <div class="item"><span class="key">Message tampering</span><span class="val-pass">DETECTED</span></div>
+          <div class="item"><span class="key">Author impersonation</span><span class="val-pass">BLOCKED</span></div>
+          <div class="item"><span class="key">Replay attacks</span><span class="val-pass">NONCE</span></div>
+          <div class="item"><span class="key">Key compromise</span><span class="val-fail">OUT OF SCOPE</span></div>
+          <div class="item"><span class="key">gpg-agent isolation</span><span class="val-pass">THROWAWAY GNUPGHOME</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Invisible encoding</h3>
+            <p class="text-xs text-(--color-text-muted)">Signatures are encoded as Unicode invisible characters (zero-width spaces, non-joiners) appended to the message. Empirically tested against Discord's actual client behavior to ensure preservation across platforms.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Content canonicalization</h3>
+            <p class="text-xs text-(--color-text-muted)">NFC normalization, CRLF→LF conversion, whitespace collapsing. Prevents trivial bypasses via Unicode normalization or line-ending differences.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">gpg-agent isolation</h3>
+            <p class="text-xs text-(--color-text-muted)">Verification uses a throwaway GNUPGHOME to prevent verification from accessing the signing key. Each verify operation runs in isolation.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Desktop-only by design</h3>
+            <p class="text-xs text-(--color-text-muted)">Web browsers cannot access gpg-agent. The plugin is desktop-only (Vencord/Vesktop) because the security model requires local key access.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Test count</div>
+            <div class="item"><span class="val-neutral text-lg">142</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Test lines</div>
+            <div class="item"><span class="val-neutral text-lg">1,817</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Source lines</div>
+            <div class="item"><span class="val-neutral text-lg">3,782</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Footer size</div>
+            <div class="item"><span class="val-neutral text-lg">113 chars</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tradeoffs -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Tradeoffs</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Desktop-only (web cannot access gpg-agent)</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Requires GPG key pair setup</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Invisible encoding may be stripped by some clients</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Key compromise is out of scope (standard GPG limitation)</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

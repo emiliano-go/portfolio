@@ -52,6 +52,14 @@ const { lang } = Astro.params;
       </div>
     </section>
 
+    <!-- Why it's hard -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Why it's hard</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">The hard constraint is never executing code. Static analysis of PKGBUILDs means reasoning about shell scripts, command injection, typosquatting, and maintainer behavior patterns without running anything. Corpus-wide cluster detection adds another layer: tracking ~180K source URLs and ~36K maintainer identities to detect first-seen signals, orphan hijacking, and accelerated release cadence. The tool must fail-closed; incomplete evidence must not silently become confidence.</p>
+      </div>
+    </section>
+
     <!-- Security model -->
     <section class="py-12 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
@@ -159,6 +167,31 @@ const { lang } = Astro.params;
           <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Runtime attacks (tool never executes anything)</li>
           <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Zero-day structural attacks (pattern-based, calibrated against corpus)</li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Test count</div>
+            <div class="item"><span class="val-neutral text-lg">1,943</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Test lines</div>
+            <div class="item"><span class="val-neutral text-lg">28,000</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Detection rules</div>
+            <div class="item"><span class="val-neutral text-lg">~200</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Source URLs</div>
+            <div class="item"><span class="val-neutral text-lg">180K</span></div>
+          </div>
+        </div>
       </div>
     </section>
 

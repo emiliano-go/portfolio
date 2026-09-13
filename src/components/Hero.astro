@@ -18,17 +18,50 @@ const t = createT(Astro.props.lang);
           {t("hero.role")}
         </p>
 
-        <p class="text-[11px] font-mono text-(--color-text-dim) mb-8">
-          Montevideo, Uruguay · Python · Rust · SQL
+        <p class="text-xs font-mono text-(--color-accent) max-w-[540px] mb-4">
+          {t("hero.thesis")}
         </p>
 
-        <div class="flex flex-wrap gap-3">
+        <ul class="text-[11px] text-(--color-text-muted) space-y-1 mb-4 max-w-[540px]">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.1")}</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.2")}</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.3")}</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.4")}</li>
+        </ul>
+
+        <p class="text-[11px] font-mono text-(--color-text-dim) mb-6">
+          {t("hero.stat.location")}
+        </p>
+
+        <div class="flex flex-wrap gap-3 mb-8">
+          <a href={`/${Astro.props.lang || 'en'}/work/dbwarden`} class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">
+            {t("hero.cta.work")} <span class="text-[8px]" aria-hidden="true">→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+            {t("hero.cta.contact")} <span class="text-[8px]" aria-hidden="true">↗</span>
+          </a>
           <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
             GitHub <span class="text-[8px]" aria-hidden="true">↗</span>
           </a>
-          <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
-            LinkedIn <span class="text-[8px]" aria-hidden="true">↗</span>
-          </a>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 max-w-[320px]">
+          <div class="proof-panel">
+            <div class="label">Tests</div>
+            <div class="item"><span class="val-neutral text-sm font-medium">3,300+</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">PyPI packages</div>
+            <div class="item"><span class="val-neutral text-sm font-medium">17</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">DB dialects</div>
+            <div class="item"><span class="val-neutral text-sm font-medium">5</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">OSS repos</div>
+            <div class="item"><span class="val-neutral text-sm font-medium">73</span></div>
+          </div>
         </div>
       </div>
 

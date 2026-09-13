@@ -17,24 +17,21 @@ const { lang } = Astro.params;
 const t = createT(lang!);
 
 const featured = [
-  { name: 'DBWarden', desc: 'Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models.', stack: ['Python', 'SQLAlchemy', 'SQL', 'PostgreSQL', 'MySQL', 'ClickHouse'], github: 'https://github.com/dbwarden-org/dbwarden', docs: 'https://docs.dbwarden.org' },
-  { name: 'TrustSight', desc: 'Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.', stack: ['Python', 'Arch Linux', 'SQLite', 'Security'], github: 'https://github.com/emiliano-go/trustsight', docs: 'https://docs.trustsight.org' },
-  { name: 'rypipe', desc: 'Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.', stack: ['Rust', 'Python', 'PyO3', 'Arrow'], github: 'https://github.com/emiliano-go/rypipe', docs: 'https://rypipe.emiliano-go.com' },
+  { name: 'DBWarden', desc: 'Declarative schema compiler for SQLAlchemy. 45K LOC, 129 test files, 5 DB backends, 8 plugins, release-certification harness.', stack: ['Python', 'SQLAlchemy', 'SQL', 'PostgreSQL', 'MySQL', 'ClickHouse'], github: 'https://github.com/dbwarden-org/dbwarden', docs: 'https://docs.dbwarden.org' },
+  { name: 'TrustSight', desc: 'Evidence-driven security analysis for AUR packages. 1,943 tests, corpus-wide cluster detection, signed IOC baselines. Never executes code.', stack: ['Python', 'Arch Linux', 'SQLite', 'Security'], github: 'https://github.com/emiliano-go/trustsight', docs: 'https://docs.trustsight.org' },
+  { name: 'rypipe', desc: 'Rust ingestion framework. 319 tests, 13K docs, published to PyPI and crates.io. 4.2 GB/s parallel throughput.', stack: ['Rust', 'Python', 'PyO3', 'Arrow'], github: 'https://github.com/emiliano-go/rypipe', docs: 'https://rypipe.emiliano-go.com' },
+  { name: 'heard', desc: 'Voice-controlled tooling daemon. 299 tests, deployed on real hardware with systemd and GNOME extension.', stack: ['Python', 'Whisper', 'evdev', 'Linux'], github: 'https://github.com/emiliano-go/heard' },
+  { name: 'ClickVault', desc: 'HashiCorp Vault plugin for ClickHouse. 85% coverage, cluster-aware DDL, dynamic credentials.', stack: ['Go', 'Vault', 'ClickHouse'], github: 'https://github.com/emiliano-go/clickvault' },
+  { name: 'dsig', desc: 'GPG message signing for Discord. 142 tests, invisible encoding, empirical Discord client testing.', stack: ['TypeScript', 'GPG', 'OpenPGP'], github: 'https://github.com/emiliano-go/dsig' },
 ];
 
-const projects = [
-  { name: 'crxml', desc: 'Crystal Reports XML adapter built on rypipe. Rust-accelerated, parallel, bounded-memory.', stack: ['Rust', 'Python', 'XML', 'Arrow'], github: 'https://github.com/emiliano-go/crxml', pypi: 'https://pypi.org/project/crxml/' },
-  { name: 'schemap', desc: 'Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models.', stack: ['Python', 'Pydantic', 'SQLAlchemy'], github: 'https://github.com/emiliano-go/schemap', pypi: 'https://pypi.org/project/schemap/' },
+const secondary = [
+  { name: 'crxml', desc: 'Crystal Reports XML parser. Rust-accelerated, parallel, bounded-memory. 184 tests, differential testing.', stack: ['Rust', 'Python', 'XML', 'Arrow'], github: 'https://github.com/emiliano-go/crxml', pypi: 'https://pypi.org/project/crxml/' },
+  { name: 'schemap', desc: 'Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models. 108 tests, thorough edge case coverage.', stack: ['Python', 'Pydantic', 'SQLAlchemy'], github: 'https://github.com/emiliano-go/schemap', pypi: 'https://pypi.org/project/schemap/' },
+  { name: 'detrack', desc: 'Strip tracking parameters from URLs. 345+ patterns, zero dependencies, 126 tests.', stack: ['Python'], github: 'https://github.com/emiliano-go/detrack', pypi: 'https://pypi.org/project/detrack/' },
   { name: 'seoslug', desc: 'Deterministic SEO payload generation. Same input always produces the same output.', stack: ['Python', 'SEO', 'JSON-LD'], github: 'https://github.com/emiliano-go/seoslug', pypi: 'https://pypi.org/project/seoslug/' },
-  { name: 'acrresolv', desc: 'Hybrid acronym resolver: rules + lookup + ML. 95.5% accuracy on unseen data.', stack: ['Python', 'NLP', 'ML'], github: 'https://github.com/emiliano-go/acrresolv', pypi: 'https://pypi.org/project/acrresolv/' },
-  { name: 'detrack', desc: 'Strip tracking parameters from URLs. Deterministically. Zero dependencies.', stack: ['Python'], github: 'https://github.com/emiliano-go/detrack', pypi: 'https://pypi.org/project/detrack/' },
-  { name: 'clickvault', desc: 'HashiCorp Vault database secrets engine plugin for ClickHouse.', stack: ['Go', 'Vault', 'ClickHouse'], github: 'https://github.com/emiliano-go/clickvault' },
-  { name: 'interferon', desc: 'Container-native immune signaling for Docker stacks.', stack: ['Python', 'Docker', 'SSE'], github: 'https://github.com/emiliano-go/interferon' },
-  { name: 'heard', desc: 'Voice-controlled tooling daemon for Linux. Hold Shift, speak, release.', stack: ['Python', 'Whisper', 'evdev', 'Linux'], github: 'https://github.com/emiliano-go/heard' },
-  { name: 'mapcreator', desc: 'Tile-based building map editor with A* pathfinding.', stack: ['React', 'TypeScript', 'Canvas'], github: 'https://github.com/emiliano-go/mapcreator' },
-  { name: 'dsig', desc: 'GPG message signing for Vencord / Vesktop. Authorship attestation.', stack: ['TypeScript', 'GPG'], github: 'https://github.com/emiliano-go/dsig' },
-  { name: 'Equinox', desc: 'My "cold storage" of everything I learn. Published as a Quartz site.', stack: ['Obsidian', 'Quartz'], github: 'https://github.com/emiliano-go/Equinox' },
-  { name: 'vigil', desc: 'Personal GitHub activity monitoring workflow built with Prefect.', stack: ['Python', 'Prefect', 'ClickHouse'], github: 'https://github.com/emiliano-go/vigil' },
+  { name: 'dbwarden-harness', desc: 'Release-certification harness across 5 databases. 189 tests, 11 suites, MCP server.', stack: ['Python', 'Docker', 'Testcontainers'], github: 'https://github.com/dbwarden-org/dbwarden-harness' },
+  { name: 'totem', desc: 'Persistent memory layer for AI agents. MCP server, 31 tools, FTS5 search.', stack: ['Python', 'MCP', 'SQLite'], github: 'https://github.com/emiliano-go/totem', pypi: 'https://pypi.org/project/totem/' },
 ];
 ---
 
@@ -71,9 +68,10 @@ const projects = [
           ))}
         </div>
 
-        <!-- Other projects: 2-column grid -->
+        <!-- Secondary projects: 2-column grid -->
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4 mt-8">Other projects</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
-          {projects.map((p) => (
+          {secondary.map((p) => (
             <div class="bg-(--color-bg) p-5 flex flex-col">
               <h3 class="font-[family-name:var(--font-mono)] text-sm font-medium text-(--color-text-head) mb-2">{p.name}</h3>
               <p class="text-[11px] leading-relaxed text-(--color-text-muted) flex-1 mb-3">{p.desc}</p>

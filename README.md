@@ -18,4 +18,4 @@ npm run preview
 
 ## Deploy
 
-Push to `main` — GitHub Actions builds and publishes to GHCR.
+Push to `main`, GitHub Actions builds and publishes to GHCR.

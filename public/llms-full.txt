@@ -1,4 +1,4 @@
-# Emiliano G.O. — Portfolio
+# Emiliano G.O.: Portfolio
 
 > Software engineer building Python backends, CLI tools, and data infrastructure.
 > Based in Montevideo, Uruguay.
@@ -52,23 +52,23 @@ Links: GitHub donation
 
 #### Career
 
-1. Bachelor's in Statistics (Technology Track) — UdelaR - FCEA, 2026 - Current
+1. Bachelor's in Statistics (Technology Track), UdelaR - FCEA, 2026 - Current
    Studying advanced statistical methods, computational tools (R, Python, SQL), data-driven decision frameworks, experimental design.
 
-2. System Analyst — Universidad de la Republica — FING, 2018 - 2023
+2. System Analyst, Universidad de la Republica (FING), 2018 - 2023
    Software engineering, algorithms, databases, networks, operating systems, programming paradigms.
 
 #### Education
 
-1. Introduction to Data Science — Universidad de la Republica — FING, 2022
+1. Introduction to Data Science, Universidad de la Republica (FING), 2022
    Statistical modeling, data wrangling, visualization, machine learning fundamentals.
 
-2. Advanced Data Analysis — Universidad de la Republica — FING, 2023
+2. Advanced Data Analysis, Universidad de la Republica (FING), 2023
    Multivariate methods, time series, Bayesian inference, statistical computing.
 
 #### Certifications
 
-1. Meta Front-End Developer Professional Certificate — Coursera — Meta, Sep 2024
+1. Meta Front-End Developer Professional Certificate, Coursera (Meta), Sep 2024
    JavaScript, Web Development, CSS, HTML, React, Responsive Design.
 
 ### Experience
@@ -85,9 +85,9 @@ Batteries-included async FastAPI starter shipping auth (sessions, OAuth, API key
 
 ### References
 
-- Igor Benav — Founder, Benav Labs. Co-maintainer, 2025 - Present.
-- Carlos A. Planchon — Technical Leader, Busco Jobs. Colleague, 2023 - Present.
-- Maximiliano Schmidt — Full-Stack Developer, Casas Y Mas. Colleague, 2026 - Present.
+- Igor Benav, Founder, Benav Labs. Co-maintainer, 2025 - Present.
+- Carlos A. Planchon, Technical Leader, Busco Jobs. Colleague, 2023 - Present.
+- Maximiliano Schmidt, Full-Stack Developer, Casas Y Mas. Colleague, 2026 - Present.
 
 ## https://emiliano-go.com/projects
 

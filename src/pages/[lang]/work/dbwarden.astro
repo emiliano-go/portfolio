@@ -89,6 +89,14 @@ const { lang } = Astro.params;
       </div>
     </section>
 
+    <!-- Why it's hard -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Why it's hard</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Schema drift is the core enemy. Most tools ask you to maintain two representations of your schema: ORM models and migration files. When they diverge, you find out at deploy time. Making this deterministic requires: a diff engine that handles renames, type changes, constraint changes, and ordering across 5 database backends with different DDL dialects. Every migration must carry both upgrade and rollback SQL, and the rollback must be tested against the actual database.</p>
+      </div>
+    </section>
+
     <!-- Workflow -->
     <section class="py-12 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
