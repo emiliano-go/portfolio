@@ -81,7 +81,7 @@ export const GET: APIRoute = async ({ url }) => {
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err.message, fallback: true }), {
       status: 502,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
     });
   }
 };
