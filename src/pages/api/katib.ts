@@ -31,34 +31,20 @@ export const GET: APIRoute = async ({ url }) => {
   const endpoint = url.searchParams.get('endpoint') || 'commits';
   try {
     if (endpoint === 'commits') {
-      const cacheKey = 'katib-commits-v3';
+      const cacheKey = 'katib-commits-v4';
       let data = getCached<any>(cacheKey, 10 * 60 * 1000);
       if (!data) {
-        const raw = await fetchKatib('/commits/latest');
-        const commits = [];
-        if (raw && raw.repo) {
-          commits.push({
-            repo: raw.repo.replace('emiliano-go/', ''),
-            message: raw.messageHeadline,
-            sha: raw.oid,
-            date: raw.committedDate,
-            url: raw.commitUrl,
-          });
-          if (raw.parentCommits) {
-            for (const pc of raw.parentCommits.slice(0, 2)) {
-              commits.push({
-                repo: raw.repo.replace('emiliano-go/', ''),
-                message: pc.messageHeadline,
-                sha: pc.oid || pc.commitUrl?.split('/').pop()?.substring(0, 7) || '',
-                date: pc.committedDate,
-                url: pc.commitUrl,
-              });
-            }
-          }
-        }
+        const raw = await fetchKatib('/v2/commits/latest');
+        const commits = (raw.commits || []).slice(0, 3).map((c: any) => ({
+          repo: (c.repo || '').replace('emiliano-go/', ''),
+          message: c.messageHeadline || '',
+          sha: c.oid || '',
+          date: c.committedDate || '',
+          url: c.commitUrl || '',
+        }));
         data = {
           commits,
-          languages: raw?.languages || [],
+          languages: raw.languages || [],
         };
         setCache(cacheKey, data, 10 * 60 * 1000);
       }
