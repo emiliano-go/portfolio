@@ -16,13 +16,13 @@ const { lang } = Astro.params;
 
 <Layout lang={lang} route={'/' + lang + '/work/trustsight'} title="TrustSight | Emiliano G.O." description="Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.">
   <Nav lang={lang} />
-  <main id="main" class="pt-24">
+  <main id="main" class="pt-24" style="--color-accent: #0092d2;">
 
     <!-- Header -->
     <section class="py-16 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">SECURITY · STATIC ANALYSIS</p>
-        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">TrustSight</h1>
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-accent) mb-2">SECURITY · STATIC ANALYSIS</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-accent) mb-4">TrustSight</h1>
         <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.</p>
 
         <div class="flex flex-wrap gap-2 mb-6">
@@ -35,11 +35,11 @@ const { lang } = Astro.params;
         <div class="arch-diagram mb-6">PKGBUILD / diff → Static analysis → Evidence + coverage → Risk assessment → Verdict</div>
 
         <div class="flex flex-wrap gap-3">
-          <a href="https://github.com/emiliano-go/trustsight" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
-          <a href="https://docs.trustsight.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Docs ↗</a>
-          <a href="https://trustsight.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">trustsight.org ↗</a>
-          <a href="https://pypi.org/project/trustsight/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
-          <a href="https://github.com/emiliano-go/trustsight-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Harness ↗</a>
+          <a href="https://github.com/emiliano-go/trustsight" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://docs.trustsight.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">Docs ↗</a>
+          <a href="https://trustsight.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">trustsight.org ↗</a>
+          <a href="https://pypi.org/project/trustsight/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">PyPI ↗</a>
+          <a href="https://github.com/emiliano-go/trustsight-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">Harness ↗</a>
         </div>
       </div>
     </section>
@@ -177,19 +177,19 @@ const { lang } = Astro.params;
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="proof-panel">
             <div class="label">Test count</div>
-            <div class="item"><span class="val-neutral text-lg">1,943</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">1,943</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Test lines</div>
-            <div class="item"><span class="val-neutral text-lg">28,000</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">28,000</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Detection rules</div>
-            <div class="item"><span class="val-neutral text-lg">~200</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">~200</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Source URLs</div>
-            <div class="item"><span class="val-neutral text-lg">180K</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">180K</span></div>
           </div>
         </div>
       </div>

@@ -16,13 +16,13 @@ const { lang } = Astro.params;
 
 <Layout lang={lang} route={'/' + lang + '/work/dbwarden'} title="DBWarden | Emiliano G.O." description="Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.">
   <Nav lang={lang} />
-  <main id="main" class="pt-24">
+  <main id="main" class="pt-24" style="--color-accent: #b39d6a;">
 
     <!-- Header -->
     <section class="py-16 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">DATABASE INFRASTRUCTURE</p>
-        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">DBWarden</h1>
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-accent) mb-2">DATABASE INFRASTRUCTURE</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-accent) mb-4">DBWarden</h1>
         <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models.</p>
         <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Your models are the source code. SQL is the output.</p>
 
@@ -72,11 +72,11 @@ const { lang } = Astro.params;
             Verification Gate</div>
 
         <div class="flex flex-wrap gap-3">
-          <a href="https://github.com/dbwarden-org/dbwarden" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
-          <a href="https://docs.dbwarden.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Docs ↗</a>
-          <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">PyPI ↗</a>
-          <a href="https://harness.dbwarden.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Harness ↗</a>
-          <a href="https://github.com/dbwarden-org/dbwarden-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">Harness source ↗</a>
+          <a href="https://github.com/dbwarden-org/dbwarden" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://docs.dbwarden.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">Docs ↗</a>
+          <a href="https://pypi.org/project/dbwarden/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">PyPI ↗</a>
+          <a href="https://harness.dbwarden.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">Harness ↗</a>
+          <a href="https://github.com/dbwarden-org/dbwarden-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">Harness source ↗</a>
         </div>
       </div>
     </section>
@@ -261,15 +261,15 @@ const { lang } = Astro.params;
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="proof-panel">
             <div class="label">DB backends</div>
-            <div class="item"><span class="val-neutral text-lg">5</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">5</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">CLI commands</div>
-            <div class="item"><span class="val-neutral text-lg">14</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">14</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Plugins</div>
-            <div class="item"><span class="val-neutral text-lg">8</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">8</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Harnessed</div>

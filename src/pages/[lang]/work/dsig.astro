@@ -16,13 +16,13 @@ const { lang } = Astro.params;
 
 <Layout lang={lang} route={'/' + lang + '/work/dsig'} title="dsig | Emiliano G.O." description="GPG message signing for Vencord / Vesktop. Authorship attestation.">
   <Nav lang={lang} />
-  <main id="main" class="pt-24">
+  <main id="main" class="pt-24" style="--color-accent: #1a2744;">
 
     <!-- Header -->
     <section class="py-16 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">SECURITY · CRYPTOGRAPHY</p>
-        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">dsig</h1>
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-accent) mb-2">SECURITY · CRYPTOGRAPHY</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-accent) mb-4">dsig</h1>
         <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">GPG message signing for Vencord / Vesktop. Authorship attestation for every message.</p>
         <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">Signs Discord messages with your GPG key. Verifies authorship, prevents impersonation. Compact (113-char) and invisible footer formats.</p>
 
@@ -50,7 +50,7 @@ const { lang } = Astro.params;
           (compact 113-char or invisible)</div>
 
         <div class="flex flex-wrap gap-3">
-          <a href="https://github.com/emiliano-go/dsig" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://github.com/emiliano-go/dsig" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">GitHub ↗</a>
         </div>
       </div>
     </section>
@@ -110,19 +110,19 @@ const { lang } = Astro.params;
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="proof-panel">
             <div class="label">Test count</div>
-            <div class="item"><span class="val-neutral text-lg">142</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">142</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Test lines</div>
-            <div class="item"><span class="val-neutral text-lg">1,817</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">1,817</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Source lines</div>
-            <div class="item"><span class="val-neutral text-lg">3,782</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">3,782</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Footer size</div>
-            <div class="item"><span class="val-neutral text-lg">113 chars</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">113 chars</span></div>
           </div>
         </div>
       </div>

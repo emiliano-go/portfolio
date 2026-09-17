@@ -8,6 +8,7 @@ const projects = [
     num: '01',
     category: 'DATABASE INFRASTRUCTURE',
     name: 'DBWarden',
+    accent: '#b39d6a',
     desc: 'Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models. 5 DB backends, 8 plugins, release-certification harness.',
     diagram: 'Models → IR → Diff → SQL → Verification',
     facts: ['45K LOC', '129 test files', '5 databases', 'Release harness'],
@@ -21,6 +22,7 @@ const projects = [
     num: '02',
     category: 'SECURITY · STATIC ANALYSIS',
     name: 'TrustSight',
+    accent: '#0092d2',
     desc: 'Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. Corpus-wide cluster detection across 180K source URLs.',
     diagram: 'Diff → Static analysis → Evidence + coverage → Risk assessment → Verdict',
     facts: ['1,943 tests', '~200 rules', 'Signed baselines', 'IOC federation'],
@@ -34,6 +36,7 @@ const projects = [
     num: '03',
     category: 'DATA · INGESTION FRAMEWORK',
     name: 'rypipe',
+    accent: '#af4f37',
     desc: 'Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits. Published to PyPI and crates.io.',
     diagram: 'Format Adapter → Splitter / Parser → Execution Plan → Parallel Engine → Arrow',
     facts: ['319 tests', '13K docs', 'PyPI + crates.io', '4.2 GB/s parallel'],
@@ -47,6 +50,7 @@ const projects = [
     num: '04',
     category: 'VOICE · LINUX DAEMON',
     name: 'heard',
+    accent: '#6b2fa0',
     desc: 'Voice-controlled tooling daemon for Linux. Hold Shift, speak, release. Deployed on real hardware with systemd and GNOME Shell extension.',
     diagram: 'PTT → Whisper STT → Embedding classifier → Tool dispatch → Shell/Hyprland/Media',
     facts: ['299 tests', 'Deployed', 'Systemd unit', 'GNOME extension'],
@@ -59,6 +63,7 @@ const projects = [
     num: '05',
     category: 'SECURITY · VAULT PLUGIN',
     name: 'ClickVault',
+    accent: '#f5c81b',
     desc: 'HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic credentials, password rotation, cluster-aware DDL.',
     diagram: 'Vault API → Plugin → ClickHouse dynamic users → Short-lived credentials → Rotation',
     facts: ['85% coverage', 'Code enforced', 'Cluster-aware', 'TLS support'],
@@ -95,16 +100,16 @@ const projects = [
         const href = isMore ? `/${Astro.props.lang}/projects` : `/${Astro.props.lang}/work/${p.id}`;
         return (
           <a href={href} class:list={[
-            "p-5 sm:p-7 group block transition-colors duration-200",
-            isMore ? "bg-(--color-surface) hover:bg-(--color-bg)" : "bg-(--color-bg) hover:bg-(--color-surface)"
-          ]}>
+            "p-5 sm:p-7 group block transition-colors duration-200 border-l-2",
+            isMore ? "bg-(--color-surface) hover:bg-(--color-bg) border-l-(--color-border)" : "bg-(--color-bg) hover:bg-(--color-surface)"
+          ]} style={!isMore && p.accent ? `--accent: ${p.accent}; border-left-color: ${p.accent}` : undefined}>
             <div class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
               <div class="lg:w-48 shrink-0">
-                <span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-text-dim)">{p.num}</span>
-                {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] text-(--color-text-dim) mt-1 mb-1">{p.category}</p>}
+                <span class="font-[family-name:var(--font-mono)] text-[10px]" style={!isMore && p.accent ? `color: ${p.accent}` : undefined}>{p.num}</span>
+                {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] mt-1 mb-1" style={!isMore && p.accent ? `color: ${p.accent}` : undefined}>{p.category}</p>}
                 <h3 class:list={[
                   "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-colors duration-200",
-                  isMore ? "text-xl text-(--color-text-muted) group-hover:text-(--color-text-bright) mt-1" : "text-2xl md:text-3xl text-(--color-text-head) group-hover:text-(--color-accent)"
+                  isMore ? "text-xl text-(--color-text-muted) group-hover:text-(--color-text-bright) mt-1" : "text-2xl md:text-3xl text-(--color-text-head) group-hover:text-[var(--accent,var(--color-accent))]"
                 ]}>{p.name}</h3>
               </div>
               <div class="flex-1 min-w-0">
@@ -113,13 +118,13 @@ const projects = [
                 {p.facts.length > 0 && (
                   <div class="flex flex-wrap items-center gap-2 mb-4">
                     {p.facts.map(f => (
-                      <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">{f}</span>
+                      <span class="text-[10px] font-mono px-2 py-0.5 border text-(--color-text-dim)" style={!isMore && p.accent ? `border-color: ${p.accent}40` : undefined}>{f}</span>
                     ))}
                   </div>
                 )}
                 <div class="flex flex-wrap gap-3">
                   {p.links.map(link => (
-                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) group-hover:text-(--color-text-bright) group-hover:border-(--color-text-muted) transition-colors duration-200">
+                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border transition-colors duration-200" style={!isMore && p.accent ? `border-color: ${p.accent}; color: ${p.accent}` : undefined}>
                       {link.label} <span class="text-[8px]" aria-hidden="true">{isMore ? '→' : '↗'}</span>
                     </span>
                   ))}
