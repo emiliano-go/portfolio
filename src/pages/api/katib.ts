@@ -1,19 +1,8 @@
 import type { APIRoute } from 'astro';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-
-function loadEnv(): string {
-  try {
-    const envPath = resolve(process.cwd(), '.env');
-    const content = readFileSync(envPath, 'utf-8');
-    const match = content.match(/^KATIB_GITHUB_TOKEN=(.+)$/m);
-    return match?.[1]?.trim() || '';
-  } catch { return ''; }
-}
 
 const KATIB_BASE = 'https://katib.jsn.cam';
 const USERNAME = 'emiliano-go';
-const TOKEN = loadEnv();
+const TOKEN = import.meta.env.KATIB_GITHUB_TOKEN || '';
 
 interface CacheEntry<T> { data: T; expires: number; }
 const cache = new Map<string, CacheEntry<any>>();
