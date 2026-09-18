@@ -56,7 +56,7 @@ const pageDesc = description ?? t('meta.default.desc');
           try {
             var s = JSON.parse(a11y);
             if (s.contrast === 'high') document.documentElement.setAttribute('data-contrast', 'high');
-            if (s.fontsize) document.documentElement.setAttribute('data-fontsize', s.fontsize);
+            if (s.fontsize === 'large' || s.fontsize === 'xlarge') document.documentElement.setAttribute('data-fontsize', s.fontsize);
           } catch(e) {}
         }
         if (!window.__astroThemeInit) {
@@ -74,7 +74,7 @@ const pageDesc = description ?? t('meta.default.desc');
               try {
                 var s = JSON.parse(a11y);
                 if (s.contrast === 'high') document.documentElement.setAttribute('data-contrast', 'high');
-                if (s.fontsize) document.documentElement.setAttribute('data-fontsize', s.fontsize);
+                if (s.fontsize === 'large' || s.fontsize === 'xlarge') document.documentElement.setAttribute('data-fontsize', s.fontsize);
               } catch(e) {}
             }
           });

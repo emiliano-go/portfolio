@@ -225,8 +225,10 @@ window.__astroNavInit = true;
 
   function toggleFont() {
     var el = document.documentElement;
-    if (el.getAttribute('data-fontsize')) el.removeAttribute('data-fontsize');
-    else el.setAttribute('data-fontsize', 'large');
+    var cur = el.getAttribute('data-fontsize');
+    if (!cur) el.setAttribute('data-fontsize', 'large');
+    else if (cur === 'large') el.setAttribute('data-fontsize', 'xlarge');
+    else el.removeAttribute('data-fontsize');
     saveA11y(); updateDots();
   }
 
