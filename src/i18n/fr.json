@@ -39,7 +39,7 @@
   "engineering.principle.explicit-state.desc": "L'état important doit être inspectable plutôt qu'implicite.",
   "engineering.principle.determinism.title": "Déterminisme",
   "engineering.principle.determinism.desc": "Les mêmes entrées doivent produire le même résultat chaque fois que c'est pratique.",
-  "engineering.principle.fail-closed.title": "Échec fermé",
+  "engineering.principle.fail-closed.title": "Échec en mode fermé",
   "engineering.principle.fail-closed.desc": "L'évidence incomplète ne doit pas devenir silencieusement de la confiance.",
   "engineering.principle.reproducibility.title": "Reproductibilité",
   "engineering.principle.reproducibility.desc": "Une affirmation doit être mesurable et re-exécutable.",
