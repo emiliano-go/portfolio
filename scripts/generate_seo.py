@@ -1,4 +1,4 @@
-"""Pre-build: generates the SEO JSON manifest and sitemap for every route using seoslug.
+"""Pre-build: generates the SEO JSON manifest and sitemap for every route using easeo.
 
 Titles, descriptions and Person/JSON-LD fields are read from src/i18n/*.json so the
 metadata stays in the same place as the copy it describes, and each language gets
@@ -8,8 +8,8 @@ Outputs:
   src/data/seo-manifest.json  - consumed by src/components/Seo.astro
   public/sitemap.xml          - all routes with hreflang alternates
 
-Exits non-zero if seoslug reports a payload-level warning, so a too-long title or a
-relative canonical fails the build rather than shipping.
+Exits non-zero if easeo reports a payload-level validation issue, so a too-long title
+or a relative canonical fails the build rather than shipping.
 """
 from __future__ import annotations
 
@@ -19,12 +19,12 @@ from datetime import date
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-from seoslug import (
+from easeo import (
     Breadcrumb,
-    OGImage,
     Robots,
     SEOConfig,
     SEOEntity,
+    SEOImage,
     SEOOverrides,
     URLPolicy,
     build_seo_payload,
@@ -47,7 +47,7 @@ SAME_AS = [
     "https://www.linkedin.com/in/emiliano-go",
 ]
 
-OG_IMAGE = OGImage(
+OG_IMAGE = SEOImage(
     url=f"{SITE_URL}/og-image.png",
     width=1200,
     height=630,
@@ -58,6 +58,59 @@ OG_IMAGE = OGImage(
 # in Google results; max-snippet:-1 lifts the snippet length cap.
 INDEXABLE = Robots(index=True, follow=True, max_snippet=-1, max_image_preview="large")
 NOINDEX = Robots(index=False, follow=False)
+
+# Project case-study pages are English-only copy, but they exist under every language
+# prefix and are linked from the localized project cards. (slug, breadcrumb name, title, excerpt)
+WORK_PAGES = [
+    (
+        "dbwarden",
+        "DBWarden",
+        "DBWarden | Emiliano G.O.",
+        "Declarative schema compiler for SQLAlchemy. Models \u2192 IR \u2192 Diff \u2192 SQL \u2192 Verification.",
+    ),
+    (
+        "trustsight",
+        "TrustSight",
+        "TrustSight | Emiliano G.O.",
+        "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    ),
+    (
+        "rypipe",
+        "rypipe",
+        "rypipe | Emiliano G.O.",
+        "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    ),
+    (
+        "postal",
+        "postal",
+        "postal | Emiliano G.O.",
+        "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+    ),
+    (
+        "neurafly",
+        "neurafly",
+        "neurafly | Emiliano G.O.",
+        "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+    ),
+    (
+        "easeo",
+        "easeo",
+        "easeo | Emiliano G.O.",
+        "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+    ),
+    (
+        "clickvault",
+        "ClickVault",
+        "ClickVault | Emiliano G.O.",
+        "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+    ),
+    (
+        "dsig",
+        "dsig",
+        "dsig | Emiliano G.O.",
+        "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+    ),
+]
 
 
 def load_i18n() -> dict[str, dict[str, str]]:
@@ -120,7 +173,7 @@ def routes_for(prefix: str, t: dict[str, str]) -> list[tuple[str, SEOEntity, SEO
         Breadcrumb(name=t["nav.logo"], url=home),
         Breadcrumb(name=t["nav.projects"].title(), url=projects),
     ]
-    return [
+    routes = [
         (
             home,
             SEOEntity(
@@ -154,6 +207,24 @@ def routes_for(prefix: str, t: dict[str, str]) -> list[tuple[str, SEOEntity, SEO
             False,
         ),
     ]
+    # Unprefixed /work/* pages do not exist, so only emit work routes for real prefixes.
+    if prefix:
+        for slug, name, title, excerpt in WORK_PAGES:
+            route = f"{prefix}/work/{slug}/"
+            routes.append(
+                (
+                    route,
+                    SEOEntity(
+                        entity_type="page",
+                        title=title,
+                        excerpt=excerpt,
+                        breadcrumbs=crumbs + [Breadcrumb(name=name, url=route)],
+                    ),
+                    SEOOverrides(twitter_creator=TWITTER),
+                    True,
+                )
+            )
+    return routes
 
 
 def as_list(schema) -> list:
@@ -204,18 +275,19 @@ def main() -> int:
 
         for route, entity, overrides, in_sitemap in routes_for(prefix, t):
             payload = build_seo_payload(entity, route, config, overrides)
+            payload_dict = payload.to_dict()
 
             if entity.entity_type == "home":
-                payload.schema_jsonld = as_list(payload.schema_jsonld) + [person_node(t, home_url)]
+                payload_dict["schema_jsonld"] = as_list(payload_dict.get("schema_jsonld")) + [
+                    person_node(t, home_url)
+                ]
 
-            for warning in validate_payload(payload.to_dict(), config):
-                # BreadcrumbList/Person nodes legitimately carry no name+description;
-                # only payload-level problems should fail the build.
-                if warning.startswith("schema_jsonld["):
+            for issue in validate_payload(payload):
+                if issue.severity == "info":
                     continue
-                warnings.append(f"{route}: {warning}")
+                warnings.append(f"{route}: {issue.rule_id} {issue.message}")
 
-            manifest[route] = payload.to_dict()
+            manifest[route] = payload_dict
             if in_sitemap and prefix:
                 sitemap_paths.append(route)
             elif in_sitemap and not prefix:
@@ -239,7 +311,11 @@ def main() -> int:
                 suffix = route[len(lang) + 1 :]
                 break
         alternates = {lang: f"{SITE_URL}/{lang}{suffix}" for lang in LOCALES}
-        alternates["x-default"] = f"{SITE_URL}{suffix}"
+        # /work/* has no unprefixed page; English is the x-default.
+        if suffix.startswith("/work/"):
+            alternates["x-default"] = f"{SITE_URL}/en{suffix}"
+        else:
+            alternates["x-default"] = f"{SITE_URL}{suffix}"
         entries.append((f"{SITE_URL}{route}", alternates))
 
     sitemap_path = PROJECT_ROOT / "public" / "sitemap.xml"

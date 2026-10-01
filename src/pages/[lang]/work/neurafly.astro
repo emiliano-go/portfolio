@@ -1,0 +1,134 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'neurafly' } },
+    { params: { lang: 'es', project: 'neurafly' } },
+    { params: { lang: 'fr', project: 'neurafly' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/neurafly'} title="neurafly | Emiliano G.O." description="Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-accent) mb-2">TERMINAL AUDIO · COMPUTATIONAL NEUROSCIENCE</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-accent) mb-4">neurafly</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">Real audio in, real neurons firing, real time. A terminal visualizer wired to the actual FlyWire whole-brain connectome.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">138,333 leaky integrate-and-fire neurons and 2,052,622 weighted synapses from FlyWire release v783, rendered as a living disk in braille using your terminal's own palette.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Rust</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">TUI / Braille</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Audio DSP</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">FlyWire Connectome</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">MIT</span>
+        </div>
+
+        <div class="arch-diagram mb-6">System audio (PipeWire / PulseAudio)
+                  │
+                  ▼
+        2048-pt FFT at 44.1 kHz
+   24 log bands (40 Hz - 12 kHz) + beat
+                  │
+                  ▼
+   LIF spiking network, fixed 100 Hz tick
+   (138,333 neurons, 2,052,622 synapses)
+                  │
+                  ▼
+        Disk geometry + anomalies
+                  │
+                  ▼
+    Float phosphor buffer → braille 2x4
+    ANSI 30-37 palette only</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/neurafly" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://crates.io/crates/neurafly" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">crates.io ↗</a>
+          <a href="https://aur.archlinux.org/packages/neurafly" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">AUR ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Audio visualizers synthesize shapes from frequency data. The motion looks organic but carries no structure: bars, particles, and waveforms driven by the same FFT numbers. neurafly instead couples live system audio to a real biological wiring diagram, so activity propagates, reverberates, and decays through genuine fly-brain topology.</p>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Real connectome, not a model</h3>
+            <p class="text-xs text-(--color-text-muted)">Wiring comes from FlyWire release v783: 138,333 neurons and 2,052,622 weighted synapses. Inhibitory sign follows presynaptic neurotransmitter probabilities (GABA inhibitory, the rest excitatory).</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">cava-style band processing</h3>
+            <p class="text-xs text-(--color-text-muted)">A 2048-point FFT folds into 24 logarithmic bands, each judged against its own rolling spectral floor, with equal-loudness EQ, auto-gain, and a peakiness gate.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Fixed-tick pipeline</h3>
+            <p class="text-xs text-(--color-text-muted)">Four modules (audio, sim, figure, canvas) share a fixed 100 Hz simulation tick, so each band injects current into its own neuron subset deterministically.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Terminal-native rendering</h3>
+            <p class="text-xs text-(--color-text-muted)">A float phosphor buffer at 2x4 sub-cell resolution folds into braille, and colors come exclusively from ANSI 30-37 so the disk adopts the user's theme.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Neurons</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">138,333</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Synapses</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">2,052,622</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Sim tick</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">100 Hz</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Connectome data</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">18 MB</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tradeoffs -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Tradeoffs</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Linux only (PipeWire/PulseAudio) and a terminal with Unicode braille support</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>The 18 MB connectome is excluded from the published crate, which falls back to a synthetic network</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Regenerating the network needs the Zenodo feather file and the Python preprocessing tooling</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

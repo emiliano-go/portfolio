@@ -1,176 +1,185 @@
 # Emiliano G.O.: Portfolio
 
-> Software engineer building Python backends, CLI tools, and data infrastructure.
+> Systems and infrastructure engineer building reliable data, database, and security tooling in Rust, Python, Go, and SQL.
 > Based in Montevideo, Uruguay.
 
 ## https://emiliano-go.com/
 
 ### Hero
 
-Backend Engineer · Data Scientist
+Systems & Infrastructure Engineer.
 
-Building systems that handle real data.
+Building reliable data, database, and security tooling in Python, Rust, and Go. Based in Montevideo, Uruguay.
 
-Python developer focused on data pipelines, ETL infrastructure, and backend architecture. Based in Montevideo, Uruguay. Open to interesting problems.
+Highlights:
+- Author of postal, easeo, DBWarden, rypipe, TrustSight
+- Co-maintainer of BenavLabs FastAPI-boilerplate
+- 5,800+ tests across 7 flagship projects
+- Published to PyPI and crates.io
 
 Stats:
-- ~2K stars on maintained OSS
-- 6 packages on PyPI
-- Montevideo, Uruguay
+- 5,800+ tests
+- 17 packages on PyPI
+- 5 DB dialects
+- 47 public OSS repositories
 
-### About
+### Engineering principles
 
-Emiliano G.O.
-Montevideo, Uruguay
+- **Explicit state**: important state should be inspectable rather than implicit.
+- **Determinism**: the same inputs should produce the same result whenever practical.
+- **Fail closed**: incomplete evidence should not silently become confidence.
+- **Reproducibility**: a claim should be measurable and rerunnable.
+- **Separation of concerns**: format-specific behavior belongs at the boundary; generic machinery belongs in the core.
+- **Show evidence**: claims without measurements are marketing.
 
-Backend developer and data scientist. I work mostly in Python: pipelines, APIs, and the infrastructure that keeps them running. I care about clean architecture, good documentation, and building things that hold up under load.
-
-I learn by building things until they break, then figuring out why. Also run LibreCourseUY, an open source organization promoting the OSS ecosystem in Uruguay.
-
-Stack: Python, FastAPI, pandas, scikit-learn, matplotlib, PostgreSQL, Prefect, Redis, Docker, Traefik, Vue 3, Taskiq.
-
-### Projects (Home)
+### Projects (home)
 
 #### DBWarden
 
-SQL-first migration system for SQLAlchemy. No migration runtime, no generated Python scripts. Built-in rollback, schema snapshots, offline CI generation, pre-deploy impact analysis, multi-database support, and a full CLI.
+Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models. 48K LOC, 127 test files, 5 DB backends, 7 plugins, release-certification harness.
+Flow: Models → IR → Diff → SQL → Verification.
+Links: GitHub (dbwarden-org/dbwarden), Docs (docs.dbwarden.org).
 
-Tags: SQLAlchemy, FastAPI, PostgreSQL, 5 dialects
-Links: GitHub, PyPI
+#### TrustSight
 
-#### vigil
+Evidence-driven security analysis for AUR packages. Never executes code, fail-closed by design. 3,967+ tests, 185 scoring rules, signed baselines, IOC federation, corpus-wide cluster detection across ~186K source URLs.
+Flow: Diff → Static analysis → Evidence + coverage → Risk assessment → Verdict.
+Links: GitHub (emiliano-go/trustsight), Docs (docs.trustsight.org).
 
-Prefect-based GitHub activity monitor. Fetches events, commits, and PR activity via PyGithub, stores in ClickHouse.
+#### rypipe
 
-### LibreCourseUY
+Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits (Splitter, RecordParser). 476 tests, 15.9K docs lines, ~4.2 GB/s parallel throughput. Published to PyPI and crates.io.
+Flow: Format Adapter → Splitter/Parser → Execution Plan → Parallel Engine → Arrow.
+Links: GitHub, Docs (rypipe.emiliano-go.com), PyPI.
 
-An open source organization focused on promoting the FOSS ecosystem in Uruguay. We build and maintain free tools, services, and infrastructure for the Uruguayan developer community.
+#### postal
 
-Links: GitHub donation
+Native WhatsApp multi-device client with no webview. History sync is a choice, not a 20 GB download: ~0.3% idle CPU vs ~200% for a webview client, ~600 MB RAM vs 2.2–23 GB, bounded message window (500 default, 50–2,000), durable SQLite archive. Session DB compacted 97 MB → 5.8 MB across 399,620 rows. 352 Rust tests, 66 frontend tests, ~68K LOC. Release v0.1.0 ("Hermóðr"). MIT.
+Flow: Multi-device session → whatsapp-rust core → Event loop → SQLite archive + retention → Tauri IPC → Svelte UI.
+Links: GitHub, Release v0.1.0.
+
+#### neurafly
+
+Terminal audio visualizer driven by the real FlyWire connectome: 138,333 leaky integrate-and-fire neurons and 2,052,622 weighted synapses from release v783, fed by live system audio and rendered in braille with the terminal's own ANSI palette. 2048-point FFT at 44.1 kHz folded into 24 log bands (40 Hz–12 kHz), fixed 100 Hz simulation tick, 2,930 Rust LOC, 18 MB connectome. Published to crates.io v0.2.0 and AUR. MIT.
+Flow: System audio → FFT → 24 log bands → LIF network (FlyWire v783) → Braille phosphor canvas.
+Links: GitHub, crates.io, AUR.
+
+#### easeo
+
+Deterministic SEO metadata generator: entity + route + config produce canonical URL, title, description, robots directives, Open Graph, Twitter Cards, and JSON-LD. One Rust core with Python and Node.js bindings; the cross-language conformance suite asserts byte-for-byte identical output. 310 tests, 11 entity types, 8 built-in JSON-LD schemas, 10 framework/adapters, 64 docs pages. Published to PyPI, npm (@easeo/core), and crates.io (easeo-core). MIT.
+Flow: Entity + route + config → URL normalization → Fallback chains → OG/Twitter/JSON-LD → SHA-256 contract → render_html().
+Links: GitHub, Docs (easeo.emiliano-go.com), PyPI, npm, crates.io.
+
+#### ClickVault
+
+HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic short-lived credentials, scheduled password rotation, cluster-aware DDL (ON CLUSTER), cleanup on partial creation. 85.4% coverage of the plugin package, CI enforced.
+Flow: Vault API → Plugin → ClickHouse dynamic users → Short-lived credentials → Rotation.
+Links: GitHub.
+
+### Open Source
+
+#### LibreCourseUY (Director)
+
+Open source organization promoting the FOSS ecosystem in Uruguay. 400+ members building free tools, services, and infrastructure for the Uruguayan developer community.
+Links: github.com/LibreCourseUY, librecourse.uy.
+
+#### FastAPI-boilerplate (Co-maintainer)
+
+Batteries-included async FastAPI starter: auth (sessions, OAuth, API keys), FastCRUD, Alembic, Taskiq workers, Redis caching, per-tier rate limiting. Named co-maintainer in v0.18.0, the pluggable restructure release. ~2k stars.
+Links: github.com/benavlabs/FastAPI-boilerplate.
 
 ### Studies
 
 #### Career
 
-1. Bachelor's in Statistics (Technology Track), UdelaR - FCEA, 2026 - Current
-   Studying advanced statistical methods, computational tools (R, Python, SQL), data-driven decision frameworks, experimental design.
-
-2. System Analyst, Universidad de la Republica (FING), 2018 - 2023
-   Software engineering, algorithms, databases, networks, operating systems, programming paradigms.
+1. Bachelor's in Statistics (Technology Track), UdelaR / FCEA, 2026 - Present.
+2. Computer Engineering, UdelaR / FING, 2025 - Present.
 
 #### Education
 
-1. Introduction to Data Science, Universidad de la Republica (FING), 2022
-   Statistical modeling, data wrangling, visualization, machine learning fundamentals.
-
-2. Advanced Data Analysis, Universidad de la Republica (FING), 2023
-   Multivariate methods, time series, Bayesian inference, statistical computing.
+1. University of Tokyo, GCI World 2026, Data Science and Machine Learning.
+2. CoderHouse, Course, Data Analytics, 2026.
 
 #### Certifications
 
-1. Meta Front-End Developer Professional Certificate, Coursera (Meta), Sep 2024
-   JavaScript, Web Development, CSS, HTML, React, Responsive Design.
-
-### Experience
-
-- Jan 2024 - Present: Backend Engineer at Some Company. Building data pipelines and API infrastructure serving 50K+ daily requests.
-- 2022 - 2023: Data Engineer at Another Co. Developed ETL pipelines, migrated legacy batch to event-driven.
-- 2020 - 2022: Junior Developer at Startup XYZ. Full-stack SaaS development, REST APIs, CI/CD.
-
-### Open Source
-
-#### FastAPI-boilerplate (Co-maintainer)
-
-Batteries-included async FastAPI starter shipping auth (sessions, OAuth, API keys), FastCRUD, Alembic, Taskiq workers, Redis caching, and per-tier rate limiting. Organized as a uv workspace with vertical-slice layout. ~2k stars, 286 forks.
+1. HTML, CSS and Javascript for Web Development, Coursera · Johns Hopkins University, 2024.
 
 ### References
 
-- Igor Benav, Founder, Benav Labs. Co-maintainer, 2025 - Present.
-- Carlos A. Planchon, Technical Leader, Busco Jobs. Colleague, 2023 - Present.
-- Maximiliano Schmidt, Full-Stack Developer, Casas Y Mas. Colleague, 2026 - Present.
+- Igor Benav, Founder, Benav Labs. Co-maintainer, 2025 - Present. linkedin.com/in/igor-benav
+- Carlos A. Planchon, Technical Leader, Busco Jobs. Colleague, 2025 - Present. linkedin.com/in/carlosplanchon
+- Maximiliano Schmidt, Full-Stack Developer, Casas Y Mas. Colleague, 2026 - Present. linkedin.com/in/maximiliano-schmidt
+
+### Contact
+
+- GitHub: https://github.com/emiliano-go
+- LinkedIn: https://www.linkedin.com/in/emiliano-go
+- Blog: https://blog.emiliano-go.com
 
 ## https://emiliano-go.com/projects
 
+Full project index. Featured projects link to dedicated case-study pages.
+
 ### DBWarden
 
-Python Package · PyPI. The SQL-first database toolkit for SQLAlchemy.
+Declarative schema compiler for SQLAlchemy. Your models are the source code; SQL is the output. 48K LOC, 127 test files, 5 DB backends (PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse), 7 official plugins (seeds, RBAC, FastAPI, sandbox, PostgreSQL types/extensions/RBAC, ClickHouse RBAC), standalone release-certification harness. Python 3.12+, PyPI.
+Links: GitHub, Docs, PyPI.
 
-DBWarden is a SQL-first migration system for SQLAlchemy that replaces Python-based migration workflows with explicit, reviewable SQL generated directly from your models. Unlike script-based migration tools, DBWarden does not introduce a migration runtime or require executing generated Python migration code. It produces plain SQL files that can be reviewed, versioned, and executed directly against any environment.
+### TrustSight
 
-Stats: 12 stars, 829 tests, 31K+ LOC, 5 DB dialects, 15+ CLI commands.
+Evidence-driven security analysis for AUR PKGBUILD updates: structural changes, suspicious commands, typosquatting, novelty signals, deterministic evidence reports. 3,967+ collected tests, 185 scoring rules across six namespaces, ~186K source URLs and ~36K maintainer identities in signed baselines, cluster detection, IOC federation. Never executes code; coverage loss is explicit; incomplete analysis fails closed.
+Links: GitHub, Docs (docs.trustsight.org), Website (trustsight.org).
 
-Features: SQL-first migration system, multi-database support (PostgreSQL, MySQL, SQLite, MariaDB, MSSQL), offline CI generation, pre-deploy impact analysis, schema snapshots and diff, rollback support, declarative model-driven configuration.
+### rypipe
 
-Links: GitHub, PyPI, Documentation, DeepWiki
+Format- and source-agnostic ingestion framework: a common execution runtime for turning record-oriented data into typed columnar data. Rust core, Python bindings via PyO3. Adapters live in separate packages. 476 tests, 15.9K docs lines, ~4.2 GB/s parallel (Ryzen 5800X, 533 MB workload), memory-bounded execution, query pushdown, zero-copy Arrow export. Published to PyPI and crates.io.
+Links: GitHub, Docs (rypipe.emiliano-go.com), PyPI.
 
-### schemap
+### postal
 
-Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models. Define your model once, schemap generates Create, Update, Public, and Full schemas automatically, with field-level type mapping, nullability handling, and configurable exclusions.
+Standalone native WhatsApp client that speaks the multi-device protocol directly (whatsapp-rust, pinned git revision). No WhatsApp Web webview: its only webview renders Postal's own Tauri 2 UI. History sync is opt-in (up to 10,000 days on request); SQLite is a durable archive while RAM keeps a bounded window; 256 KiB IPC chunks; optional Android companion link for one-time media. 352 Rust tests + 66 frontend tests, ~68K LOC. Release v0.1.0. MIT.
+Limits: plaintext local storage (encryption open work), releases on hold until all platforms are covered, no calls/tray/status/communities yet.
+Links: GitHub, Release.
 
-Supports AutoBase inheritance and @auto_schema decorator, with built-in TimestampMixin and SoftDeleteMixin.
+### neurafly
 
-Tags: Pydantic v2, SQLAlchemy 2.0, PyPI
+Real connectome audio visualizer for the terminal. FlyWire release v783 (138,333 neurons, 2,052,622 weighted synapses; inhibitory sign from presynaptic neurotransmitter probabilities). cava-style 2048-point FFT folded into 24 log bands with rolling spectral floors, equal-loudness EQ, auto-gain and peakiness gate; four-module fixed 100 Hz tick pipeline; braille rendering at 2x4 sub-cell resolution with ANSI 30–37 colors. Published to crates.io v0.2.0 and AUR (neurafly 0.2.0-1). MIT.
+Limits: Linux only, braille terminal required, the 18 MB connectome is excluded from the published crate (synthetic fallback), regeneration needs the Zenodo feather file.
+Links: GitHub, crates.io, AUR.
 
-### seoslug
+### easeo
 
-Deterministic SEO payload generation for content platforms. Pure functions, framework-agnostic. Generates canonical URLs, Open Graph (10+ fields), Twitter Cards (6+ fields), robots directives, and JSON-LD structured data. URL normalization with tracking parameter stripping.
+Deterministic SEO metadata generator. All logic in easeo-core (Rust); Python and Node.js bindings wrap the same engine with byte-for-byte conformance. Pure determinism: no timestamps, randomness, environment reads, or hidden I/O. SEO contracts for CI, config-scoped HookRegistry and SchemaRegistry, conservative URL policy (HTTPS enforcement, trailing-slash control, duplicate-slash collapse, query allowlist). 310 tests, 11 entity types, 8 built-in JSON-LD schemas, 6 JS framework integrations, 4 Python adapters, 64 docs pages. Published to PyPI, npm (@easeo/core), crates.io (easeo-core). MIT.
+Limits: not a framework, scoring tool, crawler, site auditor, content rewriter, or full page renderer; alpha status.
+Links: GitHub, Docs (easeo.emiliano-go.com), PyPI, npm, crates.io.
 
-Fast: 10,000 payloads in ~276 ms.
+### ClickVault
 
-Tags: Python, PyPI, SEO
+HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic credentials, static role password rotation, cluster-aware DDL via ON CLUSTER, privilege verification before accepting configuration, cleanup of partially created users, mutex-guarded concurrent access, TLS support. 85.4% coverage of internal/clickvault, CI enforced.
+Links: GitHub.
 
-Links: GitHub, PyPI
+### dsig
 
-### PyPI Utilities
+GPG message signing for Vencord / Vesktop: every Discord message carries a verifiable authorship attestation (not encryption). Canonicalization (NFC, CRLF→LF, whitespace), OpenPGP v4 signatures, compact 113-char or invisible Unicode footer formats, throwaway GNUPGHOME for verification. 142 tests, empirically tested against Discord clients; desktop-only by design.
+Links: GitHub.
 
-#### seoslug (also featured above)
+### Other projects
 
-Deterministic SEO payload generation: canonical URLs, Open Graph, Twitter Cards, and JSON-LD. Same input always produces the same output. Testable, cacheable, predictable.
-
-Links: GitHub, PyPI
-
-#### detrack
-
-Strip tracking parameters from URLs. Deterministically. Zero dependencies. 60+ default patterns, case-insensitive, pure functions, metadata returned.
-
-Links: GitHub, PyPI
-
-#### acrresolv
-
-Acronym resolver for Python. Converts natural language phrases to acronyms. Zero dependencies, CLI and library usage.
-
-Links: GitHub, PyPI
-
-### More Projects
-
-#### crxml
-
-Fast streaming parser for Crystal Reports XML exports with Rust acceleration. Streams row-by-row without loading the full document into memory. Built-in pipeline stages: rename, cast types, filter, and drop fields. Parallel mode for multi-core systems. Outputs DataFrames via pandas, CSV, or dicts.
-
-Tags: Python, Rust, XML, pandas
-Links: GitHub, PyPI
-
-#### vigil
-
-Personal GitHub activity monitoring workflow built with Prefect. Fetches events, commits, and PR activity via PyGithub, stores structured records in ClickHouse through DBWarden's migration framework. Cron-scheduled execution with structured logging and error notifications.
-
-Tags: Python, Prefect, PyGithub, ClickHouse
-Links: GitHub
-
-#### mapcreator
-
-Tile-based building map editor built with React and Canvas. Multi-floor building layouts with grid editor, A* pathfinding across floors, 60fps canvas rendering with virtual scrolling, undo/redo, JSON export.
-
-Tags: React, TypeScript, Canvas, A* Pathfinding
-Links: GitHub
-
-#### clickvault
-
-HashiCorp Vault database secrets engine plugin for ClickHouse. Generates ephemeral ClickHouse users on demand (dynamic secrets) and rotates static role passwords on a schedule. Implements Vault database plugin SDK. All DDL isolated in a dedicated SQL layer. Clustered deployments get ON CLUSTER appended automatically.
-
-Tags: Go, Vault, ClickHouse, Plugin
-Links: GitHub
+- **crxml**: Crystal Reports XML parser built on the rypipe columnar ingestion engine. Streams row-by-row, parallel mode, pipeline stages, bounded memory. 184 Python tests + 63 Rust tests. PyPI.
+- **schemap**: automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models: Create, Update, Public, Full, plus AutoBase, @auto_schema, TimestampMixin, SoftDeleteMixin. 149 tests. PyPI.
+- **detrack**: strip tracking parameters from URLs deterministically. 345 default patterns, zero dependencies, 126 tests. PyPI.
+- **dbwarden-harness**: standalone black-box release-certification harness across 5 databases. 189 tests, 12 suites, MCP server.
+- **vigil**: self-hosted GitHub activity tracker. Syncs commits every 30 minutes into ClickHouse, serves streaks, breakdowns, merge ratios, and full history over a REST API. FastAPI + Prefect + Docker (GHCR image).
+- **mapcreator**: browser-based multi-floor building map editor with room detection, A* pathfinding across floors, 37 keyboard shortcuts, and JSON export. React 19, TypeScript, Canvas, Zustand. Live at mapcreator.emiliano-go.com.
+- **acrresolv**: hybrid acronym resolver: O(1) lookup + deterministic rules + fine-tuned T5-small fallback. 95.5% accuracy on unseen data, <1 ms rules path, 231 MB model. PyPI.
+- **trustsight-harness**: reproducible, cost-tracked adversarial measurement harness for TrustSight. 26 committed campaigns pinned to TrustSight builds, 153 tests. GHCR image.
+- **trustsight-web**: single-page site for trustsight.org presenting the evidence-first AUR review model. React + Vite. Live at trustsight.org.
+- **interferon**: Docker sidecar watcher + Python SDK turning Docker lifecycle events into typed immune signals over HTTP SSE.
+- **tagurl**: natural-language query to ranked semantic tags and an SEO URL path. Design spec; implementation in progress.
+- **lambda-compiler**: compile Python lambdas into declarative filter specs via CPython bytecode analysis. Extracted from rypipe.
+- **carpricepredictor**: linear-regression car price predictor from the classic Automobile Data Set: modular pipeline, FastAPI service, and browser front end, containerized.
+- **autoimmune-disorder-prediction**: machine-learning exploration of the All Autoimmune Disorder 10k dataset: download/clean package plus EDA and feature-engineering notebooks.
 
 ## Tech Stack
 
-Astro, Tailwind CSS, TypeScript. Deployed as static site to Cloudflare Pages.
+Astro, Tailwind CSS, TypeScript. Deployed as a static site.

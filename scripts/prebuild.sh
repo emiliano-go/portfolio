@@ -2,10 +2,10 @@
 # Runs before `astro build` (see package.json "prebuild").
 #
 #   1. copies the i18n JSON into public/ so the client-side language switcher can fetch it
-#   2. regenerates the SEO manifest + sitemap with seoslug
+#   2. regenerates the SEO manifest + sitemap with easeo
 #
-# Step 2 needs Python + seoslug. That is guaranteed inside the Dockerfile, but NOT on a
-# generic CI host (Cloudflare Pages installs npm deps only). So: try to make seoslug
+# Step 2 needs Python + easeo. That is guaranteed inside the Dockerfile, but NOT on a
+# generic CI host (Cloudflare Pages installs npm deps only). So: try to make easeo
 # available, and if we cannot, fall back to the committed manifest/sitemap instead of
 # failing the deploy. Both artifacts are tracked in git precisely so this fallback is safe.
 set -e
@@ -28,12 +28,12 @@ if ! command -v "$PY" >/dev/null 2>&1; then
   exit 0
 fi
 
-has_seoslug() {
-  "$PY" -c 'import seoslug' >/dev/null 2>&1
+has_easeo() {
+  "$PY" -c 'import easeo' >/dev/null 2>&1
 }
 
-if ! has_seoslug; then
-  echo "prebuild: seoslug not installed, attempting install..."
+if ! has_easeo; then
+  echo "prebuild: easeo not installed, attempting install..."
   # PEP 668 environments reject a plain install; --user and --break-system-packages
   # cover the two common escapes. Failure here is not fatal.
   "$PY" -m pip install --quiet --disable-pip-version-check -r requirements-seo.txt >/dev/null 2>&1 \
@@ -42,7 +42,7 @@ if ! has_seoslug; then
     || true
 fi
 
-if has_seoslug; then
+if has_easeo; then
   exec "$PY" scripts/generate_seo.py
 fi
 
@@ -51,8 +51,8 @@ missing=""
 [ -f src/data/seo-manifest.json ] || missing="$missing src/data/seo-manifest.json"
 [ -f public/sitemap.xml ] || missing="$missing public/sitemap.xml"
 if [ -n "$missing" ]; then
-  echo "prebuild: seoslug unavailable and no committed SEO artifacts ($missing)." >&2
+  echo "prebuild: easeo unavailable and no committed SEO artifacts ($missing)." >&2
   exit 1
 fi
 
-echo "prebuild: seoslug unavailable; using committed SEO artifacts (run 'npm run seo' locally to refresh)."
+echo "prebuild: easeo unavailable; using committed SEO artifacts (run 'npm run seo' locally to refresh)."

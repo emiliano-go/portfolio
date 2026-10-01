@@ -9,7 +9,9 @@ export interface Props {
 }
 
 const { route = Astro.url.pathname, fallbackTitle = 'Emiliano G.O.', fallbackDescription, lang } = Astro.props;
-const seo = (seoManifest as Record<string, any>)[route];
+// Manifest keys are directory-style with a trailing slash; normalize so callers can pass either.
+const manifestRoute = route === '/' || route.endsWith('/') ? route : route + '/';
+const seo = (seoManifest as Record<string, any>)[manifestRoute];
 
 const LANG_CONFIGS: Record<string, { label: string; locale: string }> = {
   en: { label: 'en', locale: 'en_US' },
@@ -20,12 +22,17 @@ const LANG_CONFIGS: Record<string, { label: string; locale: string }> = {
 // Build hreflang alternates from current route
 const routeLang = lang ?? 'en';
 const basePath = '/' + routeLang;
-const routeSuffix = route.startsWith(basePath) ? route.slice(basePath.length) || '/' : route;
+let routeSuffix = route.startsWith(basePath) ? route.slice(basePath.length) || '/' : route;
+if (routeSuffix !== '/' && !routeSuffix.endsWith('/')) routeSuffix += '/';
 const altLinks = Object.entries(LANG_CONFIGS).map(([code, cfg]) => ({
   code: code,
   href: 'https://emiliano-go.com/' + code + routeSuffix,
   locale: cfg.locale,
 }));
+// Work pages have no unprefixed variant; x-default points at the English page.
+const xDefault = routeSuffix.startsWith('/work/')
+  ? 'https://emiliano-go.com/en' + routeSuffix
+  : 'https://emiliano-go.com' + routeSuffix;
 ---
 
 {seo ? (
@@ -38,18 +45,18 @@ const altLinks = Object.entries(LANG_CONFIGS).map(([code, cfg]) => ({
     {altLinks.map((alt) => (
       <link rel="alternate" hreflang={alt.code} href={alt.href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={'https://emiliano-go.com' + routeSuffix} />
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
     <meta property="og:type" content={seo.og.type} />
     <meta property="og:title" content={seo.og.title} />
     <meta property="og:description" content={seo.og.description} />
     <meta property="og:url" content={seo.og.url} />
     <meta property="og:image" content={seo.og.image} />
-    {seo.og['image:alt'] && <meta property="og:image:alt" content={seo.og['image:alt']} />}
-    <meta property="og:image:width" content={seo.og['image:width']} />
-    <meta property="og:image:height" content={seo.og['image:height']} />
+    {seo.og.image_alt && <meta property="og:image:alt" content={seo.og.image_alt} />}
+    <meta property="og:image:width" content={seo.og.image_width} />
+    <meta property="og:image:height" content={seo.og.image_height} />
     <meta property="og:site_name" content={seo.og.site_name} />
     <meta property="og:locale" content={seo.og.locale} />
-    {Array.isArray(seo.og['locale:alternate']) && seo.og['locale:alternate'].map((locale: string) => (
+    {Array.isArray(seo.og.locale_alternate) && seo.og.locale_alternate.map((locale: string) => (
       <meta property="og:locale:alternate" content={locale} />
     ))}
     <meta name="twitter:card" content={seo.twitter.card} />

@@ -7,7 +7,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -17,7 +17,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/projects/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/projects/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/projects/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -27,7 +27,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -37,7 +37,87 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/projects/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/projects/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/projects/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/dbwarden/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/dbwarden/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/trustsight/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/trustsight/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/rypipe/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/rypipe/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/postal/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/postal/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/neurafly/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/neurafly/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/easeo/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/easeo/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/clickvault/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/clickvault/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/en/work/dsig/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/dsig/" />
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -47,7 +127,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -57,7 +137,87 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/projects/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/projects/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/projects/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/dbwarden/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/dbwarden/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/trustsight/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/trustsight/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/rypipe/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/rypipe/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/postal/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/postal/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/neurafly/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/neurafly/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/easeo/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/easeo/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/clickvault/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/clickvault/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/es/work/dsig/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/dsig/" />
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -67,7 +227,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -77,7 +237,87 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/projects/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/projects/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/projects/" />
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/dbwarden/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/dbwarden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/dbwarden/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/trustsight/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/trustsight/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/trustsight/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/rypipe/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/rypipe/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/rypipe/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/postal/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/postal/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/postal/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/neurafly/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/neurafly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/neurafly/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/easeo/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/easeo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/easeo/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/clickvault/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/clickvault/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/clickvault/" />
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emiliano-go.com/fr/work/dsig/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emiliano-go.com/en/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://emiliano-go.com/es/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emiliano-go.com/fr/work/dsig/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emiliano-go.com/en/work/dsig/" />
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

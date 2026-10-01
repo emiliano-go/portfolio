@@ -1,0 +1,155 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'postal' } },
+    { params: { lang: 'es', project: 'postal' } },
+    { params: { lang: 'fr', project: 'postal' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang} route={'/' + lang + '/work/postal'} title="postal | Emiliano G.O." description="Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.">
+  <Nav lang={lang} />
+  <main id="main" class="pt-24">
+
+    <!-- Header -->
+    <section class="py-16 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-accent) mb-2">NATIVE DESKTOP · MESSAGING PROTOCOL</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-accent) mb-4">postal</h1>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-3">A standalone native WhatsApp client that speaks the multi-device protocol directly. No webview, no forced history download.</p>
+        <p class="text-xs text-(--color-text-dim) max-w-[540px] mb-6">SQLite is the durable archive. RAM is a bounded window. History sync is a program decision rather than a pairing requirement.</p>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Rust</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Tauri 2</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">Svelte 5</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">SQLite</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-border) text-(--color-text-dim)">MIT</span>
+        </div>
+
+        <div class="arch-diagram mb-6">WhatsApp phone (multi-device link)
+                  │
+                  ▼
+        whatsapp-rust protocol core
+                  │
+                  ▼
+          Service event loop
+                  │
+                  ▼
+        StoreWorker async gate
+   (exclusive lease + savepoint)
+                  │
+        ┌─────────┴─────────┐
+        ▼                   ▼
+  SQLite archive     Bounded RAM window
+  (durable rows)     (500 msgs, 50-2000)
+        │                   │
+        └─────────┬─────────┘
+                  ▼
+            Tauri 2 IPC
+                  │
+                  ▼
+            Svelte 5 UI</div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/emiliano-go/postal" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">GitHub ↗</a>
+          <a href="https://github.com/emiliano-go/postal/releases/tag/v0.1.0" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">Release v0.1.0 ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Problem</h2>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">Wrapping WhatsApp Web forces the client to download and hold the account's entire message history. That is tens of gigabytes on disk, multiple gigabytes of RAM, and performance that degrades as the history grows. The protocol itself does not require any of it.</p>
+      </div>
+    </section>
+
+    <!-- Key decisions -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Key decisions</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Native protocol, no webview</h3>
+            <p class="text-xs text-(--color-text-muted)">Built on whatsapp-rust pinned to a git revision newer than the 0.7.0 release for history-sync admission. The only webview renders Postal's own UI.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">History sync is opt-in</h3>
+            <p class="text-xs text-(--color-text-muted)">Pairing pulls the recent window only. Full history (up to 10,000 days, phone permitting) is requested explicitly from Settings instead of being downloaded by default.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Disk and RAM decoupled</h3>
+            <p class="text-xs text-(--color-text-muted)">SQLite is a durable archive; the open conversation keeps a bounded message window (500 default, 50-2,000). Eviction from RAM never deletes disk rows.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-(--color-text-head) mb-1">Serialized store access</h3>
+            <p class="text-xs text-(--color-text-muted)">A StoreWorker gate holds an exclusive lease through each savepoint, so live and history batches never race while background work waits without occupying Tokio workers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Measured -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Measured against a webview client</h2>
+        <div class="proof-panel max-w-[440px]">
+          <div class="label">Same account, same machine</div>
+          <div class="item"><span class="key">Idle CPU</span><span class="val-pass">~0.3% vs ~200%</span></div>
+          <div class="item"><span class="key">Memory</span><span class="val-pass">~600 MB vs 2.2 → 23 GB</span></div>
+          <div class="item"><span class="key">History at pairing</span><span class="val-pass">none vs ~20 GB</span></div>
+          <div class="item"><span class="key">Session DB compacted</span><span class="val-pass">97 MB → 5.8 MB</span></div>
+          <div class="item"><span class="key">Rows preserved</span><span class="val-neutral">399,620</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Results</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="proof-panel">
+            <div class="label">Rust tests</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">352</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Frontend tests</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">66</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Total LOC</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">~68K</span></div>
+          </div>
+          <div class="proof-panel">
+            <div class="label">Version</div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">v0.1.0</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tradeoffs -->
+    <section class="py-12 border-b border-(--color-border-subtle)">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Tradeoffs</h2>
+        <ul class="space-y-2 text-sm text-(--color-text-muted)">
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Databases, media, and backups are plaintext on disk; encryption is open work</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>Releases are on hold until they cover every supported platform; installers build from master</li>
+          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-1">·</span>No calls, tray icon, status updates, communities, or album support yet</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+  <Footer lang={lang} />
+</Layout>

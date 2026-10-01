@@ -1,46 +1,36 @@
 {
   "/": {
-    "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
     "canonical": "https://emiliano-go.com/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
     "og": {
-      "type": "website",
-      "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
       "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
-      "url": "https://emiliano-go.com/",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
       "locale": "en_US",
-      "locale:alternate": [
+      "locale_alternate": [
         "es_ES",
         "fr_FR"
-      ]
-    },
-    "twitter": {
-      "card": "summary_large_image",
+      ],
+      "site_name": "Emiliano G.O.",
       "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
-      "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "type": "website",
+      "url": "https://emiliano-go.com/"
     },
-    "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Emiliano G.O. > Systems & Infrastructure Engineer",
-        "url": "https://emiliano-go.com/",
+        "@type": "WebSite",
         "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "Emiliano G.O. > Systems & Infrastructure Engineer",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/"
       },
       {
         "@context": "https://schema.org",
@@ -69,50 +59,50 @@
           "addressCountry": "UY"
         }
       }
-    ]
-  },
-  "/projects/": {
-    "title": "Projects | Emiliano G.O.",
-    "canonical": "https://emiliano-go.com/projects/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
-    "og": {
-      "type": "website",
-      "title": "Projects | Emiliano G.O.",
-      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
-      "url": "https://emiliano-go.com/projects/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "en_US",
-      "locale:alternate": [
-        "es_ES",
-        "fr_FR"
-      ]
-    },
+    ],
+    "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
     "twitter": {
       "card": "summary_large_image",
-      "title": "Projects | Emiliano G.O.",
+      "creator": "@emiliano_gando",
+      "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Emiliano G.O. > Systems & Infrastructure Engineer"
+    }
+  },
+  "/projects/": {
+    "canonical": "https://emiliano-go.com/projects/",
+    "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+    "og": {
       "description": "Open source packages, tools, and experiments by Emiliano G.O.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Projects | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/projects/"
     },
-    "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Projects | Emiliano G.O.",
-        "url": "https://emiliano-go.com/projects/",
         "description": "Open source packages, tools, and experiments by Emiliano G.O.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "Projects | Emiliano G.O.",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/projects/"
       },
       {
         "@context": "https://schema.org",
@@ -120,104 +110,104 @@
         "itemListElement": [
           {
             "@type": "ListItem",
-            "position": 1,
+            "item": "https://emiliano-go.com/",
             "name": "EMILIANO G.O.",
-            "item": "https://emiliano-go.com/"
+            "position": 1
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "item": "https://emiliano-go.com/projects/",
             "name": "Projects",
-            "item": "https://emiliano-go.com/projects/"
+            "position": 2
           }
         ]
       }
-    ]
-  },
-  "/404/": {
-    "title": "404: Page Not Found",
-    "canonical": "https://emiliano-go.com/404/",
-    "robots": "noindex,nofollow",
-    "og": {
-      "type": "website",
-      "title": "404: Page Not Found",
-      "description": "Page not found.",
-      "url": "https://emiliano-go.com/404/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "en_US",
-      "locale:alternate": [
-        "es_ES",
-        "fr_FR"
-      ]
-    },
+    ],
+    "title": "Projects | Emiliano G.O.",
     "twitter": {
       "card": "summary_large_image",
-      "title": "404: Page Not Found",
+      "creator": "@emiliano_gando",
+      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Projects | Emiliano G.O."
+    }
+  },
+  "/404/": {
+    "canonical": "https://emiliano-go.com/404/",
+    "description": "Page not found.",
+    "og": {
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "404: Page Not Found",
+      "type": "website",
+      "url": "https://emiliano-go.com/404/"
     },
-    "description": "Page not found.",
+    "robots": "noindex,nofollow",
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404: Page Not Found",
-      "url": "https://emiliano-go.com/404/",
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
+      "name": "404: Page Not Found",
       "publisher": {
         "@type": "Organization",
         "name": "Emiliano Gandini Outeda"
-      }
+      },
+      "url": "https://emiliano-go.com/404/"
+    },
+    "title": "404: Page Not Found",
+    "twitter": {
+      "card": "summary_large_image",
+      "description": "Page not found.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "404: Page Not Found"
     }
   },
   "/en/": {
-    "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
     "canonical": "https://emiliano-go.com/en/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
     "og": {
-      "type": "website",
-      "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
       "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
-      "url": "https://emiliano-go.com/en/",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
       "locale": "en_US",
-      "locale:alternate": [
+      "locale_alternate": [
         "es_ES",
         "fr_FR"
-      ]
-    },
-    "twitter": {
-      "card": "summary_large_image",
+      ],
+      "site_name": "Emiliano G.O.",
       "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
-      "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "type": "website",
+      "url": "https://emiliano-go.com/en/"
     },
-    "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Emiliano G.O. > Systems & Infrastructure Engineer",
-        "url": "https://emiliano-go.com/en/",
+        "@type": "WebSite",
         "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "Emiliano G.O. > Systems & Infrastructure Engineer",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/en/"
       },
       {
         "@context": "https://schema.org",
@@ -246,50 +236,50 @@
           "addressCountry": "UY"
         }
       }
-    ]
-  },
-  "/en/projects/": {
-    "title": "Projects | Emiliano G.O.",
-    "canonical": "https://emiliano-go.com/en/projects/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
-    "og": {
-      "type": "website",
-      "title": "Projects | Emiliano G.O.",
-      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
-      "url": "https://emiliano-go.com/en/projects/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "en_US",
-      "locale:alternate": [
-        "es_ES",
-        "fr_FR"
-      ]
-    },
+    ],
+    "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
     "twitter": {
       "card": "summary_large_image",
-      "title": "Projects | Emiliano G.O.",
+      "creator": "@emiliano_gando",
+      "description": "Systems and infrastructure engineer building reliable data, database, and security tooling. Based in Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Emiliano G.O. > Systems & Infrastructure Engineer"
+    }
+  },
+  "/en/projects/": {
+    "canonical": "https://emiliano-go.com/en/projects/",
+    "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+    "og": {
       "description": "Open source packages, tools, and experiments by Emiliano G.O.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Projects | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/projects/"
     },
-    "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Projects | Emiliano G.O.",
-        "url": "https://emiliano-go.com/en/projects/",
         "description": "Open source packages, tools, and experiments by Emiliano G.O.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "Projects | Emiliano G.O.",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/en/projects/"
       },
       {
         "@context": "https://schema.org",
@@ -297,104 +287,656 @@
         "itemListElement": [
           {
             "@type": "ListItem",
-            "position": 1,
+            "item": "https://emiliano-go.com/en/",
             "name": "EMILIANO G.O.",
-            "item": "https://emiliano-go.com/en/"
+            "position": 1
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "item": "https://emiliano-go.com/en/projects/",
             "name": "Projects",
-            "item": "https://emiliano-go.com/en/projects/"
+            "position": 2
           }
         ]
       }
-    ]
-  },
-  "/en/404/": {
-    "title": "404: Page Not Found",
-    "canonical": "https://emiliano-go.com/en/404/",
-    "robots": "noindex,nofollow",
-    "og": {
-      "type": "website",
-      "title": "404: Page Not Found",
-      "description": "Page not found.",
-      "url": "https://emiliano-go.com/en/404/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "en_US",
-      "locale:alternate": [
-        "es_ES",
-        "fr_FR"
-      ]
-    },
+    ],
+    "title": "Projects | Emiliano G.O.",
     "twitter": {
       "card": "summary_large_image",
-      "title": "404: Page Not Found",
+      "creator": "@emiliano_gando",
+      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Projects | Emiliano G.O."
+    }
+  },
+  "/en/404/": {
+    "canonical": "https://emiliano-go.com/en/404/",
+    "description": "Page not found.",
+    "og": {
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "404: Page Not Found",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/404/"
     },
-    "description": "Page not found.",
+    "robots": "noindex,nofollow",
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404: Page Not Found",
-      "url": "https://emiliano-go.com/en/404/",
       "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
+      "name": "404: Page Not Found",
       "publisher": {
         "@type": "Organization",
         "name": "Emiliano Gandini Outeda"
-      }
-    }
-  },
-  "/es/": {
-    "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
-    "canonical": "https://emiliano-go.com/es/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
-    "og": {
-      "type": "website",
-      "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
-      "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
-      "url": "https://emiliano-go.com/es/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "es_ES",
-      "locale:alternate": [
-        "en_US",
-        "fr_FR"
-      ]
+      },
+      "url": "https://emiliano-go.com/en/404/"
     },
+    "title": "404: Page Not Found",
     "twitter": {
       "card": "summary_large_image",
-      "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
-      "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+      "description": "Page not found.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "title": "404: Page Not Found"
+    }
+  },
+  "/en/work/dbwarden/": {
+    "canonical": "https://emiliano-go.com/en/work/dbwarden/",
+    "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+    "og": {
+      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "DBWarden | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/dbwarden/"
     },
-    "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
-        "url": "https://emiliano-go.com/es/",
-        "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+        "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "DBWarden | Emiliano G.O.",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/en/work/dbwarden/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/dbwarden/",
+            "name": "DBWarden",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "DBWarden | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "DBWarden | Emiliano G.O."
+    }
+  },
+  "/en/work/trustsight/": {
+    "canonical": "https://emiliano-go.com/en/work/trustsight/",
+    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    "og": {
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "TrustSight | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/trustsight/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "TrustSight | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/trustsight/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/trustsight/",
+            "name": "TrustSight",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "TrustSight | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "TrustSight | Emiliano G.O."
+    }
+  },
+  "/en/work/rypipe/": {
+    "canonical": "https://emiliano-go.com/en/work/rypipe/",
+    "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    "og": {
+      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "rypipe | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/rypipe/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "rypipe | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/rypipe/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/rypipe/",
+            "name": "rypipe",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "rypipe | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "rypipe | Emiliano G.O."
+    }
+  },
+  "/en/work/postal/": {
+    "canonical": "https://emiliano-go.com/en/work/postal/",
+    "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+    "og": {
+      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "postal | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/postal/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "postal | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/postal/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/postal/",
+            "name": "postal",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "postal | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "postal | Emiliano G.O."
+    }
+  },
+  "/en/work/neurafly/": {
+    "canonical": "https://emiliano-go.com/en/work/neurafly/",
+    "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+    "og": {
+      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "neurafly | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/neurafly/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "neurafly | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/neurafly/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/neurafly/",
+            "name": "neurafly",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "neurafly | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "neurafly | Emiliano G.O."
+    }
+  },
+  "/en/work/easeo/": {
+    "canonical": "https://emiliano-go.com/en/work/easeo/",
+    "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+    "og": {
+      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "easeo | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/easeo/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "easeo | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/easeo/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/easeo/",
+            "name": "easeo",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "easeo | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "easeo | Emiliano G.O."
+    }
+  },
+  "/en/work/clickvault/": {
+    "canonical": "https://emiliano-go.com/en/work/clickvault/",
+    "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+    "og": {
+      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "ClickVault | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/clickvault/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "ClickVault | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/clickvault/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/clickvault/",
+            "name": "ClickVault",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "ClickVault | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "ClickVault | Emiliano G.O."
+    }
+  },
+  "/en/work/dsig/": {
+    "canonical": "https://emiliano-go.com/en/work/dsig/",
+    "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+    "og": {
+      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "dsig | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/dsig/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "dsig | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/dsig/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/dsig/",
+            "name": "dsig",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "dsig | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "dsig | Emiliano G.O."
+    }
+  },
+  "/es/": {
+    "canonical": "https://emiliano-go.com/es/",
+    "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+    "og": {
+      "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/"
       },
       {
         "@context": "https://schema.org",
@@ -423,50 +965,50 @@
           "addressCountry": "UY"
         }
       }
-    ]
-  },
-  "/es/projects/": {
-    "title": "Proyectos | Emiliano G.O.",
-    "canonical": "https://emiliano-go.com/es/projects/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
-    "og": {
-      "type": "website",
-      "title": "Proyectos | Emiliano G.O.",
-      "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
-      "url": "https://emiliano-go.com/es/projects/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "es_ES",
-      "locale:alternate": [
-        "en_US",
-        "fr_FR"
-      ]
-    },
+    ],
+    "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
     "twitter": {
       "card": "summary_large_image",
-      "title": "Proyectos | Emiliano G.O.",
+      "creator": "@emiliano_gando",
+      "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura"
+    }
+  },
+  "/es/projects/": {
+    "canonical": "https://emiliano-go.com/es/projects/",
+    "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+    "og": {
       "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Proyectos | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/projects/"
     },
-    "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Proyectos | Emiliano G.O.",
-        "url": "https://emiliano-go.com/es/projects/",
         "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "Proyectos | Emiliano G.O.",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/es/projects/"
       },
       {
         "@context": "https://schema.org",
@@ -474,104 +1016,656 @@
         "itemListElement": [
           {
             "@type": "ListItem",
-            "position": 1,
+            "item": "https://emiliano-go.com/es/",
             "name": "EMILIANO G.O.",
-            "item": "https://emiliano-go.com/es/"
+            "position": 1
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "item": "https://emiliano-go.com/es/projects/",
             "name": "Proyectos",
-            "item": "https://emiliano-go.com/es/projects/"
+            "position": 2
           }
         ]
       }
-    ]
-  },
-  "/es/404/": {
-    "title": "404: Página no encontrada",
-    "canonical": "https://emiliano-go.com/es/404/",
-    "robots": "noindex,nofollow",
-    "og": {
-      "type": "website",
-      "title": "404: Página no encontrada",
-      "description": "Página no encontrada.",
-      "url": "https://emiliano-go.com/es/404/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "es_ES",
-      "locale:alternate": [
-        "en_US",
-        "fr_FR"
-      ]
-    },
+    ],
+    "title": "Proyectos | Emiliano G.O.",
     "twitter": {
       "card": "summary_large_image",
-      "title": "404: Página no encontrada",
+      "creator": "@emiliano_gando",
+      "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Proyectos | Emiliano G.O."
+    }
+  },
+  "/es/404/": {
+    "canonical": "https://emiliano-go.com/es/404/",
+    "description": "Página no encontrada.",
+    "og": {
       "description": "Página no encontrada.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "404: Página no encontrada",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/404/"
     },
-    "description": "Página no encontrada.",
+    "robots": "noindex,nofollow",
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404: Página no encontrada",
-      "url": "https://emiliano-go.com/es/404/",
       "description": "Página no encontrada.",
       "image": "https://emiliano-go.com/og-image.png",
+      "name": "404: Página no encontrada",
       "publisher": {
         "@type": "Organization",
         "name": "Emiliano Gandini Outeda"
-      }
-    }
-  },
-  "/fr/": {
-    "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
-    "canonical": "https://emiliano-go.com/fr/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
-    "og": {
-      "type": "website",
-      "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
-      "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
-      "url": "https://emiliano-go.com/fr/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "fr_FR",
-      "locale:alternate": [
-        "en_US",
-        "es_ES"
-      ]
+      },
+      "url": "https://emiliano-go.com/es/404/"
     },
+    "title": "404: Página no encontrada",
     "twitter": {
       "card": "summary_large_image",
-      "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
-      "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+      "description": "Página no encontrada.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "title": "404: Página no encontrada"
+    }
+  },
+  "/es/work/dbwarden/": {
+    "canonical": "https://emiliano-go.com/es/work/dbwarden/",
+    "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+    "og": {
+      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "DBWarden | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/dbwarden/"
     },
-    "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
-        "url": "https://emiliano-go.com/fr/",
-        "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+        "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "DBWarden | Emiliano G.O.",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/es/work/dbwarden/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/dbwarden/",
+            "name": "DBWarden",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "DBWarden | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "DBWarden | Emiliano G.O."
+    }
+  },
+  "/es/work/trustsight/": {
+    "canonical": "https://emiliano-go.com/es/work/trustsight/",
+    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    "og": {
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "TrustSight | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/trustsight/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "TrustSight | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/trustsight/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/trustsight/",
+            "name": "TrustSight",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "TrustSight | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "TrustSight | Emiliano G.O."
+    }
+  },
+  "/es/work/rypipe/": {
+    "canonical": "https://emiliano-go.com/es/work/rypipe/",
+    "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    "og": {
+      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "rypipe | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/rypipe/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "rypipe | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/rypipe/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/rypipe/",
+            "name": "rypipe",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "rypipe | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "rypipe | Emiliano G.O."
+    }
+  },
+  "/es/work/postal/": {
+    "canonical": "https://emiliano-go.com/es/work/postal/",
+    "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+    "og": {
+      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "postal | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/postal/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "postal | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/postal/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/postal/",
+            "name": "postal",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "postal | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "postal | Emiliano G.O."
+    }
+  },
+  "/es/work/neurafly/": {
+    "canonical": "https://emiliano-go.com/es/work/neurafly/",
+    "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+    "og": {
+      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "neurafly | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/neurafly/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "neurafly | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/neurafly/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/neurafly/",
+            "name": "neurafly",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "neurafly | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "neurafly | Emiliano G.O."
+    }
+  },
+  "/es/work/easeo/": {
+    "canonical": "https://emiliano-go.com/es/work/easeo/",
+    "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+    "og": {
+      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "easeo | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/easeo/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "easeo | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/easeo/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/easeo/",
+            "name": "easeo",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "easeo | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "easeo | Emiliano G.O."
+    }
+  },
+  "/es/work/clickvault/": {
+    "canonical": "https://emiliano-go.com/es/work/clickvault/",
+    "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+    "og": {
+      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "ClickVault | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/clickvault/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "ClickVault | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/clickvault/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/clickvault/",
+            "name": "ClickVault",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "ClickVault | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "ClickVault | Emiliano G.O."
+    }
+  },
+  "/es/work/dsig/": {
+    "canonical": "https://emiliano-go.com/es/work/dsig/",
+    "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+    "og": {
+      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "dsig | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/dsig/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "dsig | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/dsig/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/dsig/",
+            "name": "dsig",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "dsig | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "dsig | Emiliano G.O."
+    }
+  },
+  "/fr/": {
+    "canonical": "https://emiliano-go.com/fr/",
+    "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+    "og": {
+      "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/"
       },
       {
         "@context": "https://schema.org",
@@ -600,50 +1694,50 @@
           "addressCountry": "UY"
         }
       }
-    ]
-  },
-  "/fr/projects/": {
-    "title": "Projets | Emiliano G.O.",
-    "canonical": "https://emiliano-go.com/fr/projects/",
-    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
-    "og": {
-      "type": "website",
-      "title": "Projets | Emiliano G.O.",
-      "description": "Paquets open source, outils et expériences par Emiliano G.O.",
-      "url": "https://emiliano-go.com/fr/projects/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "fr_FR",
-      "locale:alternate": [
-        "en_US",
-        "es_ES"
-      ]
-    },
+    ],
+    "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
     "twitter": {
       "card": "summary_large_image",
-      "title": "Projets | Emiliano G.O.",
+      "creator": "@emiliano_gando",
+      "description": "Ingénieur systèmes et infrastructure construisant des outils fiables pour les données, les bases de données et la sécurité. Montevideo, Uruguay.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure"
+    }
+  },
+  "/fr/projects/": {
+    "canonical": "https://emiliano-go.com/fr/projects/",
+    "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+    "og": {
       "description": "Paquets open source, outils et expériences par Emiliano G.O.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando",
-      "creator": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Projets | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/projects/"
     },
-    "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
     "schema_jsonld": [
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Projets | Emiliano G.O.",
-        "url": "https://emiliano-go.com/fr/projects/",
         "description": "Paquets open source, outils et expériences par Emiliano G.O.",
         "image": "https://emiliano-go.com/og-image.png",
+        "name": "Projets | Emiliano G.O.",
         "publisher": {
           "@type": "Organization",
           "name": "Emiliano Gandini Outeda"
-        }
+        },
+        "url": "https://emiliano-go.com/fr/projects/"
       },
       {
         "@context": "https://schema.org",
@@ -651,60 +1745,622 @@
         "itemListElement": [
           {
             "@type": "ListItem",
-            "position": 1,
+            "item": "https://emiliano-go.com/fr/",
             "name": "EMILIANO G.O.",
-            "item": "https://emiliano-go.com/fr/"
+            "position": 1
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "item": "https://emiliano-go.com/fr/projects/",
             "name": "Projets",
-            "item": "https://emiliano-go.com/fr/projects/"
+            "position": 2
           }
         ]
       }
-    ]
-  },
-  "/fr/404/": {
-    "title": "404: Page non trouvée",
-    "canonical": "https://emiliano-go.com/fr/404/",
-    "robots": "noindex,nofollow",
-    "og": {
-      "type": "website",
-      "title": "404: Page non trouvée",
-      "description": "Page non trouvée.",
-      "url": "https://emiliano-go.com/fr/404/",
-      "image": "https://emiliano-go.com/og-image.png",
-      "image:width": 1200,
-      "image:height": 630,
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site_name": "Emiliano G.O.",
-      "locale": "fr_FR",
-      "locale:alternate": [
-        "en_US",
-        "es_ES"
-      ]
-    },
+    ],
+    "title": "Projets | Emiliano G.O.",
     "twitter": {
       "card": "summary_large_image",
-      "title": "404: Page non trouvée",
+      "creator": "@emiliano_gando",
+      "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Projets | Emiliano G.O."
+    }
+  },
+  "/fr/404/": {
+    "canonical": "https://emiliano-go.com/fr/404/",
+    "description": "Page non trouvée.",
+    "og": {
       "description": "Page non trouvée.",
       "image": "https://emiliano-go.com/og-image.png",
-      "image:alt": "Emiliano G.O. - portfolio preview card",
-      "site": "@emiliano_gando"
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "404: Page non trouvée",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/404/"
     },
-    "description": "Page non trouvée.",
+    "robots": "noindex,nofollow",
     "schema_jsonld": {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "404: Page non trouvée",
-      "url": "https://emiliano-go.com/fr/404/",
       "description": "Page non trouvée.",
       "image": "https://emiliano-go.com/og-image.png",
+      "name": "404: Page non trouvée",
       "publisher": {
         "@type": "Organization",
         "name": "Emiliano Gandini Outeda"
+      },
+      "url": "https://emiliano-go.com/fr/404/"
+    },
+    "title": "404: Page non trouvée",
+    "twitter": {
+      "card": "summary_large_image",
+      "description": "Page non trouvée.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "404: Page non trouvée"
+    }
+  },
+  "/fr/work/dbwarden/": {
+    "canonical": "https://emiliano-go.com/fr/work/dbwarden/",
+    "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+    "og": {
+      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "DBWarden | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/dbwarden/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "DBWarden | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/dbwarden/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/dbwarden/",
+            "name": "DBWarden",
+            "position": 3
+          }
+        ]
       }
+    ],
+    "title": "DBWarden | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "DBWarden | Emiliano G.O."
+    }
+  },
+  "/fr/work/trustsight/": {
+    "canonical": "https://emiliano-go.com/fr/work/trustsight/",
+    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    "og": {
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "TrustSight | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/trustsight/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "TrustSight | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/trustsight/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/trustsight/",
+            "name": "TrustSight",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "TrustSight | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "TrustSight | Emiliano G.O."
+    }
+  },
+  "/fr/work/rypipe/": {
+    "canonical": "https://emiliano-go.com/fr/work/rypipe/",
+    "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    "og": {
+      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "rypipe | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/rypipe/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "rypipe | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/rypipe/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/rypipe/",
+            "name": "rypipe",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "rypipe | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "rypipe | Emiliano G.O."
+    }
+  },
+  "/fr/work/postal/": {
+    "canonical": "https://emiliano-go.com/fr/work/postal/",
+    "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+    "og": {
+      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "postal | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/postal/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "postal | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/postal/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/postal/",
+            "name": "postal",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "postal | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "postal | Emiliano G.O."
+    }
+  },
+  "/fr/work/neurafly/": {
+    "canonical": "https://emiliano-go.com/fr/work/neurafly/",
+    "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+    "og": {
+      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "neurafly | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/neurafly/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "neurafly | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/neurafly/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/neurafly/",
+            "name": "neurafly",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "neurafly | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "neurafly | Emiliano G.O."
+    }
+  },
+  "/fr/work/easeo/": {
+    "canonical": "https://emiliano-go.com/fr/work/easeo/",
+    "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+    "og": {
+      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "easeo | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/easeo/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "easeo | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/easeo/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/easeo/",
+            "name": "easeo",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "easeo | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "easeo | Emiliano G.O."
+    }
+  },
+  "/fr/work/clickvault/": {
+    "canonical": "https://emiliano-go.com/fr/work/clickvault/",
+    "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+    "og": {
+      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "ClickVault | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/clickvault/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "ClickVault | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/clickvault/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/clickvault/",
+            "name": "ClickVault",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "ClickVault | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "ClickVault | Emiliano G.O."
+    }
+  },
+  "/fr/work/dsig/": {
+    "canonical": "https://emiliano-go.com/fr/work/dsig/",
+    "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+    "og": {
+      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "dsig | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/dsig/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "dsig | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/dsig/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/dsig/",
+            "name": "dsig",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "dsig | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "dsig | Emiliano G.O."
     }
   }
 }

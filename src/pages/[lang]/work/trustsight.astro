@@ -56,7 +56,7 @@ const { lang } = Astro.params;
     <section class="py-12 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
         <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim) mb-6">Why it's hard</h2>
-        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">The hard constraint is never executing code. Static analysis of PKGBUILDs means reasoning about shell scripts, command injection, typosquatting, and maintainer behavior patterns without running anything. Corpus-wide cluster detection adds another layer: tracking ~180K source URLs and ~36K maintainer identities to detect first-seen signals, orphan hijacking, and accelerated release cadence. The tool must fail-closed; incomplete evidence must not silently become confidence.</p>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px]">The hard constraint is never executing code. Static analysis of PKGBUILDs means reasoning about shell scripts, command injection, typosquatting, and maintainer behavior patterns without running anything. Corpus-wide cluster detection adds another layer: tracking ~186K source URLs and ~36K maintainer identities to detect first-seen signals, orphan hijacking, and accelerated release cadence. The tool must fail-closed; incomplete evidence must not silently become confidence.</p>
       </div>
     </section>
 
@@ -98,7 +98,7 @@ const { lang } = Astro.params;
           </div>
           <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
             <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Novelty detection</h3>
-            <p class="text-[11px] text-(--color-text-muted)">First-seen URLs and maintainers against signed seed database (~180K source URLs, ~36K maintainer identities)</p>
+            <p class="text-[11px] text-(--color-text-muted)">First-seen URLs and maintainers against signed seed database (~186K source URLs, ~36K maintainer identities)</p>
           </div>
           <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4">
             <h3 class="text-xs font-medium text-(--color-text-head) mb-1">Sabotage payloads</h3>
@@ -177,19 +177,19 @@ const { lang } = Astro.params;
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="proof-panel">
             <div class="label">Test count</div>
-            <div class="item"><span class="text-(--color-accent) text-lg font-medium">1,943</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">3,967+</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Test lines</div>
-            <div class="item"><span class="text-(--color-accent) text-lg font-medium">28,000</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">34,000</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Detection rules</div>
-            <div class="item"><span class="text-(--color-accent) text-lg font-medium">~200</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">185</span></div>
           </div>
           <div class="proof-panel">
             <div class="label">Source URLs</div>
-            <div class="item"><span class="text-(--color-accent) text-lg font-medium">180K</span></div>
+            <div class="item"><span class="text-(--color-accent) text-lg font-medium">186K</span></div>
           </div>
         </div>
       </div>

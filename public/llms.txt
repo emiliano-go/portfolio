@@ -1,32 +1,51 @@
 # Emiliano G.O.: Portfolio
 
-> Software engineer building Python backends, CLI tools, and data infrastructure.
+> Systems and infrastructure engineer building reliable data, database, and security tooling in Rust, Python, Go, and SQL. Based in Montevideo, Uruguay.
 
 ## https://emiliano-go.com/
 
-Personal portfolio and project showcase. About, open-source contributions, references, and contact information.
+Personal portfolio and project showcase: selected work, engineering principles, studies, open-source contributions, and references.
 
 ### Key sections
 
-- **Projects**: DBWarden (SQL-first migration toolkit), schemap (Pydantic v2 schema generator), seoslug (deterministic SEO payload generator), clickvault (Vault plugin for ClickHouse), crxml (Rust-accelerated XML parser), vigil (Prefect GitHub activity monitor), mapcreator (React Canvas map editor).
-- **Open Source**: Co-maintainer of FastAPI-boilerplate (2k stars). Documentation, developer experience, plugin architecture.
-- **References**: Professional references with contact details.
+- **Projects**: postal (native WhatsApp multi-device client), easeo (deterministic SEO metadata SDK), DBWarden (declarative schema compiler for SQLAlchemy), TrustSight (evidence-driven AUR security analysis), rypipe (Rust ingestion framework), neurafly (FlyWire connectome audio visualizer), ClickVault (Vault plugin for ClickHouse), dsig (GPG message signing for Discord), and more.
+- **Engineering principles**: explicit state, determinism, fail closed, reproducibility, separation of concerns, show evidence.
+- **Open Source**: Director of LibreCourseUY (FOSS organization in Uruguay); co-maintainer of FastAPI-boilerplate.
+- **Studies**: Bachelor's in Statistics (UdelaR / FCEA) and Computer Engineering (UdelaR / FING); University of Tokyo GCI World 2026 in Data Science and Machine Learning.
+- **References**: Igor Benav (Benav Labs), Carlos A. Planchon (Busco Jobs), Maximiliano Schmidt (Casas Y Mas).
 
 ## https://emiliano-go.com/projects
 
-Detailed project pages with code examples, feature grids, and links to GitHub/PyPI.
+Full project index: 9 featured projects plus smaller packages, tools, and experiments, with links to GitHub, docs, PyPI, npm, and crates.io.
 
-### Projects
+### Featured
 
-- **DBWarden**: SQL-first migration system for SQLAlchemy. No migration runtime, plain SQL output. Python, 5 DB dialects, rollback, impact analysis, offline mode.
-- **schemap**: Automatic Pydantic v2 schemas from SQLAlchemy 2.0 models. @auto_schema decorator, AutoBase inheritance, TimestampMixin, SoftDeleteMixin.
-- **seoslug**: Deterministic SEO payload generation. Canonical URLs, Open Graph, Twitter Cards, JSON-LD schemas, URL normalization. Python, framework-agnostic.
-- **clickvault**: Vault database secrets engine plugin for ClickHouse. Dynamic secrets, static roles, Go, plugin SDK.
-- **crxml**: Fast streaming Crystal Reports XML parser with Rust extension. Lazy pandas, pipeline stages, parallel mode. PyPI package.
-- **vigil**: Prefect-based GitHub activity monitor. PyGithub + ClickHouse, cron-scheduled, structured logging.
-- **mapcreator**: Tile-based building map editor. React + Canvas, multi-floor, A* pathfinding, JSON export.
-- **PyPI utilities**: seoslug, detrack, acrresolv.
+- **DBWarden**: declarative schema compiler that derives deterministic migrations from SQLAlchemy models. 48K LOC, 127 test files, 5 DB backends, 7 plugins, release-certification harness. Python/PyPI.
+- **TrustSight**: evidence-driven security analysis for AUR packages; never executes code, fail-closed. 3,967+ tests, 185 scoring rules, cluster detection across ~186K source URLs, signed IOC baselines.
+- **rypipe**: format-agnostic Rust ingestion framework with Python bindings. 476 tests, 15.9K docs lines, ~4.2 GB/s parallel throughput. PyPI + crates.io.
+- **postal**: native WhatsApp desktop client speaking the multi-device protocol directly, no webview. ~0.3% idle CPU, bounded RAM, opt-in history sync, durable SQLite archive. Rust/Tauri 2/Svelte 5.
+- **neurafly**: terminal audio visualizer driven by the real FlyWire connectome (138,333 neurons, 2,052,622 synapses, release v783), rendered in braille. Rust, crates.io + AUR.
+- **easeo**: deterministic SEO metadata generator; one Rust core with Python and Node.js bindings, byte-for-byte conformance. PyPI + npm + crates.io.
+- **ClickVault**: HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic credentials, password rotation, cluster-aware DDL. 85.4% coverage.
+- **dsig**: GPG message signing for Discord (Vencord/Vesktop). Invisible and compact footer encodings, 142 tests. TypeScript.
+
+### Other projects
+
+- **crxml**: Crystal Reports XML parser built on the rypipe engine. 184 Python + 63 Rust tests, bounded memory. PyPI.
+- **schemap**: automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models. 149 tests. PyPI.
+- **detrack**: strip tracking parameters from URLs. 345 patterns, zero dependencies, 126 tests. PyPI.
+- **dbwarden-harness**: release-certification harness across 5 databases. 189 tests, 12 suites, MCP server.
+- **vigil**: self-hosted GitHub activity tracker (FastAPI + ClickHouse + Prefect + Docker).
+- **mapcreator**: browser-based multi-floor building map editor with A* pathfinding. React 19 + Canvas.
+- **acrresolv**: hybrid acronym resolver (lookup + rules + T5-small), 95.5% accuracy on unseen data. PyPI.
+- **trustsight-harness**: adversarial measurement harness for TrustSight; 26 campaigns, 153 tests, cost-tracked.
+- **trustsight-web**: single-page site for trustsight.org presenting the AUR review model.
+- **interferon**: Docker sidecar watcher + Python SDK turning container lifecycle events into typed signals.
+- **tagurl**: natural-language query to ranked tags and an SEO URL path (design spec).
+- **lambda-compiler**: compile Python lambdas into declarative filter specs via bytecode analysis.
+- **carpricepredictor**: linear-regression car price predictor with FastAPI service, containerized.
+- **autoimmune-disorder-prediction**: ML exploration of the All Autoimmune Disorder 10k dataset.
 
 ## Tech stack
 
-Astro, Tailwind CSS, TypeScript. Deployed as static site.
+Astro, Tailwind CSS, TypeScript. Deployed as a static site.

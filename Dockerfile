@@ -1,5 +1,6 @@
-# Build stage
-FROM node:22-alpine AS builder
+# Build stage. Debian-based: easeo ships manylinux (glibc) abi3 wheels only,
+# so the musl-based alpine image cannot install it.
+FROM node:22-slim AS builder
 
 ARG VIGIL_API_KEY
 ARG VIGIL_API_BASE_URL
@@ -8,24 +9,21 @@ ENV VIGIL_API_BASE_URL=$VIGIL_API_BASE_URL
 
 WORKDIR /app
 
-RUN apk add --no-cache python3 py3-pip
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3 python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 RUN npm ci
 
 COPY requirements-seo.txt ./
-RUN python3 -m pip install --no-cache-dir -r requirements-seo.txt
+RUN python3 -m pip install --no-cache-dir --break-system-packages -r requirements-seo.txt
 
 COPY . .
 # `npm run build` runs scripts/generate_seo.py via prebuild, which regenerates the
-# manifest + sitemap and fails the build on any SEO payload warning.
+# manifest + sitemap and fails the build on any SEO payload validation issue.
 RUN npm run build
-RUN python3 -m seoslug validate-html \
-      dist/index.html dist/projects/index.html \
-      dist/en/index.html dist/en/projects/index.html dist/en/404/index.html \
-      dist/es/index.html dist/es/projects/index.html dist/es/404/index.html \
-      dist/fr/index.html dist/fr/projects/index.html dist/fr/404/index.html \
-      --strict
+RUN find dist -name '*.html' -print0 | xargs -0 python3 scripts/validate_html.py
 
 
 # Runtime stage
