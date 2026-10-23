@@ -4,3 +4,5 @@
 /dist
 /public/i18n
 .env
+
+/.wrangler

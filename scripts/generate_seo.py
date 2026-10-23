@@ -72,7 +72,7 @@ WORK_PAGES = [
         "trustsight",
         "TrustSight",
         "TrustSight | Emiliano G.O.",
-        "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
     ),
     (
         "rypipe",

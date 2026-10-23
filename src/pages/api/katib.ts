@@ -1,5 +1,9 @@
 import type { APIRoute } from 'astro';
 
+// Build-time snapshot only. The site is static (no SSR adapter), so Astro
+// prerenders this route. In production Cloudflare Pages runs
+// functions/api/katib.js first, which proxies Katib at request time with
+// KATIB_GITHUB_TOKEN; this handler is the Docker/nginx fallback.
 const KATIB_BASE = 'https://katib.jsn.cam';
 const USERNAME = 'emiliano-go';
 const TOKEN = import.meta.env.KATIB_GITHUB_TOKEN || '';

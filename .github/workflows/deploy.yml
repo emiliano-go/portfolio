@@ -28,4 +28,5 @@ jobs:
           build-args: |
             VIGIL_API_KEY=${{ secrets.VIGIL_API_KEY }}
             VIGIL_API_BASE_URL=${{ secrets.VIGIL_API_BASE_URL }}
+            KATIB_GITHUB_TOKEN=${{ secrets.KATIB_GITHUB_TOKEN }}
           tags: ghcr.io/emiliano-go/${{ github.event.repository.name }}:latest

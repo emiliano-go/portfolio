@@ -82,9 +82,14 @@ html[data-fontsize="xlarge"] {
 
 @layer base {
   html {
+    color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
     background-color: var(--color-bg);
+  }
+
+  html.light {
+    color-scheme: light;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -140,14 +145,14 @@ html[data-fontsize="xlarge"] {
     color: var(--color-text-head);
     border: 1px solid var(--color-accent);
     border-radius: 0 0 4px 4px;
-    transition: transform 0.15s ease;
+    transition: transform 0.1s ease;
   }
   .skip-link:focus-visible {
     transform: translate(-50%, 0);
   }
 
   body, nav, button, a {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
   }
 
   #i18n-wrapper {
@@ -214,5 +219,92 @@ html[data-fontsize="xlarge"] {
     padding: 0.75rem 1rem;
     white-space: pre-wrap;
     word-break: break-word;
+  }
+}
+
+@layer components {
+  /* Project pages carry a per-project accent that stays readable in both themes. */
+  .project-main {
+    --color-accent: var(--project-accent);
+  }
+  html.light .project-main {
+    --color-accent: var(--project-accent-light, var(--project-accent));
+  }
+
+  /* Project cards in the listings use the same theme-aware accent. */
+  .project-accent {
+    --accent: var(--accent-dark);
+  }
+  html.light .project-accent {
+    --accent: var(--accent-light, var(--accent-dark));
+  }
+
+  /* Faint drafting grid behind the project dossier hero. */
+  .project-grid {
+    background-image:
+      linear-gradient(to right, var(--color-border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-border-subtle) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 0%, #000 25%, transparent 78%);
+    mask-image: radial-gradient(ellipse 85% 75% at 50% 0%, #000 25%, transparent 78%);
+  }
+
+  /* Corner ticks give the project panels a measured, technical edge. */
+  .dossier {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+  }
+  .dossier::before,
+  .dossier::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-color: var(--color-accent);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .dossier::before {
+    top: -1px;
+    left: -1px;
+    border-width: 2px 0 0 2px;
+  }
+  .dossier::after {
+    right: -1px;
+    bottom: -1px;
+    border-width: 0 2px 2px 0;
+  }
+
+  @keyframes project-rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .project-rise {
+    animation: project-rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .project-rise {
+      animation: none;
+    }
+  }
+
+  /* Skip layout and paint for long case-study sections until they approach the viewport. */
+  .project-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 420px;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }

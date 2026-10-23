@@ -1,0 +1,333 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getProject, neighbours, sectionId, type Section, type Tone } from '../data/projects';
+
+interface Props {
+  lang: string;
+  id: string;
+}
+
+const { lang, id } = Astro.props as Props;
+const project = getProject(id);
+const { prev, next } = neighbours(id);
+
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+const toneClass = (tone?: Tone) =>
+  tone === 'pass'
+    ? 'text-(--color-success)'
+    : tone === 'fail'
+      ? 'text-(--color-fail)'
+      : 'text-(--color-text-dim)';
+
+const repo = project.links.find((link) => link.href.startsWith('https://github.com/'));
+const LICENSE_URL: Record<string, string> = {
+  MIT: 'https://opensource.org/licenses/MIT',
+  'GPL-3.0': 'https://www.gnu.org/licenses/gpl-3.0.html',
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: project.name,
+  description: project.meta.description,
+  codeRepository: repo?.href,
+  programmingLanguage: project.stack.join(', '),
+  license: LICENSE_URL[project.license],
+  author: {
+    '@type': 'Person',
+    name: 'Emiliano Gandini Outeda',
+    url: 'https://emiliano-go.com',
+  },
+};
+const sectionTitle = (section: Section) => section.title;
+---
+
+<Layout
+  lang={lang}
+  route={'/' + lang + '/work/' + project.id}
+  title={project.meta.title}
+  description={project.meta.description}
+>
+  <Nav lang={lang} />
+  <main
+    id="main"
+    class="project-main pt-24"
+    style={`--project-accent: ${project.accent}; --project-accent-light: ${project.accentLight};`}
+  >
+
+    <!-- Dossier hero -->
+    <section class="relative overflow-hidden border-b border-(--color-border-subtle)">
+      <div class="project-grid absolute inset-0 opacity-50" aria-hidden="true"></div>
+      <div
+        class="pointer-events-none absolute -top-40 right-[4%] h-80 w-80 rounded-full opacity-20 blur-[130px]"
+        style={`background: ${project.accent};`}
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative mx-auto w-[85%] md:w-[72%] xl:w-[66%] min-w-0 pb-0 pt-8 md:pt-10">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim)">
+          <a href={`/${lang}`} class="hover:text-(--color-text-bright) transition-colors duration-100">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href={`/${lang}/projects`} class="hover:text-(--color-text-bright) transition-colors duration-100">Projects</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-(--color-text-muted)" aria-current="page">{project.name}</span>
+        </nav>
+
+        <div class="project-rise mt-8 grid items-start gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
+          <div class="min-w-0">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="font-mono text-[10px] text-(--color-accent)">{project.index}</span>
+              <span class="h-px w-10 bg-(--color-accent)" aria-hidden="true"></span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-(--color-text-dim)">{project.category}</span>
+            </div>
+
+            <h1 class="mb-5 text-balance font-[family-name:var(--font-display)] text-[clamp(44px,7vw,84px)] font-bold uppercase leading-[0.9] tracking-wide text-(--color-accent)">
+              {project.name}
+            </h1>
+
+            <p class="mb-3 max-w-[560px] text-pretty text-sm leading-relaxed text-(--color-text-muted)">
+              {project.summary}
+            </p>
+            <p class="mb-6 max-w-[560px] text-pretty text-xs leading-relaxed text-(--color-text-dim)">
+              {project.lede}
+            </p>
+
+            <div class="mb-6 flex flex-wrap gap-1.5">
+              {project.stack.map((item) => (
+                <span class="border border-(--color-border) px-2 py-0.5 font-mono text-[10px] text-(--color-text-dim)">{item}</span>
+              ))}
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              {project.links.map((link) => (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    'inline-flex items-center gap-1 border px-3 py-1.5 font-mono text-[10px] transition-colors duration-100',
+                    link.primary
+                      ? 'border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg)'
+                      : 'border-(--color-border) text-(--color-text-muted) hover:border-(--color-text-muted) hover:text-(--color-text-bright)',
+                  ]}
+                >
+                  {link.label} <span class="text-[8px]" aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <aside class="dossier w-full">
+            <div class="flex items-center justify-between border-b border-(--color-border-subtle) px-4 py-3">
+              <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">Architecture</span>
+              <span class="font-mono text-[9px] text-(--color-accent)">{project.index}</span>
+            </div>
+            <div class="p-4">
+              <pre class="whitespace-pre-wrap break-words font-[family-name:var(--font-mono)] text-[10px] leading-relaxed text-(--color-text-muted)">{project.diagram}</pre>
+            </div>
+            <div class="flex items-center justify-between border-t border-(--color-border-subtle) px-4 py-2.5 font-mono text-[9px] uppercase tracking-[0.1em] text-(--color-text-dim)">
+              <span>License · {project.license}</span>
+              <span>{project.stack.length} technologies</span>
+            </div>
+          </aside>
+        </div>
+
+        <div class="mt-10 grid grid-cols-2 gap-px border-t border-(--color-border-subtle) bg-(--color-border-subtle) md:grid-cols-4">
+          {project.metrics.map((metric) => (
+            <div class="bg-(--color-bg) px-4 py-5">
+              <p class="mb-1 font-mono text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">{metric.label}</p>
+              <p class:list={['font-[family-name:var(--font-display)] text-2xl font-bold leading-none', toneClass(metric.tone)]}>
+                {metric.value}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Body -->
+    <div class="mx-auto w-[85%] md:w-[72%] xl:w-[66%] min-w-0">
+      <nav
+        aria-label="Sections"
+        class="no-scrollbar flex gap-1 overflow-x-auto border-b border-(--color-border-subtle) py-2.5 lg:hidden"
+      >
+        {project.sections.map((section, i) => (
+          <a
+            href={`#${sectionId(section.title)}`}
+            class="shrink-0 border border-(--color-border-subtle) px-2 py-1 font-mono text-[10px] text-(--color-text-dim) transition-colors duration-100 hover:border-(--color-accent) hover:text-(--color-text-bright)"
+          >
+            {pad(i)} {section.title}
+          </a>
+        ))}
+      </nav>
+
+      <div class="grid lg:grid-cols-[180px_1fr] lg:gap-12">
+        <aside class="hidden py-12 lg:block">
+          <div class="sticky top-28">
+            <p class="mb-4 font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">Index</p>
+            <ol class="border-l border-(--color-border-subtle)">
+              {project.sections.map((section, i) => (
+                <li>
+                  <a
+                    href={`#${sectionId(section.title)}`}
+                    class="group -ml-px block border-l-2 border-transparent py-1 pl-3 font-mono text-[10px] text-(--color-text-dim) transition-colors duration-100 hover:border-(--color-accent) hover:text-(--color-text-bright)"
+                  >
+                    <span class="mr-2 text-(--color-accent)">{pad(i)}</span>{sectionTitle(section)}
+                  </a>
+                </li>
+              ))}
+            </ol>
+            <a
+              href={`/${lang}/projects`}
+              class="mt-6 inline-flex items-center gap-1 font-mono text-[10px] text-(--color-text-muted) transition-colors duration-100 hover:text-(--color-text-bright)"
+            >
+              <span aria-hidden="true">←</span> All projects
+            </a>
+          </div>
+        </aside>
+
+        <div class="min-w-0 divide-y divide-(--color-border-subtle)">
+          {project.sections.map((section, i) => (
+            <section id={sectionId(section.title)} class="project-section scroll-mt-28 py-12">
+              <div class="mb-6 flex items-baseline gap-4">
+                <span class="font-mono text-[10px] text-(--color-accent)">{pad(i)}</span>
+                <h2 class="font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim)">
+                  {section.title}
+                </h2>
+                <div class="h-px flex-1 bg-(--color-border-subtle)" aria-hidden="true"></div>
+              </div>
+
+              {section.kind === 'prose' && (
+                <div class="max-w-[640px] space-y-3">
+                  {section.body.map((paragraph) => (
+                    <p class="text-pretty text-sm leading-relaxed text-(--color-text-muted)">{paragraph}</p>
+                  ))}
+                </div>
+              )}
+
+              {section.kind === 'cards' && (
+                <div
+                  class:list={[
+                    'grid gap-3',
+                    section.columns === 3 ? 'sm:grid-cols-2 xl:grid-cols-3' : 'sm:grid-cols-2',
+                  ]}
+                >
+                  {section.cards.map((card) => (
+                    <div class="border border-(--color-border-subtle) bg-(--color-surface) p-4 transition-colors duration-100 hover:border-(--color-accent)">
+                      <h3 class="mb-1.5 font-mono text-xs font-medium text-(--color-text-head)">{card.title}</h3>
+                      <p class="text-[11px] leading-relaxed text-(--color-text-muted)">{card.body}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {section.kind === 'list' && (
+                <ul class="max-w-[640px] space-y-2">
+                  {section.items.map((item) => (
+                    <li class="flex gap-3 text-sm leading-relaxed text-(--color-text-muted)">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-(--color-accent)" aria-hidden="true"></span>
+                      <span class="text-pretty">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {section.kind === 'panel' && (
+                <div class="max-w-[640px]">
+                  {section.lead && (
+                    <p class="mb-5 text-pretty text-xs leading-relaxed text-(--color-text-muted)">{section.lead}</p>
+                  )}
+                  <div class="proof-panel max-w-[440px]">
+                    <div class="label">{section.label}</div>
+                    {section.items.map((item) => (
+                      <div class="item">
+                        <span class="key">{item.key}</span>
+                        <span class={toneClass(item.tone)}>{item.val}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {section.kind === 'steps' && (
+                <ol class="max-w-[640px] space-y-6">
+                  {section.steps.map((step, j) => (
+                    <li class="flex gap-4">
+                      <span class="shrink-0 pt-1 font-mono text-[10px] text-(--color-accent)">{pad(j)}</span>
+                      <div class="min-w-0 border-l border-(--color-border-subtle) pl-4">
+                        <h3 class="mb-1 font-mono text-xs font-medium text-(--color-text-head)">{step.title}</h3>
+                        <p class="text-[11px] leading-relaxed text-(--color-text-muted)">{step.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              )}
+
+              {section.kind === 'ecosystem' && (
+                <div>
+                  {section.intro && (
+                    <p class="mb-5 max-w-[640px] text-pretty text-xs leading-relaxed text-(--color-text-muted)">{section.intro}</p>
+                  )}
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    {section.repos.map((item) => (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group flex flex-col border border-(--color-border-subtle) bg-(--color-surface) p-4 transition-colors duration-100 hover:border-(--color-accent)"
+                      >
+                        <div class="mb-2 flex items-start justify-between gap-2">
+                          <h3 class="font-mono text-xs font-medium text-(--color-text-bright) transition-colors duration-100 group-hover:text-(--color-accent)">
+                            {item.name}
+                          </h3>
+                          <span class="shrink-0 border border-(--color-border) px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.1em] text-(--color-text-dim)">
+                            {item.role}
+                          </span>
+                        </div>
+                        <p class="mb-3 flex-1 text-[11px] leading-relaxed text-(--color-text-muted)">{item.desc}</p>
+                        <div class="mb-3 flex flex-wrap gap-1.5">
+                          {item.stack.map((tech) => (
+                            <span class="border border-(--color-border) px-1.5 py-0.5 font-mono text-[9px] text-(--color-text-dim)">{tech}</span>
+                          ))}
+                        </div>
+                        <span class="font-mono text-[10px] text-(--color-accent)">Source ↗</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Prev / next -->
+    <nav aria-label="Project navigation" class="border-t border-(--color-border-subtle)">
+      <div class="mx-auto grid w-[85%] md:w-[72%] xl:w-[66%] sm:grid-cols-2">
+        <a
+          href={`/${lang}/work/${prev.id}`}
+          class="group flex flex-col gap-1 border-b border-(--color-border-subtle) py-6 sm:border-b-0 sm:border-r sm:pr-6"
+        >
+          <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">← Previous</span>
+          <span class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-muted) transition-colors duration-100 group-hover:text-(--color-accent)">
+            {prev.name}
+          </span>
+        </a>
+        <a
+          href={`/${lang}/work/${next.id}`}
+          class="group flex flex-col items-start gap-1 py-6 sm:items-end sm:pl-6"
+        >
+          <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">Next →</span>
+          <span class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-muted) transition-colors duration-100 group-hover:text-(--color-accent)">
+            {next.name}
+          </span>
+        </a>
+      </div>
+    </nav>
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </main>
+  <Footer lang={lang} />
+</Layout>

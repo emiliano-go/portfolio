@@ -424,9 +424,9 @@
   },
   "/en/work/trustsight/": {
     "canonical": "https://emiliano-go.com/en/work/trustsight/",
-    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
     "og": {
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -446,7 +446,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
@@ -484,7 +484,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1153,9 +1153,9 @@
   },
   "/es/work/trustsight/": {
     "canonical": "https://emiliano-go.com/es/work/trustsight/",
-    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
     "og": {
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1175,7 +1175,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
@@ -1213,7 +1213,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1882,9 +1882,9 @@
   },
   "/fr/work/trustsight/": {
     "canonical": "https://emiliano-go.com/fr/work/trustsight/",
-    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
     "og": {
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1904,7 +1904,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
@@ -1942,7 +1942,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design.",
+      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",

@@ -17,14 +17,14 @@ const { lang } = Astro.params;
 const t = createT(lang!);
 
 const featured = [
-  { name: 'DBWarden', accent: '#b39d6a', desc: 'Declarative schema compiler for SQLAlchemy. 48K LOC, 127 test files, 5 DB backends, 7 plugins, release-certification harness.', stack: ['Python', 'SQLAlchemy', 'SQL', 'PostgreSQL', 'MySQL', 'ClickHouse'], github: 'https://github.com/dbwarden-org/dbwarden', docs: 'https://docs.dbwarden.org' },
-  { name: 'TrustSight', accent: '#0092d2', desc: 'Evidence-driven security analysis for AUR packages. 3,967+ tests, 185 scoring rules, corpus-wide cluster detection, signed IOC baselines. Never executes code.', stack: ['Python', 'Arch Linux', 'SQLite', 'Security'], github: 'https://github.com/emiliano-go/trustsight', docs: 'https://docs.trustsight.org' },
-  { name: 'rypipe', accent: '#af4f37', desc: 'Rust ingestion framework. 476 tests, 15.9K docs lines, published to PyPI and crates.io. 4.2 GB/s parallel throughput.', stack: ['Rust', 'Python', 'PyO3', 'Arrow'], github: 'https://github.com/emiliano-go/rypipe', docs: 'https://rypipe.emiliano-go.com' },
-  { name: 'postal', accent: '#2e9e6b', desc: 'Native WhatsApp client that speaks the multi-device protocol directly. No webview, 0.3% idle CPU, bounded RAM, opt-in history sync.', stack: ['Rust', 'Tauri 2', 'Svelte 5', 'SQLite'], github: 'https://github.com/emiliano-go/postal' },
-  { name: 'neurafly', accent: '#c04a72', desc: 'Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons, 2,052,622 synapses, rendered in braille.', stack: ['Rust', 'TUI', 'DSP', 'Neuroscience'], github: 'https://github.com/emiliano-go/neurafly', docs: 'https://crates.io/crates/neurafly' },
-  { name: 'easeo', accent: '#6b2fa0', desc: 'Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.', stack: ['Rust', 'Python', 'Node.js', 'JSON-LD'], github: 'https://github.com/emiliano-go/easeo', docs: 'https://easeo.emiliano-go.com' },
-  { name: 'ClickVault', accent: '#f5c81b', desc: 'HashiCorp Vault plugin for ClickHouse. 85.4% coverage, cluster-aware DDL, dynamic credentials.', stack: ['Go', 'Vault', 'ClickHouse'], github: 'https://github.com/emiliano-go/clickvault' },
-  { name: 'dsig', accent: '#1a2744', desc: 'GPG message signing for Discord. 142 tests, invisible encoding, empirical Discord client testing.', stack: ['TypeScript', 'GPG', 'OpenPGP'], github: 'https://github.com/emiliano-go/dsig' },
+  { name: 'DBWarden', accent: '#b39d6a', accentLight: '#7a6a3a', desc: 'Declarative schema compiler for SQLAlchemy. 48K LOC, 127 test files, 5 DB backends, 7 plugins, release-certification harness.', stack: ['Python', 'SQLAlchemy', 'SQL', 'PostgreSQL', 'MySQL', 'ClickHouse'], github: 'https://github.com/dbwarden-org/dbwarden', docs: 'https://docs.dbwarden.org' },
+  { name: 'TrustSight', accent: '#0092d2', accentLight: '#0072a8', desc: 'Evidence-driven security analysis for AUR packages. ~7K tests, 257 documented rules, corpus-wide cluster detection, signed IOC baselines. Never executes code.', stack: ['Python', 'Arch Linux', 'SQLite', 'Security'], github: 'https://github.com/emiliano-go/trustsight', docs: 'https://docs.trustsight.org' },
+  { name: 'rypipe', accent: '#c96a50', accentLight: '#9b4a32', desc: 'Rust ingestion framework. 476 tests, 15.9K docs lines, published to PyPI and crates.io. 4.2 GB/s parallel throughput.', stack: ['Rust', 'Python', 'PyO3', 'Arrow'], github: 'https://github.com/emiliano-go/rypipe', docs: 'https://rypipe.emiliano-go.com' },
+  { name: 'postal', accent: '#2e9e6b', accentLight: '#1f6f4a', desc: 'Native WhatsApp client that speaks the multi-device protocol directly. No webview, 0.3% idle CPU, bounded RAM, opt-in history sync.', stack: ['Rust', 'Tauri 2', 'Svelte 5', 'SQLite'], github: 'https://github.com/emiliano-go/postal' },
+  { name: 'neurafly', accent: '#d45f86', accentLight: '#a33458', desc: 'Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons, 2,052,622 synapses, rendered in braille.', stack: ['Rust', 'TUI', 'DSP', 'Neuroscience'], github: 'https://github.com/emiliano-go/neurafly', docs: 'https://crates.io/crates/neurafly' },
+  { name: 'easeo', accent: '#a06ad9', accentLight: '#6b2fa0', desc: 'Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.', stack: ['Rust', 'Python', 'Node.js', 'JSON-LD'], github: 'https://github.com/emiliano-go/easeo', docs: 'https://easeo.emiliano-go.com' },
+  { name: 'ClickVault', accent: '#f5c81b', accentLight: '#8a6d00', desc: 'HashiCorp Vault plugin for ClickHouse. 85.4% coverage, cluster-aware DDL, dynamic credentials.', stack: ['Go', 'Vault', 'ClickHouse'], github: 'https://github.com/emiliano-go/clickvault' },
+  { name: 'dsig', accent: '#7387e0', accentLight: '#4d5ec0', desc: 'GPG message signing for Discord. 142 tests, invisible encoding, empirical Discord client testing.', stack: ['TypeScript', 'GPG', 'OpenPGP'], github: 'https://github.com/emiliano-go/dsig' },
 ];
 
 const secondary = [
@@ -57,10 +57,10 @@ const secondary = [
         <!-- Featured: full-width cards -->
         <div class="flex flex-col gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">
           {featured.map((p) => (
-            <a href={`/${lang}/work/${p.name.toLowerCase()}`} class="bg-(--color-bg) p-5 sm:p-6 group block hover:bg-(--color-surface) transition-colors duration-200 border-l-2" style={`--accent: ${p.accent}; border-left-color: ${p.accent}`}>
+            <a href={`/${lang}/work/${p.name.toLowerCase()}`} class="project-accent bg-(--color-bg) p-5 sm:p-6 group block hover:bg-(--color-surface) transition-colors duration-100 border-l-2" style={`--accent-dark: ${p.accent}; --accent-light: ${p.accentLight}; border-left-color: var(--accent)`}>
               <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                 <div>
-                  <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide transition-colors duration-200" style={`color: ${p.accent}`}>{p.name}</h3>
+                  <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide transition-colors duration-100" style="color: var(--accent)">{p.name}</h3>
                   <p class="text-[11px] leading-relaxed text-(--color-text-muted) mt-1 max-w-[540px]">{p.desc}</p>
                 </div>
                 <div class="flex flex-wrap gap-1.5 shrink-0">
@@ -70,8 +70,8 @@ const secondary = [
                 </div>
               </div>
               <div class="flex flex-wrap gap-3">
-                <span class="text-[10px] font-mono" style={`color: ${p.accent}`}>GitHub ↗</span>
-                <span class="text-[10px] font-mono" style={`color: ${p.accent}`}>Docs ↗</span>
+                <span class="text-[10px] font-mono" style="color: var(--accent)">GitHub ↗</span>
+                <span class="text-[10px] font-mono" style="color: var(--accent)">Docs ↗</span>
                 <span class="text-[10px] font-mono text-(--color-text-muted) group-hover:text-(--color-text-bright)">Explore →</span>
               </div>
             </a>
@@ -91,12 +91,12 @@ const secondary = [
                 ))}
               </div>
               <div class="flex flex-wrap gap-2">
-                <a href={p.github} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">GitHub ↗</a>
+                <a href={p.github} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">GitHub ↗</a>
                 {p.pypi && (
-                  <a href={p.pypi} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">PyPI ↗</a>
+                  <a href={p.pypi} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">PyPI ↗</a>
                 )}
                 {p.demo && (
-                  <a href={p.demo} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-200">Demo ↗</a>
+                  <a href={p.demo} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">Demo ↗</a>
                 )}
               </div>
             </div>

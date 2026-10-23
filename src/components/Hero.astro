@@ -34,13 +34,13 @@ const t = createT(Astro.props.lang);
         </p>
 
         <div class="flex flex-wrap gap-3 mb-8">
-          <a href={`/${Astro.props.lang || 'en'}/work/dbwarden`} class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-200">
+          <a href={`/${Astro.props.lang || 'en'}/work/dbwarden`} class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-100">
             {t("hero.cta.work")} <span class="text-[8px]" aria-hidden="true">→</span>
           </a>
-          <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+          <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
             {t("hero.cta.contact")} <span class="text-[8px]" aria-hidden="true">↗</span>
           </a>
-          <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-200">
+          <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
             GitHub <span class="text-[8px]" aria-hidden="true">↗</span>
           </a>
         </div>
@@ -214,7 +214,7 @@ const t = createT(Astro.props.lang);
           var msg = (c.message || '').split('\n')[0];
           var date = c.date || '';
           var url = c.url || ('https://github.com/emiliano-go/' + repo + '/commit/' + (c.sha || ''));
-          html += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 py-2 border-b border-(--color-border-subtle) hover:bg-(--color-surface) transition-colors duration-150 -mx-2 px-2">';
+          html += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 py-2 border-b border-(--color-border-subtle) hover:bg-(--color-surface) transition-colors duration-75 -mx-2 px-2">';
           html += '<span class="font-[family-name:var(--font-mono)] text-[11px] text-(--color-accent) shrink-0 w-20 truncate">' + repo + '</span>';
           html += '<span class="font-[family-name:var(--font-mono)] text-[11px] text-(--color-text-muted) flex-1 truncate">' + msg + '</span>';
           html += '<span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-text-dim) shrink-0 whitespace-nowrap">' + (date ? ago(date) : '') + '</span>';
@@ -235,7 +235,7 @@ const t = createT(Astro.props.lang);
               if (pct < 1 && k >= 5) break;
               barHtml += '<div class="hero-lang-seg h-full cursor-default" data-lang="' + (lang.name || '') + '" data-pct="' + Math.round(pct) + '" style="width:' + pct + '%;background:' + (lang.color || '#5ba3a8') + '"></div>';
             }
-            barHtml += '</div><div id="hero-lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-[9px] font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-150"></div></div>';
+            barHtml += '</div><div id="hero-lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-[9px] font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-75"></div></div>';
             langContainer.innerHTML = barHtml;
 
             var tip = document.getElementById('hero-lang-tooltip');

@@ -9,6 +9,7 @@ const projects = [
     category: 'DATABASE INFRASTRUCTURE',
     name: 'DBWarden',
     accent: '#b39d6a',
+    accentLight: '#7a6a3a',
     desc: 'Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models. 5 DB backends, 7 plugins, release-certification harness.',
     diagram: 'Models → IR → Diff → SQL → Verification',
     facts: ['48K LOC', '127 test files', '5 databases', 'Release harness'],
@@ -23,9 +24,10 @@ const projects = [
     category: 'SECURITY · STATIC ANALYSIS',
     name: 'TrustSight',
     accent: '#0092d2',
+    accentLight: '#0072a8',
     desc: 'Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. Corpus-wide cluster detection across 186K source URLs.',
     diagram: 'Diff → Static analysis → Evidence + coverage → Risk assessment → Verdict',
-    facts: ['3,967+ tests', '185 scoring rules', 'Signed baselines', 'IOC federation'],
+    facts: ['~7K tests', '257 documented rules', 'Signed baselines', 'IOC federation'],
     links: [
       { label: 'GitHub', href: 'https://github.com/emiliano-go/trustsight' },
       { label: 'Docs', href: 'https://docs.trustsight.org' },
@@ -36,7 +38,8 @@ const projects = [
     num: '03',
     category: 'DATA · INGESTION FRAMEWORK',
     name: 'rypipe',
-    accent: '#af4f37',
+    accent: '#c96a50',
+    accentLight: '#9b4a32',
     desc: 'Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits. Published to PyPI and crates.io.',
     diagram: 'Format Adapter → Splitter / Parser → Execution Plan → Parallel Engine → Arrow',
     facts: ['476 tests', '15.9K docs lines', 'PyPI + crates.io', '4.2 GB/s parallel'],
@@ -51,6 +54,7 @@ const projects = [
     category: 'NATIVE DESKTOP · MESSAGING PROTOCOL',
     name: 'postal',
     accent: '#2e9e6b',
+    accentLight: '#1f6f4a',
     desc: 'Native WhatsApp multi-device client with no webview. History sync is a choice, not a 20 GB download: 0.3% idle CPU, bounded RAM, durable SQLite archive.',
     diagram: 'Multi-device session → whatsapp-rust core → Event loop → SQLite archive + retention → Tauri IPC → Svelte UI',
     facts: ['352 Rust tests', '~68K LOC', 'v0.1.0', 'MIT'],
@@ -64,7 +68,8 @@ const projects = [
     num: '05',
     category: 'TERMINAL AUDIO · NEUROSCIENCE',
     name: 'neurafly',
-    accent: '#c04a72',
+    accent: '#d45f86',
+    accentLight: '#a33458',
     desc: 'Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses wired to live system audio, rendered in braille.',
     diagram: 'System audio → 2048-pt FFT → 24 log bands → LIF network (FlyWire v783) → Braille phosphor canvas',
     facts: ['138K neurons', '2M synapses', 'crates.io + AUR', '100 Hz sim'],
@@ -78,7 +83,8 @@ const projects = [
     num: '06',
     category: 'SEO METADATA · MULTI-LANGUAGE SDK',
     name: 'easeo',
-    accent: '#6b2fa0',
+    accent: '#a06ad9',
+    accentLight: '#6b2fa0',
     desc: 'Deterministic SEO metadata from one Rust core with Python and Node.js bindings. The cross-language conformance suite asserts byte-for-byte identical output.',
     diagram: 'Entity + route + config → URL normalization → Fallback chains → OG / Twitter / JSON-LD → SHA-256 contract',
     facts: ['310 tests', '11 entity types', 'PyPI + npm + crates.io', '64 docs pages'],
@@ -93,6 +99,7 @@ const projects = [
     category: 'SECURITY · VAULT PLUGIN',
     name: 'ClickVault',
     accent: '#f5c81b',
+    accentLight: '#8a6d00',
     desc: 'HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic credentials, password rotation, cluster-aware DDL.',
     diagram: 'Vault API → Plugin → ClickHouse dynamic users → Short-lived credentials → Rotation',
     facts: ['85.4% coverage', 'Code enforced', 'Cluster-aware', 'TLS support'],
@@ -129,15 +136,15 @@ const projects = [
         const href = isMore ? `/${Astro.props.lang}/projects` : `/${Astro.props.lang}/work/${p.id}`;
         return (
           <a href={href} class:list={[
-            "p-5 sm:p-7 group block transition-colors duration-200 border-l-2",
-            isMore ? "bg-(--color-surface) hover:bg-(--color-bg) border-l-(--color-border)" : "bg-(--color-bg) hover:bg-(--color-surface)"
-          ]} style={!isMore && p.accent ? `--accent: ${p.accent}; border-left-color: ${p.accent}` : undefined}>
+            "p-5 sm:p-7 group block transition-colors duration-100 border-l-2",
+            isMore ? "bg-(--color-surface) hover:bg-(--color-bg) border-l-(--color-border)" : "project-accent bg-(--color-bg) hover:bg-(--color-surface)"
+          ]} style={!isMore && p.accent ? `--accent-dark: ${p.accent}; --accent-light: ${p.accentLight}; border-left-color: var(--accent)` : undefined}>
             <div class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
               <div class="lg:w-48 shrink-0">
-                <span class="font-[family-name:var(--font-mono)] text-[10px]" style={!isMore && p.accent ? `color: ${p.accent}` : undefined}>{p.num}</span>
-                {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] mt-1 mb-1" style={!isMore && p.accent ? `color: ${p.accent}` : undefined}>{p.category}</p>}
+                <span class="font-[family-name:var(--font-mono)] text-[10px]" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.num}</span>
+                {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] mt-1 mb-1" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.category}</p>}
                 <h3 class:list={[
-                  "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-colors duration-200",
+                  "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-colors duration-100",
                   isMore ? "text-xl text-(--color-text-muted) group-hover:text-(--color-text-bright) mt-1" : "text-2xl md:text-3xl text-(--color-text-head) group-hover:text-[var(--accent,var(--color-accent))]"
                 ]}>{p.name}</h3>
               </div>
@@ -147,13 +154,13 @@ const projects = [
                 {p.facts.length > 0 && (
                   <div class="flex flex-wrap items-center gap-2 mb-4">
                     {p.facts.map(f => (
-                      <span class="text-[10px] font-mono px-2 py-0.5 border text-(--color-text-dim)" style={!isMore && p.accent ? `border-color: ${p.accent}40` : undefined}>{f}</span>
+                      <span class="text-[10px] font-mono px-2 py-0.5 border text-(--color-text-dim)" style={!isMore && p.accent ? `border-color: color-mix(in srgb, var(--accent) 25%, transparent)` : undefined}>{f}</span>
                     ))}
                   </div>
                 )}
                 <div class="flex flex-wrap gap-3">
                   {p.links.map(link => (
-                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border transition-colors duration-200" style={!isMore && p.accent ? `border-color: ${p.accent}; color: ${p.accent}` : undefined}>
+                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border transition-colors duration-100" style={!isMore && p.accent ? `border-color: var(--accent); color: var(--accent)` : undefined}>
                       {link.label} <span class="text-[8px]" aria-hidden="true">{isMore ? '→' : '↗'}</span>
                     </span>
                   ))}

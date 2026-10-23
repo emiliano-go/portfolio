@@ -84,7 +84,7 @@ const t = createT(Astro.props.lang);
       var date = c.date || '';
       var url = c.url || ('https://github.com/emiliano-go/' + repo + '/commit/' + (c.sha || ''));
 
-      html += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 py-2.5 border-b border-(--color-border-subtle) hover:bg-(--color-surface) transition-colors duration-150 -mx-2 px-2">';
+      html += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 py-2.5 border-b border-(--color-border-subtle) hover:bg-(--color-surface) transition-colors duration-75 -mx-2 px-2">';
       html += '<span class="font-[family-name:var(--font-mono)] text-[11px] text-(--color-accent) shrink-0 w-24 truncate">' + repo + '</span>';
       html += '<span class="font-[family-name:var(--font-mono)] text-[11px] text-(--color-text-muted) flex-1 truncate">' + msg + '</span>';
       html += '<span class="font-[family-name:var(--font-mono)] text-[10px] text-(--color-text-dim) shrink-0 whitespace-nowrap">' + (date ? ago(date) : '') + '</span>';
@@ -130,7 +130,7 @@ const t = createT(Astro.props.lang);
       var color = lang.color || '#5ba3a8';
       html += '<div class="lang-seg h-full cursor-default" data-lang="' + name + '" data-pct="' + Math.round(pct) + '" style="width:' + pct + '%;background:' + color + '"></div>';
     }
-    html += '</div><div id="lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-[9px] font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-150"></div></div>';
+    html += '</div><div id="lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-[9px] font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-75"></div></div>';
     container.innerHTML = html;
 
     var tip = document.getElementById('lang-tooltip');
