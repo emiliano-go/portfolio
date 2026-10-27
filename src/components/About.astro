@@ -2,6 +2,16 @@
 import { createT } from '../i18n';
 const t = createT(Astro.props.lang);
 
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+const linkify = (value: string) =>
+  escapeHtml(value).replace(
+    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+    (_match, label, href) =>
+      `<a href="${href}" class="text-(--color-accent) underline underline-offset-2 hover:text-(--color-text-bright)" target="_blank" rel="noopener noreferrer">${label}</a>`,
+  );
+
+
 const stack = [
   { name: 'Rust', icon: 'rust' },
   { name: 'Python', icon: 'python' },
@@ -46,11 +56,11 @@ const iconPaths: Record<string, { path: string; viewBox: string }> = {
         <p class="text-sm leading-relaxed text-(--color-text-muted) mb-6">{t("about.bio")}</p>
         <div class="mb-6">
           <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.current")}</p>
-          <p class="text-xs leading-relaxed text-(--color-text-muted)">{t("about.current.desc")}</p>
+          <p class="text-xs leading-relaxed text-(--color-text-muted)" set:html={linkify(t("about.current.desc"))}></p>
         </div>
         <div class="mb-6">
-          <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.oss")}</p>
-          <p class="text-xs leading-relaxed text-(--color-text-muted)">{t("about.oss.desc")}</p>
+          <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.hobbies")}</p>
+          <p class="text-xs leading-relaxed text-(--color-text-muted)">{t("about.hobbies.desc")}</p>
         </div>
         <div class="mb-6">
           <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.interests")}</p>

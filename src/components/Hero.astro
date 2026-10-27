@@ -22,12 +22,9 @@ const t = createT(Astro.props.lang);
           {t("hero.thesis")}
         </p>
 
-        <ul class="text-[11px] text-(--color-text-muted) space-y-1 mb-4 max-w-[540px]">
-          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.1")}</li>
-          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.2")}</li>
-          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.3")}</li>
-          <li class="flex items-start gap-2"><span class="text-(--color-accent) mt-0.5">·</span>{t("hero.proof.4")}</li>
-        </ul>
+        <p class="text-sm leading-relaxed text-(--color-text-muted) max-w-[540px] mb-6">
+          {t("hero.bio")}
+        </p>
 
         <p class="text-[11px] font-mono text-(--color-text-dim) mb-6">
           {t("hero.stat.location")}
@@ -40,29 +37,14 @@ const t = createT(Astro.props.lang);
           <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
             {t("hero.cta.contact")} <span class="text-[8px]" aria-hidden="true">↗</span>
           </a>
+          <a href="mailto:emiliano.gandini@protonmail.com" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
+            emiliano [dot] gandini [at] protonmail.com <span class="text-[8px]" aria-hidden="true">↗</span>
+          </a>
           <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
             GitHub <span class="text-[8px]" aria-hidden="true">↗</span>
           </a>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 max-w-[320px]">
-          <div class="proof-panel">
-            <div class="label">{t("hero.stat.tests")}</div>
-            <div class="item"><span class="val-neutral text-sm font-medium">5,800+</span></div>
-          </div>
-          <div class="proof-panel">
-            <div class="label">{t("hero.stat.pypi")}</div>
-            <div class="item"><span class="val-neutral text-sm font-medium">17</span></div>
-          </div>
-          <div class="proof-panel">
-            <div class="label">{t("hero.stat.dialects")}</div>
-            <div class="item"><span class="val-neutral text-sm font-medium">5</span></div>
-          </div>
-          <div class="proof-panel">
-            <div class="label">{t("hero.stat.repos")}</div>
-            <div class="item"><span class="val-neutral text-sm font-medium">47</span></div>
-          </div>
-        </div>
       </div>
 
       <!-- Right: activity (desktop only) -->
@@ -227,15 +209,37 @@ const t = createT(Astro.props.lang);
           var total = 0;
           for (var j = 0; j < languages.length; j++) total += languages[j].size || 0;
           if (total > 0) {
-            var barHtml = '<div class="relative"><div class="flex h-2 rounded-sm overflow-hidden bg-(--color-border-subtle)">';
+            var esc = function (value) {
+              return String(value).replace(/[&<>"']/g, function (char) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+              });
+            };
+            var segments = [];
             for (var k = 0; k < languages.length; k++) {
               var lang = languages[k];
               var pct = (lang.size / total) * 100;
               if (pct < 1 && k >= 5) break;
-              barHtml += '<div class="hero-lang-seg h-full cursor-default" data-lang="' + (lang.name || '') + '" data-pct="' + Math.round(pct) + '" style="width:' + pct + '%;background:' + (lang.color || '#5ba3a8') + '"></div>';
+              segments.push({
+                name: lang.name || 'Other',
+                pct: pct,
+                color: /^#[0-9a-fA-F]{3,8}$/.test(lang.color || '') ? lang.color : '#5ba3a8',
+              });
+            }
+            var summary = segments.map(function (segment) { return segment.name + ' ' + Math.round(segment.pct) + '%'; }).join(', ');
+            var legendHtml = '<div class="mb-1 flex items-end" aria-hidden="true">';
+            var barHtml = '<div class="relative" role="img" aria-label="' + esc(summary) + '"><div class="flex h-2 rounded-sm overflow-hidden bg-(--color-border-subtle)">';
+            for (var n = 0; n < segments.length; n++) {
+              var segment = segments[n];
+              var label = esc(segment.name);
+              legendHtml += '<div class="min-w-0 px-px" style="width:' + segment.pct + '%">'
+                + '<div class="flex flex-col items-center gap-0.5">'
+                + '<span class="w-full truncate text-center font-mono text-[9px] leading-none text-(--color-text-muted)" title="' + label + '">' + label + '</span>'
+                + '<span class="h-1.5 w-px" style="background:' + segment.color + '"></span>'
+                + '</div></div>';
+              barHtml += '<div class="hero-lang-seg h-full cursor-default" data-lang="' + label + '" data-pct="' + Math.round(segment.pct) + '" style="width:' + segment.pct + '%;background:' + segment.color + '"></div>';
             }
             barHtml += '</div><div id="hero-lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-[9px] font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-75"></div></div>';
-            langContainer.innerHTML = barHtml;
+            langContainer.innerHTML = legendHtml + '</div>' + barHtml;
 
             var tip = document.getElementById('hero-lang-tooltip');
             var barWrapper = tip.parentElement;
