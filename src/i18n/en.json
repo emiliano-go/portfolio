@@ -181,7 +181,7 @@
   "ecosystem.dbwarden-sandbox.desc": "Sandbox testing against temporary databases",
   "ecosystem.dbwarden-sandbox.tag": "Python · Testing",
   "page404.heading": "404",
-  "activity.project.heading": "Repository activity",
+  "activity.project.heading": "Latest repository commit",
   "activity.project.loading": "Loading latest commits…",
   "activity.project.empty": "No commit data available.",
   "activity.project.error": "Commit activity unavailable.",

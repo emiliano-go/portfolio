@@ -23,7 +23,6 @@ const t = createT(lang);
   >
     <div class="flex items-center justify-between border-b border-(--color-border-subtle) px-4 py-3">
       <span id="project-activity-heading" class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-muted)">{t('activity.project.heading')}</span>
-      <span class="font-mono text-[9px] text-(--color-accent)">{repos.length}</span>
     </div>
     <div id="project-activity-list" class="max-h-80 overflow-y-auto px-4 py-2" aria-live="polite">
       <p class="py-2 text-[11px] text-(--color-text-muted)">{t('activity.project.loading')}</p>
@@ -103,7 +102,14 @@ const t = createT(lang);
         list.textContent = root.dataset.empty;
         return;
       }
-      list.replaceChildren.apply(list, data.repos.map(renderRow));
+      var commits = data.repos
+        .filter(function (item) { return !item.error && item.date; })
+        .sort(function (a, b) { return new Date(b.date).getTime() - new Date(a.date).getTime(); });
+      if (!commits.length) {
+        list.textContent = root.dataset.error;
+        return;
+      }
+      list.replaceChildren(renderRow(commits[0]));
     })
     .catch(function () {
       list.textContent = root.dataset.error;
