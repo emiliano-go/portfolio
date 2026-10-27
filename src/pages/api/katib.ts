@@ -11,7 +11,7 @@ const TOKEN = import.meta.env.KATIB_GITHUB_TOKEN || '';
 interface CacheEntry<T> { data: T; expires: number; }
 const cache = new Map<string, CacheEntry<any>>();
 
-function getCached<T>(key: string, ttlMs: number): T | null {
+function getCached<T>(key: string): T | null {
   const entry = cache.get(key);
   if (entry && Date.now() < entry.expires) return entry.data as T;
   return null;
@@ -36,7 +36,7 @@ export const GET: APIRoute = async ({ url }) => {
   try {
     if (endpoint === 'commits') {
       const cacheKey = 'katib-commits-v4';
-      let data = getCached<any>(cacheKey, 10 * 60 * 1000);
+      let data = getCached<any>(cacheKey);
       if (!data) {
         const raw = await fetchKatib('/v2/commits/latest');
         const commits = (raw.commits || []).slice(0, 3).map((c: any) => ({

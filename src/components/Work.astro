@@ -1,123 +1,27 @@
 ---
-import { createT } from '../i18n';
-const t = createT(Astro.props.lang);
+import { createT, type Lang } from '../i18n';
+import { getProject } from '../data/projects';
 
+const lang = Astro.props.lang as Lang;
+const t = createT(lang);
+
+const landingIds = ['trustsight', 'rypipe', 'kestrel', 'dbwarden', 'xmlstreamer-ng', 'eclipse'];
+const landing = landingIds.map((id) => getProject(id, lang));
 const projects = [
-  {
-    id: 'dbwarden',
-    num: '01',
-    category: 'DATABASE INFRASTRUCTURE',
-    name: 'DBWarden',
-    accent: '#b39d6a',
-    accentLight: '#7a6a3a',
-    desc: 'Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models. 5 DB backends, 7 plugins, release-certification harness.',
-    diagram: 'Models → IR → Diff → SQL → Verification',
-    facts: ['48K LOC', '127 test files', '5 databases', 'Release harness'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/dbwarden-org/dbwarden' },
-      { label: 'Docs', href: 'https://docs.dbwarden.org' },
-    ],
-  },
-  {
-    id: 'trustsight',
-    num: '02',
-    category: 'SECURITY · STATIC ANALYSIS',
-    name: 'TrustSight',
-    accent: '#0092d2',
-    accentLight: '#0072a8',
-    desc: 'Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. Corpus-wide cluster detection across 186K source URLs.',
-    diagram: 'Diff → Static analysis → Evidence + coverage → Risk assessment → Verdict',
-    facts: ['~7K tests', '257 documented rules', 'Signed baselines', 'IOC federation'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-go/trustsight' },
-      { label: 'Docs', href: 'https://docs.trustsight.org' },
-    ],
-  },
-  {
-    id: 'rypipe',
-    num: '03',
-    category: 'DATA · INGESTION FRAMEWORK',
-    name: 'rypipe',
-    accent: '#c96a50',
-    accentLight: '#9b4a32',
-    desc: 'Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits. Published to PyPI and crates.io.',
-    diagram: 'Format Adapter → Splitter / Parser → Execution Plan → Parallel Engine → Arrow',
-    facts: ['476 tests', '15.9K docs lines', 'PyPI + crates.io', '4.2 GB/s parallel'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-go/rypipe' },
-      { label: 'Docs', href: 'https://rypipe.emiliano-go.com' },
-    ],
-  },
-  {
-    id: 'postal',
-    num: '04',
-    category: 'NATIVE DESKTOP · MESSAGING PROTOCOL',
-    name: 'postal',
-    accent: '#2e9e6b',
-    accentLight: '#1f6f4a',
-    desc: 'Native WhatsApp multi-device client with no webview. History sync is a choice, not a 20 GB download: 0.3% idle CPU, bounded RAM, durable SQLite archive.',
-    diagram: 'Multi-device session → whatsapp-rust core → Event loop → SQLite archive + retention → Tauri IPC → Svelte UI',
-    facts: ['352 Rust tests', '~68K LOC', 'v0.1.0', 'MIT'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-go/postal' },
-      { label: 'Release', href: 'https://github.com/emiliano-go/postal/releases/tag/v0.1.0' },
-    ],
-  },
-  {
-    id: 'neurafly',
-    num: '05',
-    category: 'TERMINAL AUDIO · NEUROSCIENCE',
-    name: 'neurafly',
-    accent: '#d45f86',
-    accentLight: '#a33458',
-    desc: 'Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses wired to live system audio, rendered in braille.',
-    diagram: 'System audio → 2048-pt FFT → 24 log bands → LIF network (FlyWire v783) → Braille phosphor canvas',
-    facts: ['138K neurons', '2M synapses', 'crates.io + AUR', '100 Hz sim'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-go/neurafly' },
-      { label: 'crates.io', href: 'https://crates.io/crates/neurafly' },
-    ],
-  },
-  {
-    id: 'easeo',
-    num: '06',
-    category: 'SEO METADATA · MULTI-LANGUAGE SDK',
-    name: 'easeo',
-    accent: '#a06ad9',
-    accentLight: '#6b2fa0',
-    desc: 'Deterministic SEO metadata from one Rust core with Python and Node.js bindings. The cross-language conformance suite asserts byte-for-byte identical output.',
-    diagram: 'Entity + route + config → URL normalization → Fallback chains → OG / Twitter / JSON-LD → SHA-256 contract',
-    facts: ['310 tests', '11 entity types', 'PyPI + npm + crates.io', '64 docs pages'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-go/easeo' },
-      { label: 'Docs', href: 'https://easeo.emiliano-go.com' },
-    ],
-  },
-  {
-    id: 'clickvault',
-    num: '07',
-    category: 'SECURITY · VAULT PLUGIN',
-    name: 'ClickVault',
-    accent: '#f5c81b',
-    accentLight: '#8a6d00',
-    desc: 'HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic credentials, password rotation, cluster-aware DDL.',
-    diagram: 'Vault API → Plugin → ClickHouse dynamic users → Short-lived credentials → Rotation',
-    facts: ['85.4% coverage', 'Code enforced', 'Cluster-aware', 'TLS support'],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/emiliano-go/clickvault' },
-    ],
-  },
+  ...landing.map((project, i) => ({ ...project, displayIndex: String(i + 1).padStart(2, '0'), isMore: false })),
   {
     id: 'more',
-    num: '→',
+    index: '→',
+    displayIndex: '→',
     category: '',
-    name: 'More projects',
-    desc: 'crxml, dsig, schemap, detrack, vigil, mapcreator, and more.',
+    name: t('work.more.title'),
+    accent: '',
+    accentLight: '',
+    summary: t('work.more.desc'),
     diagram: '',
     facts: [],
-    links: [
-      { label: 'View all', href: `/${Astro.props.lang || 'en'}/projects` },
-    ],
+    links: [{ label: t('work.more.link'), href: `/${lang}/projects` }],
+    isMore: true,
   },
 ];
 ---
@@ -132,35 +36,35 @@ const projects = [
 
     <div class="flex flex-col gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
       {projects.map((p) => {
-        const isMore = p.id === 'more';
-        const href = isMore ? `/${Astro.props.lang}/projects` : `/${Astro.props.lang}/work/${p.id}`;
+        const isMore = p.isMore;
+        const href = isMore ? `/${lang}/projects` : `/${lang}/work/${p.id}`;
         return (
           <a href={href} class:list={[
-            "p-5 sm:p-7 group block transition-colors duration-100 border-l-2",
+            "p-5 sm:p-7 group block transition-none border-l-2",
             isMore ? "bg-(--color-surface) hover:bg-(--color-bg) border-l-(--color-border)" : "project-accent bg-(--color-bg) hover:bg-(--color-surface)"
           ]} style={!isMore && p.accent ? `--accent-dark: ${p.accent}; --accent-light: ${p.accentLight}; border-left-color: var(--accent)` : undefined}>
             <div class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
               <div class="lg:w-48 shrink-0">
-                <span class="font-[family-name:var(--font-mono)] text-[10px]" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.num}</span>
+                <span class="font-[family-name:var(--font-mono)] text-[10px]" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.displayIndex}</span>
                 {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] mt-1 mb-1" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.category}</p>}
                 <h3 class:list={[
-                  "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-colors duration-100",
+                  "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-none",
                   isMore ? "text-xl text-(--color-text-muted) group-hover:text-(--color-text-bright) mt-1" : "text-2xl md:text-3xl text-(--color-text-head) group-hover:text-[var(--accent,var(--color-accent))]"
                 ]}>{p.name}</h3>
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4 max-w-[480px]">{p.desc}</p>
+                <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4 max-w-[480px]">{p.summary}</p>
                 {p.diagram && <div class="arch-diagram mb-4 text-[10px]">{p.diagram}</div>}
-                {p.facts.length > 0 && (
+                {(p.facts ?? []).length > 0 && (
                   <div class="flex flex-wrap items-center gap-2 mb-4">
-                    {p.facts.map(f => (
+                    {(p.facts ?? []).map(f => (
                       <span class="text-[10px] font-mono px-2 py-0.5 border text-(--color-text-dim)" style={!isMore && p.accent ? `border-color: color-mix(in srgb, var(--accent) 25%, transparent)` : undefined}>{f}</span>
                     ))}
                   </div>
                 )}
                 <div class="flex flex-wrap gap-3">
-                  {p.links.map(link => (
-                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border transition-colors duration-100" style={!isMore && p.accent ? `border-color: var(--accent); color: var(--accent)` : undefined}>
+                  {p.links.slice(0, 3).map(link => (
+                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border transition-none" style={!isMore && p.accent ? `border-color: var(--accent); color: var(--accent)` : undefined}>
                       {link.label} <span class="text-[8px]" aria-hidden="true">{isMore ? '→' : '↗'}</span>
                     </span>
                   ))}

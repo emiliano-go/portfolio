@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { createT } from '../i18n';
+
+const lang = 'en';
+const t = createT(lang);
+---
+
+<Layout lang={lang} route="/404/" title={t("page404.title")} description={t("page404.sub")}>
+  <Nav lang={lang} />
+  <main id="main" class="min-h-[100svh] flex items-center justify-center">
+    <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 text-center">
+      <h1 class="font-[family-name:var(--font-display)] text-[clamp(72px,12vw,120px)] font-bold uppercase leading-[0.92] tracking-wide text-(--color-text-head) mb-4">{t("page404.heading")}</h1>
+      <p class="text-sm text-(--color-text-muted) mb-8">{t("page404.sub")}</p>
+      <a
+        href="/en"
+        class="inline-flex items-center gap-1.5 text-[13px] px-5 py-2.5 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100"
+      >{t("page404.back")}</a>
+    </div>
+  </main>
+  <Footer lang={lang} />
+</Layout>

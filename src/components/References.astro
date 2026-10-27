@@ -1,32 +1,32 @@
 ---
 interface ReferenceItem {
   name: string;
-  title: string;
+  titleKey: string;
   company: string;
-  relationship: string;
+  relationshipKey: string;
   linkedin: string;
 }
 
 const references: ReferenceItem[] = [
   {
     name: 'Igor Benav',
-    title: 'Founder',
+    titleKey: 'refs.igor.title',
     company: 'Benav Labs',
-    relationship: 'Co-maintainer, 2025 - Present',
+    relationshipKey: 'refs.igor.relationship',
     linkedin: 'https://www.linkedin.com/in/igor-benav/',
   },
   {
     name: 'Carlos A. Planchon',
-    title: 'Technical Leader',
+    titleKey: 'refs.carlos.title',
     company: 'Busco Jobs',
-    relationship: 'Colleague, 2025 - Present',
+    relationshipKey: 'refs.carlos.relationship',
     linkedin: 'https://www.linkedin.com/in/carlosplanchon/',
   },
   {
     name: 'Maximiliano Schmidt',
-    title: 'Full-Stack Developer',
+    titleKey: 'refs.maximiliano.title',
     company: 'Casas Y Mas',
-    relationship: 'Colleague, 2026 - Present',
+    relationshipKey: 'refs.maximiliano.relationship',
     linkedin: 'https://www.linkedin.com/in/maximiliano-schmidt/',
   },
 ];
@@ -48,9 +48,9 @@ const t = createT(Astro.props.lang);
           <div class="p-4 flex flex-col w-full">
             <h3 class="font-[family-name:var(--font-display)] text-base font-bold uppercase tracking-wide text-(--color-text-head) mb-0.5">{ref.name}</h3>
             <p class="text-xs text-(--color-text-dim) leading-snug">
-              {ref.title}, <span class="text-(--color-text-muted)">{ref.company}</span>
+              {t(ref.titleKey)}, <span class="text-(--color-text-muted)">{ref.company}</span>
             </p>
-            <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mt-2 mb-3">{ref.relationship}</p>
+            <p class="text-[10px] uppercase tracking-[0.1em] text-(--color-accent) mt-2 mb-3">{t(ref.relationshipKey)}</p>
             <a
               href={ref.linkedin}
               target="_blank"

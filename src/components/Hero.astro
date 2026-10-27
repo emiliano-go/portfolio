@@ -34,7 +34,7 @@ const t = createT(Astro.props.lang);
         </p>
 
         <div class="flex flex-wrap gap-3 mb-8">
-          <a href={`/${Astro.props.lang || 'en'}/work/dbwarden`} class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-100">
+          <a href={`/${Astro.props.lang || 'en'}/work/trustsight`} class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-100">
             {t("hero.cta.work")} <span class="text-[8px]" aria-hidden="true">→</span>
           </a>
           <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
@@ -47,19 +47,19 @@ const t = createT(Astro.props.lang);
 
         <div class="grid grid-cols-2 gap-3 max-w-[320px]">
           <div class="proof-panel">
-            <div class="label">Tests</div>
+            <div class="label">{t("hero.stat.tests")}</div>
             <div class="item"><span class="val-neutral text-sm font-medium">5,800+</span></div>
           </div>
           <div class="proof-panel">
-            <div class="label">PyPI packages</div>
+            <div class="label">{t("hero.stat.pypi")}</div>
             <div class="item"><span class="val-neutral text-sm font-medium">17</span></div>
           </div>
           <div class="proof-panel">
-            <div class="label">DB dialects</div>
+            <div class="label">{t("hero.stat.dialects")}</div>
             <div class="item"><span class="val-neutral text-sm font-medium">5</span></div>
           </div>
           <div class="proof-panel">
-            <div class="label">OSS repos</div>
+            <div class="label">{t("hero.stat.repos")}</div>
             <div class="item"><span class="val-neutral text-sm font-medium">47</span></div>
           </div>
         </div>
@@ -92,7 +92,7 @@ const t = createT(Astro.props.lang);
   </div>
 
   <div id="hero-scroll" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2" style="opacity: 0;">
-    <span class="text-[9px] font-mono text-(--color-text-dim) tracking-widest uppercase">scroll</span>
+    <span class="text-[9px] font-mono text-(--color-text-dim) tracking-widest uppercase">{t("hero.scroll")}</span>
     <svg width="16" height="24" viewBox="0 0 16 24" fill="none" class="text-(--color-text-dim) animate-[bounce_2s_ease-in-out_infinite]">
       <rect x="1" y="1" width="14" height="22" rx="7" stroke="currentColor" stroke-width="1.5"/>
       <line x1="8" y1="6" x2="8" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -157,7 +157,6 @@ const t = createT(Astro.props.lang);
         }
       }
 
-      var raf;
       function loop(time) {
         draw(time);
         if (!reducedMotion) raf = requestAnimationFrame(loop);
@@ -242,7 +241,7 @@ const t = createT(Astro.props.lang);
             var barWrapper = tip.parentElement;
             var segs = langContainer.querySelectorAll('.hero-lang-seg');
             for (var m = 0; m < segs.length; m++) {
-              segs[m].addEventListener('mouseenter', function(e) {
+              segs[m].addEventListener('mouseenter', function() {
                 tip.textContent = this.dataset.lang + ' ' + this.dataset.pct + '%';
                 var rect = this.getBoundingClientRect();
                 var parent = barWrapper.getBoundingClientRect();

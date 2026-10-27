@@ -17,15 +17,15 @@ const t = createT(Astro.props.lang);
       <div class="border border-(--color-border-subtle) bg-(--color-surface) p-5 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
           <div>
-            <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">OPEN SOURCE · URUGUAY</p>
+            <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">{t("opensource.librecourse.tag")}</p>
             <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head)">LibreCourseUY</h3>
           </div>
-          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-accent-muted) text-(--color-accent) self-start">Director</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-accent-muted) text-(--color-accent) self-start">{t("opensource.librecourse.role")}</span>
         </div>
-        <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4">An open source organization focused on promoting the FOSS ecosystem in Uruguay. 400+ members. We build and maintain free tools, services, and infrastructure for the Uruguayan developer community.</p>
+        <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4">{t("opensource.librecourse.desc")}</p>
         <div class="flex flex-wrap gap-3">
           <a href="https://github.com/LibreCourseUY" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">GitHub ↗</a>
-          <a href="https://librecourse.uy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">Website ↗</a>
+          <a href="https://librecourse.uy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">{t("opensource.website")} ↗</a>
         </div>
       </div>
 
@@ -33,12 +33,12 @@ const t = createT(Astro.props.lang);
       <div class="border border-(--color-border-subtle) bg-(--color-surface) p-5 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
           <div>
-            <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">OPEN SOURCE · PYTHON</p>
+            <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">{t("opensource.fastapi.tag")}</p>
             <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head)">FastAPI-boilerplate</h3>
           </div>
-          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-accent-muted) text-(--color-accent) self-start">Co-maintainer</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 border border-(--color-accent-muted) text-(--color-accent) self-start">{t("opensource.fastapi.role")}</span>
         </div>
-        <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4">Batteries-included async FastAPI starter. Auth (sessions, OAuth, API keys), FastCRUD, Alembic, Taskiq workers, Redis caching, and per-tier rate limiting. Named co-maintainer in v0.18.0, the pluggable restructure release.</p>
+        <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4">{t("opensource.fastapi.desc")}</p>
         <div class="flex flex-wrap gap-3">
           <a href="https://github.com/benavlabs/FastAPI-boilerplate" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">GitHub ↗</a>
         </div>

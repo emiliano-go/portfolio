@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.4
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-seo.txt
+
+      - name: Install SEO toolchain
+        run: python -m pip install -r requirements-seo.txt
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check
+      - run: npm test
+
+      - name: Validate HTML
+        run: find dist -name '*.html' -print0 | xargs -0 python3 scripts/validate_html.py

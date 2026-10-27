@@ -1,0 +1,112 @@
+---
+import { createT, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  repos: string[];
+}
+
+const { lang, repos } = Astro.props;
+const t = createT(lang);
+---
+
+{repos.length > 0 && (
+  <section
+    class="dossier mt-3 w-full"
+    data-project-activity
+    data-repos={repos.join(',')}
+    data-loading={t('activity.project.loading')}
+    data-empty={t('activity.project.empty')}
+    data-error={t('activity.project.error')}
+    data-lang={lang}
+    aria-labelledby="project-activity-heading"
+  >
+    <div class="flex items-center justify-between border-b border-(--color-border-subtle) px-4 py-3">
+      <span id="project-activity-heading" class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-muted)">{t('activity.project.heading')}</span>
+      <span class="font-mono text-[9px] text-(--color-accent)">{repos.length}</span>
+    </div>
+    <div id="project-activity-list" class="max-h-80 overflow-y-auto px-4 py-2" aria-live="polite">
+      <p class="py-2 text-[11px] text-(--color-text-muted)">{t('activity.project.loading')}</p>
+    </div>
+  </section>
+)}
+
+<script is:inline data-astro-rerun>
+(function () {
+  var root = document.querySelector('[data-project-activity]');
+  if (!root || !root.dataset.repos || root.dataset.bound) return;
+  root.dataset.bound = '1';
+
+  var list = root.querySelector('[id="project-activity-list"]');
+  var repos = root.dataset.repos.split(',').filter(Boolean);
+  if (!list) return;
+  if (!repos.length) {
+    list.textContent = root.dataset.empty;
+    return;
+  }
+
+  var lang = root.dataset.lang || document.documentElement.lang || 'en';
+  var rtf;
+  try {
+    rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto' });
+  } catch (err) {
+    rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  }
+
+  function ago(iso) {
+    if (!iso) return '';
+    var diff = (new Date(iso).getTime() - Date.now()) / 1000;
+    var abs = Math.abs(diff);
+    if (abs < 60) return rtf.format(Math.round(diff), 'second');
+    if (abs < 3600) return rtf.format(Math.round(diff / 60), 'minute');
+    if (abs < 86400) return rtf.format(Math.round(diff / 3600), 'hour');
+    if (abs < 2592000) return rtf.format(Math.round(diff / 86400), 'day');
+    if (abs < 31536000) return rtf.format(Math.round(diff / 2592000), 'month');
+    return rtf.format(Math.round(diff / 31536000), 'year');
+  }
+
+  function renderRow(item) {
+    var link = document.createElement('a');
+    link.href = item.url || 'https://github.com/' + item.repo;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'block border-b border-(--color-border-subtle) py-2.5 last:border-0 hover:bg-(--color-surface) -mx-2 px-2 transition-colors';
+
+    var top = document.createElement('div');
+    top.className = 'mb-0.5 flex items-baseline justify-between gap-2';
+
+    var repo = document.createElement('span');
+    repo.className = 'truncate font-mono text-[10px] text-(--color-accent)';
+    repo.textContent = item.repo;
+
+    var time = document.createElement('span');
+    time.className = 'whitespace-nowrap font-mono text-[9px] text-(--color-text-muted)';
+    time.textContent = item.error ? '' : ago(item.date);
+
+    top.append(repo, time);
+
+    var message = document.createElement('p');
+    message.className = 'truncate text-[11px] leading-snug text-(--color-text-muted)';
+    message.textContent = item.error ? root.dataset.error : item.message;
+
+    link.append(top, message);
+    return link;
+  }
+
+  fetch('/api/katib?endpoint=repo-commits&repos=' + encodeURIComponent(repos.join(',')))
+    .then(function (response) {
+      if (!response.ok) throw new Error('Request failed');
+      return response.json();
+    })
+    .then(function (data) {
+      if (!data || !Array.isArray(data.repos) || !data.repos.length) {
+        list.textContent = root.dataset.empty;
+        return;
+      }
+      list.replaceChildren.apply(list, data.repos.map(renderRow));
+    })
+    .catch(function () {
+      list.textContent = root.dataset.error;
+    });
+})();
+</script>

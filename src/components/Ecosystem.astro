@@ -5,63 +5,63 @@ const t = createT(Astro.props.lang);
 const ecosystem = [
   {
     name: 'dbwarden-harness',
-    desc: 'Black-box validation harness for releases',
-    tag: 'Python · Testing',
+    descKey: 'ecosystem.dbwarden-harness.desc',
+    tagKey: 'ecosystem.dbwarden-harness.tag',
   },
   {
     name: 'wlite',
-    desc: 'CLI and bindings (C++, Rust, Python, Go, Zig) for libwlite',
-    tag: 'Multi-language · SQLite',
+    descKey: 'ecosystem.wlite.desc',
+    tagKey: 'ecosystem.wlite.tag',
   },
   {
     name: 'libwlite',
-    desc: 'C library for SQLite schema management',
-    tag: 'C · SQLite',
+    descKey: 'ecosystem.libwlite.desc',
+    tagKey: 'ecosystem.libwlite.tag',
   },
   {
     name: 'dbwarden-redis',
-    desc: 'Redis-backed distributed migration locking',
-    tag: 'Python · Redis',
+    descKey: 'ecosystem.dbwarden-redis.desc',
+    tagKey: 'ecosystem.dbwarden-redis.tag',
   },
   {
     name: 'dbwarden-fastapi',
-    desc: 'FastAPI sessions, health checks, migration routes',
-    tag: 'Python · FastAPI',
+    descKey: 'ecosystem.dbwarden-fastapi.desc',
+    tagKey: 'ecosystem.dbwarden-fastapi.tag',
   },
   {
     name: 'dbwarden-ch-rbac',
-    desc: 'ClickHouse role-based access control',
-    tag: 'Python · ClickHouse',
+    descKey: 'ecosystem.dbwarden-ch-rbac.desc',
+    tagKey: 'ecosystem.dbwarden-ch-rbac.tag',
   },
   {
     name: 'dbwarden-pgsql-types',
-    desc: 'PostgreSQL custom types: ENUMs, domains, composites',
-    tag: 'Python · PostgreSQL',
+    descKey: 'ecosystem.dbwarden-pgsql-types.desc',
+    tagKey: 'ecosystem.dbwarden-pgsql-types.tag',
   },
   {
     name: 'dbwarden-pgsql-rbac',
-    desc: 'PostgreSQL roles, grants, row-level security',
-    tag: 'Python · PostgreSQL',
+    descKey: 'ecosystem.dbwarden-pgsql-rbac.desc',
+    tagKey: 'ecosystem.dbwarden-pgsql-rbac.tag',
   },
   {
     name: 'dbwarden-pgsql-extensions',
-    desc: 'PostgreSQL extension management',
-    tag: 'Python · PostgreSQL',
+    descKey: 'ecosystem.dbwarden-pgsql-extensions.desc',
+    tagKey: 'ecosystem.dbwarden-pgsql-extensions.tag',
   },
   {
     name: 'dbwarden-plugin-template',
-    desc: 'Template for building DBWarden plugins',
-    tag: 'Python · Scaffolding',
+    descKey: 'ecosystem.dbwarden-plugin-template.desc',
+    tagKey: 'ecosystem.dbwarden-plugin-template.tag',
   },
   {
     name: 'dbwarden-seeds',
-    desc: 'Seed data management across environments',
-    tag: 'Python · Data',
+    descKey: 'ecosystem.dbwarden-seeds.desc',
+    tagKey: 'ecosystem.dbwarden-seeds.tag',
   },
   {
     name: 'dbwarden-sandbox',
-    desc: 'Sandbox testing against temporary databases',
-    tag: 'Python · Testing',
+    descKey: 'ecosystem.dbwarden-sandbox.desc',
+    tagKey: 'ecosystem.dbwarden-sandbox.tag',
   },
 ];
 ---
@@ -86,9 +86,9 @@ const ecosystem = [
           rel="noopener noreferrer"
           class="bg-(--color-bg) p-4 hover:bg-(--color-surface) transition-colors duration-100 group"
         >
-          <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">{p.tag}</p>
+          <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-1">{t(p.tagKey)}</p>
           <h3 class="font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright) mb-1 group-hover:text-(--color-accent) transition-colors duration-100">{p.name}</h3>
-          <p class="text-[11px] leading-relaxed text-(--color-text-muted)">{p.desc}</p>
+          <p class="text-[11px] leading-relaxed text-(--color-text-muted)">{t(p.descKey)}</p>
         </a>
       ))}
     </div>

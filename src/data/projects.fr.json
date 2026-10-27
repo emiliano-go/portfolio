@@ -1,0 +1,2163 @@
+{
+  "dbwarden": {
+    "id": "dbwarden",
+    "name": "DBWarden",
+    "index": "01",
+    "category": "Infrastructure de base de données",
+    "accent": "#b39d6a",
+    "accentLight": "#705f2f",
+    "summary": "Compilateur de schéma déclaratif qui dérive des migrations de bases de données déterministes à partir de modèles SQLAlchemy.",
+    "lede": "Vos modèles sont le code source. SQL est la sortie.",
+    "stack": [
+      "Python 3.12+",
+      "SQLAlchemy 2.0",
+      "PostgreSQL",
+      "MySQL",
+      "MariaDB",
+      "SQLite",
+      "ClickHouse"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/dbwarden-org/dbwarden",
+        "primary": true
+      },
+      {
+        "label": "Documentation",
+        "href": "https://docs.dbwarden.org"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/dbwarden/"
+      },
+      {
+        "label": "Harnais",
+        "href": "https://harness.dbwarden.org"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Backends de base de données",
+        "value": "5"
+      },
+      {
+        "label": "Plugins officiels",
+        "value": "7"
+      },
+      {
+        "label": "Fichiers de tests",
+        "value": "166"
+      },
+      {
+        "label": "Version",
+        "value": "v0.20.10",
+        "repo": "dbwarden-org/dbwarden"
+      }
+    ],
+    "facts": [
+      "63K LOC source",
+      "5 bases de données",
+      "Alpha stable",
+      "Harnais de release"
+    ],
+    "diagram": "Modèles → IR → Diff → SQL → Vérification",
+    "license": "MIT",
+    "meta": {
+      "title": "DBWarden | Emiliano G.O.",
+      "description": "Compilateur de schémas déclaratifs pour SQLAlchemy. SQL et rollbacks déterministes, génération hors ligne en CI et analyse d'impact."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "Les outils de gestion de schéma se répartissent en deux camps. Des outils impératifs vous permettent de créer des modifications : des scripts de révision qui décrivent comment passer d'une version de schéma à la suivante. Les outils déclaratifs vous permettent de créer l'état souhaité et d'en dériver les modifications pour vous. La plupart des outils impératifs vous demandent de conserver deux représentations de votre schéma : vos modèles ORM et vos fichiers de migration. Lorsqu'ils dérivent, vous le découvrez au moment du déploiement."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Pourquoi c'est dur",
+        "body": [
+          "La dérive des schémas est le principal ennemi. Rendre cela déterministe nécessite un moteur de comparaison qui gère les renommages, les modifications de type, les modifications de contraintes et le classement sur cinq backends de bases de données avec différents dialectes DDL. Chaque migration doit comporter à la fois une mise à niveau et une restauration SQL, et la restauration doit être testée par rapport à la base de données réelle."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Capacités",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "Analyse d'impact",
+            "body": "dbwarden check-impact scanne le code avec une analyse AST et un fallback grep, puis liste chaque référence à une colonne ou table modifiée par une migration avant le déploiement."
+          },
+          {
+            "title": "Génération hors ligne",
+            "body": "Exportez l'état des modèles une fois, puis générez des migrations en CI ou sur une machine sans base de données avec make-migrations --offline."
+          },
+          {
+            "title": "Snapshots de schéma",
+            "body": "Chaque migration écrit un snapshot JSON avec checksum. Les snapshots alimentent la détection de renommages, les diffs hors ligne et les comparaisons au niveau colonne."
+          },
+          {
+            "title": "Meta typé",
+            "body": "Une métaclasse valide chaque attribut de class Meta à l'import ; les fautes de frappe qui produiraient un DDL incorrect lèvent DBWardenConfigError immédiatement."
+          },
+          {
+            "title": "Ingénierie inverse",
+            "body": "Générez des modèles SQLAlchemy depuis une base vivante avec generate-models, métadonnées backend et import --base personnalisé inclus."
+          },
+          {
+            "title": "Multi-base",
+            "body": "Un projet peut cibler plusieurs bases avec des configurations isolées, une propriété de tables par base et des bases optionnelles ignorées si absentes."
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "Flux de travail",
+        "steps": [
+          {
+            "title": "Pointez sur les modèles existants",
+            "body": "DBWarden lit vos modèles SQLAlchemy comme source unique de vérité."
+          },
+          {
+            "title": "faire des migrations",
+            "body": "Génère un schéma de base ou des différences par rapport à l'état actuel de la base de données."
+          },
+          {
+            "title": "Validation générée SQL",
+            "body": "Fichiers SQL simples : révisables, validables, exécutables n'importe où."
+          },
+          {
+            "title": "émigrer",
+            "body": "S'applique aux migrations en attente avec vérification de convergence."
+          },
+          {
+            "title": "En option : analyse d'impact, mode hors ligne, plugins",
+            "body": "Détection des changements de rupture basée sur AST, CI sans base de données, intégration seed/RBAC/FastAPI."
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "SQL-première sortie",
+            "body": "Les migrations sont de simples fichiers SQL. Pas de runtime, pas de Python généré. Révisable, validable, exécutable n’importe où."
+          },
+          {
+            "title": "Différence déterministe",
+            "body": "Mêmes modèles + même instantané = même migration. Toujours. Pas d'état caché, pas de dépendances d'ordre."
+          },
+          {
+            "title": "Contrat de restauration strict",
+            "body": "Chaque migration implique une mise à niveau + une restauration SQL. Restauration de l'espace réservé refusée par défaut."
+          },
+          {
+            "title": "Architecture des plugins",
+            "body": "7 plugins officiels pour les graines, RBAC, FastAPI, les tests sandbox et les extensions PostgreSQL/ClickHouse."
+          }
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Modèle de sécurité",
+        "body": [
+          "La génération de migrations classe chaque opération, découpe les changements de type en étapes expand-contract et attribue une sévérité. La CLI ajoute des plafonds d'exécution, des contrôles de plans en attente et des rapports d'impact structurés, pour arrêter un changement destructif avant la production.",
+          "L'historique reste auditable : snapshots avec checksum, migrations répétables, réconciliation de merges et support du rebase. Les rollbacks sont générés lorsqu'ils sont sûrs ; les changements irréversibles exigent une déclaration explicite au lieu d'un placeholder."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Contraintes",
+        "items": [
+          "Aucun runtime de migration à installer ou à versionner",
+          "Aucun script Python généré qui fait discrètement la mauvaise chose",
+          "Aucune dérive de schéma découverte en production",
+          "Migrations pouvant être générées dans CI sans connexion à une base de données"
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Bases de données prises en charge",
+        "columns": [
+          "Base de données",
+          "Round-trip",
+          "Notes"
+        ],
+        "rows": [
+          [
+            "PostgreSQL",
+            "Full",
+            "Colonnes identity/générées, partitioning, héritage, contraintes d’exclusion, types enum et index avancés."
+          ],
+          [
+            "MySQL",
+            "Full",
+            "Parité DDL, options engine/charset/collation, colonnes unsigned et on-update."
+          ],
+          [
+            "ClickHouse",
+            "Full",
+            "Famille MergeTree, moteurs répliqués, projections, dictionnaires, vues matérialisées et index skip."
+          ],
+          [
+            "SQLite",
+            "Full",
+            "WITHOUT ROWID/STRICT, colonnes générées et reconstruction de tables pour les ALTER non pris en charge."
+          ],
+          [
+            "MariaDB",
+            "Partial",
+            "Couche de schéma complète ; des lacunes subsistent pour les snapshots et l’ingénierie inverse."
+          ]
+        ],
+        "note": "Round-trip signifie modèle → SQL → base vivante → validation du modèle."
+      },
+      {
+        "kind": "prose",
+        "title": "État",
+        "body": [
+          "Alpha stable : pré-1.0 mais prêt pour la production. Aucun changement incompatible n'est publié sans une fenêtre de dépréciation de 3 mois."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Harnais de test",
+        "lead": "Le harnais de tests dbwarden-harness est une suite de validation autonome en boîte noire. Il installe DBWarden en tant que consommateur, appelle son CLI public, crée des instances de base de données réelles jetables via Testcontainers et vérifie que le SQL compilé produit le schéma correct. Il ne s'agit pas d'une suite de tests unitaires ; il s'agit d'une limite de certification de version.",
+        "label": "Couverture du harnais",
+        "items": [
+          {
+            "key": "Installation de PyPI",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Contrat CLI",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "5 fournisseurs de bases de données",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Demande de migration",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Application des contraintes",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Silence de régénération",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Restauration/récupération",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Découverte de plugins",
+            "val": "PASS",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "ecosystem",
+        "title": "Écosystème",
+        "intro": "Le compilateur est au centre d’un ensemble d’outils versionnés indépendamment.",
+        "repos": [
+          {
+            "name": "wlite",
+            "role": "CLI + fixations",
+            "desc": "Gestion déclarative du schéma SQLite sans la surcharge Python. La même philosophie que DBWarden, réduite à ce que SQLite et C peuvent faire seuls.",
+            "stack": [
+              "C++",
+              "Rust",
+              "Python",
+              "Go",
+              "C#",
+              "Zig"
+            ],
+            "href": "https://github.com/dbwarden-org/wlite"
+          },
+          {
+            "name": "libwlite",
+            "role": "bibliothèque C",
+            "desc": "Moteur SQLite de DBWarden extrait en tant que bibliothèque C autonome. Analyse les fichiers de modèle .wlite, gère les bases de données, compare les schémas et génère des migrations.",
+            "stack": [
+              "C11",
+              "SQLite3"
+            ],
+            "href": "https://github.com/dbwarden-org/libwlite"
+          },
+          {
+            "name": "dbwarden-harness",
+            "role": "Certification de sortie",
+            "desc": "Validation boîte noire autonome sur cinq bases de données réelles : installation PyPI, contrat CLI, application de migration, restauration et découverte de plugins.",
+            "stack": [
+              "Python",
+              "Docker",
+              "Testcontainers"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-harness"
+          },
+          {
+            "name": "dbwarden-redis",
+            "role": "Verrouillage des migrations",
+            "desc": "Verrouillage distribué des migrations avec Redis pour les déploiements concurrents.",
+            "stack": [
+              "Python",
+              "Redis"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-redis"
+          },
+          {
+            "name": "dbwarden-fastapi",
+            "role": "Intégration web",
+            "desc": "Dépendances de session FastAPI, health endpoints et routes de migration.",
+            "stack": [
+              "Python",
+              "FastAPI"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-fastapi"
+          },
+          {
+            "name": "dbwarden-ch-rbac",
+            "role": "RBAC ClickHouse",
+            "desc": "Rôles, utilisateurs, grants, politiques de lignes, quotas et profils de settings pour ClickHouse.",
+            "stack": [
+              "Python",
+              "ClickHouse"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-ch-rbac"
+          },
+          {
+            "name": "dbwarden-pgsql-types",
+            "role": "Types Postgres",
+            "desc": "ENUMs, domaines, types composites et séquences personnalisées.",
+            "stack": [
+              "Python",
+              "PostgreSQL"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-pgsql-types"
+          },
+          {
+            "name": "dbwarden-pgsql-rbac",
+            "role": "RBAC Postgres",
+            "desc": "Rôles, grants, privilèges par défaut et politiques de sécurité au niveau des lignes.",
+            "stack": [
+              "Python",
+              "PostgreSQL"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-pgsql-rbac"
+          },
+          {
+            "name": "dbwarden-pgsql-extensions",
+            "role": "Extensions Postgres",
+            "desc": "Extensions, event triggers, fonctions, triggers et paramètres de stockage.",
+            "stack": [
+              "Python",
+              "PostgreSQL"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-pgsql-extensions"
+          },
+          {
+            "name": "dbwarden-plugin-template",
+            "role": "Modèle de plugin",
+            "desc": "Échafaudage pour construire et tester de nouveaux plugins DBWarden.",
+            "stack": [
+              "Python"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-plugin-template"
+          },
+          {
+            "name": "dbwarden-seeds",
+            "role": "Données de seed",
+            "desc": "Gestion de seeds par code et fichiers avec apply et rollback.",
+            "stack": [
+              "Python"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-seeds"
+          },
+          {
+            "name": "dbwarden-sandbox",
+            "role": "Tests sandbox",
+            "desc": "Fournisseurs Testcontainers pour rejouer les migrations en sécurité.",
+            "stack": [
+              "Python",
+              "Docker"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-sandbox"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Nécessite SQLAlchemy 2.0+ (non compatible avec les anciens modèles)",
+          "La compilation de schéma ajoute une étape de construction par rapport à la migration d'exécution",
+          "L’approche déclarative signifie moins de contrôle sur l’ordre des migrations"
+        ]
+      }
+    ]
+  },
+  "trustsight": {
+    "id": "trustsight",
+    "name": "TrustSight",
+    "index": "02",
+    "category": "Sécurité · Analyse statique",
+    "accent": "#0092d2",
+    "accentLight": "#006498",
+    "summary": "Analyse de sécurité fondée sur des preuves pour les packages AUR. Il n'exécute jamais de code, ne récupère jamais les sources et applique le principe fail-closed lorsque la couverture est incomplète.",
+    "lede": "Un résultat propre n’est pas une preuve de sécurité. C'est une déclaration sur la détection.",
+    "stack": [
+      "Python 3.11+",
+      "Arch Linux",
+      "SQLite",
+      "Ed25519",
+      "libgit2"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/trustsight",
+        "primary": true
+      },
+      {
+        "label": "Documentation",
+        "href": "https://docs.trustsight.org"
+      },
+      {
+        "label": "trustsight.org",
+        "href": "https://trustsight.org"
+      },
+      {
+        "label": "Observateur",
+        "href": "https://watcher.trustsight.org"
+      },
+      {
+        "label": "Harnais",
+        "href": "https://harness.trustsight.org"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/trustsight/"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Règles documentées",
+        "value": "257"
+      },
+      {
+        "label": "URL sources",
+        "value": "186K"
+      },
+      {
+        "label": "Identités des responsables",
+        "value": "36K"
+      },
+      {
+        "label": "Version",
+        "value": "v0.25.0",
+        "repo": "emiliano-go/trustsight"
+      }
+    ],
+    "facts": [
+      "~7 000 essais",
+      "257 règles documentées",
+      "Lignes de base signées",
+      "Fédération IOC"
+    ],
+    "diagram": "PKGBUILD / diff → Analyse statique → Preuve + couverture → Évaluation des risques → Verdict",
+    "license": "MIT",
+    "meta": {
+      "title": "TrustSight | Emiliano G.O.",
+      "description": "Analyse de sécurité fondée sur des preuves pour les paquets AUR. N'exécute jamais de code. Fail-closed. 257 règles documentées."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "Les mises à jour du package AUR sont examinées par des humains lisant les différences PKGBUILD. Ce processus est lent, incohérent et rate les attaques structurelles : scripts shell redirigés, désactivation de la somme de contrôle, fautes de frappe, commandes obscurcies et reprises de main du responsable. Il n'existe aucun outil automatisé qui produit des preuves sans exécuter le package."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Pourquoi c'est dur",
+        "body": [
+          "La contrainte dure est de ne jamais exécuter de code. L'analyse statique des PKGBUILD signifie raisonner sur les scripts shell, l'injection de commandes, le typosquatting et les modèles de comportement du responsable sans rien exécuter.",
+          "La détection de clusters à l'échelle du corpus ajoute une autre couche : le suivi d'environ 186 000 URL sources et de 36 000 identités de responsables pour détecter les premiers signaux observés, les détournements d'orphelins et la cadence de publication accélérée. L'outil doit échouer fermé ; les preuves incomplètes ne doivent pas silencieusement devenir confidentielles."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Modèle de sécurité",
+        "label": "Invariants",
+        "items": [
+          {
+            "key": "Exécution PKGBUILD",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Réseau arbitraire",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Modification du système",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Perte de couverture",
+            "val": "EXPLICIT",
+            "tone": "neutral"
+          },
+          {
+            "key": "Analyse incomplète",
+            "val": "FAIL-CLOSED",
+            "tone": "fail"
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Catégories de détection",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Injection de commandes",
+            "body": "Scripts shell canalisés, commandes obscurcies, falsification de l'environnement de construction (LD_PRELOAD et pairs)."
+          },
+          {
+            "title": "Chaîne d'approvisionnement",
+            "body": "Somme de contrôle désactivée, swaps source URL, dépendances de build non épinglées, vérification GPG supprimée."
+          },
+          {
+            "title": "Typosquattage",
+            "body": "Le nom du package et la source-URL modifient la distance par rapport aux domaines forge connus et aux packages populaires."
+          },
+          {
+            "title": "Signaux du responsable",
+            "body": "Prise de contrôle non fiable, détournement d’orphelins, paquet obsolète réactivé, cadence de publication accélérée."
+          },
+          {
+            "title": "Détection de nouveauté",
+            "body": "URL et responsables consultés pour la première fois par rapport à une base de données de départ signée d'environ 186 000 URL sources et d'environ 36 000 identités."
+          },
+          {
+            "title": "Charges utiles de sabotage",
+            "body": "Bombes à fourche, effacement de disque, sabotage d'autorisation, mineurs de pièces ; distingue le bac à sable de construction du contexte système."
+          },
+          {
+            "title": "Attaques de codage",
+            "body": "Remplacements de bidi Unicode, points de code homoglyphes et modèles d'instructions dirigés par les réviseurs."
+          },
+          {
+            "title": "Correspondance IOC",
+            "body": "Indicateurs connus de mauvais par rapport aux lignes de base signées et fédérées du canal de publication."
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Analyse statique uniquement",
+            "body": "N'exécute jamais les PKGBUILD, ne récupère jamais les URL, s'exécute avant makepkg. L'outil est un outil SAST de par sa conception."
+          },
+          {
+            "title": "Des preuves, pas des preuves",
+            "body": "Chaque résultat est traçable à une ligne de différence spécifique, URL ou à un enregistrement de nouveauté. Le résultat est un rapport de preuves structuré, pas une porte."
+          },
+          {
+            "title": "Lignes de base signées",
+            "body": "Les graines de nouveauté et les lignes de base IOC sont livrées en tant qu'actifs de version GitHub signés, vérifiés par rapport à une clé de distribution épinglée lors de l'importation."
+          },
+          {
+            "title": "Profondeur de dépendance configurable",
+            "body": "Les dépendances AUR sont analysées comme des packages à part entière, à une profondeur configurable. Les lacunes de couverture restent explicites."
+          }
+        ]
+      },
+      {
+        "kind": "ecosystem",
+        "title": "Écosystème",
+        "intro": "TrustSight est un noyau composé de cinq satellites indépendants : mesure, recherche, triage, site public et flux d'observateurs en direct.",
+        "repos": [
+          {
+            "name": "trustsight",
+            "role": "Noyau · CLI · observateur",
+            "desc": "Le moteur d'analyse, le catalogue de règles, les lignes de base signées, les rapports de preuves déterministes et l'observateur AUR qui alimente le flux d'alertes publiques.",
+            "stack": [
+              "Python",
+              "SQLite",
+              "libgit2"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight"
+          },
+          {
+            "name": "trustsight-harness",
+            "role": "Mesure contradictoire",
+            "desc": "Transforme « un LLM trouvé N contournements » en campagnes reproductibles et dont les coûts sont suivis par rapport à une version épinglée. Expose également un serveur MCP pour les outils de flux et de vérification.",
+            "stack": [
+              "Python",
+              "Docker",
+              "pytest"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-harness"
+          },
+          {
+            "name": "trustsight-lab",
+            "role": "Recherche hors ligne",
+            "desc": "Recherche, classe et valide les améliorations des règles déterministes dans un arbre de travail jetable. Les propositions nécessitent un examen humain et les portes normales.",
+            "stack": [
+              "Python",
+              "uv",
+              "pytest"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-lab"
+          },
+          {
+            "name": "trustsight-triage-agent",
+            "role": "Triage des modèles locaux",
+            "desc": "Un processus, un modèle local. Triage FP/TP cité sur les alertes de l'observateur sans passerelle distante, file d'attente ou conteneur de tâches.",
+            "stack": [
+              "Python",
+              "Ollama",
+              "MCP"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-triage-agent"
+          },
+          {
+            "name": "trustsight-web",
+            "role": "Site produit",
+            "desc": "Site d'une seule page pour trustsight.org présentant le modèle d'examen axé sur les preuves : capacités, étalonnage, configuration et limites.",
+            "stack": [
+              "Preact",
+              "Vite"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-web"
+          },
+          {
+            "name": "trustsight-feed",
+            "role": "Flux d'alerte en direct",
+            "desc": "Archive consultable des alertes des observateurs sur Cloudflare Workers et D1, avec des explications par règle et des documents de preuve complets.",
+            "stack": [
+              "Workers",
+              "D1",
+              "Preact"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-feed"
+          }
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Vérification",
+        "lead": "Le harnais transforme « un LLM trouvé N contournements » en une mesure reproductible, vérifiable et suivie par les coûts par rapport à une version épinglée.",
+        "label": "Statuts du faisceau",
+        "items": [
+          {
+            "key": "détecté",
+            "val": "règle déclenchée",
+            "tone": "pass"
+          },
+          {
+            "key": "évasion_partielle",
+            "val": "une autre règle l'a attrapé",
+            "tone": "neutral"
+          },
+          {
+            "key": "échec_closed_catch",
+            "val": "écart de couverture bloqué",
+            "tone": "fail"
+          },
+          {
+            "key": "by-pass",
+            "val": "retourné UNFLAGGED",
+            "tone": "fail"
+          },
+          {
+            "key": "behavior_lost",
+            "val": "chaîne d'attaque non prouvée",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Ce qu'il ne peut pas voir",
+        "items": [
+          "Archives tar de versions amont malveillantes (audite le PKGBUILD, pas les binaires)",
+          "Attaques délibérément banales (pas de signal différentiel = invisible)",
+          "Attaques d'exécution (l'outil n'exécute jamais rien)",
+          "Attaques structurelles Zero Day (basées sur des modèles, calibrées sur le corpus)"
+        ]
+      }
+    ]
+  },
+  "rypipe": {
+    "id": "rypipe",
+    "name": "rypipe",
+    "index": "03",
+    "category": "Données · Cadre d'ingestion",
+    "accent": "#c96a50",
+    "accentLight": "#9b4a32",
+    "summary": "Framework d'ingestion réutilisable. Cœur Rust, bindings Python. Ajouter un nouveau format en implémentant deux traits.",
+    "lede": "Les adaptateurs restent petits. Le moteur possède la planification, la mémoire limitée et l'exportation Arrow.",
+    "stack": [
+      "Rust 1.78+",
+      "Python 3.10+",
+      "PyO3",
+      "Apache Arrow",
+      "mmap"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/rypipe",
+        "primary": true
+      },
+      {
+        "label": "Documentation",
+        "href": "https://rypipe.emiliano-go.com"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/rypipe/"
+      },
+      {
+        "label": "crxml",
+        "href": "https://github.com/emiliano-go/crxml"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Essais",
+        "value": "476"
+      },
+      {
+        "label": "Parallèle (crxml)",
+        "value": "7,63 Go/s",
+        "tone": "pass"
+      },
+      {
+        "label": "Documentation",
+        "value": "15,9K lignes"
+      },
+      {
+        "label": "Publié",
+        "value": "PyPI + crates.io",
+        "tone": "pass"
+      }
+    ],
+    "facts": [
+      "476 tests",
+      "7,63 Go/s borné",
+      "4,23 Go/s RAM complète",
+      "2,12 Go/s xmlstreamer-ng"
+    ],
+    "diagram": "Adaptateur de format (Splitter + RecordParser) → Moteur parallèle → Plan fusionné → Arrow",
+    "license": "MIT",
+    "meta": {
+      "title": "rypipe | Emiliano G.O.",
+      "description": "Moteur d'ingestion Rust réutilisable avec bindings Python. Adaptateurs à deux traits. 7,63 Go/s en parallèle borné sur crxml."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Qu'est-ce que rypipe",
+        "body": [
+          "rypipe est un framework d'ingestion réutilisable, pas un analyseur monoformat. Il sépare l'analyse spécifique au format de l'exécution indépendante du format. Ajoutez un nouveau format en implémentant deux petits traits : Splitter et RecordParser.",
+          "rypipe lui-même ne livre pas d'analyseurs. Ceux-ci vivent dans des packages d’adaptateurs séparés. Installez le moteur ainsi que les adaptateurs dont vous avez besoin. Le framework gère la planification parallèle, l'exécution limitée en mémoire, le refoulement des requêtes et un pipeline chaînable API."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "L'analyse des flux d'octets orientés lignes dans des formats en colonnes (Apache Arrow) nécessite généralement l'écriture d'un moteur complet par format. Chaque format possède son propre planificateur parallèle, son propre gestionnaire de mémoire et sa propre infrastructure d'exécution. Le résultat est un effort dupliqué et des caractéristiques de performances incohérentes entre les formats."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Pourquoi c'est dur",
+        "body": [
+          "La difficulté consiste à séparer l'analyse spécifique au format (deux petits traits) de l'exécution indépendante du format (planification parallèle, mémoire limitée, refoulement de requêtes, exportation Arrow sans copie) tout en maintenant le débit à la bande passante mémoire. La suite de tests de contrat d'adaptateur vérifie que tout adaptateur produit une sortie identique dans les modes d'exécution monothread, parallèle et limité."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Débit mesuré",
+        "body": [
+          "Le débit dépend de l'adaptateur et de la charge. Derniers benchmarks sur un Ryzen 7 5800X : crxml atteint 4,23 Go/s en RAM complète et 7,63 Go/s en mode borné avec schéma explicite sur un rapport de 533 Mo ; xmlstreamer-ng atteint 2,12 Go/s en parallèle (8 threads) et 1,36 Go/s en parallèle borné sur un flux de 128 Mio."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Contraintes",
+        "items": [
+          "Mémoire limitée : impossible de charger des fichiers entiers dans RAM",
+          "L'exécution parallèle doit évoluer linéairement avec les cœurs",
+          "Les étapes du pipeline doivent fusionner dans la boucle d'analyse (pas d'aller-retour Python)",
+          "L'adaptateur API doit être minimal : deux caractéristiques, pas un moteur complet"
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Modèle d'adaptateur à deux traits",
+            "body": "L'ajout d'un nouveau format nécessite l'implémentation de Splitter et RecordParser. Le moteur gère tout le reste."
+          },
+          {
+            "title": "Évaluation du prédicat en premier",
+            "body": "Les filtres descendent dans la boucle d'analyse Rust. Les lignes qui échouent sont rejetées avant la création d'un objet Python."
+          },
+          {
+            "title": "Prédiction de mise en page via memcmp",
+            "body": "Prédit la structure des lignes à partir des modèles d'octets, en ignorant la découverte des colonnes lorsque le schéma est connu."
+          },
+          {
+            "title": "Exportation Arrow sans copie",
+            "body": "Les données sont déplacées des tampons d'analyse directement vers les tableaux Arrow sans copies intermédiaires."
+          }
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Origine",
+        "body": [
+          "rypipe a été initialement développé en tant que moteur d'ingestion pour crxml, un adaptateur Crystal Reports XML. La conception du moteur, les caractéristiques de performance et le API ont été façonnés par l'utilisation en production avec crxml. crxml est l'adaptateur de référence qui a fait ses preuves : schémas imbriqués complexes, fichiers volumineux, traitement parallèle et filtrage avancé."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Les adaptateurs doivent être écrits par format (pas un analyseur universel)",
+          "Le noyau Rust ajoute de la complexité à la construction par rapport au Python pur",
+          "Le schéma doit être connu à l'avance pour un débit maximal"
+        ]
+      }
+    ]
+  },
+  "postal": {
+    "id": "postal",
+    "name": "postal",
+    "index": "04",
+    "category": "Bureau natif · Protocole de messagerie",
+    "accent": "#2e9e6b",
+    "accentLight": "#1f6f4a",
+    "summary": "Un client WhatsApp natif autonome qui parle directement le protocole multi-périphérique. Pas de visualisation Web, pas de téléchargement forcé de l'historique.",
+    "lede": "SQLite est l'archive durable. RAM est une fenêtre délimitée. La synchronisation de l'historique est une décision du programme.",
+    "stack": [
+      "Rust",
+      "Tauri 2",
+      "Svelte 5",
+      "SQLite",
+      "MIT"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/postal",
+        "primary": true
+      },
+      {
+        "label": "Version v0.1.0",
+        "href": "https://github.com/emiliano-go/postal/releases/tag/v0.1.0"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Tests Rust",
+        "value": "352"
+      },
+      {
+        "label": "Tests frontaux",
+        "value": "66"
+      },
+      {
+        "label": "Total LOC",
+        "value": "~68K"
+      },
+      {
+        "label": "Version",
+        "value": "v0.1.0"
+      }
+    ],
+    "diagram": "Lien multi-appareil → WhatsApp-rust → Boucle d'événements → StoreWorker → Fenêtre SQLite + RAM → Tauri → Svelte",
+    "license": "MIT",
+    "meta": {
+      "title": "postal | Emiliano G.O.",
+      "description": "Client multi-appareils natif WhatsApp sans vue Web. Mémoire limitée, synchronisation de l'historique opt-in, archive SQLite durable. 0.3% inactif CPU."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "L'encapsulation de WhatsApp Web oblige le client à télécharger et à conserver l'intégralité de l'historique des messages du compte. Cela représente des dizaines de gigaoctets sur le disque, plusieurs gigaoctets de RAM et des performances qui se dégradent à mesure que l'historique grandit. Le protocole lui-même n’exige rien de tout cela."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Protocole natif, pas de webview",
+            "body": "Construit sur WhatsApp-rust épinglé sur une révision git plus récente que 0.7.0 pour l'admission de synchronisation de l'historique. La seule vue Web affiche la propre interface utilisateur de Postal."
+          },
+          {
+            "title": "La synchronisation de l'historique est facultative",
+            "body": "Le couplage extrait uniquement la fenêtre récente. L'historique complet (jusqu'à 10 000 jours, si le téléphone le permet) est demandé explicitement dans les paramètres."
+          },
+          {
+            "title": "Disque et RAM découplés",
+            "body": "SQLite est une archive durable ; la conversation ouverte conserve une fenêtre de message limitée (500 par défaut, 50-2 000). L'expulsion ne supprime jamais les lignes de disque."
+          },
+          {
+            "title": "Accès au magasin sérialisé",
+            "body": "Une porte StoreWorker détient un bail exclusif sur chaque point de sauvegarde, de sorte que les lots en direct et historiques ne s'affrontent jamais pendant que le travail en arrière-plan attend."
+          }
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Mesuré par rapport à un client WebView",
+        "lead": "Même compte, même machine.",
+        "label": "Comparaison",
+        "items": [
+          {
+            "key": "Inactif CPU",
+            "val": "~0.3% contre ~200%",
+            "tone": "pass"
+          },
+          {
+            "key": "Mémoire",
+            "val": "~600 Mo contre 2.2 → 23 Go",
+            "tone": "pass"
+          },
+          {
+            "key": "Histoire au jumelage",
+            "val": "aucun contre ~20 Go",
+            "tone": "pass"
+          },
+          {
+            "key": "Base de données de session compactée",
+            "val": "97 Mo → 5.8 Mo",
+            "tone": "pass"
+          },
+          {
+            "key": "Lignes préservées",
+            "val": "399 620",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Les bases de données, les supports et les sauvegardes sont en texte brut sur le disque ; le cryptage est un travail ouvert",
+          "Les versions sont suspendues jusqu'à ce qu'elles couvrent toutes les plates-formes prises en charge ; les installateurs construisent à partir du maître",
+          "Pas encore d'appels, d'icône de barre d'état, de mises à jour de statut, de communautés ou d'albums"
+        ]
+      }
+    ]
+  },
+  "neurafly": {
+    "id": "neurafly",
+    "name": "neurafly",
+    "index": "05",
+    "category": "Terminal audio · Neurosciences computationnelles",
+    "accent": "#d45f86",
+    "accentLight": "#a33458",
+    "summary": "Entrée audio réelle, activation de vrais neurones, temps réel. Un visualiseur terminal connecté au véritable connectome du cerveau entier FlyWire.",
+    "lede": "138 333 neurones d'intégration et de déclenchement qui fuient et 2 052 622 synapses pondérées restituées sous forme de disque vivant en braille.",
+    "stack": [
+      "Rust",
+      "TUI / Braille",
+      "Audio DSP",
+      "FlyWire Connectome",
+      "MIT"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/neurafly",
+        "primary": true
+      },
+      {
+        "label": "crates.io",
+        "href": "https://crates.io/crates/neurafly"
+      },
+      {
+        "label": "AUR",
+        "href": "https://aur.archlinux.org/packages/neurafly"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Neurones",
+        "value": "138,333"
+      },
+      {
+        "label": "Synapses",
+        "value": "2,052,622"
+      },
+      {
+        "label": "Tique de simulation",
+        "value": "100 Hz"
+      },
+      {
+        "label": "Données du Connectome",
+        "value": "18 MB"
+      }
+    ],
+    "diagram": "Audio → FFT 2048 pt → 24 bandes de journal → Réseau LIF (FlyWire v783) → Toile phosphorescente braille",
+    "license": "MIT",
+    "meta": {
+      "title": "neurafly | Emiliano G.O.",
+      "description": "Visualiseur audio de terminal piloté par le véritable connectome FlyWire : 138 333 neurones de pointe et 2 052 622 synapses, rendus en braille."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "Les visualiseurs audio synthétisent des formes à partir de données de fréquence. Le mouvement semble organique mais ne comporte aucune structure : des barres, des particules et des formes d'onde pilotées par les mêmes nombres FFT. neurafly couple à la place l'audio du système en direct à un véritable schéma de câblage biologique, de sorte que l'activité se propage, se répercute et se désintègre à travers une véritable topologie de cerveau de mouche."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Un vrai connectome, pas un modèle",
+            "body": "Le câblage provient de la version FlyWire v783 : 138 333 neurones et 2 052 622 synapses pondérées. Le signe inhibiteur suit les probabilités des neurotransmetteurs présynaptiques."
+          },
+          {
+            "title": "traitement de bande de style cava",
+            "body": "Un FFT de 2 048 points se plie en 24 bandes logarithmiques, chacune jugée par rapport à son propre plancher spectral roulant, avec un égaliseur à niveau sonore égal, un gain automatique et une porte de pointe."
+          },
+          {
+            "title": "Pipeline à tick fixe",
+            "body": "Quatre modules (audio, simulation, figure, canevas) partagent un tick de simulation fixe de 100 Hz, de sorte que chaque bande injecte du courant dans son propre sous-ensemble de neurones de manière déterministe."
+          },
+          {
+            "title": "Rendu natif du terminal",
+            "body": "Un tampon de phosphore flottant à une résolution de 2x4 sous-cellules se plie en braille et les couleurs proviennent exclusivement de ANSI 30-37, de sorte que le disque adopte le thème de l'utilisateur."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Linux uniquement (PipeWire/PulseAudio) et un terminal avec prise en charge du braille Unicode",
+          "Le connectome de 18 Mo est exclu de la caisse publiée, qui revient à un réseau synthétique",
+          "La régénération du réseau nécessite le fichier plume Zenodo et l'outil de prétraitement Python"
+        ]
+      }
+    ]
+  },
+  "easeo": {
+    "id": "easeo",
+    "name": "easeo",
+    "index": "06",
+    "category": "Métadonnées SEO · SDK multilingue",
+    "accent": "#a06ad9",
+    "accentLight": "#6b2fa0",
+    "summary": "Un générateur de métadonnées déterministe SEO : un noyau Rust avec les API Python, Node.js et Rust.",
+    "lede": "Prend une configuration d'entité, d'itinéraire et de site, et renvoie le URL canonique, le titre, la description, les robots, Open Graph, les cartes Twitter et JSON-LD.",
+    "stack": [
+      "Rust core",
+      "Python",
+      "Node.js",
+      "JSON-LD",
+      "MIT"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/easeo",
+        "primary": true
+      },
+      {
+        "label": "Documentation",
+        "href": "https://easeo.emiliano-go.com/"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/easeo/"
+      },
+      {
+        "label": "npm",
+        "href": "https://www.npmjs.com/package/@easeo/core"
+      },
+      {
+        "label": "crates.io",
+        "href": "https://crates.io/crates/easeo-core"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Essais",
+        "value": "310"
+      },
+      {
+        "label": "Types d'entités",
+        "value": "11"
+      },
+      {
+        "label": "Intégrations",
+        "value": "10"
+      },
+      {
+        "label": "Pages de documentation",
+        "value": "64"
+      }
+    ],
+    "diagram": "Entité + route + config → normalisation URL → chaînes de repli → Meta / OG / Twitter / JSON-LD → contrat SHA-256",
+    "license": "MIT",
+    "meta": {
+      "title": "easeo | Emiliano G.O.",
+      "description": "Métadonnées déterministes SEO provenant d'un noyau Rust avec liaisons Python et Node.js. Sortie identique octet par octet dans toutes les langues."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "Les bibliothèques SEO ont tendance à mélanger la génération de métadonnées avec la notation, l'analyse de mots clés et la réécriture de contenu. La sortie varie d'une exécution à l'autre, ce qui rend difficile le test d'instantané, le hachage, le cache ou la comparaison. Les plates-formes qui s'affichent dans plusieurs langues se retrouvent avec des charges utiles subtilement différentes par pile."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Un noyau, trois liaisons",
+            "body": "Toute la logique réside dans le noyau easeo. Python et Node.js intègrent le même moteur, et la suite de conformité multilingue affirme une sortie identique octet par octet."
+          },
+          {
+            "title": "Déterminisme pur",
+            "body": "Pas d'horodatage, de caractère aléatoire, de lecture d'environnement ou d'E/S cachées. Les mêmes entrées produisent toujours la même charge utile, la sortie peut donc être hachée et validée."
+          },
+          {
+            "title": "Contrats SEO pour CI",
+            "body": "build_seo_contract émet une intention SEO lisible par machine qui peut être validée et validée sous forme de code, capturant les régressions de métadonnées en cours d'examen."
+          },
+          {
+            "title": "Registres d'extensions étendus",
+            "body": "HookRegistry et SchemaRegistry ajoutent un post-traitement et un JSON-LD personnalisé sans toucher au noyau, limité à une configuration plutôt que globale."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Pas un framework : les adaptateurs rassemblent les entrées, ils ne possèdent pas le cycle de vie des applications",
+          "Il ne s'agit pas d'un outil de notation, d'analyse de mots clés, d'exploration ou de réécriture de contenu.",
+          "Rend un extrait de code, pas un document complet ; statut de version alpha"
+        ]
+      }
+    ]
+  },
+  "clickvault": {
+    "id": "clickvault",
+    "name": "ClickVault",
+    "index": "07",
+    "category": "Sécurité · Plugin Vault",
+    "accent": "#f5c81b",
+    "accentLight": "#785f00",
+    "summary": "Plugin du moteur de secrets de base de données HashiCorp Vault pour ClickHouse. Informations d'identification dynamiques, rotation des mots de passe, DDL compatible avec le cluster.",
+    "lede": "Crée des utilisateurs ClickHouse de courte durée à la demande et alterne les mots de passe selon un calendrier.",
+    "stack": [
+      "Go 1.26+",
+      "Vault SDK",
+      "ClickHouse",
+      "Database secrets"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/clickvault",
+        "primary": true
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Lignes sources",
+        "value": "1,017"
+      },
+      {
+        "label": "Lignes de test",
+        "value": "979"
+      },
+      {
+        "label": "Codecov",
+        "value": "85.4%",
+        "tone": "pass"
+      },
+      {
+        "label": "CI appliqué",
+        "value": "YES",
+        "tone": "pass"
+      }
+    ],
+    "diagram": "Vault API → Plugin ClickVault → Dynamique / Statique / Rotation → Cluster ClickHouse (ON CLUSTER DDL)",
+    "license": "MIT",
+    "meta": {
+      "title": "ClickVault | Emiliano G.O.",
+      "description": "Plugin HashiCorp Vault pour ClickHouse. Identifiants dynamiques, rotation des mots de passe et DDL cluster-aware."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "ClickHouse ne prend pas en charge les informations d'identification dynamiques natives dans le moteur de secrets de base de données de Vault. Les équipes gérant des clusters ClickHouse ont besoin d'informations d'identification de courte durée et d'une rotation automatisée des mots de passe sans intervention manuelle."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Pourquoi c'est dur",
+        "body": [
+          "Les clusters ClickHouse utilisent DDL distribué (ON CLUSTER) que la plupart des plugins Vault ne gèrent pas. La création d'utilisateur dynamique doit être atomique : si les autorisations échouent, l'utilisateur partiellement créé doit être nettoyé. La rotation des mots de passe doit fonctionner sur les moteurs répliqués et non répliqués. Le plug-in doit implémenter correctement l'interface dbplugin.Database de Vault tout en gérant les différences de syntaxe spécifiques à ClickHouse."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Modèle de sécurité",
+        "label": "Invariants",
+        "items": [
+          {
+            "key": "Injection SQL",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Accès simultané",
+            "val": "MUTEX",
+            "tone": "pass"
+          },
+          {
+            "key": "Création partielle",
+            "val": "CLEANUP",
+            "tone": "pass"
+          },
+          {
+            "key": "Collision de nom d'utilisateur",
+            "val": "GUARDED",
+            "tone": "pass"
+          },
+          {
+            "key": "Prise en charge de TLS",
+            "val": "YES",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "DDL compatible avec les clusters",
+            "body": "L'insertion ON CLUSTER garantit que DDL se propage à travers le cluster. Gère les tables de moteur répliquées et non répliquées."
+          },
+          {
+            "title": "Vérification des privilèges",
+            "body": "La vérification de la connexion vérifie que le compte de service dispose des privilèges requis avant d'accepter la configuration."
+          },
+          {
+            "title": "Nettoyage en cas d'échec",
+            "body": "Si la création d'un utilisateur réussit partiellement (par exemple, les autorisations échouent), le plugin supprime l'utilisateur partiellement créé pour éviter les comptes orphelins."
+          }
+        ]
+      }
+    ]
+  },
+  "dsig": {
+    "id": "dsig",
+    "name": "dsig",
+    "index": "08",
+    "category": "Sécurité · Cryptographie",
+    "accent": "#7387e0",
+    "accentLight": "#4d5ec0",
+    "summary": "Signature de message GPG pour Vencord / Vesktop. Attestation de paternité pour chaque message.",
+    "lede": "Signez les messages Discord avec votre clé GPG. Vérifie la paternité, empêche l’usurpation d’identité. Formats de pied de page compacts et invisibles.",
+    "stack": [
+      "TypeScript",
+      "GPG / OpenPGP",
+      "Vencord",
+      "Discord"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/dsig",
+        "primary": true
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Essais",
+        "value": "142"
+      },
+      {
+        "label": "Lignes de test",
+        "value": "1,817"
+      },
+      {
+        "label": "Lignes sources",
+        "value": "3,782"
+      },
+      {
+        "label": "Taille du pied de page",
+        "value": "113 chars"
+      }
+    ],
+    "diagram": "Message → Canonicaliser (NFC, CRLF → LF) → Signature OpenPGP → Encodage invisible → Pied de page",
+    "license": "GPL-3.0",
+    "meta": {
+      "title": "dsig | Emiliano G.O.",
+      "description": "Signature de message GPG pour Vencord / Vesktop. Attestation de paternité avec encodage compact ou invisible."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "Discord n'a pas de signature de message native. N'importe qui peut usurper l'identité de n'importe qui en copiant son nom d'affichage et son avatar. Il n’existe aucun moyen cryptographique de vérifier qu’un message a bien été écrit par l’auteur revendiqué."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Modèle de menace",
+        "label": "Invariants",
+        "items": [
+          {
+            "key": "Falsification des messages",
+            "val": "DETECTED",
+            "tone": "pass"
+          },
+          {
+            "key": "Usurpation d'identité d'auteur",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Rejouer les attaques",
+            "val": "NONCE",
+            "tone": "pass"
+          },
+          {
+            "key": "Compromis clé",
+            "val": "OUT DE SCOPE",
+            "tone": "fail"
+          },
+          {
+            "key": "isolement de l'agent gpg",
+            "val": "THROWAWAY GNUPGHOME",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Encodage invisible",
+            "body": "Les signatures sont codées sous forme de caractères invisibles Unicode (espaces de largeur nulle, non-participants) ajoutés au message, testés par rapport au comportement réel du client Discord."
+          },
+          {
+            "title": "Canonisation du contenu",
+            "body": "Normalisation NFC, conversion CRLF en LF, réduction des espaces. Empêche les contournements triviaux via la normalisation Unicode ou les différences de fin de ligne."
+          },
+          {
+            "title": "isolement de l'agent gpg",
+            "body": "La vérification utilise un GNUPGHOME jetable pour empêcher la vérification d'accéder à la clé de signature. Chaque opération de vérification s'exécute de manière isolée."
+          },
+          {
+            "title": "Conçu uniquement pour ordinateur de bureau",
+            "body": "Les navigateurs Web ne peuvent pas accéder à gpg-agent. Le plugin est uniquement destiné au bureau (Vencord/Vesktop) car le modèle de sécurité nécessite un accès par clé locale."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Ordinateur de bureau uniquement (le Web ne peut pas accéder à gpg-agent)",
+          "Nécessite la configuration de la paire de clés GPG",
+          "L'encodage invisible peut être supprimé par certains clients",
+          "Le compromis clé est hors de portée (limitation standard GPG)"
+        ]
+      }
+    ]
+  },
+  "xmlstreamer-ng": {
+    "id": "xmlstreamer-ng",
+    "name": "xmlstreamer-ng",
+    "index": "09",
+    "category": "Données · Flux XML",
+    "accent": "#3f9e8a",
+    "accentLight": "#26695c",
+    "summary": "Streamer de flux XML à isolation des défauts construit sur rypipe, adapté de carlosplanchon/xmlstreamer. Mémoire bornée, récupération conservatrice et échecs partiels explicites.",
+    "lede": "Une adaptation de carlosplanchon/xmlstreamer basée sur rypipe qui diffuse des flux XML volumineux ou endommagés vers des enregistrements Python sans masquer les éléments corrompus.",
+    "stack": [
+      "Python 3.11+",
+      "Rust (rypipe-core)",
+      "Apache Arrow",
+      "PyO3"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/xmlstreamer-ng",
+        "primary": true
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/xmlstreamer-ng/"
+      },
+      {
+        "label": "rypipe",
+        "href": "https://github.com/emiliano-go/rypipe"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Débit parallèle",
+        "value": "15,8M lignes/s",
+        "tone": "pass"
+      },
+      {
+        "label": "Débit",
+        "value": "2,12 Go/s",
+        "tone": "pass"
+      },
+      {
+        "label": "Parallèle borné",
+        "value": "10,2M lignes/s"
+      },
+      {
+        "label": "Pic RSS (borné)",
+        "value": "202 Mo"
+      }
+    ],
+    "facts": [
+      "15,8M lignes/s",
+      "2,12 Go/s",
+      "10,2M lignes/s borné",
+      "PyPI"
+    ],
+    "diagram": "HTTP / GZIP / fichier → tokenizer d'octets → analyseur Rust par élément → enregistrements plats ou lots Arrow",
+    "license": "MIT",
+    "meta": {
+      "title": "xmlstreamer-ng | Emiliano G.O.",
+      "description": "Streamer XML à isolation des fautes sur rypipe, adapté de carlosplanchon/xmlstreamer. Mémoire bornée et récupération conservatrice."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "Les flux XML volumineux provenant de systèmes distants sont souvent mal formés, mal codés ou interrompus en cours de transit. Un analyseur strict perd l'intégralité du document au profit d'un seul enregistrement brisé ; un analyseur de récupération agressif peut réécrire silencieusement le balisage endommagé dans des enregistrements qui n'ont jamais existé.",
+          "xmlstreamer-ng est conçu pour l'espace entre ces deux comportements : livrer chaque élément intact avant et après une corruption localisée, ne jamais inventer d'enregistrements et signaler ce qui a été supprimé au lieu de présenter un traitement incomplet comme un succès."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Origine",
+        "body": [
+          "xmlstreamer-ng est basé sur [carlosplanchon/xmlstreamer](https://github.com/carlosplanchon/xmlstreamer) de Carlos A. Planchón (MIT) et conserve son approche de streaming par élément pour les flux XML volumineux ou endommagés. Le moteur d'analyse repose sur [rypipe](https://github.com/emiliano-go/rypipe) (rypipe-core), qui fournit le tokenizer d'octets, le splitter, l'analyse par élément et l'exécution Arrow."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Pourquoi c'est dur",
+        "body": [
+          "La reprise doit être conservatrice sans devenir inutile. Les balises séparatrices doivent être reconnues à l'intérieur des commentaires, CDATA, des instructions de traitement et DOCTYPE sans jamais être inventées par eux. La détection de codage doit vaincre une déclaration XML mensongère sans corrompre un UTF-8 valide. La mémoire limitée doit être conservée tandis que les éléments, les sections de balisage et les descripteurs peuvent chacun être plus grands que le tampon de lecture.",
+          "Le chemin en colonnes ajoute un deuxième contrat : le même moteur Rust doit produire des lots Arrow sous projection, filtrage et exécution parallèle, avec une sémantique de suppression d'éléments mal formés identique au chemin de streaming."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Débit",
+        "body": [
+          "Derniers benchmarks sur un Ryzen 7 5800X avec un flux de 128 Mio et 951 898 éléments : XmlSource en parallèle (8 threads) atteint 15,8M lignes/s et 2,12 Go/s ; le streaming parallèle borné atteint 10,2M lignes/s et 1,36 Go/s avec 202 Mo de RSS maximal."
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Résultats du benchmark",
+        "columns": [
+          "Moteur",
+          "Mode",
+          "items/s",
+          "Mo/s",
+          "RSS max"
+        ],
+        "rows": [
+          [
+            "xmlstreamer-ng",
+            "XmlSource parallèle (8 threads)",
+            "15,8M",
+            "2122,6",
+            "283 Mo"
+          ],
+          [
+            "xmlstreamer-ng",
+            "Parallèle borné (8 threads)",
+            "10,2M",
+            "1364,7",
+            "202 Mo"
+          ],
+          [
+            "xmlstreamer-ng",
+            "XmlSource colonnaire",
+            "4,6M",
+            "621,6",
+            "297 Mo"
+          ],
+          [
+            "quick-xml (natif)",
+            "parse + comptage seulement",
+            "3,2M",
+            "433,0",
+            "14 Mo"
+          ],
+          [
+            "lxml iterparse",
+            "dicts par élément",
+            "304k",
+            "40,8",
+            "26 Mo"
+          ],
+          [
+            "xmlstreamer (original)",
+            "dicts par élément",
+            "103k",
+            "13,8",
+            "34 Mo"
+          ]
+        ],
+        "note": "Flux synthétique de 128 Mio, 951 898 éléments, médiane de 5 exécutions sur un Ryzen 7 5800X. Les lignes natives ne font que parser et compter ; elles ne construisent pas d'enregistrements."
+      },
+      {
+        "kind": "cards",
+        "title": "Décisions clés",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "Deux API, un moteur",
+            "body": "StreamInterpreter conserve le contrat de récupération par article ; XmlSource expose la projection, le filtrage et les lots parallèles Arrow à partir du même analyseur Rust."
+          },
+          {
+            "title": "Comptabilisation des échecs explicites",
+            "body": "Les éléments mal formés sont enregistrés et comptés, jamais réparés en silence. Les statistiques de clôture distinguent les dommages causés au flux des éléments supprimés par le filtre de l'appelant."
+          },
+          {
+            "title": "Reprise conservatrice",
+            "body": "La corruption contenue à l'intérieur d'un objet ne laisse tomber que cet objet. Les sections qui ne se ferment jamais sont un choix documenté via Sections(on_limit=...), annoncé avec un avertissement."
+          }
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Garanties",
+        "label": "Contracter",
+        "items": [
+          {
+            "key": "Article endommagé",
+            "val": "DROPPED + WARNED",
+            "tone": "pass"
+          },
+          {
+            "key": "Voisins valides",
+            "val": "DELIVERED",
+            "tone": "pass"
+          },
+          {
+            "key": "Des disques inventés",
+            "val": "NEVER",
+            "tone": "pass"
+          },
+          {
+            "key": "Mémoire",
+            "val": "BOUNDED",
+            "tone": "pass"
+          },
+          {
+            "key": "Encoder les mensonges",
+            "val": "CONTENT WINS",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "La balise de séparation ne doit pas s'emboîter à l'intérieur d'elle-même",
+          "Les éléments sont construits à partir du texte de l'élément et non des attributs XML.",
+          "Une entrée non fiable et bien formée peut être mieux servie par lxml.iterparse",
+          "Le API par article est plus lent que l'adaptateur en colonne/parallèle"
+        ]
+      }
+    ]
+  },
+  "eclipse": {
+    "id": "eclipse",
+    "name": "eclipse",
+    "index": "10",
+    "category": "ML · Recherche sur la distillation",
+    "accent": "#d98a4a",
+    "accentLight": "#8f4d1b",
+    "summary": "Appareil de distillation au niveau octet pour Ornith 1.5 9B. Cibles EOT exactes, un étudiant de 48 Mo et une étude de faisabilité reproductible.",
+    "lede": "Transforme la distribution de jetons d'un enseignant 9B en cibles exactes d'octets/fin de jeton, puis mesure ce qu'un élève de petit octet apprend réellement.",
+    "stack": [
+      "Python",
+      "PyTorch",
+      "llama.cpp",
+      "CUDA"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/eclipse",
+        "primary": true
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Tenu à l'écart BPB",
+        "value": "0.818"
+      },
+      {
+        "label": "Enseignant KL",
+        "value": "0.317"
+      },
+      {
+        "label": "Top 1 observé",
+        "value": "0.865"
+      },
+      {
+        "label": "Étudiant octet",
+        "value": "48M"
+      }
+    ],
+    "facts": [
+      "BPB 0.818",
+      "KL 0.317",
+      "top-1 0.865",
+      "26,2M positions"
+    ],
+    "diagram": "Logits de l'enseignant (llama.cpp) → trie d'octets → cibles EOT exactes → élève de 48 Mo → évaluation BPB / KL",
+    "license": "MIT",
+    "meta": {
+      "title": "eclipse | Emiliano G.O.",
+      "description": "Distillation au niveau octet pour Ornith 1.5 9B : cibles EOT exactes et un étudiant de 48M paramètres."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "La distillation au niveau du jeton suppose que l’élève partage le tokeniseur de l’enseignant. Ce n’est pas le cas d’un étudiant au niveau octet, donc la distribution du jeton suivant de l’enseignant doit être convertie en une distribution de l’octet suivant avec un état terminal bien défini.",
+          "Ce projet teste si cette conversion peut être exacte, si un étudiant en petits octets peut en tirer des leçons et si les cibles de fin de jeton battent Marginalize-It et l'entropie croisée des octets simples dans une comparaison contrôlée."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Configuration",
+        "body": [
+          "Le teacher est Ornith-1.5-9B, un modèle hybride Qwen3.5 de 9B, quantifié en Q5_K_M pour l'extraction massive et Q8_0 pour l'audit de précision. Le student est un Transformer byte dense de ~48M avec un contexte de 1 024 octets et un vocabulaire de 260 symboles. Le corpus fait ~20 Mo de texte et de code normalisés NFC : 6 592 718 tokens d'entraînement et 136 916 de validation. L'entraînement tourne sur une seule RTX 3070 8 Go."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Méthode",
+        "body": [
+          "Les logs de l'enseignant sont diffusés à partir de llama.cpp et sont convertis par rapport à un essai d'octets du vocabulaire de 248 000 jetons dans l'ordre DFS, de sorte que chaque sous-arbre de préfixes constitue une plage contiguë. Les distributions d'octets proviennent de masses de sous-arbres enfants ; le nœud terminal reçoit p(token) / mass(prefix) sur le symbole EOT.",
+          "Marginaliser-Il est dérivé de la même ligne à 260 dimensions en mettant à zéro EOT et en renormalisant. Les logits bruts ne sont jamais conservés ; les cibles sont stockées sous forme de fragments fp16 avec des étiquettes explicites de symbole suivant."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Conversion des cibles",
+        "body": [
+          "Une somme cumulée en float32 du convertisseur Python pouvait mal allouer les cibles de préfixes rares (jusqu’à 0,789 contre une référence float64). Le convertisseur C++ est le chemin de référence et correspond au float64 à 1,3e-7.",
+          "L’extraction 1M a produit 4 014 129 positions à partir de 1 000 497 tokens du teacher : 2,087 Go, 431 tokens/s, 38,7 minutes. Cinq positions sous-débordent en fp16 ; le shard valide avec des sommes de lignes et des comptes exacts."
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Comparaison des objectifs",
+        "columns": [
+          "Objectif",
+          "BPB val",
+          "BPB incl. EOT",
+          "KL teacher",
+          "Top-1"
+        ],
+        "rows": [
+          [
+            "EOT",
+            "0,860",
+            "0,921",
+            "0,348",
+            "0,862"
+          ],
+          [
+            "Marginalize-It",
+            "0,771",
+            "6,418",
+            "0,404",
+            "0,637"
+          ],
+          [
+            "Byte CE",
+            "0,872",
+            "0,937",
+            "0,488",
+            "0,865"
+          ]
+        ],
+        "note": "1M tokens, 2 000 pas, 300 653 octets de validation. Marginalize-It gagne le BPB de contenu en supprimant la masse EOT, ce qui le rend non déployable."
+      },
+      {
+        "kind": "table",
+        "title": "Documents retenus",
+        "columns": [
+          "Objectif",
+          "BPB",
+          "BPB incl. EOT",
+          "KL teacher",
+          "Top-1",
+          "Préfixe greedy"
+        ],
+        "rows": [
+          [
+            "EOT",
+            "1,362",
+            "1,473",
+            "0,617",
+            "0,790",
+            "2,5"
+          ],
+          [
+            "Marginalize-It",
+            "1,228",
+            "6,562",
+            "3,287",
+            "0,583",
+            "2,9"
+          ],
+          [
+            "Byte CE",
+            "1,483",
+            "1,615",
+            "0,826",
+            "0,787",
+            "14,2"
+          ]
+        ],
+        "note": "36 documents inédits, 420 313 octets évalués. Les mêmes documents ont servi à choisir l’objectif : il n’y a pas de split de test intact."
+      },
+      {
+        "kind": "table",
+        "title": "Entraînement sur données complètes",
+        "columns": [
+          "Métrique",
+          "1M positions",
+          "26,2M positions"
+        ],
+        "rows": [
+          [
+            "BPB",
+            "1,276",
+            "0,818"
+          ],
+          [
+            "BPB incl. EOT",
+            "1,378",
+            "0,879"
+          ],
+          [
+            "KL teacher",
+            "0,575",
+            "0,317"
+          ],
+          [
+            "Top-1 observé du symbole suivant",
+            "0,801",
+            "0,865"
+          ],
+          [
+            "UTF-8 valide",
+            "0,90",
+            "1,00"
+          ],
+          [
+            "Préfixe greedy (octets)",
+            "6,35",
+            "7,25"
+          ]
+        ],
+        "note": "Run complet : 10 000 pas, ~3,1 époques. La courbe de validation s’aplatit après ~8k pas ; la documentation atteint BPB 0,764 et Python 1,143."
+      },
+      {
+        "kind": "cards",
+        "title": "Ce que ça prouve",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Le pipeline fonctionne de bout en bout",
+            "body": "Un étudiant de 48 Mo apprend la répartition des octets suivants de l'enseignant de 9 Mo sur des documents invisibles, et la conversion cible est exacte."
+          },
+          {
+            "title": "Le choix objectif compte",
+            "body": "EOT + 10 % CE bat le EOT pur et l'octet pur CE dans la comparaison contrôlée 1M, et EOT est la seule méthode avec des limites de jetons utilisables."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Limites",
+        "items": [
+          "Pas un modèle de langage utilisable : la génération libre accumule encore l'erreur (correspondance greedy de 7,25 octets)",
+          "Pas de split de test intact ; les 36 documents de validation ont aussi servi à choisir l'objectif",
+          "Le contexte du teacher (4 096 tokens) dépasse la fenêtre de 1 024 symboles du student, et les fenêtres peuvent traverser des documents",
+          "Validé sur une seule RTX 3070 8 Go ; l'échelle reste le levier dominant",
+          "Le résultat prouve le pipeline, pas le modèle"
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Travaux suivants",
+        "body": [
+          "Ensuite : une voie GPU 24 Go avec un student de 100–300M et des cibles à la volée, un objectif centré sur la génération, et une seconde graine ou un contrôle token-student. Le résultat actuel est une étude de faisabilité, pas un produit entraîné."
+        ]
+      }
+    ]
+  },
+  "kestrel": {
+    "id": "kestrel",
+    "name": "Kestrel",
+    "index": "11",
+    "category": "Distribution Linux · Systèmes de bureau",
+    "accent": "#8a7bd8",
+    "accentLight": "#4b3d99",
+    "summary": "Distribution Linux autonome basée sur Arch, avec Hyprland + Quickshell et un pont d'ordonnancement par tâche au niveau du noyau.",
+    "lede": "Un bureau façonné, un noyau et un vocabulaire d'ordonnancement : le compositeur, le terminal et les applications partagent une indication par tâche consommée par sched_ext.",
+    "stack": [
+      "Arch Linux",
+      "Hyprland",
+      "Quickshell",
+      "sched_ext",
+      "Btrfs",
+      "Shell"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/kestrel-distro/kestrel",
+        "primary": true
+      },
+      {
+        "label": "ISO",
+        "href": "https://github.com/kestrel-distro/iso"
+      },
+      {
+        "label": "Kernel",
+        "href": "https://github.com/kestrel-distro/kernel"
+      },
+      {
+        "label": "Documentation",
+        "href": "https://github.com/kestrel-distro/docs"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Base",
+        "value": "ARCH"
+      },
+      {
+        "label": "Bureau",
+        "value": "HYPRLAND + QUICKSHELL"
+      },
+      {
+        "label": "Installation",
+        "value": "COPIE DU ROOTFS"
+      },
+      {
+        "label": "Ordonnanceur",
+        "value": "scx_kestrel",
+        "tone": "pass"
+      }
+    ],
+    "facts": [
+      "Basée sur Arch",
+      "Hyprland + Quickshell",
+      "indication sched_ext 0–1024",
+      "MIT"
+    ],
+    "diagram": "Apps / Hyprland / foot → libkestrel-hint → kestrel-broker cgroups → linux-kestrel → scx_kestrel",
+    "license": "MIT",
+    "meta": {
+      "title": "Kestrel | Emiliano G.O.",
+      "description": "Distribution Linux autonome basée sur Arch avec Hyprland, Quickshell et un pont d'ordonnancement par tâche jusqu'à sched_ext."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problème",
+        "body": [
+          "La plupart des distributions donnent au bureau un ordonnanceur et s'arrêtent là. Le compositeur, le terminal et les applications ne partagent pas de vocabulaire pour la latence ou le débit ; le réglage passe par des priorités génériques et de la configuration empilée sur un système générique.",
+          "Kestrel part d'Arch et remplace les pièces qui décident du comportement du bureau : compositeur, shell, terminal, noyau et ordonnanceur sont construits et livrés comme un système apparié."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Qu'est-ce que Kestrel",
+        "body": [
+          "Kestrel est une distribution autonome basée sur Arch avec un seul bureau façonné : Hyprland, Quickshell, foot et fish. Le compositeur, le shell, le terminal, le noyau et l'ordonnanceur sont construits et livrés comme un système apparié.",
+          "Le noyau, linux-kestrel, est compilé avec Clang ThinLTO pour x86-64-v3, préemption complète, 1000 Hz, sched_ext, DAMON et NTSYNC. Hyprland, Quickshell et leur fermeture de bibliothèques partagées sont recompilés avec les mêmes flags, et le terminal est un fork de foot qui participe au chemin de l'indication."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Le pont d'ordonnancement",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Indication noyau",
+            "body": "linux-kestrel ajoute sched_ext_hint à struct sched_attr ; l'espace utilisateur fixe 0..1024 avec sched_setattr(2) et SCHED_FLAG_KESTREL_HINT (1ULL << 40)."
+          },
+          {
+            "title": "Bibliothèque utilisateur",
+            "body": "libkestrel-hint et kestrel-hint fixent et lisent l'indication pour le bureau, les terminaux, le navigateur et le travail en arrière-plan."
+          },
+          {
+            "title": "Broker",
+            "body": "kestrel-broker place les processus dans les cgroups kestrel-desktop, kestrel-term, kestrel-browser et kestrel-background."
+          },
+          {
+            "title": "Ordonnanceur",
+            "body": "scx_kestrel, un fork de scx_layered, lit l'indication via scx_bpf_task_hint et applique son jeu de couches ; scx_loader/scxctl changent d'ordonnanceur à l'exécution."
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Paquets lourds → noyau",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "Hyprland",
+            "body": "Le compositeur tourne dans kestrel-desktop. Le travail critique pour les frames porte une indication de latence avant le dispatch, afin que scx_kestrel puisse le préférer lorsque le bureau est chargé."
+          },
+          {
+            "title": "Quickshell",
+            "body": "La barre, le lanceur, les notifications, l'OSD et l'économiseur d'écran partagent la classe kestrel-desktop avec le compositeur ; l'UI interactive reste sur le même chemin de latence."
+          },
+          {
+            "title": "Navigateur Zen",
+            "body": "Les processus du navigateur tournent dans kestrel-browser. Les onglets au premier plan et l'entrée portent l'indication interactive ; les onglets en arrière-plan ne se disputent pas le même budget."
+          },
+          {
+            "title": "Terminal foot",
+            "body": "Un seul foot --server partagé tourne dans kestrel-term avec des clients par fenêtre ; la latence du terminal est isolée du navigateur et du travail de fond."
+          },
+          {
+            "title": "Travail de fond",
+            "body": "Les builds, l'indexation et les jobs d'agents vont dans kestrel-background, libres d'utiliser les cœurs inactifs sans voler de latence au bureau."
+          },
+          {
+            "title": "Noyau + ordonnanceur",
+            "body": "linux-kestrel expose l'indication 0..1024 via sched_ext ; scx_kestrel la lit avec scx_bpf_task_hint et la combine avec son jeu de couches."
+          }
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Pile d'optimisation",
+        "body": [
+          "Kestrel ne s'arrête pas aux indications de runtime. Hyprland et Quickshell sont compilés pour x86-64-v3 avec Clang ThinLTO, et leur fermeture partagée de bibliothèques Hyprland est reconstruite avec les mêmes flags au lieu du -O2 générique d'Arch, afin que le bureau ait un seul codegen. qt6-base-kestrel ajoute Wayland explicit sync (linux-drm-syncobj-v1), et linux-kestrel est Clang ThinLTO sur x86-64-v3 avec préemption complète, 1000 Hz, sched_ext, DAMON et NTSYNC.",
+          "Le résultat est un seul chemin d'optimisation depuis les processus lourds (Zen, Hyprland, Quickshell, foot, Obsidian, OBS), à travers leur cgroup et leur indication par tâche, jusqu'à l'ordonnanceur et au noyau. Chaque classe et chaque tâche portent une information explicite au lieu de dépendre de priorités ambiantes."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Ce qui est inclus",
+        "body": [
+          "Hyprland gère les fenêtres et Quickshell fournit la barre, le lanceur, les notifications, l'OSD, l'économiseur d'écran et les thèmes. foot tourne comme un serveur partagé dans le slice kestrel-term ; fish est le shell de connexion. Les applications incluent Neovim, Zen, Obsidian, LibreOffice, Kdenlive et OBS Studio.",
+          "Une seule CLI kestrel couvre les thèmes, les captures, le packaging, le matériel et la configuration système. Les mises à jour sont Arch rolling, avec un snapshot Btrfs automatique avant chaque upgrade et un rollback depuis le menu de démarrage. L'outillage agentique est installé via mise."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Mesure",
+        "body": [
+          "kestrel-bench s'exécute dans la VM et vérifie le pont d'indications de bout en bout : set/get, placement du broker et de foot, A/B 3x scx_bpfland vs scx_kestrel, matrice de workers de foot et échantillonnage du PSS maximal des processus livrés. Un changement qui ne bouge pas une métrique n'est pas publié."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "État",
+        "items": [
+          "L'ISO live compile et démarre le noyau Kestrel avec le bureau complet et le pont d'indications",
+          "Le pont d'indications (linux-kestrel + libkestrel-hint + scx_kestrel) est implémenté et exercé par kestrel-bench",
+          "Le bureau, les defaults foot/fish et la chaîne de thèmes sont en place",
+          "Le packaging et la documentation rattrapent encore l'implémentation"
+        ]
+      },
+      {
+        "kind": "ecosystem",
+        "title": "Écosystème Kestrel",
+        "intro": "La distribution est répartie entre des dépôts versionnés indépendamment qui partagent les mêmes contrats de noyau, de bureau et de packaging.",
+        "repos": [
+          {
+            "name": "iso",
+            "role": "Image live",
+            "desc": "Profil archiso, installeur et configurateur, helper de démarrage VM, signature et outils de release.",
+            "stack": [
+              "Shell",
+              "archiso"
+            ],
+            "href": "https://github.com/kestrel-distro/iso"
+          },
+          {
+            "name": "kernel",
+            "role": "Noyau",
+            "desc": "Recette linux-kestrel, patch de l’indication, intégration sched_ext et harness de benchmarks.",
+            "stack": [
+              "Shell",
+              "sched_ext"
+            ],
+            "href": "https://github.com/kestrel-distro/kernel"
+          },
+          {
+            "name": "desktop",
+            "role": "Fermeture de bureau",
+            "desc": "Méta-paquet kestrel-desktop et la fermeture appariée des bibliothèques Hyprland.",
+            "stack": [
+              "Shell",
+              "Hyprland"
+            ],
+            "href": "https://github.com/kestrel-distro/desktop"
+          },
+          {
+            "name": "foot",
+            "role": "Terminal",
+            "desc": "Fork de foot qui porte l'indication par tâche de Kestrel dans l'arbre de processus du terminal.",
+            "stack": [
+              "C"
+            ],
+            "href": "https://github.com/kestrel-distro/foot"
+          },
+          {
+            "name": "hyprland",
+            "role": "Compositeur",
+            "desc": "Paquet source lean de Hyprland compilé pour x86-64-v3 avec ThinLTO.",
+            "stack": [
+              "C++"
+            ],
+            "href": "https://github.com/kestrel-distro/hyprland"
+          },
+          {
+            "name": "quickshell",
+            "role": "Shell de bureau",
+            "desc": "Paquet source lean de Quickshell avec les correctifs d’interception QML.",
+            "stack": [
+              "C++",
+              "QML"
+            ],
+            "href": "https://github.com/kestrel-distro/quickshell"
+          },
+          {
+            "name": "scx",
+            "role": "Ordonnanceur",
+            "desc": "scx_kestrel, un fork de scx_layered, et le bake de son jeu de couches.",
+            "stack": [
+              "C",
+              "BPF"
+            ],
+            "href": "https://github.com/kestrel-distro/scx"
+          },
+          {
+            "name": "scx-loader",
+            "role": "Chargeur d'ordonnanceur",
+            "desc": "Fork du loader qui connaît scx_kestrel, packagé comme scx-tools-kestrel.",
+            "stack": [
+              "Rust"
+            ],
+            "href": "https://github.com/kestrel-distro/scx-loader"
+          },
+          {
+            "name": "qtbase",
+            "role": "Base Qt",
+            "desc": "Branche Qt base ajoutant Wayland explicit sync (linux-drm-syncobj-v1).",
+            "stack": [
+              "C++",
+              "Qt"
+            ],
+            "href": "https://github.com/kestrel-distro/qtbase"
+          },
+          {
+            "name": "packages",
+            "role": "Overlay de paquets",
+            "desc": "Overlay pacman [kestrel] signé et publié sur GitHub Pages.",
+            "stack": [
+              "Shell",
+              "pacman"
+            ],
+            "href": "https://github.com/kestrel-distro/packages"
+          },
+          {
+            "name": "docs",
+            "role": "Documentation",
+            "desc": "Architecture, packaging, publication et documentation des mainteneurs.",
+            "stack": [
+              "Markdown"
+            ],
+            "href": "https://github.com/kestrel-distro/docs"
+          }
+        ]
+      }
+    ]
+  }
+}

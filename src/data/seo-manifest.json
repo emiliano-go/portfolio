@@ -73,9 +73,9 @@
   },
   "/projects/": {
     "canonical": "https://emiliano-go.com/projects/",
-    "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+    "description": "Open source packages, tools, and experiments.",
     "og": {
-      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+      "description": "Open source packages, tools, and experiments.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -95,7 +95,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+        "description": "Open source packages, tools, and experiments.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Projects | Emiliano G.O.",
         "publisher": {
@@ -127,7 +127,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+      "description": "Open source packages, tools, and experiments.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -250,9 +250,9 @@
   },
   "/en/projects/": {
     "canonical": "https://emiliano-go.com/en/projects/",
-    "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+    "description": "Open source packages, tools, and experiments.",
     "og": {
-      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+      "description": "Open source packages, tools, and experiments.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -272,7 +272,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+        "description": "Open source packages, tools, and experiments.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Projects | Emiliano G.O.",
         "publisher": {
@@ -304,7 +304,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Open source packages, tools, and experiments by Emiliano G.O.",
+      "description": "Open source packages, tools, and experiments.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -493,9 +493,9 @@
   },
   "/en/work/rypipe/": {
     "canonical": "https://emiliano-go.com/en/work/rypipe/",
-    "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    "description": "Reusable Rust ingestion engine with Python bindings. Two-trait adapters. 7.63 GB/s bounded parallel on crxml.",
     "og": {
-      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "description": "Reusable Rust ingestion engine with Python bindings. Two-trait adapters. 7.63 GB/s bounded parallel on crxml.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -515,7 +515,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "description": "Reusable Rust ingestion engine with Python bindings. Two-trait adapters. 7.63 GB/s bounded parallel on crxml.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "rypipe | Emiliano G.O.",
         "publisher": {
@@ -553,11 +553,80 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "description": "Reusable Rust ingestion engine with Python bindings. Two-trait adapters. 7.63 GB/s bounded parallel on crxml.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "rypipe | Emiliano G.O."
+    }
+  },
+  "/en/work/kestrel/": {
+    "canonical": "https://emiliano-go.com/en/work/kestrel/",
+    "description": "Standalone Arch-based Linux distribution with Hyprland, Quickshell and a per-task scheduling bridge from kernel to sched_ext.",
+    "og": {
+      "description": "Standalone Arch-based Linux distribution with Hyprland, Quickshell and a per-task scheduling bridge from kernel to sched_ext.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Kestrel | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/kestrel/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Standalone Arch-based Linux distribution with Hyprland, Quickshell and a per-task scheduling bridge from kernel to sched_ext.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "Kestrel | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/kestrel/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/kestrel/",
+            "name": "Kestrel",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "Kestrel | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Standalone Arch-based Linux distribution with Hyprland, Quickshell and a per-task scheduling bridge from kernel to sched_ext.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Kestrel | Emiliano G.O."
     }
   },
   "/en/work/postal/": {
@@ -905,6 +974,144 @@
       "title": "dsig | Emiliano G.O."
     }
   },
+  "/en/work/xmlstreamer-ng/": {
+    "canonical": "https://emiliano-go.com/en/work/xmlstreamer-ng/",
+    "description": "Fault-isolating XML streamer built on rypipe, adapted from carlosplanchon/xmlstreamer. Bounded memory, conservative recovery.",
+    "og": {
+      "description": "Fault-isolating XML streamer built on rypipe, adapted from carlosplanchon/xmlstreamer. Bounded memory, conservative recovery.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "xmlstreamer-ng | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/xmlstreamer-ng/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Fault-isolating XML streamer built on rypipe, adapted from carlosplanchon/xmlstreamer. Bounded memory, conservative recovery.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "xmlstreamer-ng | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/xmlstreamer-ng/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/xmlstreamer-ng/",
+            "name": "xmlstreamer-ng",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "xmlstreamer-ng | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Fault-isolating XML streamer built on rypipe, adapted from carlosplanchon/xmlstreamer. Bounded memory, conservative recovery.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "xmlstreamer-ng | Emiliano G.O."
+    }
+  },
+  "/en/work/eclipse/": {
+    "canonical": "https://emiliano-go.com/en/work/eclipse/",
+    "description": "Byte-level distillation rig for Ornith 1.5 9B: exact End-Of-Token targets and a 48M byte student.",
+    "og": {
+      "description": "Byte-level distillation rig for Ornith 1.5 9B: exact End-Of-Token targets and a 48M byte student.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "eclipse | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/work/eclipse/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Byte-level distillation rig for Ornith 1.5 9B: exact End-Of-Token targets and a 48M byte student.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "eclipse | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/en/work/eclipse/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/projects/",
+            "name": "Projects",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/work/eclipse/",
+            "name": "eclipse",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "eclipse | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Byte-level distillation rig for Ornith 1.5 9B: exact End-Of-Token targets and a 48M byte student.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "eclipse | Emiliano G.O."
+    }
+  },
   "/es/": {
     "canonical": "https://emiliano-go.com/es/",
     "description": "Ingeniero de sistemas e infraestructura construyendo herramientas confiables de datos, bases de datos y seguridad. Montevideo, Uruguay.",
@@ -979,9 +1186,9 @@
   },
   "/es/projects/": {
     "canonical": "https://emiliano-go.com/es/projects/",
-    "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+    "description": "Paquetes open source, herramientas y experimentos.",
     "og": {
-      "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+      "description": "Paquetes open source, herramientas y experimentos.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1001,7 +1208,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+        "description": "Paquetes open source, herramientas y experimentos.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Proyectos | Emiliano G.O.",
         "publisher": {
@@ -1033,7 +1240,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Paquetes open source, herramientas y experimentos de Emiliano G.O.",
+      "description": "Paquetes open source, herramientas y experimentos.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1084,9 +1291,9 @@
   },
   "/es/work/dbwarden/": {
     "canonical": "https://emiliano-go.com/es/work/dbwarden/",
-    "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+    "description": "Compilador de esquemas declarativos para SQLAlchemy. SQL y rollbacks deterministas, generación offline en CI y análisis de impacto.",
     "og": {
-      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "description": "Compilador de esquemas declarativos para SQLAlchemy. SQL y rollbacks deterministas, generación offline en CI y análisis de impacto.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1106,7 +1313,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+        "description": "Compilador de esquemas declarativos para SQLAlchemy. SQL y rollbacks deterministas, generación offline en CI y análisis de impacto.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "DBWarden | Emiliano G.O.",
         "publisher": {
@@ -1144,7 +1351,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "description": "Compilador de esquemas declarativos para SQLAlchemy. SQL y rollbacks deterministas, generación offline en CI y análisis de impacto.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1153,9 +1360,9 @@
   },
   "/es/work/trustsight/": {
     "canonical": "https://emiliano-go.com/es/work/trustsight/",
-    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+    "description": "Análisis de seguridad basado en evidencia para paquetes AUR. Nunca ejecuta código. Fail-closed por diseño. 257 reglas documentadas.",
     "og": {
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+      "description": "Análisis de seguridad basado en evidencia para paquetes AUR. Nunca ejecuta código. Fail-closed por diseño. 257 reglas documentadas.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1175,7 +1382,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+        "description": "Análisis de seguridad basado en evidencia para paquetes AUR. Nunca ejecuta código. Fail-closed por diseño. 257 reglas documentadas.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
@@ -1213,7 +1420,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+      "description": "Análisis de seguridad basado en evidencia para paquetes AUR. Nunca ejecuta código. Fail-closed por diseño. 257 reglas documentadas.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1222,9 +1429,9 @@
   },
   "/es/work/rypipe/": {
     "canonical": "https://emiliano-go.com/es/work/rypipe/",
-    "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    "description": "Motor de ingestión Rust reutilizable con bindings de Python. Adaptadores de dos traits. 7,63 GB/s en paralelo acotado con crxml.",
     "og": {
-      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "description": "Motor de ingestión Rust reutilizable con bindings de Python. Adaptadores de dos traits. 7,63 GB/s en paralelo acotado con crxml.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1244,7 +1451,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "description": "Motor de ingestión Rust reutilizable con bindings de Python. Adaptadores de dos traits. 7,63 GB/s en paralelo acotado con crxml.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "rypipe | Emiliano G.O.",
         "publisher": {
@@ -1282,18 +1489,87 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "description": "Motor de ingestión Rust reutilizable con bindings de Python. Adaptadores de dos traits. 7,63 GB/s en paralelo acotado con crxml.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "rypipe | Emiliano G.O."
     }
   },
+  "/es/work/kestrel/": {
+    "canonical": "https://emiliano-go.com/es/work/kestrel/",
+    "description": "Distribución Linux independiente basada en Arch con Hyprland, Quickshell y un puente de planificación por tarea hasta sched_ext.",
+    "og": {
+      "description": "Distribución Linux independiente basada en Arch con Hyprland, Quickshell y un puente de planificación por tarea hasta sched_ext.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Kestrel | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/kestrel/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Distribución Linux independiente basada en Arch con Hyprland, Quickshell y un puente de planificación por tarea hasta sched_ext.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "Kestrel | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/kestrel/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/kestrel/",
+            "name": "Kestrel",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "Kestrel | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Distribución Linux independiente basada en Arch con Hyprland, Quickshell y un puente de planificación por tarea hasta sched_ext.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Kestrel | Emiliano G.O."
+    }
+  },
   "/es/work/postal/": {
     "canonical": "https://emiliano-go.com/es/work/postal/",
-    "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+    "description": "Cliente multidispositivo nativo WhatsApp sin vista web. Memoria limitada, sincronización de historial opcional, archivo SQLite duradero. 0.3% inactivo CPU.",
     "og": {
-      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "description": "Cliente multidispositivo nativo WhatsApp sin vista web. Memoria limitada, sincronización de historial opcional, archivo SQLite duradero. 0.3% inactivo CPU.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1313,7 +1589,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+        "description": "Cliente multidispositivo nativo WhatsApp sin vista web. Memoria limitada, sincronización de historial opcional, archivo SQLite duradero. 0.3% inactivo CPU.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "postal | Emiliano G.O.",
         "publisher": {
@@ -1351,7 +1627,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "description": "Cliente multidispositivo nativo WhatsApp sin vista web. Memoria limitada, sincronización de historial opcional, archivo SQLite duradero. 0.3% inactivo CPU.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1360,9 +1636,9 @@
   },
   "/es/work/neurafly/": {
     "canonical": "https://emiliano-go.com/es/work/neurafly/",
-    "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+    "description": "Visualizador de audio terminal impulsado por el conectoma FlyWire real: 138.333 neuronas activas y 2.052.622 sinapsis, renderizadas en braille.",
     "og": {
-      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "description": "Visualizador de audio terminal impulsado por el conectoma FlyWire real: 138.333 neuronas activas y 2.052.622 sinapsis, renderizadas en braille.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1382,7 +1658,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+        "description": "Visualizador de audio terminal impulsado por el conectoma FlyWire real: 138.333 neuronas activas y 2.052.622 sinapsis, renderizadas en braille.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "neurafly | Emiliano G.O.",
         "publisher": {
@@ -1420,7 +1696,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "description": "Visualizador de audio terminal impulsado por el conectoma FlyWire real: 138.333 neuronas activas y 2.052.622 sinapsis, renderizadas en braille.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1429,9 +1705,9 @@
   },
   "/es/work/easeo/": {
     "canonical": "https://emiliano-go.com/es/work/easeo/",
-    "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+    "description": "Metadatos SEO deterministas de un núcleo Rust con enlaces Python y Node.js. Salida idéntica byte por byte en todos los idiomas.",
     "og": {
-      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "description": "Metadatos SEO deterministas de un núcleo Rust con enlaces Python y Node.js. Salida idéntica byte por byte en todos los idiomas.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1451,7 +1727,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+        "description": "Metadatos SEO deterministas de un núcleo Rust con enlaces Python y Node.js. Salida idéntica byte por byte en todos los idiomas.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "easeo | Emiliano G.O.",
         "publisher": {
@@ -1489,7 +1765,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "description": "Metadatos SEO deterministas de un núcleo Rust con enlaces Python y Node.js. Salida idéntica byte por byte en todos los idiomas.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1498,9 +1774,9 @@
   },
   "/es/work/clickvault/": {
     "canonical": "https://emiliano-go.com/es/work/clickvault/",
-    "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+    "description": "Plugin de HashiCorp Vault para ClickHouse. Credenciales dinámicas, rotación de contraseñas y DDL cluster-aware.",
     "og": {
-      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "description": "Plugin de HashiCorp Vault para ClickHouse. Credenciales dinámicas, rotación de contraseñas y DDL cluster-aware.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1520,7 +1796,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+        "description": "Plugin de HashiCorp Vault para ClickHouse. Credenciales dinámicas, rotación de contraseñas y DDL cluster-aware.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "ClickVault | Emiliano G.O.",
         "publisher": {
@@ -1558,7 +1834,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "description": "Plugin de HashiCorp Vault para ClickHouse. Credenciales dinámicas, rotación de contraseñas y DDL cluster-aware.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1567,9 +1843,9 @@
   },
   "/es/work/dsig/": {
     "canonical": "https://emiliano-go.com/es/work/dsig/",
-    "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+    "description": "Firma de mensajes GPG para Vencord/Vesktop. Atestación de autoría con codificación compacta o invisible.",
     "og": {
-      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "description": "Firma de mensajes GPG para Vencord/Vesktop. Atestación de autoría con codificación compacta o invisible.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1589,7 +1865,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+        "description": "Firma de mensajes GPG para Vencord/Vesktop. Atestación de autoría con codificación compacta o invisible.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "dsig | Emiliano G.O.",
         "publisher": {
@@ -1627,11 +1903,149 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "description": "Firma de mensajes GPG para Vencord/Vesktop. Atestación de autoría con codificación compacta o invisible.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "dsig | Emiliano G.O."
+    }
+  },
+  "/es/work/xmlstreamer-ng/": {
+    "canonical": "https://emiliano-go.com/es/work/xmlstreamer-ng/",
+    "description": "Streamer XML con aislamiento de fallos sobre rypipe, adaptado de carlosplanchon/xmlstreamer. Memoria acotada y recuperación conservadora.",
+    "og": {
+      "description": "Streamer XML con aislamiento de fallos sobre rypipe, adaptado de carlosplanchon/xmlstreamer. Memoria acotada y recuperación conservadora.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "xmlstreamer-ng | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/xmlstreamer-ng/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Streamer XML con aislamiento de fallos sobre rypipe, adaptado de carlosplanchon/xmlstreamer. Memoria acotada y recuperación conservadora.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "xmlstreamer-ng | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/xmlstreamer-ng/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/xmlstreamer-ng/",
+            "name": "xmlstreamer-ng",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "xmlstreamer-ng | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Streamer XML con aislamiento de fallos sobre rypipe, adaptado de carlosplanchon/xmlstreamer. Memoria acotada y recuperación conservadora.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "xmlstreamer-ng | Emiliano G.O."
+    }
+  },
+  "/es/work/eclipse/": {
+    "canonical": "https://emiliano-go.com/es/work/eclipse/",
+    "description": "Destilación byte-level para Ornith 1.5 9B: objetivos EOT exactos y un estudiante de 48M parámetros.",
+    "og": {
+      "description": "Destilación byte-level para Ornith 1.5 9B: objetivos EOT exactos y un estudiante de 48M parámetros.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "eclipse | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/work/eclipse/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Destilación byte-level para Ornith 1.5 9B: objetivos EOT exactos y un estudiante de 48M parámetros.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "eclipse | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/es/work/eclipse/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/projects/",
+            "name": "Proyectos",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/work/eclipse/",
+            "name": "eclipse",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "eclipse | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Destilación byte-level para Ornith 1.5 9B: objetivos EOT exactos y un estudiante de 48M parámetros.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "eclipse | Emiliano G.O."
     }
   },
   "/fr/": {
@@ -1708,9 +2122,9 @@
   },
   "/fr/projects/": {
     "canonical": "https://emiliano-go.com/fr/projects/",
-    "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+    "description": "Paquets open source, outils et expériences.",
     "og": {
-      "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+      "description": "Paquets open source, outils et expériences.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1730,7 +2144,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+        "description": "Paquets open source, outils et expériences.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Projets | Emiliano G.O.",
         "publisher": {
@@ -1762,7 +2176,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Paquets open source, outils et expériences par Emiliano G.O.",
+      "description": "Paquets open source, outils et expériences.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1813,9 +2227,9 @@
   },
   "/fr/work/dbwarden/": {
     "canonical": "https://emiliano-go.com/fr/work/dbwarden/",
-    "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+    "description": "Compilateur de schémas déclaratifs pour SQLAlchemy. SQL et rollbacks déterministes, génération hors ligne en CI et analyse d'impact.",
     "og": {
-      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "description": "Compilateur de schémas déclaratifs pour SQLAlchemy. SQL et rollbacks déterministes, génération hors ligne en CI et analyse d'impact.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1835,7 +2249,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+        "description": "Compilateur de schémas déclaratifs pour SQLAlchemy. SQL et rollbacks déterministes, génération hors ligne en CI et analyse d'impact.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "DBWarden | Emiliano G.O.",
         "publisher": {
@@ -1873,7 +2287,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Declarative schema compiler for SQLAlchemy. Models → IR → Diff → SQL → Verification.",
+      "description": "Compilateur de schémas déclaratifs pour SQLAlchemy. SQL et rollbacks déterministes, génération hors ligne en CI et analyse d'impact.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1882,9 +2296,9 @@
   },
   "/fr/work/trustsight/": {
     "canonical": "https://emiliano-go.com/fr/work/trustsight/",
-    "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+    "description": "Analyse de sécurité fondée sur des preuves pour les paquets AUR. N'exécute jamais de code. Fail-closed. 257 règles documentées.",
     "og": {
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+      "description": "Analyse de sécurité fondée sur des preuves pour les paquets AUR. N'exécute jamais de code. Fail-closed. 257 règles documentées.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1904,7 +2318,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+        "description": "Analyse de sécurité fondée sur des preuves pour les paquets AUR. N'exécute jamais de code. Fail-closed. 257 règles documentées.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
@@ -1942,7 +2356,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Evidence-driven security analysis for AUR packages. Never executes code. Fail-closed by design. 257 documented rules, corpus-wide novelty detection.",
+      "description": "Analyse de sécurité fondée sur des preuves pour les paquets AUR. N'exécute jamais de code. Fail-closed. 257 règles documentées.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -1951,9 +2365,9 @@
   },
   "/fr/work/rypipe/": {
     "canonical": "https://emiliano-go.com/fr/work/rypipe/",
-    "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+    "description": "Moteur d'ingestion Rust réutilisable avec bindings Python. Adaptateurs à deux traits. 7,63 Go/s en parallèle borné sur crxml.",
     "og": {
-      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "description": "Moteur d'ingestion Rust réutilisable avec bindings Python. Adaptateurs à deux traits. 7,63 Go/s en parallèle borné sur crxml.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -1973,7 +2387,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "description": "Moteur d'ingestion Rust réutilisable avec bindings Python. Adaptateurs à deux traits. 7,63 Go/s en parallèle borné sur crxml.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "rypipe | Emiliano G.O.",
         "publisher": {
@@ -2011,18 +2425,87 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+      "description": "Moteur d'ingestion Rust réutilisable avec bindings Python. Adaptateurs à deux traits. 7,63 Go/s en parallèle borné sur crxml.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "rypipe | Emiliano G.O."
     }
   },
+  "/fr/work/kestrel/": {
+    "canonical": "https://emiliano-go.com/fr/work/kestrel/",
+    "description": "Distribution Linux autonome basée sur Arch avec Hyprland, Quickshell et un pont d'ordonnancement par tâche jusqu'à sched_ext.",
+    "og": {
+      "description": "Distribution Linux autonome basée sur Arch avec Hyprland, Quickshell et un pont d'ordonnancement par tâche jusqu'à sched_ext.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Kestrel | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/kestrel/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Distribution Linux autonome basée sur Arch avec Hyprland, Quickshell et un pont d'ordonnancement par tâche jusqu'à sched_ext.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "Kestrel | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/kestrel/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/kestrel/",
+            "name": "Kestrel",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "Kestrel | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Distribution Linux autonome basée sur Arch avec Hyprland, Quickshell et un pont d'ordonnancement par tâche jusqu'à sched_ext.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Kestrel | Emiliano G.O."
+    }
+  },
   "/fr/work/postal/": {
     "canonical": "https://emiliano-go.com/fr/work/postal/",
-    "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+    "description": "Client multi-appareils natif WhatsApp sans vue Web. Mémoire limitée, synchronisation de l'historique opt-in, archive SQLite durable. 0.3% inactif CPU.",
     "og": {
-      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "description": "Client multi-appareils natif WhatsApp sans vue Web. Mémoire limitée, synchronisation de l'historique opt-in, archive SQLite durable. 0.3% inactif CPU.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -2042,7 +2525,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+        "description": "Client multi-appareils natif WhatsApp sans vue Web. Mémoire limitée, synchronisation de l'historique opt-in, archive SQLite durable. 0.3% inactif CPU.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "postal | Emiliano G.O.",
         "publisher": {
@@ -2080,7 +2563,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Native WhatsApp multi-device client with no webview. Bounded memory, opt-in history sync, durable SQLite archive.",
+      "description": "Client multi-appareils natif WhatsApp sans vue Web. Mémoire limitée, synchronisation de l'historique opt-in, archive SQLite durable. 0.3% inactif CPU.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -2089,9 +2572,9 @@
   },
   "/fr/work/neurafly/": {
     "canonical": "https://emiliano-go.com/fr/work/neurafly/",
-    "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+    "description": "Visualiseur audio de terminal piloté par le véritable connectome FlyWire : 138 333 neurones de pointe et 2 052 622 synapses, rendus en braille.",
     "og": {
-      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "description": "Visualiseur audio de terminal piloté par le véritable connectome FlyWire : 138 333 neurones de pointe et 2 052 622 synapses, rendus en braille.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -2111,7 +2594,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+        "description": "Visualiseur audio de terminal piloté par le véritable connectome FlyWire : 138 333 neurones de pointe et 2 052 622 synapses, rendus en braille.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "neurafly | Emiliano G.O.",
         "publisher": {
@@ -2149,7 +2632,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons and 2,052,622 synapses, rendered in braille.",
+      "description": "Visualiseur audio de terminal piloté par le véritable connectome FlyWire : 138 333 neurones de pointe et 2 052 622 synapses, rendus en braille.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -2158,9 +2641,9 @@
   },
   "/fr/work/easeo/": {
     "canonical": "https://emiliano-go.com/fr/work/easeo/",
-    "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+    "description": "Métadonnées déterministes SEO provenant d'un noyau Rust avec liaisons Python et Node.js. Sortie identique octet par octet dans toutes les langues.",
     "og": {
-      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "description": "Métadonnées déterministes SEO provenant d'un noyau Rust avec liaisons Python et Node.js. Sortie identique octet par octet dans toutes les langues.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -2180,7 +2663,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+        "description": "Métadonnées déterministes SEO provenant d'un noyau Rust avec liaisons Python et Node.js. Sortie identique octet par octet dans toutes les langues.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "easeo | Emiliano G.O.",
         "publisher": {
@@ -2218,7 +2701,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.",
+      "description": "Métadonnées déterministes SEO provenant d'un noyau Rust avec liaisons Python et Node.js. Sortie identique octet par octet dans toutes les langues.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -2227,9 +2710,9 @@
   },
   "/fr/work/clickvault/": {
     "canonical": "https://emiliano-go.com/fr/work/clickvault/",
-    "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+    "description": "Plugin HashiCorp Vault pour ClickHouse. Identifiants dynamiques, rotation des mots de passe et DDL cluster-aware.",
     "og": {
-      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "description": "Plugin HashiCorp Vault pour ClickHouse. Identifiants dynamiques, rotation des mots de passe et DDL cluster-aware.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -2249,7 +2732,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+        "description": "Plugin HashiCorp Vault pour ClickHouse. Identifiants dynamiques, rotation des mots de passe et DDL cluster-aware.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "ClickVault | Emiliano G.O.",
         "publisher": {
@@ -2287,7 +2770,7 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "HashiCorp Vault database secrets engine plugin for ClickHouse.",
+      "description": "Plugin HashiCorp Vault pour ClickHouse. Identifiants dynamiques, rotation des mots de passe et DDL cluster-aware.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
@@ -2296,9 +2779,9 @@
   },
   "/fr/work/dsig/": {
     "canonical": "https://emiliano-go.com/fr/work/dsig/",
-    "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+    "description": "Signature de message GPG pour Vencord / Vesktop. Attestation de paternité avec encodage compact ou invisible.",
     "og": {
-      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "description": "Signature de message GPG pour Vencord / Vesktop. Attestation de paternité avec encodage compact ou invisible.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "image_height": 630,
@@ -2318,7 +2801,7 @@
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+        "description": "Signature de message GPG pour Vencord / Vesktop. Attestation de paternité avec encodage compact ou invisible.",
         "image": "https://emiliano-go.com/og-image.png",
         "name": "dsig | Emiliano G.O.",
         "publisher": {
@@ -2356,11 +2839,149 @@
     "twitter": {
       "card": "summary_large_image",
       "creator": "@emiliano_gando",
-      "description": "GPG message signing for Vencord / Vesktop. Authorship attestation.",
+      "description": "Signature de message GPG pour Vencord / Vesktop. Attestation de paternité avec encodage compact ou invisible.",
       "image": "https://emiliano-go.com/og-image.png",
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "dsig | Emiliano G.O."
+    }
+  },
+  "/fr/work/xmlstreamer-ng/": {
+    "canonical": "https://emiliano-go.com/fr/work/xmlstreamer-ng/",
+    "description": "Streamer XML à isolation des fautes sur rypipe, adapté de carlosplanchon/xmlstreamer. Mémoire bornée et récupération conservatrice.",
+    "og": {
+      "description": "Streamer XML à isolation des fautes sur rypipe, adapté de carlosplanchon/xmlstreamer. Mémoire bornée et récupération conservatrice.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "xmlstreamer-ng | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/xmlstreamer-ng/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Streamer XML à isolation des fautes sur rypipe, adapté de carlosplanchon/xmlstreamer. Mémoire bornée et récupération conservatrice.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "xmlstreamer-ng | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/xmlstreamer-ng/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/xmlstreamer-ng/",
+            "name": "xmlstreamer-ng",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "xmlstreamer-ng | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Streamer XML à isolation des fautes sur rypipe, adapté de carlosplanchon/xmlstreamer. Mémoire bornée et récupération conservatrice.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "xmlstreamer-ng | Emiliano G.O."
+    }
+  },
+  "/fr/work/eclipse/": {
+    "canonical": "https://emiliano-go.com/fr/work/eclipse/",
+    "description": "Distillation au niveau octet pour Ornith 1.5 9B : cibles EOT exactes et un étudiant de 48M paramètres.",
+    "og": {
+      "description": "Distillation au niveau octet pour Ornith 1.5 9B : cibles EOT exactes et un étudiant de 48M paramètres.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "eclipse | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/work/eclipse/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Distillation au niveau octet pour Ornith 1.5 9B : cibles EOT exactes et un étudiant de 48M paramètres.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "eclipse | Emiliano G.O.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Emiliano Gandini Outeda"
+        },
+        "url": "https://emiliano-go.com/fr/work/eclipse/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/projects/",
+            "name": "Projets",
+            "position": 2
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/work/eclipse/",
+            "name": "eclipse",
+            "position": 3
+          }
+        ]
+      }
+    ],
+    "title": "eclipse | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Distillation au niveau octet pour Ornith 1.5 9B : cibles EOT exactes et un étudiant de 48M paramètres.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "eclipse | Emiliano G.O."
     }
   }
 }

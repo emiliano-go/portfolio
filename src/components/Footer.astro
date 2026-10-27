@@ -7,7 +7,7 @@ const t = createT(Astro.props.lang);
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
       <div>
         <p class="text-sm text-(--color-text-head) mb-1">Emiliano G.O.</p>
-        <p class="text-[11px] font-mono text-(--color-text-dim)">Systems / Backend / Data Engineering</p>
+        <p class="text-[11px] font-mono text-(--color-text-dim)">{t("footer.tagline")}</p>
       </div>
       <div class="flex flex-wrap gap-3">
         <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100">GitHub ↗</a>

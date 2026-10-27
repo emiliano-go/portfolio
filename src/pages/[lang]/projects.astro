@@ -3,7 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Ecosystem from '../../components/Ecosystem.astro';
 import Footer from '../../components/Footer.astro';
-import { createT } from '../../i18n';
+import { createT, type Lang } from '../../i18n';
+import { getProject } from '../../data/projects';
+import { secondary } from '../../data/catalog';
 
 export async function getStaticPaths() {
   return [
@@ -13,55 +15,66 @@ export async function getStaticPaths() {
   ];
 }
 
-const { lang } = Astro.params;
-const t = createT(lang!);
+const { lang } = Astro.params as { lang: Lang };
+const t = createT(lang);
 
-const featured = [
-  { name: 'DBWarden', accent: '#b39d6a', accentLight: '#7a6a3a', desc: 'Declarative schema compiler for SQLAlchemy. 48K LOC, 127 test files, 5 DB backends, 7 plugins, release-certification harness.', stack: ['Python', 'SQLAlchemy', 'SQL', 'PostgreSQL', 'MySQL', 'ClickHouse'], github: 'https://github.com/dbwarden-org/dbwarden', docs: 'https://docs.dbwarden.org' },
-  { name: 'TrustSight', accent: '#0092d2', accentLight: '#0072a8', desc: 'Evidence-driven security analysis for AUR packages. ~7K tests, 257 documented rules, corpus-wide cluster detection, signed IOC baselines. Never executes code.', stack: ['Python', 'Arch Linux', 'SQLite', 'Security'], github: 'https://github.com/emiliano-go/trustsight', docs: 'https://docs.trustsight.org' },
-  { name: 'rypipe', accent: '#c96a50', accentLight: '#9b4a32', desc: 'Rust ingestion framework. 476 tests, 15.9K docs lines, published to PyPI and crates.io. 4.2 GB/s parallel throughput.', stack: ['Rust', 'Python', 'PyO3', 'Arrow'], github: 'https://github.com/emiliano-go/rypipe', docs: 'https://rypipe.emiliano-go.com' },
-  { name: 'postal', accent: '#2e9e6b', accentLight: '#1f6f4a', desc: 'Native WhatsApp client that speaks the multi-device protocol directly. No webview, 0.3% idle CPU, bounded RAM, opt-in history sync.', stack: ['Rust', 'Tauri 2', 'Svelte 5', 'SQLite'], github: 'https://github.com/emiliano-go/postal' },
-  { name: 'neurafly', accent: '#d45f86', accentLight: '#a33458', desc: 'Terminal audio visualizer driven by the real FlyWire connectome: 138,333 spiking neurons, 2,052,622 synapses, rendered in braille.', stack: ['Rust', 'TUI', 'DSP', 'Neuroscience'], github: 'https://github.com/emiliano-go/neurafly', docs: 'https://crates.io/crates/neurafly' },
-  { name: 'easeo', accent: '#a06ad9', accentLight: '#6b2fa0', desc: 'Deterministic SEO metadata from one Rust core with Python and Node.js bindings. Byte-for-byte identical output across languages.', stack: ['Rust', 'Python', 'Node.js', 'JSON-LD'], github: 'https://github.com/emiliano-go/easeo', docs: 'https://easeo.emiliano-go.com' },
-  { name: 'ClickVault', accent: '#f5c81b', accentLight: '#8a6d00', desc: 'HashiCorp Vault plugin for ClickHouse. 85.4% coverage, cluster-aware DDL, dynamic credentials.', stack: ['Go', 'Vault', 'ClickHouse'], github: 'https://github.com/emiliano-go/clickvault' },
-  { name: 'dsig', accent: '#7387e0', accentLight: '#4d5ec0', desc: 'GPG message signing for Discord. 142 tests, invisible encoding, empirical Discord client testing.', stack: ['TypeScript', 'GPG', 'OpenPGP'], github: 'https://github.com/emiliano-go/dsig' },
+const caseStudyIds = [
+  'dbwarden',
+  'trustsight',
+  'rypipe',
+  'kestrel',
+  'postal',
+  'neurafly',
+  'easeo',
+  'clickvault',
+  'dsig',
+  'xmlstreamer-ng',
+  'eclipse',
 ];
+const promotedIds = ['crxml', 'totem', 'RBG', 'gpg-mcp'];
+const promotedAccents: Record<string, [string, string]> = {
+  crxml: ['#c96a50', '#9b4a32'],
+  totem: ['#8a7bd8', '#4b3d99'],
+  RBG: ['#7387e0', '#4d5ec0'],
+  'gpg-mcp': ['#3f9e8a', '#26695c'],
+};
 
-const secondary = [
-  { name: 'crxml', desc: 'Crystal Reports XML parser built on the rypipe engine. 184 Python tests + 63 Rust tests, differential testing, bounded memory.', stack: ['Rust', 'Python', 'XML', 'Arrow'], github: 'https://github.com/emiliano-go/crxml', pypi: 'https://pypi.org/project/crxml/' },
-  { name: 'schemap', desc: 'Automatic Pydantic v2 schemas from SQLAlchemy 2.0 ORM models. 149 tests, thorough edge case coverage.', stack: ['Python', 'Pydantic', 'SQLAlchemy'], github: 'https://github.com/emiliano-go/schemap', pypi: 'https://pypi.org/project/schemap/' },
-  { name: 'detrack', desc: 'Strip tracking parameters from URLs. 345 patterns, zero dependencies, 126 tests.', stack: ['Python'], github: 'https://github.com/emiliano-go/detrack', pypi: 'https://pypi.org/project/detrack/' },
-  { name: 'dbwarden-harness', desc: 'Release-certification harness across 5 databases. 189 tests, 12 suites, MCP server.', stack: ['Python', 'Docker', 'Testcontainers'], github: 'https://github.com/dbwarden-org/dbwarden-harness' },
-  { name: 'vigil', desc: 'Self-hosted GitHub activity tracker. Syncs every commit into ClickHouse, serves streaks and breakdowns over a REST API.', stack: ['Python', 'FastAPI', 'ClickHouse', 'Prefect'], github: 'https://github.com/emiliano-go/vigil' },
-  { name: 'mapcreator', desc: 'Browser-based multi-floor building map editor with A* pathfinding and JSON export. React 19 + Canvas, live demo.', stack: ['TypeScript', 'React', 'Canvas', 'A*'], github: 'https://github.com/emiliano-go/mapcreator', demo: 'https://mapcreator.emiliano-go.com' },
-  { name: 'acrresolv', desc: 'Hybrid acronym resolver: lookup + rules + T5-small fallback. 95.5% accuracy on unseen data, <1 ms rules path.', stack: ['Python', 'T5-small', 'NLP'], github: 'https://github.com/emiliano-go/acrresolv', pypi: 'https://pypi.org/project/acrresolv/' },
-  { name: 'trustsight-harness', desc: 'Adversarial measurement harness for TrustSight. 26 pinned campaigns, 153 tests, cost-tracked and reproducible.', stack: ['Python', 'Docker', 'pytest'], github: 'https://github.com/emiliano-go/trustsight-harness' },
-  { name: 'trustsight-web', desc: 'Single-page site for trustsight.org presenting the evidence-first AUR review model: capabilities, calibration, limits.', stack: ['React', 'Vite', 'JavaScript'], github: 'https://github.com/emiliano-go/trustsight-web' },
-  { name: 'interferon', desc: 'Docker sidecar watcher + Python SDK: container lifecycle events become typed immune signals over HTTP SSE.', stack: ['Python', 'Docker', 'SSE'], github: 'https://github.com/emiliano-go/interferon' },
-  { name: 'tagurl', desc: 'Natural-language query to ranked semantic tags and an SEO URL path. Design spec, implementation in progress.', stack: ['Python', 'NLP', 'SEO'], github: 'https://github.com/emiliano-go/tagurl' },
-  { name: 'lambda-compiler', desc: 'Compile Python lambdas into declarative filter specs via CPython bytecode analysis. Extracted from rypipe.', stack: ['Python', 'Bytecode'], github: 'https://github.com/emiliano-go/lambda-compiler' },
-  { name: 'carpricepredictor', desc: 'Linear-regression car price predictor: modular pipeline, FastAPI service, and browser front end, all containerized.', stack: ['Python', 'scikit-learn', 'FastAPI', 'Docker'], github: 'https://github.com/emiliano-go/carpricepredictor' },
-  { name: 'autoimmune-disorder-prediction', desc: 'ML exploration of the All Autoimmune Disorder 10k dataset: reproducible ingestion/cleaning pipeline plus EDA notebooks.', stack: ['Python', 'scikit-learn', 'Jupyter', 'pandas'], github: 'https://github.com/emiliano-go/autoimmune-disorder-prediction' },
-];
+const caseStudies = caseStudyIds.map((id) => ({ ...getProject(id, lang), external: false }));
+const promoted = secondary
+  .filter((project) => promotedIds.includes(project.id))
+  .map((project) => ({
+    id: project.id,
+    name: project.name,
+    summary: project.desc[lang],
+    stack: project.stack,
+    links: project.links,
+    accent: promotedAccents[project.id][0],
+    accentLight: promotedAccents[project.id][1],
+    external: true,
+  }));
+const featured = [...caseStudies, ...promoted];
+const others = secondary
+  .filter((project) => !promotedIds.includes(project.id))
+  .map((project) => ({ ...project, desc: project.desc[lang] }));
 ---
 
-<Layout lang={lang} route={'/' + lang + '/projects'} title="Projects | Emiliano G.O." description="All projects by Emiliano G.O.">
+<Layout lang={lang} route={'/' + lang + '/projects'} title={t('projects.page.title')} description={t('projects.page.desc')}>
   <Nav lang={lang} />
   <main id="main" class="pt-24">
 
     <section class="py-16 border-b border-(--color-border-subtle)">
       <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
-        <h1 class="font-[family-name:var(--font-display)] text-[clamp(28px,4vw,40px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">All Projects</h1>
-        <p class="text-xs text-(--color-text-muted) mb-8">Open source packages, tools, and experiments.</p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(28px,4vw,40px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head) mb-4">{t('projects.page.heading')}</h1>
+        <p class="text-xs text-(--color-text-muted) mb-8">{t('projects.page.desc')}</p>
 
         <!-- Featured: full-width cards -->
         <div class="flex flex-col gap-px bg-(--color-border-subtle) border border-(--color-border-subtle) mb-8">
           {featured.map((p) => (
-            <a href={`/${lang}/work/${p.name.toLowerCase()}`} class="project-accent bg-(--color-bg) p-5 sm:p-6 group block hover:bg-(--color-surface) transition-colors duration-100 border-l-2" style={`--accent-dark: ${p.accent}; --accent-light: ${p.accentLight}; border-left-color: var(--accent)`}>
+            <a href={p.external ? p.links[0].href : `/${lang}/work/${p.id}`} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener noreferrer' : undefined} class="project-accent bg-(--color-bg) p-5 sm:p-6 group block hover:bg-(--color-surface) transition-colors duration-100 border-l-2" style={`--accent-dark: ${p.accent}; --accent-light: ${p.accentLight}; border-left-color: var(--accent)`}>
               <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                 <div>
                   <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide transition-colors duration-100" style="color: var(--accent)">{p.name}</h3>
-                  <p class="text-[11px] leading-relaxed text-(--color-text-muted) mt-1 max-w-[540px]">{p.desc}</p>
+                  <p class="text-[11px] leading-relaxed text-(--color-text-muted) mt-1 max-w-[540px]">{p.summary}</p>
                 </div>
                 <div class="flex flex-wrap gap-1.5 shrink-0">
                   {p.stack.map(s => (
@@ -70,18 +83,25 @@ const secondary = [
                 </div>
               </div>
               <div class="flex flex-wrap gap-3">
-                <span class="text-[10px] font-mono" style="color: var(--accent)">GitHub ↗</span>
-                <span class="text-[10px] font-mono" style="color: var(--accent)">Docs ↗</span>
-                <span class="text-[10px] font-mono text-(--color-text-muted) group-hover:text-(--color-text-bright)">Explore →</span>
+                {p.external ? (
+                  <span class="text-[10px] font-mono" style="color: var(--accent)">{p.links[0].label} ↗</span>
+                ) : (
+                  <>
+                    {p.links.slice(0, 2).map((link) => (
+                      <span class="text-[10px] font-mono" style="color: var(--accent)">{link.label} ↗</span>
+                    ))}
+                    <span class="text-[10px] font-mono text-(--color-text-muted) group-hover:text-(--color-text-bright)">{t('projects.explore')} →</span>
+                  </>
+                )}
               </div>
             </a>
           ))}
         </div>
 
         <!-- Secondary projects: 2-column grid -->
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4 mt-8">Other projects</p>
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4 mt-8">{t('projects.other')}</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
-          {secondary.map((p) => (
+          {others.map((p) => (
             <div class="bg-(--color-bg) p-5 flex flex-col">
               <h3 class="font-[family-name:var(--font-mono)] text-sm font-medium text-(--color-text-head) mb-2">{p.name}</h3>
               <p class="text-[11px] leading-relaxed text-(--color-text-muted) flex-1 mb-3">{p.desc}</p>
@@ -91,13 +111,9 @@ const secondary = [
                 ))}
               </div>
               <div class="flex flex-wrap gap-2">
-                <a href={p.github} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">GitHub ↗</a>
-                {p.pypi && (
-                  <a href={p.pypi} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">PyPI ↗</a>
-                )}
-                {p.demo && (
-                  <a href={p.demo} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">Demo ↗</a>
-                )}
+                {p.links.map((link) => (
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-[10px] font-mono text-(--color-accent) hover:text-(--color-text-bright) transition-colors duration-100">{link.label} ↗</a>
+                ))}
               </div>
             </div>
           ))}

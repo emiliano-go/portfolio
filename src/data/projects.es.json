@@ -1,0 +1,2163 @@
+{
+  "dbwarden": {
+    "id": "dbwarden",
+    "name": "DBWarden",
+    "index": "01",
+    "category": "Infraestructura de base de datos",
+    "accent": "#b39d6a",
+    "accentLight": "#705f2f",
+    "summary": "Compilador de esquemas declarativos que deriva migraciones de bases de datos deterministas a partir de modelos SQLAlchemy.",
+    "lede": "Tus modelos son el código fuente. SQL es la salida.",
+    "stack": [
+      "Python 3.12+",
+      "SQLAlchemy 2.0",
+      "PostgreSQL",
+      "MySQL",
+      "MariaDB",
+      "SQLite",
+      "ClickHouse"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/dbwarden-org/dbwarden",
+        "primary": true
+      },
+      {
+        "label": "Documentación",
+        "href": "https://docs.dbwarden.org"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/dbwarden/"
+      },
+      {
+        "label": "Arnés",
+        "href": "https://harness.dbwarden.org"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Backends de base de datos",
+        "value": "5"
+      },
+      {
+        "label": "Plugins oficiales",
+        "value": "7"
+      },
+      {
+        "label": "Archivos de prueba",
+        "value": "166"
+      },
+      {
+        "label": "Versión",
+        "value": "v0.20.10",
+        "repo": "dbwarden-org/dbwarden"
+      }
+    ],
+    "facts": [
+      "63K LOC de código",
+      "5 bases de datos",
+      "Alpha estable",
+      "Arnés de release"
+    ],
+    "diagram": "Modelos → IR → Diff → SQL → Verificación",
+    "license": "MIT",
+    "meta": {
+      "title": "DBWarden | Emiliano G.O.",
+      "description": "Compilador de esquemas declarativos para SQLAlchemy. SQL y rollbacks deterministas, generación offline en CI y análisis de impacto."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Las herramientas de gestión de esquemas se dividen en dos campos. Las herramientas imperativas le permiten crear cambios: scripts de revisión que describen cómo pasar de una versión de esquema a la siguiente. Las herramientas declarativas le permiten crear el estado deseado y derivar los cambios por usted. La mayoría de las herramientas imprescindibles le piden que mantenga dos representaciones de su esquema: sus modelos ORM y sus archivos de migración. Cuando se desvían, lo descubres en el momento del despliegue."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "¿Por qué es difícil?",
+        "body": [
+          "La deriva del esquema es el enemigo principal. Hacer que esto sea determinista requiere un motor de diferencias que maneje cambios de nombres, cambios de tipos, cambios de restricciones y pedidos en cinco servidores de bases de datos con diferentes dialectos DDL. Cada migración debe incluir tanto la actualización como la reversión SQL, y la reversión debe probarse con la base de datos real."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Capacidades",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "Análisis de impacto",
+            "body": "dbwarden check-impact escanea el código con análisis AST y un fallback de grep, y reporta cada referencia a una columna o tabla que cambia una migración antes del despliegue."
+          },
+          {
+            "title": "Generación offline",
+            "body": "Exporta el estado de los modelos una vez y genera migraciones en CI o en una máquina sin base de datos con make-migrations --offline."
+          },
+          {
+            "title": "Snapshots de esquema",
+            "body": "Cada migración escribe un snapshot JSON con checksum. Los snapshots alimentan la detección de renombres, los diffs offline y las comparaciones a nivel de columna."
+          },
+          {
+            "title": "Meta tipado",
+            "body": "Una metaclase valida cada atributo de class Meta en tiempo de importación; los typos que producirían DDL incorrecto lanzan DBWardenConfigError de inmediato."
+          },
+          {
+            "title": "Ingeniería inversa",
+            "body": "Genera modelos de SQLAlchemy desde una base viva con generate-models, incluyendo metadatos del backend y un import --base personalizado."
+          },
+          {
+            "title": "Multi-base de datos",
+            "body": "Un proyecto puede apuntar a varias bases con configuraciones aisladas, propiedad de tablas por base y bases opcionales que se omiten si faltan."
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "Flujo de trabajo",
+        "steps": [
+          {
+            "title": "Señalar los modelos existentes.",
+            "body": "DBWarden lee sus modelos SQLAlchemy como la única fuente de verdad."
+          },
+          {
+            "title": "hacer-migraciones",
+            "body": "Genera un esquema de referencia o diferencias con el estado actual de la base de datos."
+          },
+          {
+            "title": "Confirmación generada SQL",
+            "body": "Archivos simples SQL: revisables, confirmables, ejecutables en cualquier lugar."
+          },
+          {
+            "title": "emigrar",
+            "body": "Aplica migraciones pendientes con verificación de convergencia."
+          },
+          {
+            "title": "Opcional: análisis de impacto, modo fuera de línea, complementos",
+            "body": "Detección de cambios importantes basada en AST, CI sin base de datos, integración de semillas/RBAC/FastAPI."
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "SQL-primera salida",
+            "body": "Las migraciones son archivos simples SQL. Sin tiempo de ejecución, sin Python generado. Revisable, comprometible y ejecutable en cualquier lugar."
+          },
+          {
+            "title": "Diferencia determinista",
+            "body": "Mismos modelos + misma instantánea = misma migración. Siempre. Sin estados ocultos, sin dependencias de orden."
+          },
+          {
+            "title": "Contrato de reversión estricto",
+            "body": "Cada migración conlleva actualización + reversión SQL. La reversión del marcador de posición se rechaza de forma predeterminada."
+          },
+          {
+            "title": "Arquitectura de complementos",
+            "body": "7 complementos oficiales para semillas, RBAC, FastAPI, pruebas de sandbox y extensiones PostgreSQL/ClickHouse."
+          }
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Modelo de seguridad",
+        "body": [
+          "La generación de migraciones clasifica cada operación, divide los cambios de tipo en pasos expand-contract y asigna severidad. La CLI añade límites de ejecución, comprobaciones de planes pendientes e informes de impacto estructurados, para detener un cambio destructivo antes de que llegue a producción.",
+          "El historial queda auditable: snapshots con checksum, migraciones repetibles, reconciliación de merges y soporte de rebase. Los rollbacks se generan cuando es seguro; los cambios irreversibles requieren una declaración explícita en lugar de un placeholder."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Restricciones",
+        "items": [
+          "No hay tiempo de ejecución de migración para instalar o versión",
+          "No se generan scripts Python que silenciosamente hacen algo incorrecto",
+          "No se descubrió ninguna desviación del esquema en producción",
+          "Migraciones que se pueden generar en CI sin conexión a base de datos"
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Bases de datos soportadas",
+        "columns": [
+          "Base de datos",
+          "Round-trip",
+          "Notas"
+        ],
+        "rows": [
+          [
+            "PostgreSQL",
+            "Full",
+            "Columnas identity/generadas, partitioning, herencia, constraints de exclusión, tipos enum e índices avanzados."
+          ],
+          [
+            "MySQL",
+            "Full",
+            "Paridad DDL, opciones de engine/charset/collation, columnas unsigned y on-update."
+          ],
+          [
+            "ClickHouse",
+            "Full",
+            "Familia MergeTree, motores replicados, proyecciones, diccionarios, vistas materializadas e índices skip."
+          ],
+          [
+            "SQLite",
+            "Full",
+            "WITHOUT ROWID/STRICT, columnas generadas y reconstrucción de tablas para ALTER no soportados."
+          ],
+          [
+            "MariaDB",
+            "Partial",
+            "Capa de esquema completa; quedan brechas en snapshots e ingeniería inversa."
+          ]
+        ],
+        "note": "Round-trip significa modelo → SQL → base viva → validación del modelo."
+      },
+      {
+        "kind": "prose",
+        "title": "Estado",
+        "body": [
+          "Alpha estable: pre-1.0 pero listo para producción. Ningún cambio incompatible se publica sin una ventana de deprecación de 3 meses."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Arnés de prueba",
+        "lead": "El arnés de pruebas dbwarden-harness es un conjunto de validación de caja negra independiente. Instala DBWarden como consumidor, invoca su CLI público, crea instancias de bases de datos reales desechables a través de Testcontainers y verifica que el SQL compilado produzca el esquema correcto. Este no es un conjunto de pruebas unitarias; es un límite de certificación de versión.",
+        "label": "Cobertura del arnés",
+        "items": [
+          {
+            "key": "Instalación PyPI",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Contrato CLI",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "5 proveedores de bases de datos",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Solicitud de migración",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Aplicación de restricciones",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Silencio de regeneración",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Reversión/recuperación",
+            "val": "PASS",
+            "tone": "pass"
+          },
+          {
+            "key": "Descubrimiento de complementos",
+            "val": "PASS",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "ecosystem",
+        "title": "Ecosistema",
+        "intro": "El compilador es el centro de un conjunto de herramientas con versiones independientes.",
+        "repos": [
+          {
+            "name": "wlite",
+            "role": "CLI + fijaciones",
+            "desc": "Gestión declarativa del esquema SQLite sin la sobrecarga Python. La misma filosofía que DBWarden, reducida a lo que SQLite y C pueden hacer solos.",
+            "stack": [
+              "C++",
+              "Rust",
+              "Python",
+              "Go",
+              "C#",
+              "Zig"
+            ],
+            "href": "https://github.com/dbwarden-org/wlite"
+          },
+          {
+            "name": "libwlite",
+            "role": "biblioteca C",
+            "desc": "El motor SQLite de DBWarden se extrajo como una biblioteca C independiente. Analiza archivos de modelo .wlite, administra bases de datos, compara esquemas y genera migraciones.",
+            "stack": [
+              "C11",
+              "SQLite3"
+            ],
+            "href": "https://github.com/dbwarden-org/libwlite"
+          },
+          {
+            "name": "dbwarden-harness",
+            "role": "Certificación de lanzamiento",
+            "desc": "Validación de caja negra independiente en cinco bases de datos reales: instalación PyPI, contrato CLI, aplicación de migración, reversión y descubrimiento de complementos.",
+            "stack": [
+              "Python",
+              "Docker",
+              "Testcontainers"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-harness"
+          },
+          {
+            "name": "dbwarden-redis",
+            "role": "Bloqueo de migraciones",
+            "desc": "Bloqueo distribuido de migraciones con Redis para despliegues concurrentes.",
+            "stack": [
+              "Python",
+              "Redis"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-redis"
+          },
+          {
+            "name": "dbwarden-fastapi",
+            "role": "Integración web",
+            "desc": "Dependencias de sesión FastAPI, health endpoints y rutas de migración.",
+            "stack": [
+              "Python",
+              "FastAPI"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-fastapi"
+          },
+          {
+            "name": "dbwarden-ch-rbac",
+            "role": "RBAC de ClickHouse",
+            "desc": "Roles, usuarios, grants, políticas de fila, cuotas y perfiles de settings para ClickHouse.",
+            "stack": [
+              "Python",
+              "ClickHouse"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-ch-rbac"
+          },
+          {
+            "name": "dbwarden-pgsql-types",
+            "role": "Tipos de Postgres",
+            "desc": "ENUMs, dominios, tipos compuestos y secuencias personalizadas.",
+            "stack": [
+              "Python",
+              "PostgreSQL"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-pgsql-types"
+          },
+          {
+            "name": "dbwarden-pgsql-rbac",
+            "role": "RBAC de Postgres",
+            "desc": "Roles, grants, privilegios por defecto y políticas de seguridad a nivel de fila.",
+            "stack": [
+              "Python",
+              "PostgreSQL"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-pgsql-rbac"
+          },
+          {
+            "name": "dbwarden-pgsql-extensions",
+            "role": "Extensiones de Postgres",
+            "desc": "Extensiones, event triggers, funciones, triggers y parámetros de almacenamiento.",
+            "stack": [
+              "Python",
+              "PostgreSQL"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-pgsql-extensions"
+          },
+          {
+            "name": "dbwarden-plugin-template",
+            "role": "Plantilla de plugin",
+            "desc": "Scaffolding para construir y probar nuevos plugins de DBWarden.",
+            "stack": [
+              "Python"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-plugin-template"
+          },
+          {
+            "name": "dbwarden-seeds",
+            "role": "Datos semilla",
+            "desc": "Gestión de seeds por código y archivos con apply y rollback.",
+            "stack": [
+              "Python"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-seeds"
+          },
+          {
+            "name": "dbwarden-sandbox",
+            "role": "Pruebas sandbox",
+            "desc": "Proveedores Testcontainers para reproducir migraciones de forma segura.",
+            "stack": [
+              "Python",
+              "Docker"
+            ],
+            "href": "https://github.com/dbwarden-org/dbwarden-sandbox"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "Requiere SQLAlchemy 2.0+ (no compatible con modelos heredados)",
+          "La compilación de esquemas agrega un paso de compilación frente a la migración en tiempo de ejecución",
+          "El enfoque declarativo significa menos control sobre las órdenes de migración"
+        ]
+      }
+    ]
+  },
+  "trustsight": {
+    "id": "trustsight",
+    "name": "TrustSight",
+    "index": "02",
+    "category": "Seguridad · Análisis estático",
+    "accent": "#0092d2",
+    "accentLight": "#006498",
+    "summary": "Análisis de seguridad basado en evidencia para paquetes AUR. Nunca ejecuta código, nunca recupera fuentes y aplica fail-closed cuando la cobertura está incompleta.",
+    "lede": "Un resultado limpio no es prueba de seguridad. Es una declaración sobre la detección.",
+    "stack": [
+      "Python 3.11+",
+      "Arch Linux",
+      "SQLite",
+      "Ed25519",
+      "libgit2"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/trustsight",
+        "primary": true
+      },
+      {
+        "label": "Documentación",
+        "href": "https://docs.trustsight.org"
+      },
+      {
+        "label": "trustsight.org",
+        "href": "https://trustsight.org"
+      },
+      {
+        "label": "Observador",
+        "href": "https://watcher.trustsight.org"
+      },
+      {
+        "label": "Arnés",
+        "href": "https://harness.trustsight.org"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/trustsight/"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Reglas documentadas",
+        "value": "257"
+      },
+      {
+        "label": "URL de origen",
+        "value": "186K"
+      },
+      {
+        "label": "Identidades del mantenedor",
+        "value": "36K"
+      },
+      {
+        "label": "Versión",
+        "value": "v0.25.0",
+        "repo": "emiliano-go/trustsight"
+      }
+    ],
+    "facts": [
+      "~7K pruebas",
+      "257 reglas documentadas",
+      "Líneas de base firmadas",
+      "Federación IOC"
+    ],
+    "diagram": "PKGBUILD / diff → Análisis estático → Evidencia + cobertura → Evaluación de riesgos → Veredicto",
+    "license": "MIT",
+    "meta": {
+      "title": "TrustSight | Emiliano G.O.",
+      "description": "Análisis de seguridad basado en evidencia para paquetes AUR. Nunca ejecuta código. Fail-closed por diseño. 257 reglas documentadas."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Las actualizaciones del paquete AUR son revisadas por humanos que leen las diferencias de PKGBUILD. Este proceso es lento, inconsistente y no detecta ataques estructurales: scripts de shell canalizados, desactivación de sumas de comprobación, errores tipográficos, comandos ofuscados y tomas de control por parte del mantenedor. No existe ninguna herramienta automatizada que produzca evidencia sin ejecutar el paquete."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "¿Por qué es difícil?",
+        "body": [
+          "La restricción estricta es nunca ejecutar código. El análisis estático de PKGBUILD significa razonar sobre scripts de shell, inyección de comandos, typosquatting y patrones de comportamiento del mantenedor sin ejecutar nada.",
+          "La detección de clústeres en todo el corpus agrega otra capa: rastrear aproximadamente 186.000 URL de origen y 36.000 identidades de mantenedores para detectar señales vistas por primera vez, secuestro de huérfanos y cadencia de lanzamiento acelerada. La herramienta debe fallar cerrada; La evidencia incompleta no debe convertirse silenciosamente en confianza."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Modelo de seguridad",
+        "label": "Invariantes",
+        "items": [
+          {
+            "key": "Ejecución PKGBUILD",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Red arbitraria",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Modificación del sistema",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Pérdida de cobertura",
+            "val": "EXPLICIT",
+            "tone": "neutral"
+          },
+          {
+            "key": "Análisis incompleto",
+            "val": "FAIL-CLOSED",
+            "tone": "fail"
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Categorías de detección",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "inyección de comando",
+            "body": "Scripts de shell canalizados, comandos ofuscados, manipulación del entorno de compilación (LD_PRELOAD y pares)."
+          },
+          {
+            "title": "cadena de suministro",
+            "body": "Suma de comprobación deshabilitada, intercambios de fuente URL, dependencias de compilación no fijadas, verificación GPG eliminada."
+          },
+          {
+            "title": "Error tipográfico",
+            "body": "Distancia de edición de nombre de paquete y fuente-URL frente a dominios forge conocidos y paquetes populares."
+          },
+          {
+            "title": "Señales de mantenedor",
+            "body": "Adquisición no confiable, secuestro huérfano, paquete obsoleto revivido, cadencia de lanzamiento acelerada."
+          },
+          {
+            "title": "Detección de novedades",
+            "body": "URL y mantenedores vistos por primera vez en una base de datos inicial firmada de ~186 000 URL de origen y ~36 000 identidades."
+          },
+          {
+            "title": "Cargas útiles de sabotaje",
+            "body": "Bombas de horquilla, limpieza de discos, sabotaje de permisos, mineros de monedas; distingue la zona de pruebas de construcción del contexto del sistema."
+          },
+          {
+            "title": "Ataques de codificación",
+            "body": "Anulaciones de bidi Unicode, puntos de código de homoglifos y plantillas de instrucciones dirigidas por el revisor."
+          },
+          {
+            "title": "Coincidencia IOC",
+            "body": "Indicadores malos conocidos frente a líneas de base federadas y firmadas del canal de lanzamiento."
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Sólo análisis estático",
+            "body": "Nunca ejecuta PKGBUILD, nunca recupera URL, se ejecuta antes de makepkg. La herramienta es una herramienta SAST por diseño."
+          },
+          {
+            "title": "Evidencia, no prueba",
+            "body": "Cada hallazgo es rastreable hasta una línea diferencial específica, URL o registro de novedad. El resultado es un informe de evidencia estructurado, no una puerta."
+          },
+          {
+            "title": "Líneas de base firmadas",
+            "body": "Las líneas base de semillas novedosas y IOC se envían como activos de lanzamiento firmados de GitHub, verificados con una clave de distribución fijada en el momento de la importación."
+          },
+          {
+            "title": "Profundidad de dependencia configurable",
+            "body": "Las dependencias de AUR se analizan como paquetes por derecho propio, hasta una profundidad configurable. Las brechas de cobertura siguen siendo explícitas."
+          }
+        ]
+      },
+      {
+        "kind": "ecosystem",
+        "title": "Ecosistema",
+        "intro": "TrustSight es un núcleo con cinco satélites independientes: medición, investigación, clasificación, sitio público y transmisión de observadores en vivo.",
+        "repos": [
+          {
+            "name": "trustsight",
+            "role": "Núcleo · CLI · observador",
+            "desc": "El motor de análisis, el catálogo de reglas, las líneas base firmadas, los informes de evidencia deterministas y el observador AUR que alimenta el flujo de alertas públicas.",
+            "stack": [
+              "Python",
+              "SQLite",
+              "libgit2"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight"
+          },
+          {
+            "name": "trustsight-harness",
+            "role": "Medición adversaria",
+            "desc": "Convierte \"un LLM encontrado N omisiones\" en campañas reproducibles y con seguimiento de costos en una compilación fijada. También expone un servidor MCP para herramientas de alimentación y verificación.",
+            "stack": [
+              "Python",
+              "Docker",
+              "pytest"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-harness"
+          },
+          {
+            "name": "trustsight-lab",
+            "role": "Investigación fuera de línea",
+            "desc": "Encuentra, clasifica y valida mejoras de reglas deterministas en un árbol de trabajo desechable. Las propuestas requieren revisión humana y las puertas normales.",
+            "stack": [
+              "Python",
+              "uv",
+              "pytest"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-lab"
+          },
+          {
+            "name": "trustsight-triage-agent",
+            "role": "Triaje de modelo local",
+            "desc": "Un proceso, un modelo local. Se citó la clasificación de FP/TP sobre alertas de vigilancia sin puerta de enlace remota, cola o contenedor de trabajos.",
+            "stack": [
+              "Python",
+              "Ollama",
+              "MCP"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-triage-agent"
+          },
+          {
+            "name": "trustsight-web",
+            "role": "Sitio del producto",
+            "desc": "Sitio de una sola página para trustsight.org que presenta el modelo de revisión basada en la evidencia: capacidades, calibración, configuración y límites.",
+            "stack": [
+              "Preact",
+              "Vite"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-web"
+          },
+          {
+            "name": "trustsight-feed",
+            "role": "Feed de alerta en vivo",
+            "desc": "Archivo con capacidad de búsqueda de alertas de observadores en Cloudflare Workers y D1, con explicaciones por regla y documentos de evidencia completos.",
+            "stack": [
+              "Workers",
+              "D1",
+              "Preact"
+            ],
+            "href": "https://github.com/emiliano-go/trustsight-feed"
+          }
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Verificación",
+        "lead": "El arnés convierte \"un LLM encontrado N derivaciones\" en una medición reproducible, auditable y con seguimiento de costos frente a una construcción fijada.",
+        "label": "Estados del arnés",
+        "items": [
+          {
+            "key": "detectado",
+            "val": "regla despedida",
+            "tone": "pass"
+          },
+          {
+            "key": "evasión_parcial",
+            "val": "otra regla lo atrapó",
+            "tone": "neutral"
+          },
+          {
+            "key": "captura_cerrada_fallada",
+            "val": "brecha de cobertura bloqueada",
+            "tone": "fail"
+          },
+          {
+            "key": "derivación",
+            "val": "devuelto UNFLAGGED",
+            "tone": "fail"
+          },
+          {
+            "key": "comportamiento_perdido",
+            "val": "cadena de ataque no probada",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "lo que no puede ver",
+        "items": [
+          "Tarballs maliciosos de lanzamiento ascendente (audita el PKGBUILD, no los archivos binarios)",
+          "Ataques deliberadamente anodinos (sin señal diferencial = invisible)",
+          "Ataques en tiempo de ejecución (la herramienta nunca ejecuta nada)",
+          "Ataques estructurales de día cero (basados ​​en patrones, calibrados contra el corpus)"
+        ]
+      }
+    ]
+  },
+  "rypipe": {
+    "id": "rypipe",
+    "name": "rypipe",
+    "index": "03",
+    "category": "Datos · Marco de ingesta",
+    "accent": "#c96a50",
+    "accentLight": "#9b4a32",
+    "summary": "Marco de ingestión reutilizable. Núcleo Rust, bindings de Python. Añade un nuevo formato implementando dos traits.",
+    "lede": "Los adaptadores siguen siendo pequeños. El motor posee programación, memoria limitada y exportación Arrow.",
+    "stack": [
+      "Rust 1.78+",
+      "Python 3.10+",
+      "PyO3",
+      "Apache Arrow",
+      "mmap"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/rypipe",
+        "primary": true
+      },
+      {
+        "label": "Documentación",
+        "href": "https://rypipe.emiliano-go.com"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/rypipe/"
+      },
+      {
+        "label": "crxml",
+        "href": "https://github.com/emiliano-go/crxml"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Pruebas",
+        "value": "476"
+      },
+      {
+        "label": "Paralelo (crxml)",
+        "value": "7,63 GB/s",
+        "tone": "pass"
+      },
+      {
+        "label": "Documentación",
+        "value": "15,9K líneas"
+      },
+      {
+        "label": "Publicado",
+        "value": "PyPI + crates.io",
+        "tone": "pass"
+      }
+    ],
+    "facts": [
+      "476 tests",
+      "7,63 GB/s acotado",
+      "4,23 GB/s RAM completa",
+      "2,12 GB/s xmlstreamer-ng"
+    ],
+    "diagram": "Adaptador de formato (Splitter + RecordParser) → Motor paralelo → Plan fusionado → Arrow",
+    "license": "MIT",
+    "meta": {
+      "title": "rypipe | Emiliano G.O.",
+      "description": "Motor de ingestión Rust reutilizable con bindings de Python. Adaptadores de dos traits. 7,63 GB/s en paralelo acotado con crxml."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "¿Qué es rypipe?",
+        "body": [
+          "rypipe es un marco de ingesta reutilizable, no un analizador de formato único. Separa el análisis específico del formato de la ejecución independiente del formato. Agregue un nuevo formato implementando dos pequeños rasgos: Splitter y RecordParser.",
+          "rypipe en sí no incluye analizadores. Estos viven en paquetes de adaptadores separados. Instala el motor más los adaptadores que necesites. El marco maneja la programación paralela, la ejecución limitada a la memoria, la inserción de consultas y una canalización encadenable API."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "El análisis de flujos de bytes orientados a filas en formatos de columnas (Apache Arrow) generalmente requiere escribir un motor completo por formato. Cada formato tiene su propio programador paralelo, administrador de memoria e infraestructura de ejecución. El resultado es un esfuerzo duplicado y características de rendimiento inconsistentes en todos los formatos."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "¿Por qué es difícil?",
+        "body": [
+          "La dificultad es separar el análisis específico del formato (dos pequeños rasgos) de la ejecución independiente del formato (programación paralela, memoria limitada, envío de consultas, exportación Arrow de copia cero) manteniendo al mismo tiempo el rendimiento en el ancho de banda de la memoria. El conjunto de pruebas de contrato de adaptador verifica que cualquier adaptador produzca resultados idénticos en los modos de ejecución de subproceso único, paralelo y limitado."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Rendimiento medido",
+        "body": [
+          "El rendimiento depende del adaptador y la carga. Últimos benchmarks en un Ryzen 7 5800X: crxml alcanza 4,23 GB/s en RAM completa y 7,63 GB/s en modo acotado con esquema explícito sobre un informe de 533 MB; xmlstreamer-ng alcanza 2,12 GB/s en paralelo (8 hilos) y 1,36 GB/s en paralelo acotado sobre un feed de 128 MiB."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Restricciones",
+        "items": [
+          "Memoria limitada: no se pueden cargar archivos completos en RAM",
+          "La ejecución paralela debe escalar linealmente con los núcleos",
+          "Las etapas de la tubería deben fusionarse en el bucle de análisis (sin ida y vuelta Python)",
+          "El adaptador API debe ser mínimo: dos características, no un motor completo"
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Modelo de adaptador de dos rasgos",
+            "body": "Agregar un nuevo formato requiere implementar Splitter y RecordParser. El motor se encarga de todo lo demás."
+          },
+          {
+            "title": "Evaluación de predicado primero",
+            "body": "Los filtros se introducen en el bucle de análisis Rust. Las filas que fallan se rechazan antes de que se cree cualquier objeto Python."
+          },
+          {
+            "title": "Predicción de diseño a través de memcmp",
+            "body": "Predice la estructura de filas a partir de patrones de bytes, omitiendo el descubrimiento de columnas cuando se conoce el esquema."
+          },
+          {
+            "title": "Exportación Arrow de copia cero",
+            "body": "Los datos se mueven desde los buffers de análisis directamente a las matrices Arrow sin copias intermedias."
+          }
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Origen",
+        "body": [
+          "rypipe se desarrolló originalmente como motor de ingesta para crxml, un adaptador Crystal Reports XML. El diseño del motor, las características de rendimiento y API fueron moldeados por el uso de producción con crxml. crxml es el adaptador de referencia que demostró el modelo: esquemas anidados complejos, archivos grandes, procesamiento paralelo y filtrado avanzado."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "Los adaptadores deben escribirse por formato (no un analizador universal)",
+          "El núcleo Rust agrega complejidad de construcción frente al Python puro",
+          "El esquema debe conocerse de antemano para obtener el máximo rendimiento"
+        ]
+      }
+    ]
+  },
+  "postal": {
+    "id": "postal",
+    "name": "postal",
+    "index": "04",
+    "category": "Escritorio nativo · Protocolo de mensajería",
+    "accent": "#2e9e6b",
+    "accentLight": "#1f6f4a",
+    "summary": "Un cliente WhatsApp nativo e independiente que habla directamente el protocolo multidispositivo. Sin vista web, sin descarga forzada del historial.",
+    "lede": "SQLite es el archivo duradero. RAM es una ventana delimitada. La sincronización del historial es una decisión del programa.",
+    "stack": [
+      "Rust",
+      "Tauri 2",
+      "Svelte 5",
+      "SQLite",
+      "MIT"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/postal",
+        "primary": true
+      },
+      {
+        "label": "Versión v0.1.0",
+        "href": "https://github.com/emiliano-go/postal/releases/tag/v0.1.0"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Pruebas Rust",
+        "value": "352"
+      },
+      {
+        "label": "Pruebas de interfaz",
+        "value": "66"
+      },
+      {
+        "label": "Total LOC",
+        "value": "~68K"
+      },
+      {
+        "label": "Versión",
+        "value": "v0.1.0"
+      }
+    ],
+    "diagram": "Enlace multidispositivo → whatsapp-rust → Bucle de eventos → StoreWorker → Ventana SQLite + RAM → Tauri → Svelte",
+    "license": "MIT",
+    "meta": {
+      "title": "postal | Emiliano G.O.",
+      "description": "Cliente multidispositivo nativo WhatsApp sin vista web. Memoria limitada, sincronización de historial opcional, archivo SQLite duradero. 0.3% inactivo CPU."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Envolver WhatsApp Web obliga al cliente a descargar y conservar todo el historial de mensajes de la cuenta. Es decir, decenas de gigabytes en disco, varios gigabytes de RAM y un rendimiento que se degrada a medida que crece el historial. El protocolo en sí no requiere nada de esto."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Protocolo nativo, sin vista web",
+            "body": "Construido sobre whatsapp-rust anclado a una revisión de git más reciente que 0.7.0 para la admisión de sincronización del historial. La única vista web muestra la propia interfaz de usuario de Postal."
+          },
+          {
+            "title": "La sincronización del historial está habilitada",
+            "body": "El emparejamiento abre solo la ventana reciente. El historial completo (hasta 10 000 días, si el teléfono lo permite) se solicita explícitamente desde Configuración."
+          },
+          {
+            "title": "Disco y RAM desacoplados",
+            "body": "SQLite es un archivo duradero; la conversación abierta mantiene una ventana de mensaje limitada (500 por defecto, 50-2000). El desalojo nunca elimina las filas del disco."
+          },
+          {
+            "title": "Acceso serializado a la tienda",
+            "body": "Una puerta StoreWorker tiene un contrato de arrendamiento exclusivo a través de cada punto de guardado, por lo que los lotes en vivo y de historial nunca corren mientras espera el trabajo en segundo plano."
+          }
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Medido contra un cliente webview",
+        "lead": "Misma cuenta, misma máquina.",
+        "label": "Comparación",
+        "items": [
+          {
+            "key": "Inactivo CPU",
+            "val": "~0.3% frente a ~200%",
+            "tone": "pass"
+          },
+          {
+            "key": "Memoria",
+            "val": "~600 MB frente a 2.2 → 23 GB",
+            "tone": "pass"
+          },
+          {
+            "key": "Historia en el emparejamiento",
+            "val": "ninguno frente a ~20 GB",
+            "tone": "pass"
+          },
+          {
+            "key": "Base de datos de sesión compactada",
+            "val": "97 MB → 5.8 MB",
+            "tone": "pass"
+          },
+          {
+            "key": "Filas conservadas",
+            "val": "399,620",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "Las bases de datos, los medios y las copias de seguridad son texto sin formato en el disco; el cifrado es un trabajo abierto",
+          "Los lanzamientos están en espera hasta que cubran todas las plataformas compatibles; Los instaladores construyen desde el maestro.",
+          "Aún no hay llamadas, íconos de bandeja, actualizaciones de estado, comunidades ni soporte para álbumes"
+        ]
+      }
+    ]
+  },
+  "neurafly": {
+    "id": "neurafly",
+    "name": "neurafly",
+    "index": "05",
+    "category": "Audio terminal · Neurociencia computacional",
+    "accent": "#d45f86",
+    "accentLight": "#a33458",
+    "summary": "Entrada de audio real, neuronas reales activadas, tiempo real. Un visualizador terminal conectado al conectoma de todo el cerebro FlyWire.",
+    "lede": "138.333 neuronas con fugas que se integran y activan y 2.052.622 sinapsis ponderadas representadas como un disco viviente en braille.",
+    "stack": [
+      "Rust",
+      "TUI / Braille",
+      "Audio DSP",
+      "FlyWire Connectome",
+      "MIT"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/neurafly",
+        "primary": true
+      },
+      {
+        "label": "crates.io",
+        "href": "https://crates.io/crates/neurafly"
+      },
+      {
+        "label": "AUR",
+        "href": "https://aur.archlinux.org/packages/neurafly"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Neuronas",
+        "value": "138,333"
+      },
+      {
+        "label": "Sinapsis",
+        "value": "2,052,622"
+      },
+      {
+        "label": "tic de simulación",
+        "value": "100 Hz"
+      },
+      {
+        "label": "Datos del conectoma",
+        "value": "18 MB"
+      }
+    ],
+    "diagram": "Audio → FFT de 2048 puntos → 24 bandas de registro → Red LIF (FlyWire v783) → Lienzo de fósforo braille",
+    "license": "MIT",
+    "meta": {
+      "title": "neurafly | Emiliano G.O.",
+      "description": "Visualizador de audio terminal impulsado por el conectoma FlyWire real: 138.333 neuronas activas y 2.052.622 sinapsis, renderizadas en braille."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Los visualizadores de audio sintetizan formas a partir de datos de frecuencia. El movimiento parece orgánico pero no tiene estructura: barras, partículas y formas de onda impulsadas por los mismos números FFT. En cambio, neurafly combina el audio del sistema en vivo con un diagrama de cableado biológico real, de modo que la actividad se propaga, reverbera y decae a través de una topología genuina de cerebro de mosca."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Conectoma real, no un modelo.",
+            "body": "El cableado proviene de la versión v783 de FlyWire: 138.333 neuronas y 2.052.622 sinapsis ponderadas. El signo inhibidor sigue las probabilidades de los neurotransmisores presinápticos."
+          },
+          {
+            "title": "procesamiento de bandas estilo cava",
+            "body": "Un FFT de 2048 puntos se pliega en 24 bandas logarítmicas, cada una juzgada en función de su propio piso espectral móvil, con ecualizador de igual volumen, ganancia automática y puerta de picos."
+          },
+          {
+            "title": "Tubería de tick fijo",
+            "body": "Cuatro módulos (audio, simulación, figura, lienzo) comparten un tick de simulación fijo de 100 Hz, por lo que cada banda inyecta corriente en su propio subconjunto de neuronas de forma determinista."
+          },
+          {
+            "title": "Representación nativa de terminal",
+            "body": "Un búfer de fósforo flotante con una resolución de subcelda de 2x4 se pliega en braille y los colores provienen exclusivamente de ANSI 30-37, por lo que el disco adopta el tema del usuario."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "Solo Linux (PipeWire/PulseAudio) y un terminal compatible con braille Unicode",
+          "El conectoma de 18 MB está excluido de la caja publicada, que recurre a una red sintética.",
+          "La regeneración de la red necesita el archivo de plumas Zenodo y las herramientas de preprocesamiento Python"
+        ]
+      }
+    ]
+  },
+  "easeo": {
+    "id": "easeo",
+    "name": "easeo",
+    "index": "06",
+    "category": "Metadatos SEO · SDK multilingüe",
+    "accent": "#a06ad9",
+    "accentLight": "#6b2fa0",
+    "summary": "Un generador de metadatos SEO determinista: un núcleo Rust con las API Python, Node.js y Rust.",
+    "lede": "Toma una entidad, ruta y configuración de sitio, y devuelve URL canónico, título, descripción, robots, Open Graph, tarjetas de Twitter y JSON-LD.",
+    "stack": [
+      "Rust core",
+      "Python",
+      "Node.js",
+      "JSON-LD",
+      "MIT"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/easeo",
+        "primary": true
+      },
+      {
+        "label": "Documentación",
+        "href": "https://easeo.emiliano-go.com/"
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/easeo/"
+      },
+      {
+        "label": "npm",
+        "href": "https://www.npmjs.com/package/@easeo/core"
+      },
+      {
+        "label": "crates.io",
+        "href": "https://crates.io/crates/easeo-core"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Pruebas",
+        "value": "310"
+      },
+      {
+        "label": "Tipos de entidad",
+        "value": "11"
+      },
+      {
+        "label": "Integraciones",
+        "value": "10"
+      },
+      {
+        "label": "Páginas de documentos",
+        "value": "64"
+      }
+    ],
+    "diagram": "Entidad + ruta + configuración → Normalización URL → Cadenas de respaldo → Meta / OG / Twitter / JSON-LD → Contrato SHA-256",
+    "license": "MIT",
+    "meta": {
+      "title": "easeo | Emiliano G.O.",
+      "description": "Metadatos SEO deterministas de un núcleo Rust con enlaces Python y Node.js. Salida idéntica byte por byte en todos los idiomas."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Las bibliotecas SEO tienden a combinar la generación de metadatos con puntuación, análisis de palabras clave y reescritura de contenido. El resultado varía de una ejecución a otra, lo que dificulta la realización de pruebas de instantáneas, hash, caché o diferencias. Las plataformas que renderizan en más de un idioma terminan con cargas útiles sutilmente diferentes por pila."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Un núcleo, tres fijaciones",
+            "body": "Toda la lógica vive en el núcleo easeo. Python y Node.js incluyen el mismo motor y el conjunto de conformidad entre idiomas afirma una salida idéntica byte por byte."
+          },
+          {
+            "title": "Determinismo puro",
+            "body": "Sin marcas de tiempo, aleatoriedad, lecturas del entorno ni E/S ocultas. Las mismas entradas siempre producen la misma carga útil, por lo que la salida se puede codificar y confirmar."
+          },
+          {
+            "title": "Contratos SEO para CI",
+            "body": "build_seo_contract emite una intención SEO legible por máquina que se puede confirmar y validar como código, detectando regresiones de metadatos en revisión."
+          },
+          {
+            "title": "Registros de extensión con alcance",
+            "body": "HookRegistry y SchemaRegistry agregan posprocesamiento y JSON-LD personalizado sin tocar el núcleo, con un alcance de configuración en lugar de global."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "No es un marco: los adaptadores organizan las entradas, no poseen el ciclo de vida de la aplicación",
+          "No es una herramienta de puntuación, análisis de palabras clave, rastreo o reescritura de contenido.",
+          "Muestra un fragmento de encabezado, no un documento completo; estado de liberación alfa"
+        ]
+      }
+    ]
+  },
+  "clickvault": {
+    "id": "clickvault",
+    "name": "ClickVault",
+    "index": "07",
+    "category": "Seguridad · Complemento de bóveda",
+    "accent": "#f5c81b",
+    "accentLight": "#785f00",
+    "summary": "Complemento del motor de secretos de base de datos HashiCorp Vault para ClickHouse. Credenciales dinámicas, rotación de contraseñas, DDL compatible con clústeres.",
+    "lede": "Crea usuarios ClickHouse de corta duración a pedido y rota las contraseñas según un cronograma.",
+    "stack": [
+      "Go 1.26+",
+      "Vault SDK",
+      "ClickHouse",
+      "Database secrets"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/clickvault",
+        "primary": true
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Líneas fuente",
+        "value": "1,017"
+      },
+      {
+        "label": "Líneas de prueba",
+        "value": "979"
+      },
+      {
+        "label": "códigocov",
+        "value": "85.4%",
+        "tone": "pass"
+      },
+      {
+        "label": "CI aplicado",
+        "value": "YES",
+        "tone": "pass"
+      }
+    ],
+    "diagram": "Vault API → Complemento ClickVault → Dinámico / Estático / Girar → Clúster ClickHouse (ON CLUSTER DDL)",
+    "license": "MIT",
+    "meta": {
+      "title": "ClickVault | Emiliano G.O.",
+      "description": "Plugin de HashiCorp Vault para ClickHouse. Credenciales dinámicas, rotación de contraseñas y DDL cluster-aware."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "ClickHouse carece de soporte nativo de credenciales dinámicas en el motor de secretos de bases de datos de Vault. Los equipos que administran clústeres ClickHouse necesitan credenciales de corta duración y rotación automatizada de contraseñas sin intervención manual."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "¿Por qué es difícil?",
+        "body": [
+          "Los clústeres ClickHouse utilizan DDL distribuido (ON CLUSTER), que la mayoría de los complementos de Vault no manejan. La creación de usuarios dinámicos debe ser atómica: si las concesiones fallan, se debe limpiar el usuario creado parcialmente. La rotación de contraseñas debe funcionar en motores replicados y no replicados. El complemento debe implementar correctamente la interfaz dbplugin.Database de Vault mientras maneja las diferencias de sintaxis específicas de ClickHouse."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Modelo de seguridad",
+        "label": "Invariantes",
+        "items": [
+          {
+            "key": "Inyección SQL",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Acceso simultáneo",
+            "val": "MUTEX",
+            "tone": "pass"
+          },
+          {
+            "key": "creación parcial",
+            "val": "CLEANUP",
+            "tone": "pass"
+          },
+          {
+            "key": "Colisión de nombre de usuario",
+            "val": "GUARDED",
+            "tone": "pass"
+          },
+          {
+            "key": "Soporte para TLS",
+            "val": "YES",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "DDL compatible con clústeres",
+            "body": "La inserción ON CLUSTER garantiza que DDL se propague por todo el clúster. Maneja tablas de motor replicadas y no replicadas."
+          },
+          {
+            "title": "Verificación de privilegios",
+            "body": "La verificación de la conexión verifica que la cuenta de servicio tenga los privilegios requeridos antes de aceptar la configuración."
+          },
+          {
+            "title": "Limpieza en caso de fallo",
+            "body": "Si la creación del usuario se realiza parcialmente (por ejemplo, las concesiones fallan), el complemento elimina el usuario creado parcialmente para evitar cuentas huérfanas."
+          }
+        ]
+      }
+    ]
+  },
+  "dsig": {
+    "id": "dsig",
+    "name": "dsig",
+    "index": "08",
+    "category": "Seguridad · Criptografía",
+    "accent": "#7387e0",
+    "accentLight": "#4d5ec0",
+    "summary": "Firma de mensajes GPG para Vencord/Vesktop. Certificación de autoría de cada mensaje.",
+    "lede": "Firma mensajes de Discord con su clave GPG. Verifica la autoría, evita la suplantación. Formatos de pie de página compactos e invisibles.",
+    "stack": [
+      "TypeScript",
+      "GPG / OpenPGP",
+      "Vencord",
+      "Discord"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/dsig",
+        "primary": true
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Pruebas",
+        "value": "142"
+      },
+      {
+        "label": "Líneas de prueba",
+        "value": "1,817"
+      },
+      {
+        "label": "Líneas fuente",
+        "value": "3,782"
+      },
+      {
+        "label": "Tamaño de pie de página",
+        "value": "113 chars"
+      }
+    ],
+    "diagram": "Mensaje → Canonicalizar (NFC, CRLF→LF) → Firma OpenPGP → Codificación invisible → Pie de página",
+    "license": "GPL-3.0",
+    "meta": {
+      "title": "dsig | Emiliano G.O.",
+      "description": "Firma de mensajes GPG para Vencord/Vesktop. Atestación de autoría con codificación compacta o invisible."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Discord no tiene firma de mensajes nativa. Cualquiera puede hacerse pasar por cualquier persona copiando su nombre para mostrar y su avatar. No existe una forma criptográfica de verificar que un mensaje fue realmente escrito por el autor reclamado."
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Modelo de amenaza",
+        "label": "Invariantes",
+        "items": [
+          {
+            "key": "Manipulación de mensajes",
+            "val": "DETECTED",
+            "tone": "pass"
+          },
+          {
+            "key": "Suplantación de autor",
+            "val": "BLOCKED",
+            "tone": "pass"
+          },
+          {
+            "key": "Repetir ataques",
+            "val": "NONCE",
+            "tone": "pass"
+          },
+          {
+            "key": "Compromiso clave",
+            "val": "OUT DE SCOPE",
+            "tone": "fail"
+          },
+          {
+            "key": "aislamiento del agente gpg",
+            "val": "THROWAWAY GNUPGHOME",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Codificación invisible",
+            "body": "Las firmas se codifican como caracteres invisibles Unicode (espacios de ancho cero, no unidos) agregados al mensaje, probados con el comportamiento real del cliente de Discord."
+          },
+          {
+            "title": "Canonicalización de contenidos",
+            "body": "Normalización de NFC, conversión de CRLF a LF, colapso de espacios en blanco. Evita omisiones triviales mediante la normalización Unicode o diferencias de final de línea."
+          },
+          {
+            "title": "aislamiento del agente gpg",
+            "body": "La verificación utiliza un GNUPGHOME desechable para evitar que la verificación acceda a la clave de firma. Cada operación de verificación se ejecuta de forma aislada."
+          },
+          {
+            "title": "Solo escritorio por diseño",
+            "body": "Los navegadores web no pueden acceder a gpg-agent. El complemento es solo para escritorio (Vencord/Vesktop) porque el modelo de seguridad requiere acceso a clave local."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "Solo para escritorio (la web no puede acceder a gpg-agent)",
+          "Requiere configuración del par de claves GPG",
+          "Algunos clientes pueden eliminar la codificación invisible",
+          "El compromiso clave está fuera del alcance (limitación estándar GPG)"
+        ]
+      }
+    ]
+  },
+  "xmlstreamer-ng": {
+    "id": "xmlstreamer-ng",
+    "name": "xmlstreamer-ng",
+    "index": "09",
+    "category": "Datos · Transmisión XML",
+    "accent": "#3f9e8a",
+    "accentLight": "#26695c",
+    "summary": "Streamer de feeds XML con aislamiento de fallos construido sobre rypipe, adaptado de carlosplanchon/xmlstreamer. Memoria acotada, recuperación conservadora y fallos parciales explícitos.",
+    "lede": "Una adaptación de carlosplanchon/xmlstreamer basada en rypipe que transmite feeds XML grandes o dañados a registros Python sin ocultar elementos corruptos.",
+    "stack": [
+      "Python 3.11+",
+      "Rust (rypipe-core)",
+      "Apache Arrow",
+      "PyO3"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/xmlstreamer-ng",
+        "primary": true
+      },
+      {
+        "label": "PyPI",
+        "href": "https://pypi.org/project/xmlstreamer-ng/"
+      },
+      {
+        "label": "rypipe",
+        "href": "https://github.com/emiliano-go/rypipe"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Rendimiento paralelo",
+        "value": "15,8M filas/s",
+        "tone": "pass"
+      },
+      {
+        "label": "Throughput",
+        "value": "2,12 GB/s",
+        "tone": "pass"
+      },
+      {
+        "label": "Paralelo acotado",
+        "value": "10,2M filas/s"
+      },
+      {
+        "label": "Pico RSS (acotado)",
+        "value": "202 MB"
+      }
+    ],
+    "facts": [
+      "15,8M filas/s",
+      "2,12 GB/s",
+      "10,2M filas/s acotado",
+      "PyPI"
+    ],
+    "diagram": "HTTP / GZIP / archivo → tokenizador de bytes → analizador Rust por elemento → registros planos o lotes Arrow",
+    "license": "MIT",
+    "meta": {
+      "title": "xmlstreamer-ng | Emiliano G.O.",
+      "description": "Streamer XML con aislamiento de fallos sobre rypipe, adaptado de carlosplanchon/xmlstreamer. Memoria acotada y recuperación conservadora."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "Los feeds XML de gran tamaño procedentes de sistemas remotos suelen tener formato incorrecto, estar mal codificados o verse interrumpidos en tránsito. Un analizador estricto pierde todo el documento por un disco rayado; un analizador de recuperación agresivo puede reescribir silenciosamente marcas dañadas en registros que nunca existieron.",
+          "xmlstreamer-ng está diseñado para el espacio entre esos dos comportamientos: entregar cada elemento intacto antes y después de la corrupción localizada, nunca inventar registros e informar lo que se eliminó en lugar de presentar el procesamiento incompleto como un éxito."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Origen",
+        "body": [
+          "xmlstreamer-ng está basado en [carlosplanchon/xmlstreamer](https://github.com/carlosplanchon/xmlstreamer) de Carlos A. Planchón (MIT) y conserva su enfoque de streaming por ítems para feeds XML grandes o dañados. El motor de parseo se construye sobre [rypipe](https://github.com/emiliano-go/rypipe) (rypipe-core), que aporta el tokenizador de bytes, el splitter, el parseo por ítem y la ejecución Arrow."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "¿Por qué es difícil?",
+        "body": [
+          "La recuperación tiene que ser conservadora sin volverse inútil. Las etiquetas separadoras deben reconocerse dentro de los comentarios, CDATA, instrucciones de procesamiento y DOCTYPE sin que nunca las inventen. La detección de codificación debe superar una declaración XML mentirosa sin corromper el UTF-8 válido. La memoria limitada debe contener mientras que los elementos, las secciones de marcado y los descriptores puedan ser cada uno más grandes que el búfer de lectura.",
+          "La ruta de columnas agrega un segundo contrato: el mismo motor Rust tiene que producir lotes Arrow bajo proyección, filtrado y ejecución en paralelo, con una semántica de caída de elementos mal formados idéntica a la ruta de transmisión."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Rendimiento",
+        "body": [
+          "Últimos benchmarks en un Ryzen 7 5800X sobre un feed de 128 MiB con 951.898 ítems: XmlSource en paralelo (8 hilos) alcanza 15,8M filas/s y 2,12 GB/s; el streaming paralelo acotado alcanza 10,2M filas/s y 1,36 GB/s con 202 MB de RSS máximo."
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Resultados del benchmark",
+        "columns": [
+          "Motor",
+          "Modo",
+          "items/s",
+          "MB/s",
+          "RSS máxima"
+        ],
+        "rows": [
+          [
+            "xmlstreamer-ng",
+            "XmlSource paralelo (8 hilos)",
+            "15,8M",
+            "2122,6",
+            "283 MB"
+          ],
+          [
+            "xmlstreamer-ng",
+            "Paralelo acotado (8 hilos)",
+            "10,2M",
+            "1364,7",
+            "202 MB"
+          ],
+          [
+            "xmlstreamer-ng",
+            "XmlSource columnar",
+            "4,6M",
+            "621,6",
+            "297 MB"
+          ],
+          [
+            "quick-xml (nativo)",
+            "solo parseo y conteo",
+            "3,2M",
+            "433,0",
+            "14 MB"
+          ],
+          [
+            "lxml iterparse",
+            "dicts por ítem",
+            "304k",
+            "40,8",
+            "26 MB"
+          ],
+          [
+            "xmlstreamer (original)",
+            "dicts por ítem",
+            "103k",
+            "13,8",
+            "34 MB"
+          ]
+        ],
+        "note": "Feed sintético de 128 MiB, 951.898 ítems, mediana de 5 ejecuciones en un Ryzen 7 5800X. Las filas nativas solo parsean y cuentan; no construyen registros."
+      },
+      {
+        "kind": "cards",
+        "title": "Decisiones clave",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "Dos API, un motor",
+            "body": "StreamInterpreter mantiene el contrato de recuperación por artículo; XmlSource expone la proyección, el filtrado y los lotes paralelos de Arrow desde el mismo analizador Rust."
+          },
+          {
+            "title": "Contabilidad explícita de fallos",
+            "body": "Los elementos mal formados se registran y cuentan, nunca se reparan silenciosamente. Las estadísticas finales distinguen el daño del feed de los elementos eliminados por el filtro de la persona que llama."
+          },
+          {
+            "title": "Recuperación conservadora",
+            "body": "La corrupción contenida dentro de un objeto solo elimina ese objeto. Las secciones que nunca se cierran son una elección documentada a través de Secciones(on_limit=...), anunciadas con una advertencia."
+          }
+        ]
+      },
+      {
+        "kind": "panel",
+        "title": "Garantías",
+        "label": "Contrato",
+        "items": [
+          {
+            "key": "Artículo dañado",
+            "val": "DROPPED + WARNED",
+            "tone": "pass"
+          },
+          {
+            "key": "Vecinos válidos",
+            "val": "DELIVERED",
+            "tone": "pass"
+          },
+          {
+            "key": "Registros inventados",
+            "val": "NEVER",
+            "tone": "pass"
+          },
+          {
+            "key": "Memoria",
+            "val": "BOUNDED",
+            "tone": "pass"
+          },
+          {
+            "key": "Codificando mentiras",
+            "val": "CONTENT WINS",
+            "tone": "pass"
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "La etiqueta separadora no debe encajarse dentro de sí misma.",
+          "Los elementos se crean a partir del texto del elemento, no de los atributos XML",
+          "lxml.iterparse puede servir mejor a los comentarios no confiables y bien formados",
+          "API por elemento es más lento que el adaptador columnar/paralelo"
+        ]
+      }
+    ]
+  },
+  "eclipse": {
+    "id": "eclipse",
+    "name": "eclipse",
+    "index": "10",
+    "category": "ML · Investigación sobre destilación",
+    "accent": "#d98a4a",
+    "accentLight": "#8f4d1b",
+    "summary": "Equipo de destilación a nivel de bytes para Ornith 1.5 9B. Objetivos EOT exactos, un estudiante de 48 millones de bytes y un estudio de viabilidad reproducible.",
+    "lede": "Convierte la distribución de tokens de un maestro 9B en bytes exactos/objetivos de fin de token, luego mide lo que realmente aprende un estudiante de bytes pequeños.",
+    "stack": [
+      "Python",
+      "PyTorch",
+      "llama.cpp",
+      "CUDA"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/emiliano-go/eclipse",
+        "primary": true
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Retenido BPB",
+        "value": "0.818"
+      },
+      {
+        "label": "Profesor KL",
+        "value": "0.317"
+      },
+      {
+        "label": "Top-1 observado",
+        "value": "0.865"
+      },
+      {
+        "label": "estudiante byte",
+        "value": "48M"
+      }
+    ],
+    "facts": [
+      "BPB 0.818",
+      "KL 0.317",
+      "top-1 0.865",
+      "26,2M posiciones"
+    ],
+    "diagram": "Logits de profesor (llama.cpp) → byte trie → objetivos exactos de EOT → estudiante de 48 M bytes → evaluación BPB / KL",
+    "license": "MIT",
+    "meta": {
+      "title": "eclipse | Emiliano G.O.",
+      "description": "Destilación byte-level para Ornith 1.5 9B: objetivos EOT exactos y un estudiante de 48M parámetros."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "La destilación a nivel de token supone que el estudiante comparte el tokenizador del maestro. Un estudiante de nivel de byte no lo hace, por lo que la distribución del siguiente token del profesor debe convertirse en una distribución del siguiente byte con un estado terminal bien definido.",
+          "Este proyecto prueba si esa conversión puede ser exacta, si un estudiante de bytes pequeños puede aprender de ella y si los objetivos de fin de token superan a Marginalise-It y la entropía cruzada de bytes simples en una comparación controlada."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Configuración",
+        "body": [
+          "El teacher es Ornith-1.5-9B, un modelo híbrido Qwen3.5 de 9B, cuantizado a Q5_K_M para la extracción masiva y Q8_0 para la auditoría de precisión. El student es un Transformer byte denso de ~48M con contexto de 1.024 bytes y vocabulario de 260 símbolos. El corpus son ~20 MB de texto y código normalizados en NFC: 6.592.718 tokens de entrenamiento y 136.916 de validación. El entrenamiento corre en una única RTX 3070 de 8 GB."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Método",
+        "body": [
+          "Los logits del profesor se transmiten desde llama.cpp y se convierten en un byte-trie del vocabulario de 248k tokens en el orden DFS, por lo que cada subárbol de prefijo es un rango contiguo. Las distribuciones de bytes provienen de masas de subárboles secundarios; el nodo terminal recibe p(token) / masa(prefijo) en el símbolo EOT.",
+          "Marginar: se deriva de la misma fila de 260 dimensiones poniendo a cero EOT y renormalizando. Los logits sin procesar nunca persisten; los objetivos se almacenan como fragmentos fp16 con etiquetas explícitas del siguiente símbolo."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Conversión de objetivos",
+        "body": [
+          "Una suma acumulada en float32 del conversor de Python podía asignar mal objetivos de prefijos raros (hasta 0,789 frente a una referencia float64). El conversor de C++ es la ruta de referencia y coincide con float64 hasta 1,3e-7.",
+          "La extracción de 1M produjo 4.014.129 posiciones a partir de 1.000.497 tokens del teacher: 2,087 GB, 431 tokens/s, 38,7 minutos. Cinco posiciones hacen underflow en fp16; el shard valida con sumas de fila y conteos exactos."
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Comparación de objetivos",
+        "columns": [
+          "Objetivo",
+          "BPB val",
+          "BPB incl. EOT",
+          "KL del teacher",
+          "Top-1"
+        ],
+        "rows": [
+          [
+            "EOT",
+            "0,860",
+            "0,921",
+            "0,348",
+            "0,862"
+          ],
+          [
+            "Marginalize-It",
+            "0,771",
+            "6,418",
+            "0,404",
+            "0,637"
+          ],
+          [
+            "Byte CE",
+            "0,872",
+            "0,937",
+            "0,488",
+            "0,865"
+          ]
+        ],
+        "note": "1M tokens, 2.000 pasos, 300.653 bytes de validación. Marginalize-It gana el BPB de contenido descartando la masa EOT, lo que lo hace no desplegable."
+      },
+      {
+        "kind": "table",
+        "title": "Documentos retenidos",
+        "columns": [
+          "Objetivo",
+          "BPB",
+          "BPB incl. EOT",
+          "KL del teacher",
+          "Top-1",
+          "Prefijo greedy"
+        ],
+        "rows": [
+          [
+            "EOT",
+            "1,362",
+            "1,473",
+            "0,617",
+            "0,790",
+            "2,5"
+          ],
+          [
+            "Marginalize-It",
+            "1,228",
+            "6,562",
+            "3,287",
+            "0,583",
+            "2,9"
+          ],
+          [
+            "Byte CE",
+            "1,483",
+            "1,615",
+            "0,826",
+            "0,787",
+            "14,2"
+          ]
+        ],
+        "note": "36 documentos no vistos, 420.313 bytes evaluados. Los mismos documentos se usaron para elegir el objetivo, así que no hay un test split intacto."
+      },
+      {
+        "kind": "table",
+        "title": "Entrenamiento con datos completos",
+        "columns": [
+          "Métrica",
+          "1M posiciones",
+          "26,2M posiciones"
+        ],
+        "rows": [
+          [
+            "BPB",
+            "1,276",
+            "0,818"
+          ],
+          [
+            "BPB incl. EOT",
+            "1,378",
+            "0,879"
+          ],
+          [
+            "KL del teacher",
+            "0,575",
+            "0,317"
+          ],
+          [
+            "Top-1 observado del siguiente símbolo",
+            "0,801",
+            "0,865"
+          ],
+          [
+            "UTF-8 válido",
+            "0,90",
+            "1,00"
+          ],
+          [
+            "Prefijo greedy (bytes)",
+            "6,35",
+            "7,25"
+          ]
+        ],
+        "note": "Corrida completa: 10.000 pasos, ~3,1 épocas. La curva de validación se aplana tras ~8k pasos; documentación llega a BPB 0,764 y Python a 1,143."
+      },
+      {
+        "kind": "cards",
+        "title": "lo que prueba",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "El oleoducto funciona de punta a punta",
+            "body": "Un estudiante de 48 millones de bytes aprende la distribución del siguiente byte del profesor de 9B en documentos invisibles y la conversión objetivo es exacta."
+          },
+          {
+            "title": "La elección objetiva importa",
+            "body": "EOT + 10% CE venció a EOT puro y CE de bytes puros en la comparación controlada de 1M, y EOT es el único método con límites de token utilizables."
+          }
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Límites",
+        "items": [
+          "No es un modelo de lenguaje usable: la generación libre sigue acumulando error (coincidencia greedy de 7,25 bytes)",
+          "No hay test split intacto; los 36 documentos de validación también se usaron para elegir el objetivo",
+          "El contexto del teacher (4.096 tokens) supera la ventana de 1.024 símbolos del student, y las ventanas pueden cruzar límites de documento",
+          "Validado en una única RTX 3070 de 8 GB; la escala es la palanca dominante",
+          "El resultado prueba el pipeline, no el modelo"
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Próximos pasos",
+        "body": [
+          "Siguiente: una ruta de GPU de 24 GB con un student de 100–300M y objetivos on-the-fly, un objetivo centrado en generación y una segunda semilla o un control token-student. El resultado actual es un estudio de viabilidad, no un producto entrenado."
+        ]
+      }
+    ]
+  },
+  "kestrel": {
+    "id": "kestrel",
+    "name": "Kestrel",
+    "index": "11",
+    "category": "Distribución Linux · Sistemas de escritorio",
+    "accent": "#8a7bd8",
+    "accentLight": "#4b3d99",
+    "summary": "Distribución Linux independiente basada en Arch, con Hyprland + Quickshell y un puente de planificación por tarea a nivel de kernel.",
+    "lede": "Un escritorio moldeado, un kernel y un vocabulario de planificación: el compositor, la terminal y las apps comparten una pista por tarea que consume sched_ext.",
+    "stack": [
+      "Arch Linux",
+      "Hyprland",
+      "Quickshell",
+      "sched_ext",
+      "Btrfs",
+      "Shell"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/kestrel-distro/kestrel",
+        "primary": true
+      },
+      {
+        "label": "ISO",
+        "href": "https://github.com/kestrel-distro/iso"
+      },
+      {
+        "label": "Kernel",
+        "href": "https://github.com/kestrel-distro/kernel"
+      },
+      {
+        "label": "Documentación",
+        "href": "https://github.com/kestrel-distro/docs"
+      }
+    ],
+    "metrics": [
+      {
+        "label": "Base",
+        "value": "ARCH"
+      },
+      {
+        "label": "Escritorio",
+        "value": "HYPRLAND + QUICKSHELL"
+      },
+      {
+        "label": "Instalación",
+        "value": "COPIA DE ROOTFS"
+      },
+      {
+        "label": "Planificador",
+        "value": "scx_kestrel",
+        "tone": "pass"
+      }
+    ],
+    "facts": [
+      "Basada en Arch",
+      "Hyprland + Quickshell",
+      "pista sched_ext 0–1024",
+      "MIT"
+    ],
+    "diagram": "Apps / Hyprland / foot → libkestrel-hint → kestrel-broker cgroups → linux-kestrel → scx_kestrel",
+    "license": "MIT",
+    "meta": {
+      "title": "Kestrel | Emiliano G.O.",
+      "description": "Distribución Linux independiente basada en Arch con Hyprland, Quickshell y un puente de planificación por tarea hasta sched_ext."
+    },
+    "sections": [
+      {
+        "kind": "prose",
+        "title": "Problema",
+        "body": [
+          "La mayoría de las distribuciones entregan al escritorio un planificador y se detienen ahí. El compositor, la terminal y las aplicaciones no comparten un vocabulario para latencia o rendimiento, así que el ajuste se hace con prioridades genéricas y configuración superpuesta a un sistema genérico.",
+          "Kestrel parte de Arch y reemplaza las piezas que deciden cómo se siente el escritorio: compositor, shell, terminal, kernel y planificador se construyen y distribuyen como un sistema emparejado."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Qué es Kestrel",
+        "body": [
+          "Kestrel es una distribución independiente basada en Arch con un único escritorio moldeado: Hyprland, Quickshell, foot y fish. El compositor, el shell, la terminal, el kernel y el planificador se construyen y distribuyen como un sistema emparejado.",
+          "El kernel, linux-kestrel, se compila con Clang ThinLTO para x86-64-v3, preemption completa, 1000 Hz, sched_ext, DAMON y NTSYNC. Hyprland, Quickshell y su cierre de librerías compartidas se recompilan con las mismas flags, y la terminal es un fork de foot que participa en la ruta de la pista."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "El puente de planificación",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Pista del kernel",
+            "body": "linux-kestrel añade sched_ext_hint a struct sched_attr; el espacio de usuario fija 0..1024 con sched_setattr(2) y SCHED_FLAG_KESTREL_HINT (1ULL << 40)."
+          },
+          {
+            "title": "Librería de usuario",
+            "body": "libkestrel-hint y kestrel-hint fijan y leen la pista para el escritorio, terminales, navegador y trabajo en segundo plano."
+          },
+          {
+            "title": "Broker",
+            "body": "kestrel-broker coloca procesos en los cgroups kestrel-desktop, kestrel-term, kestrel-browser y kestrel-background."
+          },
+          {
+            "title": "Planificador",
+            "body": "scx_kestrel, un fork de scx_layered, lee la pista con scx_bpf_task_hint y aplica su conjunto de capas; scx_loader/scxctl cambian de planificador en runtime."
+          }
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Paquetes pesados → kernel",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "Hyprland",
+            "body": "El compositor corre en kestrel-desktop. El trabajo crítico de frame lleva una pista de latencia antes del dispatch, para que scx_kestrel pueda preferirlo cuando el escritorio está bajo carga."
+          },
+          {
+            "title": "Quickshell",
+            "body": "La barra, el launcher, las notificaciones, el OSD y el screensaver comparten la clase kestrel-desktop con el compositor; la UI interactiva permanece en la misma ruta de latencia."
+          },
+          {
+            "title": "Navegador Zen",
+            "body": "Los procesos del navegador corren en kestrel-browser. Las pestañas en primer plano y la entrada llevan la pista interactiva; las pestañas en segundo plano no compiten por el mismo presupuesto."
+          },
+          {
+            "title": "Terminal foot",
+            "body": "Un único foot --server compartido corre en kestrel-term con clientes por ventana, así la latencia de la terminal queda aislada del navegador y del trabajo en segundo plano."
+          },
+          {
+            "title": "Trabajo en segundo plano",
+            "body": "Builds, indexación y trabajos de agentes van a kestrel-background, libres de usar núcleos ociosos sin robar latencia al escritorio."
+          },
+          {
+            "title": "Kernel + planificador",
+            "body": "linux-kestrel expone la pista 0..1024 mediante sched_ext; scx_kestrel la lee con scx_bpf_task_hint y la combina con su conjunto de capas."
+          }
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Stack de optimización",
+        "body": [
+          "Kestrel no se detiene en las pistas de runtime. Hyprland y Quickshell se compilan para x86-64-v3 con Clang ThinLTO, y el cierre compartido de librerías de Hyprland se recompila con las mismas flags en lugar del -O2 genérico de Arch, para que el escritorio tenga un único codegen. qt6-base-kestrel añade Wayland explicit sync (linux-drm-syncobj-v1), y linux-kestrel es Clang ThinLTO sobre x86-64-v3 con preemption completa, 1000 Hz, sched_ext, DAMON y NTSYNC.",
+          "El resultado es una única ruta de optimización desde los procesos pesados (Zen, Hyprland, Quickshell, foot, Obsidian, OBS), a través de su cgroup y su pista por tarea, hasta el planificador y el kernel. Cada clase y cada tarea llevan información explícita en lugar de depender de prioridades ambientales."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Qué incluye",
+        "body": [
+          "Hyprland gestiona ventanas y Quickshell aporta la barra, el launcher, las notificaciones, el OSD, el screensaver y los temas. foot corre como un servidor compartido en el slice kestrel-term; fish es el shell de login. Las aplicaciones incluyen Neovim, Zen, Obsidian, LibreOffice, Kdenlive y OBS Studio.",
+          "Un único CLI kestrel cubre temas, capturas, empaquetado, hardware y configuración del sistema. Las actualizaciones son rolling Arch, con una snapshot Btrfs automática antes de cada upgrade y rollback desde el menú de arranque. El tooling agéntico se instala mediante mise."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Medición",
+        "body": [
+          "kestrel-bench se ejecuta dentro de la VM y comprueba el puente de pistas de extremo a extremo: verifica set/get, la colocación del broker y de foot, corre un A/B 3x scx_bpfland vs scx_kestrel, mide la matriz de workers de foot y muestrea el PSS máximo de los procesos incluidos. Un cambio que no mueve una métrica no se publica."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Estado",
+        "items": [
+          "La ISO live compila y arranca el kernel Kestrel con el escritorio completo y el puente de pistas",
+          "El puente de pistas (linux-kestrel + libkestrel-hint + scx_kestrel) está implementado y probado por kestrel-bench",
+          "El escritorio, los defaults de foot/fish y el toolchain temático están en su lugar",
+          "El empaquetado y la documentación todavía se están poniendo al día con la implementación"
+        ]
+      },
+      {
+        "kind": "ecosystem",
+        "title": "Ecosistema de Kestrel",
+        "intro": "La distribución se reparte en repositorios versionados de forma independiente que comparten los mismos contratos de kernel, escritorio y empaquetado.",
+        "repos": [
+          {
+            "name": "iso",
+            "role": "Imagen live",
+            "desc": "Perfil archiso, instalador y configurador, helper de arranque en VM, firma y herramientas de release.",
+            "stack": [
+              "Shell",
+              "archiso"
+            ],
+            "href": "https://github.com/kestrel-distro/iso"
+          },
+          {
+            "name": "kernel",
+            "role": "Kernel",
+            "desc": "Receta linux-kestrel, parche de pistas, integración con sched_ext y el harness de benchmarks.",
+            "stack": [
+              "Shell",
+              "sched_ext"
+            ],
+            "href": "https://github.com/kestrel-distro/kernel"
+          },
+          {
+            "name": "desktop",
+            "role": "Cierre de escritorio",
+            "desc": "Metapaquete kestrel-desktop y el cierre emparejado de librerías de Hyprland.",
+            "stack": [
+              "Shell",
+              "Hyprland"
+            ],
+            "href": "https://github.com/kestrel-distro/desktop"
+          },
+          {
+            "name": "foot",
+            "role": "Terminal",
+            "desc": "Fork de foot que lleva la pista por tarea de Kestrel en el árbol de procesos de la terminal.",
+            "stack": [
+              "C"
+            ],
+            "href": "https://github.com/kestrel-distro/foot"
+          },
+          {
+            "name": "hyprland",
+            "role": "Compositor",
+            "desc": "Paquete fuente lean de Hyprland compilado para x86-64-v3 con ThinLTO.",
+            "stack": [
+              "C++"
+            ],
+            "href": "https://github.com/kestrel-distro/hyprland"
+          },
+          {
+            "name": "quickshell",
+            "role": "Shell de escritorio",
+            "desc": "Paquete fuente lean de Quickshell con las correcciones de interceptación QML.",
+            "stack": [
+              "C++",
+              "QML"
+            ],
+            "href": "https://github.com/kestrel-distro/quickshell"
+          },
+          {
+            "name": "scx",
+            "role": "Planificador",
+            "desc": "scx_kestrel, un fork de scx_layered, y el bake de su conjunto de capas.",
+            "stack": [
+              "C",
+              "BPF"
+            ],
+            "href": "https://github.com/kestrel-distro/scx"
+          },
+          {
+            "name": "scx-loader",
+            "role": "Cargador de planificador",
+            "desc": "Fork del loader que conoce scx_kestrel, empaquetado como scx-tools-kestrel.",
+            "stack": [
+              "Rust"
+            ],
+            "href": "https://github.com/kestrel-distro/scx-loader"
+          },
+          {
+            "name": "qtbase",
+            "role": "Base Qt",
+            "desc": "Rama de Qt base que añade Wayland explicit sync (linux-drm-syncobj-v1).",
+            "stack": [
+              "C++",
+              "Qt"
+            ],
+            "href": "https://github.com/kestrel-distro/qtbase"
+          },
+          {
+            "name": "packages",
+            "role": "Overlay de paquetes",
+            "desc": "Overlay pacman [kestrel] firmado y publicado en GitHub Pages.",
+            "stack": [
+              "Shell",
+              "pacman"
+            ],
+            "href": "https://github.com/kestrel-distro/packages"
+          },
+          {
+            "name": "docs",
+            "role": "Documentación",
+            "desc": "Arquitectura, empaquetado, publicación y documentación para mantenedores.",
+            "stack": [
+              "Markdown"
+            ],
+            "href": "https://github.com/kestrel-distro/docs"
+          }
+        ]
+      }
+    ]
+  }
+}

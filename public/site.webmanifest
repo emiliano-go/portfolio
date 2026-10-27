@@ -1,0 +1,26 @@
+{
+  "name": "Emiliano G.O.",
+  "short_name": "Emiliano G.O.",
+  "description": "Systems and infrastructure engineer building reliable data, database, and security tooling.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0c",
+  "theme_color": "#0b0b0c",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

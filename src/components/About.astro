@@ -64,7 +64,7 @@ const iconPaths: Record<string, { path: string; viewBox: string }> = {
       </div>
 
       <div>
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">Stack</p>
+        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("about.stack")}</p>
         <div class="grid grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
           {stack.map((item) => {
             const icon = iconPaths[item.icon];

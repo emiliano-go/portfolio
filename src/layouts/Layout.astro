@@ -21,8 +21,6 @@ export interface Props {
 const { lang, route, title, description } = Astro.props;
 const t = createT(lang);
 
-const url = Astro.url;
-const slug = url.pathname === '/' ? 'index' : url.pathname.replace(/^\//, '').replace(/\/$/, '') || 'index';
 const pageTitle = title ?? t('meta.default.title');
 const pageDesc = description ?? t('meta.default.desc');
 ---
@@ -33,6 +31,8 @@ const pageDesc = description ?? t('meta.default.desc');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b0b0c" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={barlowBoldUrl} as="font" type="font/woff2" crossorigin />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
     <ClientRouter />

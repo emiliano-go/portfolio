@@ -12,7 +12,7 @@ Systems & Infrastructure Engineer.
 Building reliable data, database, and security tooling in Python, Rust, and Go. Based in Montevideo, Uruguay.
 
 Highlights:
-- Author of postal, easeo, DBWarden, rypipe, TrustSight
+- Author of TrustSight, rypipe, Kestrel, DBWarden, xmlstreamer-ng, eclipse, postal, easeo
 - Co-maintainer of BenavLabs FastAPI-boilerplate
 - 5,800+ tests across 7 flagship projects
 - Published to PyPI and crates.io
@@ -34,46 +34,40 @@ Stats:
 
 ### Projects (home)
 
-#### DBWarden
-
-Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models. 48K LOC, 127 test files, 5 DB backends, 7 plugins, release-certification harness.
-Flow: Models → IR → Diff → SQL → Verification.
-Links: GitHub (dbwarden-org/dbwarden), Docs (docs.dbwarden.org).
-
 #### TrustSight
 
-Evidence-driven security analysis for AUR packages. Never executes code, fail-closed by design. 3,967+ tests, 185 scoring rules, signed baselines, IOC federation, corpus-wide cluster detection across ~186K source URLs.
+Evidence-driven security analysis for AUR packages. Never executes code, fail-closed by design. 3,967+ tests, 185 scoring rules, signed baselines, IOC federation, corpus-wide cluster detection across ~186K source URLs. All TrustSight-related repositories (harness, lab, triage agent, web, feed) are listed under this case study.
 Flow: Diff → Static analysis → Evidence + coverage → Risk assessment → Verdict.
 Links: GitHub (emiliano-go/trustsight), Docs (docs.trustsight.org).
 
 #### rypipe
 
-Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits (Splitter, RecordParser). 476 tests, 15.9K docs lines, ~4.2 GB/s parallel throughput. Published to PyPI and crates.io.
+Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits (Splitter, RecordParser). 476 tests, 15.9K docs lines, 7.63 GB/s bounded / 4.23 GB/s full-RAM (crxml), 2.12 GB/s parallel (xmlstreamer-ng). Published to PyPI and crates.io.
 Flow: Format Adapter → Splitter/Parser → Execution Plan → Parallel Engine → Arrow.
 Links: GitHub, Docs (rypipe.emiliano-go.com), PyPI.
 
-#### postal
+#### Kestrel
 
-Native WhatsApp multi-device client with no webview. History sync is a choice, not a 20 GB download: ~0.3% idle CPU vs ~200% for a webview client, ~600 MB RAM vs 2.2–23 GB, bounded message window (500 default, 50–2,000), durable SQLite archive. Session DB compacted 97 MB → 5.8 MB across 399,620 rows. 352 Rust tests, 66 frontend tests, ~68K LOC. Release v0.1.0 ("Hermóðr"). MIT.
-Flow: Multi-device session → whatsapp-rust core → Event loop → SQLite archive + retention → Tauri IPC → Svelte UI.
-Links: GitHub, Release v0.1.0.
+Standalone Arch-based Linux distribution with one shaped desktop (Hyprland + Quickshell + foot + fish) and a per-task scheduling bridge. linux-kestrel adds a 0..1024 hint to sched_ext; libkestrel-hint sets it, kestrel-broker places processes in cgroups, and scx_kestrel consumes it. The live ISO installs by copying its root filesystem, so the installed machine is the tested machine. Rolling Arch, Btrfs snapshots, copy-on-install, MIT.
+Flow: Apps / Hyprland / foot → libkestrel-hint → kestrel-broker cgroups → linux-kestrel → scx_kestrel.
+Links: GitHub (kestrel-distro/kestrel), ISO, Kernel, Docs.
 
-#### neurafly
+#### DBWarden
 
-Terminal audio visualizer driven by the real FlyWire connectome: 138,333 leaky integrate-and-fire neurons and 2,052,622 weighted synapses from release v783, fed by live system audio and rendered in braille with the terminal's own ANSI palette. 2048-point FFT at 44.1 kHz folded into 24 log bands (40 Hz–12 kHz), fixed 100 Hz simulation tick, 2,930 Rust LOC, 18 MB connectome. Published to crates.io v0.2.0 and AUR. MIT.
-Flow: System audio → FFT → 24 log bands → LIF network (FlyWire v783) → Braille phosphor canvas.
-Links: GitHub, crates.io, AUR.
+Declarative schema compiler that derives deterministic database migrations from SQLAlchemy models. 63K source LOC, 166 test files, 5 DB backends, 7 plugins, impact analysis, offline CI generation, snapshots and release-certification harness.
+Flow: Models → IR → Diff → SQL → Verification.
+Links: GitHub (dbwarden-org/dbwarden), Docs (docs.dbwarden.org).
 
-#### easeo
+#### xmlstreamer-ng
 
-Deterministic SEO metadata generator: entity + route + config produce canonical URL, title, description, robots directives, Open Graph, Twitter Cards, and JSON-LD. One Rust core with Python and Node.js bindings; the cross-language conformance suite asserts byte-for-byte identical output. 310 tests, 11 entity types, 8 built-in JSON-LD schemas, 10 framework/adapters, 64 docs pages. Published to PyPI, npm (@easeo/core), and crates.io (easeo-core). MIT.
-Flow: Entity + route + config → URL normalization → Fallback chains → OG/Twitter/JSON-LD → SHA-256 contract → render_html().
-Links: GitHub, Docs (easeo.emiliano-go.com), PyPI, npm, crates.io.
+Fault-isolating XML feed streamer built on rypipe-core and adapted from carlosplanchon/xmlstreamer. Streams huge or damaged XML from HTTP, FTP, GZIP or local files with bounded memory, conservative per-item recovery and explicit partial-failure accounting. The same Rust engine exposes a columnar/parallel Arrow adapter. Parallel XmlSource (8 threads): 15.8M rows/s at 2.12 GB/s; bounded parallel streaming: 10.2M rows/s at 1.36 GB/s and 202 MB peak RSS. PyPI, MIT.
+Flow: HTTP / GZIP / file → byte tokenizer → per-item Rust parser → flat records or Arrow batches.
+Links: GitHub, PyPI.
 
-#### ClickVault
+#### eclipse
 
-HashiCorp Vault database secrets engine plugin for ClickHouse. Dynamic short-lived credentials, scheduled password rotation, cluster-aware DDL (ON CLUSTER), cleanup on partial creation. 85.4% coverage of the plugin package, CI enforced.
-Flow: Vault API → Plugin → ClickHouse dynamic users → Short-lived credentials → Rotation.
+Byte-level distillation rig for Ornith 1.5 9B. Converts the teacher's token distributions into exact byte / End-Of-Token targets via a byte-trie, trains a 48M byte student, and compares EOT against Marginalize-It and byte cross-entropy. Held-out: BPB 0.818, teacher KL 0.317, observed next-symbol top-1 0.865, valid UTF-8 1.00. A feasibility study, not a usable model. MIT.
+Flow: Teacher logits (llama.cpp) → byte trie → exact EOT targets → 48M byte student → BPB / KL eval.
 Links: GitHub.
 
 ### Open Source
@@ -120,9 +114,16 @@ Links: github.com/benavlabs/FastAPI-boilerplate.
 
 Full project index. Featured projects link to dedicated case-study pages.
 
+### Kestrel
+
+Standalone Arch-based Linux distribution with a single shaped desktop and a scheduling bridge that runs from the kernel to the compositor. Kestrel ships Hyprland, Quickshell, foot and fish as one matched set, with a rebuilt x86-64-v3/ThinLTO Hyprland library closure and an explicit-sync Qt base.
+The kernel, linux-kestrel, appends sched_ext_hint to struct sched_attr; userspace sets 0..1024 with sched_setattr(2) and SCHED_FLAG_KESTREL_HINT (1ULL << 40). libkestrel-hint reads and writes it, kestrel-broker places the compositor, terminals, browser and background work in cgroups, and scx_kestrel (an scx_layered fork) consumes it through scx_bpf_task_hint.
+The live ISO boots a complete Kestrel desktop and installs by copying the root filesystem to disk. LUKS2 encryption is the default; Btrfs subvolumes (@, @home, @log, @pkg) and automatic pre-upgrade snapshots provide rollback from the boot menu. kestrel-bench runs the hint checks, a scx_bpfland vs scx_kestrel A/B, the foot worker matrix and peak PSS sampling.
+Links: GitHub (kestrel-distro/kestrel), ISO, Kernel, Docs. MIT.
+
 ### DBWarden
 
-Declarative schema compiler for SQLAlchemy. Your models are the source code; SQL is the output. 48K LOC, 127 test files, 5 DB backends (PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse), 7 official plugins (seeds, RBAC, FastAPI, sandbox, PostgreSQL types/extensions/RBAC, ClickHouse RBAC), standalone release-certification harness. Python 3.12+, PyPI.
+Declarative schema compiler for SQLAlchemy. Your models are the source code; SQL is the output. 63K source LOC, 166 test files, 5 DB backends (PostgreSQL, MySQL, MariaDB, SQLite, ClickHouse), 7 official plugins (seeds, RBAC, FastAPI, sandbox, PostgreSQL types/extensions/RBAC, ClickHouse RBAC). Pre-deploy impact analysis scans the codebase with AST plus grep fallback; offline model-state generation produces migrations in CI without a database; checksummed snapshots power rename detection and column-level diffs; typed class Meta validation rejects bad DDL at import time. Standalone release-certification harness. Python 3.12+, PyPI.
 Links: GitHub, Docs, PyPI.
 
 ### TrustSight
@@ -132,7 +133,7 @@ Links: GitHub, Docs (docs.trustsight.org), Website (trustsight.org).
 
 ### rypipe
 
-Format- and source-agnostic ingestion framework: a common execution runtime for turning record-oriented data into typed columnar data. Rust core, Python bindings via PyO3. Adapters live in separate packages. 476 tests, 15.9K docs lines, ~4.2 GB/s parallel (Ryzen 5800X, 533 MB workload), memory-bounded execution, query pushdown, zero-copy Arrow export. Published to PyPI and crates.io.
+Format- and source-agnostic ingestion framework: a common execution runtime for turning record-oriented data into typed columnar data. Rust core, Python bindings via PyO3. Adapters live in separate packages. 476 tests, 15.9K docs lines, 7.63 GB/s bounded / 4.23 GB/s full-RAM on crxml (Ryzen 5800X, 533 MB) and 2.12 GB/s parallel on xmlstreamer-ng (128 MiB), memory-bounded execution, query pushdown, zero-copy Arrow export. Published to PyPI and crates.io.
 Links: GitHub, Docs (rypipe.emiliano-go.com), PyPI.
 
 ### postal
@@ -172,14 +173,20 @@ Links: GitHub.
 - **vigil**: self-hosted GitHub activity tracker. Syncs commits every 30 minutes into ClickHouse, serves streaks, breakdowns, merge ratios, and full history over a REST API. FastAPI + Prefect + Docker (GHCR image).
 - **mapcreator**: browser-based multi-floor building map editor with room detection, A* pathfinding across floors, 37 keyboard shortcuts, and JSON export. React 19, TypeScript, Canvas, Zustand. Live at mapcreator.emiliano-go.com.
 - **acrresolv**: hybrid acronym resolver: O(1) lookup + deterministic rules + fine-tuned T5-small fallback. 95.5% accuracy on unseen data, <1 ms rules path, 231 MB model. PyPI.
-- **trustsight-harness**: reproducible, cost-tracked adversarial measurement harness for TrustSight. 26 committed campaigns pinned to TrustSight builds, 153 tests. GHCR image.
-- **trustsight-web**: single-page site for trustsight.org presenting the evidence-first AUR review model. React + Vite. Live at trustsight.org.
 - **interferon**: Docker sidecar watcher + Python SDK turning Docker lifecycle events into typed immune signals over HTTP SSE.
 - **tagurl**: natural-language query to ranked semantic tags and an SEO URL path. Design spec; implementation in progress.
 - **lambda-compiler**: compile Python lambdas into declarative filter specs via CPython bytecode analysis. Extracted from rypipe.
 - **carpricepredictor**: linear-regression car price predictor from the classic Automobile Data Set: modular pipeline, FastAPI service, and browser front end, containerized.
 - **autoimmune-disorder-prediction**: machine-learning exploration of the All Autoimmune Disorder 10k dataset: download/clean package plus EDA and feature-engineering notebooks.
+- **portable-oss**: config-driven dashboard for open source projects. One `oss.config.toml` drives live GitHub and package stats, themes, orgs and generated project pages. Astro template.
+- **totem**: persistent memory layer for engineering agents: MCP server + CLI storing decisions, invariants, gotchas, assumptions and open questions in SQLite/Turso.
+- **RBG**: single-LLM control plane for coding agents: deterministic retrieval, verification and small learned models.
+- **gpg-mcp**: security-focused MCP server for GnuPG: sign, verify, encrypt, decrypt and manage keys without exposing private key material to the agent.
+- **hestia**: self-hostable agentic project cockpit with persistent Totem memory.
+- **opencode-bgj**: standalone MCP server that lets coding agents launch and supervise long-running shell jobs without blocking the turn.
+- **panopticon**: read-only index of repositories, Git history, releases, packages and CI metadata, exposed as a REST API, MCP server and dashboard.
+- **laya-coding-decisions**: training data and tooling for a coding-agent judge used by the Hestia decision engine.
 
 ## Tech Stack
 
-Astro, Tailwind CSS, TypeScript. Deployed as a static site.
+Astro, Tailwind CSS, TypeScript. Deployed on Cloudflare Pages.

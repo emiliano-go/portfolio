@@ -65,22 +65,22 @@ const langOptions = [
             ))}
           </div>
         </div>
-        <button id="theme-toggle-desktop" class="flex items-center px-2 py-1 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100 cursor-pointer" aria-label="Toggle theme">
+        <button id="theme-toggle-desktop" class="flex items-center px-2 py-1 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100 cursor-pointer" aria-label={t("a11y.theme")}>
           <svg id="sun-icon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           <svg id="moon-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
         <div class="relative" id="a11y-dd-wrap">
-          <button id="a11y-btn" class="flex items-center px-2 py-1 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100 cursor-pointer" aria-label="Accessibility settings" aria-haspopup="true" aria-expanded="false">
+          <button id="a11y-btn" class="flex items-center px-2 py-1 border border-(--color-border) rounded text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100 cursor-pointer" aria-label={t("a11y.settings")} aria-haspopup="true" aria-expanded="false">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="4.5" r="2.5"/><path d="M12 7v5m0 0l-3 7m3-7l3 7M6 10.5h12"/></svg>
           </button>
           <div id="a11y-dd" class="absolute right-0 top-full mt-1 w-40 bg-(--color-bg) border border-(--color-border) shadow-lg opacity-0 pointer-events-none transition-opacity duration-75 z-50">
             <div class="p-2.5 space-y-2.5">
               <button id="a11y-toggle-contrast" class="flex items-center justify-between w-full text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) cursor-pointer">
-                <span>High contrast</span>
+                <span>{t("a11y.contrast")}</span>
                 <span id="a11y-contrast-dot" class="w-2 h-2 rounded-full bg-(--color-border)"></span>
               </button>
               <button id="a11y-toggle-font" class="flex items-center justify-between w-full text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) cursor-pointer">
-                <span>Larger text</span>
+                <span>{t("a11y.font")}</span>
                 <span id="a11y-font-dot" class="w-2 h-2 rounded-full bg-(--color-border)"></span>
               </button>
             </div>
@@ -89,11 +89,11 @@ const langOptions = [
       </li>
     </ul>
     <div class="md:hidden flex items-center gap-2">
-      <button id="theme-toggle-mobile" class="text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100 cursor-pointer" aria-label="Toggle theme">
+      <button id="theme-toggle-mobile" class="text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100 cursor-pointer" aria-label={t("a11y.theme")}>
         <svg id="sun-icon-mobile" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
         <svg id="moon-icon-mobile" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <button id="a11y-btn-mobile" class="text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100 cursor-pointer" aria-label="Accessibility settings">
+      <button id="a11y-btn-mobile" class="text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100 cursor-pointer" aria-label={t("a11y.settings")}>
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="4.5" r="2.5"/><path d="M12 7v5m0 0l-3 7m3-7l3 7M6 10.5h12"/></svg>
       </button>
       <button
@@ -114,13 +114,13 @@ const langOptions = [
 </nav>
 
 <div id="a11y-dd-mobile" class="hidden fixed bottom-20 left-4 right-4 bg-(--color-bg) border border-(--color-border) shadow-lg z-50 p-3">
-  <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">Accessibility</p>
+  <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("a11y.heading")}</p>
   <button id="a11y-toggle-contrast-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
-    <span>High contrast</span>
+    <span>{t("a11y.contrast")}</span>
     <span id="a11y-contrast-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
   </button>
   <button id="a11y-toggle-font-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
-    <span>Larger text</span>
+    <span>{t("a11y.font")}</span>
     <span id="a11y-font-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
   </button>
 </div>
@@ -152,7 +152,7 @@ const langOptions = [
           >{o.code.toUpperCase()}</a>
         ))}
       </div>
-      <button id="theme-toggle-overlay" class="flex items-center gap-2 text-lg font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100 cursor-pointer" aria-label="Toggle theme">
+      <button id="theme-toggle-overlay" class="flex items-center gap-2 text-lg font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100 cursor-pointer" aria-label={t("a11y.theme")}>
         <svg id="sun-icon-overlay" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
         <svg id="moon-icon-overlay" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>

@@ -1,8 +1,13 @@
-name: Deploy
+name: Deploy container
 
 on:
   push:
     branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -14,19 +19,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: docker/setup-buildx-action@v3
+
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: docker/build-push-action@v5
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/emiliano-go/${{ github.event.repository.name }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,prefix=sha-
+
+      - uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           provenance: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           build-args: |
-            VIGIL_API_KEY=${{ secrets.VIGIL_API_KEY }}
-            VIGIL_API_BASE_URL=${{ secrets.VIGIL_API_BASE_URL }}
             KATIB_GITHUB_TOKEN=${{ secrets.KATIB_GITHUB_TOKEN }}
-          tags: ghcr.io/emiliano-go/${{ github.event.repository.name }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Smoke test image
+        run: |
+          docker run -d --rm --name portfolio-smoke -p 8080:80 \
+            "${{ fromJSON(steps.meta.outputs.json).tags[0] }}"
+          for path in / /en/ /en/projects/ /en/work/trustsight/ /does-not-exist; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$path")
+            echo "$path -> $code"
+            test "$code" = "200" -o "$code" = "404"
+          done
+          docker stop portfolio-smoke

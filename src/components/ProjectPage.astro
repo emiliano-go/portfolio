@@ -2,7 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import ProjectActivity from '../components/ProjectActivity.astro';
 import { getProject, neighbours, sectionId, type Section, type Tone } from '../data/projects';
+import { createT, type Lang } from '../i18n';
 
 interface Props {
   lang: string;
@@ -10,7 +12,8 @@ interface Props {
 }
 
 const { lang, id } = Astro.props as Props;
-const project = getProject(id);
+const t = createT(lang);
+const project = getProject(id, lang as Lang);
 const { prev, next } = neighbours(id);
 
 const pad = (n: number) => String(n + 1).padStart(2, '0');
@@ -40,7 +43,37 @@ const jsonLd = {
     url: 'https://emiliano-go.com',
   },
 };
+
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+const linkify = (value: string) =>
+  escapeHtml(value).replace(
+    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+    (_match, label, href) =>
+      `<a href="${href}" class="text-(--color-accent) underline underline-offset-2 hover:text-(--color-text-bright)" target="_blank" rel="noopener noreferrer">${label}</a>`,
+  );
+
 const sectionTitle = (section: Section) => section.title;
+
+const repoFromUrl = (href: string): string | null => {
+  const match = href.match(/^https:\/\/github\.com\/([^/]+)\/([^/?#]+)/);
+  return match ? `${match[1]}/${match[2]}` : null;
+};
+
+const projectRepos = Array.from(
+  new Set(
+    project.links
+      .map((link) => repoFromUrl(link.href))
+      .concat(
+        project.sections.flatMap((section) =>
+          section.kind === 'ecosystem'
+            ? section.repos.map((repo) => repoFromUrl(repo.href))
+            : [],
+        ),
+      )
+      .filter((repo): repo is string => Boolean(repo)),
+  ),
+).slice(0, 12);
 ---
 
 <Layout
@@ -66,10 +99,10 @@ const sectionTitle = (section: Section) => section.title;
       ></div>
 
       <div class="relative mx-auto w-[85%] md:w-[72%] xl:w-[66%] min-w-0 pb-0 pt-8 md:pt-10">
-        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim)">
-          <a href={`/${lang}`} class="hover:text-(--color-text-bright) transition-colors duration-100">Home</a>
+        <nav aria-label={t("a11y.breadcrumb")} class="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim)">
+          <a href={`/${lang}`} class="hover:text-(--color-text-bright) transition-colors duration-100">{t("project.home")}</a>
           <span aria-hidden="true">/</span>
-          <a href={`/${lang}/projects`} class="hover:text-(--color-text-bright) transition-colors duration-100">Projects</a>
+          <a href={`/${lang}/projects`} class="hover:text-(--color-text-bright) transition-colors duration-100">{t("project.projects")}</a>
           <span aria-hidden="true">/</span>
           <span class="text-(--color-text-muted)" aria-current="page">{project.name}</span>
         </nav>
@@ -118,26 +151,29 @@ const sectionTitle = (section: Section) => section.title;
             </div>
           </div>
 
-          <aside class="dossier w-full">
+          <div class="w-full min-w-0">
+            <aside class="dossier w-full">
             <div class="flex items-center justify-between border-b border-(--color-border-subtle) px-4 py-3">
-              <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">Architecture</span>
+              <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">{t("project.architecture")}</span>
               <span class="font-mono text-[9px] text-(--color-accent)">{project.index}</span>
             </div>
             <div class="p-4">
               <pre class="whitespace-pre-wrap break-words font-[family-name:var(--font-mono)] text-[10px] leading-relaxed text-(--color-text-muted)">{project.diagram}</pre>
             </div>
             <div class="flex items-center justify-between border-t border-(--color-border-subtle) px-4 py-2.5 font-mono text-[9px] uppercase tracking-[0.1em] text-(--color-text-dim)">
-              <span>License · {project.license}</span>
-              <span>{project.stack.length} technologies</span>
+              <span>{t("project.license")} · {project.license}</span>
+              <span>{t("project.technologies").replace('{count}', String(project.stack.length))}</span>
             </div>
-          </aside>
+            </aside>
+            <ProjectActivity lang={lang as Lang} repos={projectRepos} />
+          </div>
         </div>
 
         <div class="mt-10 grid grid-cols-2 gap-px border-t border-(--color-border-subtle) bg-(--color-border-subtle) md:grid-cols-4">
           {project.metrics.map((metric) => (
             <div class="bg-(--color-bg) px-4 py-5">
               <p class="mb-1 font-mono text-[9px] uppercase tracking-[0.12em] text-(--color-text-dim)">{metric.label}</p>
-              <p class:list={['font-[family-name:var(--font-display)] text-2xl font-bold leading-none', toneClass(metric.tone)]}>
+              <p class:list={['font-[family-name:var(--font-display)] text-2xl font-bold leading-none', toneClass(metric.tone)]} data-release-repo={metric.repo}>
                 {metric.value}
               </p>
             </div>
@@ -149,29 +185,29 @@ const sectionTitle = (section: Section) => section.title;
     <!-- Body -->
     <div class="mx-auto w-[85%] md:w-[72%] xl:w-[66%] min-w-0">
       <nav
-        aria-label="Sections"
+        aria-label={t("a11y.sections")}
         class="no-scrollbar flex gap-1 overflow-x-auto border-b border-(--color-border-subtle) py-2.5 lg:hidden"
       >
         {project.sections.map((section, i) => (
           <a
             href={`#${sectionId(section.title)}`}
-            class="shrink-0 border border-(--color-border-subtle) px-2 py-1 font-mono text-[10px] text-(--color-text-dim) transition-colors duration-100 hover:border-(--color-accent) hover:text-(--color-text-bright)"
+            class="shrink-0 border border-(--color-border-subtle) px-2.5 py-1.5 font-mono text-[11px] text-(--color-text-base) transition-colors duration-100 hover:border-(--color-accent) hover:text-(--color-text-bright)"
           >
             {pad(i)} {section.title}
           </a>
         ))}
       </nav>
 
-      <div class="grid lg:grid-cols-[180px_1fr] lg:gap-12">
+      <div class="grid lg:grid-cols-[220px_1fr] lg:gap-10">
         <aside class="hidden py-12 lg:block">
           <div class="sticky top-28">
-            <p class="mb-4 font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">Index</p>
+            <p class="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-(--color-text-bright)">{t("project.index")}</p>
             <ol class="border-l border-(--color-border-subtle)">
               {project.sections.map((section, i) => (
                 <li>
                   <a
                     href={`#${sectionId(section.title)}`}
-                    class="group -ml-px block border-l-2 border-transparent py-1 pl-3 font-mono text-[10px] text-(--color-text-dim) transition-colors duration-100 hover:border-(--color-accent) hover:text-(--color-text-bright)"
+                    class="group -ml-px block border-l-2 border-transparent py-1.5 pl-3 font-mono text-[13px] text-(--color-text-base) transition-colors duration-100 hover:border-(--color-accent) hover:text-(--color-text-bright)"
                   >
                     <span class="mr-2 text-(--color-accent)">{pad(i)}</span>{sectionTitle(section)}
                   </a>
@@ -180,9 +216,9 @@ const sectionTitle = (section: Section) => section.title;
             </ol>
             <a
               href={`/${lang}/projects`}
-              class="mt-6 inline-flex items-center gap-1 font-mono text-[10px] text-(--color-text-muted) transition-colors duration-100 hover:text-(--color-text-bright)"
+              class="mt-6 inline-flex items-center gap-1.5 font-mono text-[13px] text-(--color-text-bright) underline underline-offset-2 transition-colors duration-100 hover:text-(--color-accent)"
             >
-              <span aria-hidden="true">←</span> All projects
+              <span aria-hidden="true">←</span> {t("project.all")}
             </a>
           </div>
         </aside>
@@ -201,7 +237,7 @@ const sectionTitle = (section: Section) => section.title;
               {section.kind === 'prose' && (
                 <div class="max-w-[640px] space-y-3">
                   {section.body.map((paragraph) => (
-                    <p class="text-pretty text-sm leading-relaxed text-(--color-text-muted)">{paragraph}</p>
+                    <p class="text-pretty text-sm leading-relaxed text-(--color-text-muted)" set:html={linkify(paragraph)}></p>
                   ))}
                 </div>
               )}
@@ -264,6 +300,33 @@ const sectionTitle = (section: Section) => section.title;
                 </ol>
               )}
 
+              {section.kind === 'table' && (
+                <div class="max-w-[760px] overflow-x-auto">
+                  <table class="w-full border-collapse text-left text-[11px]">
+                    <caption class="sr-only">{section.title}</caption>
+                    <thead>
+                      <tr class="border-b border-(--color-border)">
+                        {section.columns.map((column) => (
+                          <th scope="col" class="whitespace-nowrap px-2 py-2 font-mono text-[9px] uppercase tracking-[0.1em] text-(--color-text-muted)">{column}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.rows.map((row) => (
+                        <tr class="border-b border-(--color-border-subtle)">
+                          {row.map((cell, i) => i === 0 ? (
+                            <th scope="row" class="whitespace-nowrap px-2 py-2 font-mono font-medium text-(--color-text-bright)">{cell}</th>
+                          ) : (
+                            <td class="whitespace-nowrap px-2 py-2 font-mono text-(--color-text-muted)">{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {section.note && <p class="mt-2 text-[10px] leading-relaxed text-(--color-text-muted)">{section.note}</p>}
+                </div>
+              )}
+
               {section.kind === 'ecosystem' && (
                 <div>
                   {section.intro && (
@@ -291,7 +354,7 @@ const sectionTitle = (section: Section) => section.title;
                             <span class="border border-(--color-border) px-1.5 py-0.5 font-mono text-[9px] text-(--color-text-dim)">{tech}</span>
                           ))}
                         </div>
-                        <span class="font-mono text-[10px] text-(--color-accent)">Source ↗</span>
+                        <span class="font-mono text-[10px] text-(--color-accent)">{t("project.source")} ↗</span>
                       </a>
                     ))}
                   </div>
@@ -304,13 +367,13 @@ const sectionTitle = (section: Section) => section.title;
     </div>
 
     <!-- Prev / next -->
-    <nav aria-label="Project navigation" class="border-t border-(--color-border-subtle)">
+    <nav aria-label={t("a11y.projectNav")} class="border-t border-(--color-border-subtle)">
       <div class="mx-auto grid w-[85%] md:w-[72%] xl:w-[66%] sm:grid-cols-2">
         <a
           href={`/${lang}/work/${prev.id}`}
           class="group flex flex-col gap-1 border-b border-(--color-border-subtle) py-6 sm:border-b-0 sm:border-r sm:pr-6"
         >
-          <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">← Previous</span>
+          <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">{t("project.previous")}</span>
           <span class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-muted) transition-colors duration-100 group-hover:text-(--color-accent)">
             {prev.name}
           </span>
@@ -319,7 +382,7 @@ const sectionTitle = (section: Section) => section.title;
           href={`/${lang}/work/${next.id}`}
           class="group flex flex-col items-start gap-1 py-6 sm:items-end sm:pl-6"
         >
-          <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">Next →</span>
+          <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-(--color-text-dim)">{t("project.next")}</span>
           <span class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-muted) transition-colors duration-100 group-hover:text-(--color-accent)">
             {next.name}
           </span>
@@ -327,6 +390,26 @@ const sectionTitle = (section: Section) => section.title;
       </div>
     </nav>
 
+    <script is:inline data-astro-rerun>
+      (function () {
+        var nodes = document.querySelectorAll('[data-release-repo]');
+        for (var i = 0; i < nodes.length; i++) {
+          var node = nodes[i];
+          if (node.dataset.releaseBound) continue;
+          node.dataset.releaseBound = '1';
+          var repo = node.dataset.releaseRepo;
+          fetch('/api/katib?endpoint=latest-release&repo=' + encodeURIComponent(repo))
+            .then(function (response) {
+              if (!response.ok) throw new Error('Request failed');
+              return response.json();
+            })
+            .then(function (data) {
+              if (data && data.tag) node.textContent = data.tag;
+            })
+            .catch(function () {});
+        }
+      })();
+    </script>
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </main>
   <Footer lang={lang} />

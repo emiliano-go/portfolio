@@ -1,0 +1,15 @@
+---
+import ProjectPage from '../../../components/ProjectPage.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'kestrel' } },
+    { params: { lang: 'es', project: 'kestrel' } },
+    { params: { lang: 'fr', project: 'kestrel' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<ProjectPage lang={lang!} id="kestrel" />

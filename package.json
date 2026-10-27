@@ -1,31 +1,35 @@
 {
   "name": "portfolio",
+  "description": "Personal portfolio for Emiliano G.O. — projects, writing and engineering work.",
+  "license": "MIT",
+  "repository": "github:emiliano-go/portfolio",
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
-    "predev": "mkdir -p public/i18n && cp -n src/i18n/*.json public/i18n/",
+    "predev": "mkdir -p public/i18n && cp src/i18n/*.json public/i18n/",
     "dev": "NODE_OPTIONS='--no-deprecation' astro dev",
     "seo": "python3 scripts/generate_seo.py",
     "prebuild": "sh scripts/prebuild.sh",
     "build": "NODE_OPTIONS='--no-deprecation' astro build",
     "preview": "NODE_OPTIONS='--no-deprecation' astro preview",
+    "check": "astro check",
+    "test": "python3 scripts/check_content.py && python3 scripts/check_contrast.py",
     "astro": "astro"
-  },
-  "overrides": {
-    "vite": "7.3.3"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.2.8",
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/inter": "^5.2.8",
-    "@resvg/resvg-js": "^2.6.2",
-    "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.7",
-    "lightningcss": "^1.32.0",
-    "satori": "^0.26.0",
-    "tailwindcss": "^4.3.0"
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.2",
+    "lightningcss": "^1.33.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^6.0.3"
   }
 }

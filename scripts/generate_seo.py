@@ -78,7 +78,13 @@ WORK_PAGES = [
         "rypipe",
         "rypipe",
         "rypipe | Emiliano G.O.",
-        "Reusable ingestion framework. Rust core, Python bindings. Add a new format by implementing two traits.",
+        "Reusable Rust ingestion engine with Python bindings. Two-trait adapters. 7.63 GB/s bounded parallel on crxml.",
+    ),
+    (
+        "kestrel",
+        "Kestrel",
+        "Kestrel | Emiliano G.O.",
+        "Standalone Arch-based Linux distribution with Hyprland, Quickshell and a per-task scheduling bridge from kernel to sched_ext.",
     ),
     (
         "postal",
@@ -110,7 +116,32 @@ WORK_PAGES = [
         "dsig | Emiliano G.O.",
         "GPG message signing for Vencord / Vesktop. Authorship attestation.",
     ),
+    (
+        "xmlstreamer-ng",
+        "xmlstreamer-ng",
+        "xmlstreamer-ng | Emiliano G.O.",
+        "Fault-isolating XML streamer built on rypipe, adapted from carlosplanchon/xmlstreamer. Bounded memory, conservative recovery.",
+    ),
+    (
+        "eclipse",
+        "eclipse",
+        "eclipse | Emiliano G.O.",
+        "Byte-level distillation rig for Ornith 1.5 9B: exact End-Of-Token targets and a 48M byte student.",
+    ),
 ]
+
+
+def work_pages(lang: str) -> list[tuple[str, str, str, str]]:
+    """Localized work-page metadata. English is the committed source of truth."""
+    if lang == "en":
+        return WORK_PAGES
+    localized = json.loads(
+        (PROJECT_ROOT / "src" / "data" / f"projects.{lang}.json").read_text(encoding="utf-8")
+    )
+    return [
+        (slug, name, localized[slug]["meta"]["title"], localized[slug]["meta"]["description"])
+        for slug, name, _, _ in WORK_PAGES
+    ]
 
 
 def load_i18n() -> dict[str, dict[str, str]]:
@@ -209,7 +240,8 @@ def routes_for(prefix: str, t: dict[str, str]) -> list[tuple[str, SEOEntity, SEO
     ]
     # Unprefixed /work/* pages do not exist, so only emit work routes for real prefixes.
     if prefix:
-        for slug, name, title, excerpt in WORK_PAGES:
+        lang = prefix.lstrip("/")
+        for slug, name, title, excerpt in work_pages(lang):
             route = f"{prefix}/work/{slug}/"
             routes.append(
                 (

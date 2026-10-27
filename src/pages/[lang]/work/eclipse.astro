@@ -1,0 +1,15 @@
+---
+import ProjectPage from '../../../components/ProjectPage.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'eclipse' } },
+    { params: { lang: 'es', project: 'eclipse' } },
+    { params: { lang: 'fr', project: 'eclipse' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<ProjectPage lang={lang!} id="eclipse" />

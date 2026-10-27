@@ -1,0 +1,15 @@
+---
+import ProjectPage from '../../../components/ProjectPage.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en', project: 'xmlstreamer-ng' } },
+    { params: { lang: 'es', project: 'xmlstreamer-ng' } },
+    { params: { lang: 'fr', project: 'xmlstreamer-ng' } },
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<ProjectPage lang={lang!} id="xmlstreamer-ng" />
