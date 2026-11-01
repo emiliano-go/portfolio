@@ -1,6 +1,58 @@
 ---
 import { createT } from '../i18n';
 const t = createT(Astro.props.lang);
+
+const groups = [
+  {
+    label: t("studies.career"),
+    rows: [
+      {
+        title: t("studies.career.1.title"),
+        place: `${t("studies.career.1.institution")} · ${t("studies.career.1.spec")}`,
+        period: t("studies.career.1.period"),
+        ongoing: true,
+      },
+      {
+        title: t("studies.career.2.title"),
+        place: t("studies.career.2.institution"),
+        period: t("studies.career.2.period"),
+        ongoing: true,
+      },
+    ],
+  },
+  {
+    label: t("studies.edu.heading"),
+    rows: [
+      {
+        title: t("studies.edu.1.field"),
+        place: `${t("studies.edu.1.institution")} · ${t("studies.edu.1.degree")}`,
+        period: t("studies.edu.1.period"),
+        ongoing: false,
+      },
+      {
+        title: t("studies.edu.2.field"),
+        place: t("studies.edu.2.institution"),
+        period: t("studies.edu.2.period"),
+        ongoing: false,
+      },
+    ],
+  },
+  {
+    label: t("studies.cert.heading"),
+    rows: [
+      {
+        title: t("studies.cert.1.course"),
+        place: t("studies.cert.1.platform"),
+        period: t("studies.cert.1.completed"),
+        ongoing: false,
+      },
+    ],
+  },
+];
+
+const rows = groups.flatMap((group) =>
+  group.rows.map((row) => ({ ...row, group: group.label }))
+);
 ---
 
 <section id="studies" class="py-16 border-b border-(--color-border-subtle)">
@@ -11,50 +63,26 @@ const t = createT(Astro.props.lang);
       <div class="flex-1 h-px bg-(--color-border-subtle)"></div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-      <!-- Career -->
-      <div>
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("studies.career")}</p>
-        <div class="space-y-4">
-          <div class="border-l-2 border-(--color-accent-muted) pl-4">
-            <h3 class="text-sm font-medium text-(--color-text-head)">{t("studies.career.1.title")}</h3>
-            <p class="text-[11px] font-mono text-(--color-accent)">{t("studies.career.1.spec")}</p>
-            <p class="text-[11px] text-(--color-text-muted)">{t("studies.career.1.institution")}</p>
-            <p class="text-[10px] font-mono text-(--color-text-dim)">{t("studies.career.1.period")}</p>
-          </div>
-          <div class="border-l-2 border-(--color-border) pl-4">
-            <h3 class="text-sm font-medium text-(--color-text-head)">{t("studies.career.2.title")}</h3>
-            <p class="text-[11px] text-(--color-text-muted)">{t("studies.career.2.institution")}</p>
-            <p class="text-[10px] font-mono text-(--color-text-dim)">{t("studies.career.2.period")}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Education + Certs -->
-      <div>
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("studies.edu.heading")}</p>
-        <div class="space-y-3 mb-6">
-          <div class="border-l-2 border-(--color-border) pl-4">
-            <h3 class="text-sm font-medium text-(--color-text-head)">{t("studies.edu.1.institution")}</h3>
-            <p class="text-[11px] text-(--color-text-muted)">{t("studies.edu.1.degree")}, {t("studies.edu.1.field")}</p>
-            <p class="text-[10px] font-mono text-(--color-text-dim)">{t("studies.edu.1.period")}</p>
-          </div>
-          <div class="border-l-2 border-(--color-border) pl-4">
-            <h3 class="text-sm font-medium text-(--color-text-head)">{t("studies.edu.2.institution")}</h3>
-            <p class="text-[11px] text-(--color-text-muted)">{t("studies.edu.2.degree")}, {t("studies.edu.2.field")}</p>
-            <p class="text-[10px] font-mono text-(--color-text-dim)">{t("studies.edu.2.period")}</p>
+    <div class="flex flex-col gap-px border border-(--color-border-subtle) bg-(--color-border-subtle)">
+      {rows.map((row) => (
+        <div
+          class:list={[
+            "border-l-2 bg-(--color-bg) p-5 sm:p-7",
+            row.ongoing ? "border-(--color-accent)" : "border-(--color-border)",
+          ]}
+        >
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
+            <div class="shrink-0 lg:w-48">
+              <p class="font-mono text-xs text-(--color-text-dim)">{row.period}</p>
+              <p class="mt-1 font-mono text-xs uppercase tracking-[0.12em] text-(--color-text-dim)">{row.group}</p>
+            </div>
+            <div class="min-w-0 flex-1">
+              <h3 class="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wide text-(--color-text-head) md:text-2xl">{row.title}</h3>
+              <p class="mt-2 max-w-[480px] text-xs text-(--color-text-muted)">{row.place}</p>
+            </div>
           </div>
         </div>
-
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("studies.cert.heading")}</p>
-        <div class="border-l-2 border-(--color-border) pl-4">
-          <h3 class="text-sm font-medium text-(--color-text-head)">{t("studies.cert.1.course")}</h3>
-          <p class="text-[11px] text-(--color-text-muted)">{t("studies.cert.1.platform")}</p>
-          <p class="text-[10px] font-mono text-(--color-text-dim)">{t("studies.cert.1.completed")}</p>
-        </div>
-      </div>
-
+      ))}
     </div>
 
   </div>

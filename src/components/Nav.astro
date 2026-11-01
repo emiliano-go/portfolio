@@ -34,7 +34,7 @@ const langOptions = [
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
-            class="text-[11px] font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100"
+            class="text-[13px] font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100"
           >{t(link.key)}</a>
         </li>
       ))}
@@ -47,9 +47,9 @@ const langOptions = [
             aria-expanded="false"
             aria-controls="lang-dd-desk"
             aria-label={t("a11y.lang")}
-            class="flex items-center gap-1 px-2 py-1 border border-(--color-border) rounded text-[10px] font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100 cursor-pointer"
+            class="flex items-center gap-1 px-2 py-1 border border-(--color-border) rounded text-xs font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100 cursor-pointer"
           >
-            {lang.toUpperCase()} <span class="text-[8px]" aria-hidden="true">▾</span>
+            {lang.toUpperCase()} <span class="text-xs" aria-hidden="true">▾</span>
           </button>
           <div class="absolute right-0 top-full mt-1 min-w-[68px] bg-(--color-bg) border border-(--color-border) shadow-lg opacity-0 pointer-events-none transition-opacity duration-75 z-50" id="lang-dd-desk" inert>
             {langOptions.filter((o) => o.code !== lang).map((o) => (
@@ -59,7 +59,7 @@ const langOptions = [
                 lang={o.code}
                 aria-label={o.label}
                 data-lang={o.code}
-                class="block px-3 py-1.5 text-[10px] font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-75"
+                class="block px-3 py-1.5 text-xs font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) hover:bg-(--color-border-subtle) transition-colors duration-75"
               >{o.code.toUpperCase()}</a>
             ))}
           </div>
@@ -74,11 +74,11 @@ const langOptions = [
           </button>
           <div id="a11y-dd" class="absolute right-0 top-full mt-1 w-40 bg-(--color-bg) border border-(--color-border) shadow-lg opacity-0 pointer-events-none transition-opacity duration-75 z-50">
             <div class="p-2.5 space-y-2.5">
-              <button id="a11y-toggle-contrast" class="flex items-center justify-between w-full text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) cursor-pointer">
+              <button id="a11y-toggle-contrast" class="flex items-center justify-between w-full text-xs font-mono text-(--color-text-muted) hover:text-(--color-text-bright) cursor-pointer">
                 <span>{t("a11y.contrast")}</span>
                 <span id="a11y-contrast-dot" class="w-2 h-2 rounded-full bg-(--color-border)"></span>
               </button>
-              <button id="a11y-toggle-font" class="flex items-center justify-between w-full text-[10px] font-mono text-(--color-text-muted) hover:text-(--color-text-bright) cursor-pointer">
+              <button id="a11y-toggle-font" class="flex items-center justify-between w-full text-xs font-mono text-(--color-text-muted) hover:text-(--color-text-bright) cursor-pointer">
                 <span>{t("a11y.font")}</span>
                 <span id="a11y-font-dot" class="w-2 h-2 rounded-full bg-(--color-border)"></span>
               </button>
@@ -113,12 +113,12 @@ const langOptions = [
 </nav>
 
 <div id="a11y-dd-mobile" class="hidden fixed bottom-20 left-4 right-4 bg-(--color-bg) border border-(--color-border) shadow-lg z-50 p-3">
-  <p class="text-[9px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("a11y.heading")}</p>
-  <button id="a11y-toggle-contrast-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
+  <p class="text-xs font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("a11y.heading")}</p>
+  <button id="a11y-toggle-contrast-m" class="flex items-center justify-between w-full text-xs font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
     <span>{t("a11y.contrast")}</span>
     <span id="a11y-contrast-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
   </button>
-  <button id="a11y-toggle-font-m" class="flex items-center justify-between w-full text-[11px] font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
+  <button id="a11y-toggle-font-m" class="flex items-center justify-between w-full text-xs font-mono text-(--color-text-muted) py-1.5 cursor-pointer">
     <span>{t("a11y.font")}</span>
     <span id="a11y-font-dot-m" class="w-2.5 h-2.5 rounded-full bg-(--color-border)"></span>
   </button>

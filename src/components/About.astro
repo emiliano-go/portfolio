@@ -55,26 +55,26 @@ const iconPaths: Record<string, { path: string; viewBox: string }> = {
       <div>
         <p class="text-sm leading-relaxed text-(--color-text-muted) mb-6">{t("about.bio")}</p>
         <div class="mb-6">
-          <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.current")}</p>
+          <p class="text-xs font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.current")}</p>
           <p class="text-xs leading-relaxed text-(--color-text-muted)" set:html={linkify(t("about.current.desc"))}></p>
         </div>
         <div class="mb-6">
-          <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.hobbies")}</p>
+          <p class="text-xs font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.hobbies")}</p>
           <p class="text-xs leading-relaxed text-(--color-text-muted)">{t("about.hobbies.desc")}</p>
         </div>
         <div class="mb-6">
-          <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.interests")}</p>
+          <p class="text-xs font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-2">{t("about.interests")}</p>
           <p class="text-xs font-mono leading-relaxed text-(--color-text-muted)">{t("about.interests.desc")}</p>
         </div>
         <div class="flex flex-wrap gap-2">
-          <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">GitHub <span class="text-[8px]" aria-hidden="true">↗</span></a>
-          <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">LinkedIn <span class="text-[8px]" aria-hidden="true">↗</span></a>
-          <a href="https://blog.emiliano-go.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[10px] font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">Blog <span class="text-[8px]" aria-hidden="true">↗</span></a>
+          <a href="https://github.com/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">GitHub <span class="text-xs" aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/emiliano-go" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">LinkedIn <span class="text-xs" aria-hidden="true">↗</span></a>
+          <a href="https://blog.emiliano-go.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">Blog <span class="text-xs" aria-hidden="true">↗</span></a>
         </div>
       </div>
 
       <div>
-        <p class="text-[10px] font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("about.stack")}</p>
+        <p class="text-xs font-mono uppercase tracking-[0.1em] text-(--color-text-dim) mb-4">{t("about.stack")}</p>
         <div class="grid grid-cols-2 gap-px bg-(--color-border-subtle) border border-(--color-border-subtle)">
           {stack.map((item) => {
             const icon = iconPaths[item.icon];
@@ -83,7 +83,7 @@ const iconPaths: Record<string, { path: string; viewBox: string }> = {
                 <svg class="w-4 h-4 shrink-0 text-(--color-text-dim)" viewBox={icon.viewBox} fill="currentColor" aria-hidden="true">
                   <path d={icon.path}/>
                 </svg>
-                <span class="text-[11px] text-(--color-text-muted)">{item.name}</span>
+                <span class="text-[13px] text-(--color-text-muted)">{item.name}</span>
               </div>
             );
           })}

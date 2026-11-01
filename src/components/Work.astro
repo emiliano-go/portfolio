@@ -45,8 +45,8 @@ const projects = [
           ]} style={!isMore && p.accent ? `--accent-dark: ${p.accent}; --accent-light: ${p.accentLight}; border-left-color: var(--accent)` : undefined}>
             <div class="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-8">
               <div class="lg:w-48 shrink-0">
-                <span class="font-[family-name:var(--font-mono)] text-[10px]" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.displayIndex}</span>
-                {p.category && <p class="text-[9px] font-mono uppercase tracking-[0.12em] mt-1 mb-1" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.category}</p>}
+                <span class="font-[family-name:var(--font-mono)] text-xs" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.displayIndex}</span>
+                {p.category && <p class="text-xs font-mono uppercase tracking-[0.12em] mt-1 mb-1" style={!isMore && p.accent ? `color: var(--accent)` : undefined}>{p.category}</p>}
                 <h3 class:list={[
                   "font-[family-name:var(--font-display)] font-bold uppercase tracking-wide transition-none",
                   isMore ? "text-xl text-(--color-text-muted) group-hover:text-(--color-text-bright) mt-1" : "text-2xl md:text-3xl text-(--color-text-head) group-hover:text-[var(--accent,var(--color-accent))]"
@@ -54,18 +54,18 @@ const projects = [
               </div>
               <div class="flex-1 min-w-0">
                 <p class="text-xs leading-relaxed text-(--color-text-muted) mb-4 max-w-[480px]">{p.summary}</p>
-                {p.diagram && <div class="arch-diagram mb-4 text-[10px]">{p.diagram}</div>}
+                {p.diagram && <div class="arch-diagram mb-4 text-xs">{p.diagram}</div>}
                 {(p.facts ?? []).length > 0 && (
                   <div class="flex flex-wrap items-center gap-2 mb-4">
                     {(p.facts ?? []).map(f => (
-                      <span class="text-[10px] font-mono px-2 py-0.5 border text-(--color-text-dim)" style={!isMore && p.accent ? `border-color: color-mix(in srgb, var(--accent) 25%, transparent)` : undefined}>{f}</span>
+                      <span class="text-xs font-mono px-2 py-0.5 border text-(--color-text-dim)" style={!isMore && p.accent ? `border-color: color-mix(in srgb, var(--accent) 25%, transparent)` : undefined}>{f}</span>
                     ))}
                   </div>
                 )}
                 <div class="flex flex-wrap gap-3">
                   {p.links.slice(0, 3).map(link => (
-                    <span class="inline-flex items-center gap-1 text-[10px] font-mono px-3 py-1.5 border transition-none" style={!isMore && p.accent ? `border-color: var(--accent); color: var(--accent)` : undefined}>
-                      {link.label} <span class="text-[8px]" aria-hidden="true">{isMore ? '→' : '↗'}</span>
+                    <span class="inline-flex items-center gap-1 text-xs font-mono px-3 py-1.5 border transition-none" style={!isMore && p.accent ? `border-color: var(--accent); color: var(--accent)` : undefined}>
+                      {link.label} <span class="text-xs" aria-hidden="true">{isMore ? '→' : '↗'}</span>
                     </span>
                   ))}
                 </div>
