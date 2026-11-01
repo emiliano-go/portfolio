@@ -23,8 +23,7 @@ const langOptions = [
 <nav
   id="nav"
   aria-label={t("a11y.nav")}
-  class="fixed top-0 left-0 right-0 z-50 border-b border-(--color-border-subtle) opacity-0 bg-(--color-bg)/95"
-  style="backdrop-filter: blur(12px);"
+  class="fixed top-0 left-0 right-0 z-50 border-b border-transparent opacity-0"
 >
   <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0 flex items-center justify-between py-5">
     <a href={'/' + lang} class="font-[family-name:var(--font-display)] text-xl font-bold tracking-widest uppercase text-(--color-text-head)">EMILIANO G.O.</a>
@@ -35,7 +34,7 @@ const langOptions = [
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
-            class="nav-link text-[11px] font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100"
+            class="text-[11px] font-mono tracking-wide text-(--color-text-muted) hover:text-(--color-text-bright) transition-colors duration-100"
           >{t(link.key)}</a>
         </li>
       ))}
@@ -105,9 +104,9 @@ const langOptions = [
         data-label-open={t("a11y.menu.open")}
         data-label-close={t("a11y.menu.close")}
       >
-        <span class="block w-5 h-px bg-(--color-text-muted) transition-all duration-100"></span>
-        <span class="block w-5 h-px bg-(--color-text-muted) transition-all duration-100"></span>
-        <span class="block w-5 h-px bg-(--color-text-muted) transition-all duration-100"></span>
+        <span class="block w-5 h-px bg-(--color-text-muted) transition-[transform,background-color] duration-100"></span>
+        <span class="block w-5 h-px bg-(--color-text-muted) transition-[transform,background-color] duration-100"></span>
+        <span class="block w-5 h-px bg-(--color-text-muted) transition-[transform,background-color] duration-100"></span>
       </button>
     </div>
   </div>
@@ -384,11 +383,17 @@ window.__astroNavInit = true;
     }
   });
 
-  // Scroll: nav border
-  window.addEventListener('scroll', function() {
+  // At the top the header is fully transparent; it gets a surface and a
+  // hairline once the content scrolls under it.
+  function updateNav() {
     var nav = document.getElementById('nav');
-    if (nav) nav.style.borderBottomColor = window.scrollY > 40 ? 'var(--color-border)' : 'var(--color-border-subtle)';
-  }, { passive: true });
+    if (!nav) return;
+    var scrolled = (window.scrollY || window.pageYOffset) > 40;
+    nav.style.backgroundColor = scrolled ? 'var(--color-bg)' : 'transparent';
+    nav.style.borderBottomColor = scrolled ? 'var(--color-border)' : 'transparent';
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
 
   // Language dropdown focusout
   var ddWrap = document.getElementById('lang-dd-wrap');
@@ -412,6 +417,7 @@ window.__astroNavInit = true;
     }
     updateIcons();
     updateDots();
+    updateNav();
   });
 }
 </script>
@@ -424,23 +430,5 @@ window.__astroNavInit = true;
 
   #nav {
     animation: nav-fade-in 0.6s ease-out 0.3s forwards;
-  }
-
-  .nav-link {
-    position: relative;
-  }
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background: var(--color-text-bright);
-    transition: width 0.1s ease, left 0.1s ease;
-  }
-  .nav-link:hover::after {
-    width: 100%;
-    left: 0;
   }
 </style>
