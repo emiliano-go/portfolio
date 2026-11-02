@@ -91,5 +91,77 @@ const pageDesc = description ?? t('meta.default.desc');
     <div id="i18n-wrapper" class="i18n-show">
       <slot />
     </div>
+
+    <script is:inline>
+      (function () {
+        if (window.__astroEmailToast) return;
+        window.__astroEmailToast = true;
+
+        function copyText(text, done) {
+          function fallback() {
+            var area = document.createElement('textarea');
+            area.value = text;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.top = '-1000px';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.select();
+            var ok = false;
+            try {
+              ok = document.execCommand('copy');
+            } catch (error) {
+              ok = false;
+            }
+            document.body.removeChild(area);
+            done(ok);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function () {
+              done(true);
+            }, fallback);
+          } else {
+            fallback();
+          }
+        }
+
+        function showToast(email, ok) {
+          var toast = document.getElementById('copy-email-toast');
+          if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'copy-email-toast';
+            toast.className = 'copy-toast fixed bottom-4 left-4 right-4 z-[60] flex items-start gap-3 border border-(--color-border-subtle) border-l-2 bg-(--color-surface) px-4 py-3 text-xs text-(--color-text-muted) shadow-lg sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-[380px]';
+            toast.style.borderLeftColor = 'var(--color-accent)';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            toast.innerHTML = '<p class="min-w-0 flex-1 break-all"><span data-toast-label></span> <span class="font-mono text-(--color-text-bright)" data-toast-email></span></p>'
+              + '<button type="button" data-toast-close aria-label="Close" class="shrink-0 cursor-pointer text-(--color-text-dim) transition-colors duration-150 hover:text-(--color-text-bright)">'
+              + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+              + '</button>';
+            document.body.appendChild(toast);
+            toast.querySelector('[data-toast-close]').addEventListener('click', function () {
+              toast.remove();
+            });
+          }
+
+          toast.querySelector('[data-toast-label]').textContent = ok ? 'Copied email:' : 'Copy failed:';
+          toast.querySelector('[data-toast-email]').textContent = email;
+          var close = toast.querySelector('[data-toast-close]');
+          if (close) close.focus({ preventScroll: true });
+        }
+
+        document.addEventListener('click', function (event) {
+          var target = event.target instanceof Element ? event.target.closest('[data-copy-email]') : null;
+          if (!target) return;
+          var email = target.getAttribute('data-copy-email') || '';
+          if (!email) return;
+          event.preventDefault();
+          copyText(email, function (ok) {
+            showToast(email, ok);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

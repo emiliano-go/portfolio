@@ -342,6 +342,20 @@ html[data-fontsize="xlarge"] {
     contain-intrinsic-size: auto 420px;
   }
 
+  @keyframes copy-toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .copy-toast {
+    animation: copy-toast-in 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
   }

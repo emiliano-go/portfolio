@@ -173,5 +173,6 @@
   "activity.project.error": "Commit activity unavailable.",
   "activity.project.none": "No related repositories.",
   "about.hobbies": "Hobbies",
-  "about.hobbies.desc": "Reading and going to the gym are the pillars of my day to day life that allow me to stay grounded amidst my work."
+  "about.hobbies.desc": "Reading and going to the gym are the pillars of my day to day life that allow me to stay grounded amidst my work.",
+  "hero.cta.contact.aria": "Copy email address"
 }

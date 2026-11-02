@@ -173,5 +173,6 @@
   "activity.project.error": "Activité des commits indisponible.",
   "activity.project.none": "Aucun dépôt associé.",
   "about.hobbies": "Loisirs",
-  "about.hobbies.desc": "La lecture et la salle de sport sont les piliers de mon quotidien et me permettent de rester ancré au milieu du travail."
+  "about.hobbies.desc": "La lecture et la salle de sport sont les piliers de mon quotidien et me permettent de rester ancré au milieu du travail.",
+  "hero.cta.contact.aria": "Copier l'adresse e-mail"
 }

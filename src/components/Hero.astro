@@ -1,6 +1,7 @@
 ---
 import { createT } from '../i18n';
 const t = createT(Astro.props.lang);
+const email = 'emiliano.gandini@protonmail.com';
 ---
 
 <section class="relative min-h-[100svh] pt-24 pb-12 flex items-center">
@@ -30,9 +31,9 @@ const t = createT(Astro.props.lang);
           <a href={`/${Astro.props.lang || 'en'}/work/trustsight`} class="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-(--color-bg) transition-colors duration-100">
             {t("hero.cta.work")} <span aria-hidden="true">→</span>
           </a>
-          <a href="mailto:emiliano.gandini@protonmail.com" class="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
-            {t("hero.cta.contact")} <span aria-hidden="true">↗</span>
-          </a>
+          <button type="button" data-copy-email={email} aria-label={t("hero.cta.contact.aria")} class="inline-flex cursor-pointer items-center gap-1.5 text-xs font-mono px-3 py-1.5 border border-(--color-border) text-(--color-text-muted) hover:text-(--color-text-bright) hover:border-(--color-text-muted) transition-colors duration-100">
+            {t("hero.cta.contact")}
+          </button>
         </div>
 
       </div>

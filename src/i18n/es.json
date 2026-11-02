@@ -173,5 +173,6 @@
   "activity.project.error": "Actividad de commits no disponible.",
   "activity.project.none": "Sin repositorios relacionados.",
   "about.hobbies": "Hobbies",
-  "about.hobbies.desc": "Leer e ir al gimnasio son los pilares de mi día a día que me permiten mantenerme centrado entre el trabajo."
+  "about.hobbies.desc": "Leer e ir al gimnasio son los pilares de mi día a día que me permiten mantenerme centrado entre el trabajo.",
+  "hero.cta.contact.aria": "Copiar dirección de correo"
 }
