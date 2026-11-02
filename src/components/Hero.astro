@@ -190,9 +190,129 @@ const t = createT(Astro.props.lang);
         commitEl.innerHTML = '<p class="text-xs text-(--color-text-dim)">' + commitEl.dataset.unavailable + '</p>';
       }
 
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (char) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+        });
+      }
+
+      function layoutLangChart(chart) {
+        if (!chart || !chart.isConnected) return;
+        var labelsLayer = chart.querySelector('[data-lang-labels]');
+        var svg = chart.querySelector('svg');
+        var bar = chart.querySelector('[data-lang-bar]');
+        if (!labelsLayer || !svg || !bar) return;
+
+        var chartRect = chart.getBoundingClientRect();
+        var barRect = bar.getBoundingClientRect();
+        var width = chartRect.width;
+        var height = chartRect.height;
+        var barTop = barRect.top - chartRect.top;
+        var barBottom = barRect.bottom - chartRect.top;
+        var labels = labelsLayer.querySelectorAll('[data-lang-label]');
+        var sides = { above: [], below: [] };
+
+        for (var i = 0; i < labels.length; i++) {
+          var el = labels[i];
+          sides[el.dataset.side].push({
+            el: el,
+            center: (parseFloat(el.dataset.center) / 100) * width,
+            width: el.offsetWidth,
+          });
+        }
+
+        var lines = '';
+        ['above', 'below'].forEach(function (side) {
+          var items = sides[side].sort(function (a, b) { return a.center - b.center; });
+          var lastEnd = [-9999, -9999];
+          for (var j = 0; j < items.length; j++) {
+            var item = items[j];
+            var desired = item.center - item.width / 2;
+            var left = Math.max(0, Math.min(desired, width - item.width));
+            var row = 0;
+            if (left < lastEnd[0] + 8) row = 1;
+            if (row === 1 && left < lastEnd[1] + 8) row = lastEnd[0] <= lastEnd[1] ? 0 : 1;
+            lastEnd[row] = left + item.width;
+
+            var top = side === 'above'
+              ? barTop - 28 - row * 20 - item.el.offsetHeight
+              : barBottom + 28 + row * 20;
+            item.el.style.left = left + 'px';
+            item.el.style.top = top + 'px';
+
+            var anchorY = side === 'above' ? barTop - 28 - row * 20 : top;
+            lines += '<line x1="' + (left + item.width / 2) + '" y1="' + anchorY
+              + '" x2="' + item.center + '" y2="' + (side === 'above' ? barTop : barBottom)
+              + '" stroke="var(--color-text-dim)" stroke-opacity="0.5" stroke-width="1"/>';
+          }
+        });
+
+        svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+        svg.innerHTML = lines;
+        labelsLayer.style.opacity = '1';
+      }
+
+      function renderLanguages(data) {
+        if (!langEl || !langEl.isConnected) return;
+        var languages = (data && data.languages) || [];
+        if (!languages.length) return;
+
+        var sorted = languages.slice().sort(function (a, b) { return (b.size || 0) - (a.size || 0); });
+        var total = 0;
+        for (var i = 0; i < sorted.length; i++) total += sorted[i].size || 0;
+        if (total <= 0) return;
+
+        var maxLabels = window.matchMedia('(min-width: 1280px)').matches ? 7 : 5;
+        var chosen = sorted.slice(0, maxLabels);
+        if (sorted.length > maxLabels) {
+          chosen = sorted.slice(0, maxLabels - 1);
+          var other = 0;
+          for (var j = maxLabels - 1; j < sorted.length; j++) other += sorted[j].size || 0;
+          chosen.push({ name: 'Other', size: other, color: '#5e6a7e' });
+        }
+
+        var segments = [];
+        var summary = [];
+        var cumulative = 0;
+        for (var k = 0; k < chosen.length; k++) {
+          var lang = chosen[k];
+          var pct = ((lang.size || 0) / total) * 100;
+          var color = /^#[0-9a-fA-F]{3,8}$/.test(lang.color || '') ? lang.color : '#5ba3a8';
+          segments.push({ name: lang.name || 'Other', pct: pct, color: color, center: cumulative + pct / 2 });
+          summary.push((lang.name || 'Other') + ' ' + Math.round(pct) + '%');
+          cumulative += pct;
+        }
+
+        var barHtml = '';
+        var labelsHtml = '';
+        for (var n = 0; n < segments.length; n++) {
+          var segment = segments[n];
+          barHtml += '<div class="h-full" style="width:' + segment.pct + '%;background:' + segment.color + '"></div>';
+          labelsHtml += '<span class="absolute whitespace-nowrap font-mono text-xs leading-4 text-(--color-text-muted)" data-lang-label data-center="' + segment.center + '" data-side="' + (n % 2 === 0 ? 'above' : 'below') + '" style="left:0;top:0">' + escapeHtml(segment.name) + '</span>';
+        }
+
+        langEl.innerHTML =
+          '<div class="relative py-20" data-lang-chart>'
+          + '<svg class="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true"></svg>'
+          + '<div class="relative flex h-1.5 overflow-hidden rounded-sm bg-(--color-border-subtle)" data-lang-bar role="img" aria-label="' + escapeHtml(summary.join(', ')) + '">'
+          + barHtml
+          + '</div>'
+          + '<div class="pointer-events-none absolute inset-0 transition-opacity duration-150" data-lang-labels style="opacity:0" aria-hidden="true">'
+          + labelsHtml
+          + '</div>'
+          + '</div>';
+
+        var chart = langEl.querySelector('[data-lang-chart]');
+        requestAnimationFrame(function () { layoutLangChart(chart); });
+        var onResize = function () { layoutLangChart(chart); };
+        window.addEventListener('resize', onResize);
+        cleanups.push(function () { window.removeEventListener('resize', onResize); });
+      }
+
       fetch('/api/katib?endpoint=commits')
         .then(function(r) { return r.json(); })
         .then(function(data) {
+          renderLanguages(data);
           if (!commitEl || !commitEl.isConnected) return;
           if (!data || !data.commits || data.commits.length === 0) {
             showUnavailable();
@@ -214,62 +334,6 @@ const t = createT(Astro.props.lang);
             html += '</a>';
           }
           commitEl.innerHTML = html;
-
-          var languages = data.languages || [];
-          if (langEl && langEl.isConnected && languages.length > 0) {
-            var total = 0;
-            for (var j = 0; j < languages.length; j++) total += languages[j].size || 0;
-            if (total > 0) {
-              var esc = function (value) {
-                return String(value).replace(/[&<>"']/g, function (char) {
-                  return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
-                });
-              };
-              var segments = [];
-              for (var k = 0; k < languages.length; k++) {
-                var lang = languages[k];
-                var pct = (lang.size / total) * 100;
-                if (pct < 1 && k >= 5) break;
-                segments.push({
-                  name: lang.name || 'Other',
-                  pct: pct,
-                  color: /^#[0-9a-fA-F]{3,8}$/.test(lang.color || '') ? lang.color : '#5ba3a8',
-                });
-              }
-              var summary = segments.map(function (segment) { return segment.name + ' ' + Math.round(segment.pct) + '%'; }).join(', ');
-              var legendHtml = '<div class="mb-1 flex items-end" aria-hidden="true">';
-              var barHtml = '<div class="relative" role="img" aria-label="' + esc(summary) + '"><div class="flex h-2 rounded-sm overflow-hidden bg-(--color-border-subtle)">';
-              for (var n = 0; n < segments.length; n++) {
-                var segment = segments[n];
-                var label = esc(segment.name);
-                legendHtml += '<div class="min-w-0 px-px" style="width:' + segment.pct + '%">'
-                  + '<div class="flex flex-col items-center gap-0.5">'
-                  + '<span class="w-full truncate text-center font-mono text-xs leading-none text-(--color-text-muted)" title="' + label + '">' + label + '</span>'
-                  + '<span class="h-1.5 w-px" style="background:' + segment.color + '"></span>'
-                  + '</div></div>';
-                barHtml += '<div class="hero-lang-seg h-full cursor-default" data-lang="' + label + '" data-pct="' + Math.round(segment.pct) + '" style="width:' + segment.pct + '%;background:' + segment.color + '"></div>';
-              }
-              barHtml += '</div><div id="hero-lang-tooltip" class="absolute bottom-full left-0 mb-1 px-1.5 py-0.5 bg-(--color-surface) border border-(--color-border) text-xs font-mono text-(--color-text-muted) rounded opacity-0 pointer-events-none whitespace-nowrap z-10 transition-opacity duration-75"></div></div>';
-              langEl.innerHTML = legendHtml + '</div>' + barHtml;
-
-              var tip = document.getElementById('hero-lang-tooltip');
-              var barWrapper = tip.parentElement;
-              var segs = langEl.querySelectorAll('.hero-lang-seg');
-              for (var m = 0; m < segs.length; m++) {
-                segs[m].addEventListener('mouseenter', function() {
-                  tip.textContent = this.dataset.lang + ' ' + this.dataset.pct + '%';
-                  var rect = this.getBoundingClientRect();
-                  var parent = barWrapper.getBoundingClientRect();
-                  tip.style.left = (rect.left - parent.left + rect.width / 2) + 'px';
-                  tip.style.transform = 'translateX(-50%)';
-                  tip.style.opacity = '1';
-                });
-                segs[m].addEventListener('mouseleave', function() {
-                  tip.style.opacity = '0';
-                });
-              }
-            }
-          }
         })
         .catch(showUnavailable);
 
