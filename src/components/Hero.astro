@@ -278,7 +278,7 @@ const email = 'emiliano.gandini@protonmail.com';
         for (var k = 0; k < chosen.length; k++) {
           var lang = chosen[k];
           var pct = ((lang.size || 0) / total) * 100;
-          var color = /^#[0-9a-fA-F]{3,8}$/.test(lang.color || '') ? lang.color : '#5ba3a8';
+          var color = lang.name === 'Rust' ? '#D34516' : (/^#[0-9a-fA-F]{3,8}$/.test(lang.color || '') ? lang.color : '#5ba3a8');
           segments.push({ name: lang.name || 'Other', pct: pct, color: color, center: cumulative + pct / 2 });
           summary.push((lang.name || 'Other') + ' ' + Math.round(pct) + '%');
           cumulative += pct;
