@@ -131,7 +131,7 @@ const pageDesc = description ?? t('meta.default.desc');
           if (!toast) {
             toast = document.createElement('div');
             toast.id = 'copy-email-toast';
-            toast.className = 'copy-toast fixed bottom-4 left-4 right-4 z-[60] flex items-start gap-3 border border-(--color-border-subtle) border-l-2 bg-(--color-surface) px-4 py-3 text-xs text-(--color-text-muted) shadow-lg sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-[380px]';
+            toast.className = 'copy-toast fixed bottom-4 left-4 right-4 z-[60] flex items-start gap-3 border border-(--color-border-subtle) border-l-2 bg-(--color-surface)/85 backdrop-blur-md px-4 py-3 text-xs text-(--color-text-muted) shadow-lg sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-[380px]';
             toast.style.borderLeftColor = 'var(--color-accent)';
             toast.setAttribute('role', 'status');
             toast.setAttribute('aria-live', 'polite');
