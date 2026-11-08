@@ -152,9 +152,16 @@ const pageDesc = description ?? t('meta.default.desc');
         }
 
         document.addEventListener('click', function (event) {
-          var target = event.target instanceof Element ? event.target.closest('[data-copy-email]') : null;
+          var target = event.target instanceof Element ? event.target.closest('[data-copy-email-token]') : null;
           if (!target) return;
-          var email = target.getAttribute('data-copy-email') || '';
+          var token = target.getAttribute('data-copy-email-token') || '';
+          if (!token) return;
+          var email = '';
+          try {
+            email = atob(token);
+          } catch (error) {
+            return;
+          }
           if (!email) return;
           event.preventDefault();
           copyText(email, function (ok) {
