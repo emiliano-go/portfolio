@@ -1,0 +1,9 @@
+{
+  "resource": "https://emiliano-go.com/",
+  "resource_name": "Emiliano G.O. portfolio and public MCP server",
+  "resource_documentation": "https://emiliano-go.com/auth.md",
+  "authorization_servers": [],
+  "bearer_methods_supported": [],
+  "scopes_supported": [],
+  "tls_client_certificate_bound_access_tokens": false
+}

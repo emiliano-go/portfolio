@@ -284,6 +284,25 @@ def check_auth_md(errors: list[str]) -> None:
         errors.append("auth.md: must state the OAuth protected-resource posture")
 
 
+def check_protected_resource(errors: list[str]) -> None:
+    data = load_json(WELL_KNOWN / "oauth-protected-resource", errors)
+    if data is None:
+        return
+    resource = data.get("resource")
+    if not isinstance(resource, str) or not resource.startswith(SITE):
+        errors.append("oauth-protected-resource: resource must be an absolute URL on this origin")
+    servers = data.get("authorization_servers")
+    if not isinstance(servers, list):
+        errors.append("oauth-protected-resource: authorization_servers must be an array")
+    elif servers:
+        errors.append(
+            "oauth-protected-resource: an empty authorization_servers list is what makes this "
+            "document honest; pointing at a server that cannot issue tokens would mislead agents"
+        )
+    if (WELL_KNOWN / "oauth-authorization-server").exists() or (WELL_KNOWN / "openid-configuration").exists():
+        errors.append("a protected resource with no authorization server must not advertise issuer metadata")
+
+
 def check_openapi(errors: list[str]) -> None:
     data = load_json(PUBLIC / "openapi.json", errors)
     if data is None:
@@ -358,7 +377,7 @@ def check_build_output(errors: list[str]) -> None:
         if "/*.md" not in excluded:
             errors.append("dist/_routes.json: /*.md must stay excluded")
 
-    for relative in (".well-known/api-catalog", ".well-known/ai-catalog.json", "mcp/catalog.json", "auth.md", "openapi.json"):
+    for relative in (".well-known/api-catalog", ".well-known/ai-catalog.json", ".well-known/oauth-protected-resource", "mcp/catalog.json", "auth.md", "openapi.json"):
         if not (dist / relative).is_file():
             errors.append(f"dist: {relative} missing from the build output")
 
@@ -389,6 +408,7 @@ def main() -> int:
     check_server_card(errors)
     check_agent_skills(errors)
     check_auth_md(errors)
+    check_protected_resource(errors)
     check_openapi(errors)
     check_routes(errors)
     check_markdown_twins(errors)

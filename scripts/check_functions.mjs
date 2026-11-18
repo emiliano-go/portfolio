@@ -33,8 +33,8 @@ const assets = {
     if (url.pathname === '/mcp/catalog.json') {
       return new Response(JSON.stringify(catalog), { headers: { 'Content-Type': 'application/json' } });
     }
-    if (url.pathname === '/.well-known/api-catalog') {
-      return new Response('{"linkset":[]}', { headers: { 'Content-Type': 'application/octet-stream' } });
+    if (url.pathname.startsWith('/.well-known/')) {
+      return new Response('{"ok":true}', { headers: { 'Content-Type': 'application/octet-stream' } });
     }
     if (url.pathname.endsWith('.md')) {
       return new Response(MARKDOWN, { headers: { 'Content-Type': 'text/markdown' } });
@@ -201,12 +201,13 @@ async function rpc(body) {
   assert.match(response.headers.get('Content-Type'), /^text\/html/);
 }
 
-// The linkset path has no extension, so the middleware guarantees its media type
-{
-  const response = await middleware(context(
-    new Request('https://emiliano-go.com/.well-known/api-catalog', { headers: { Accept: '*/*' } }),
-  ));
-  assert.match(response.headers.get('Content-Type'), /^application\/linkset\+json/);
+// The extensionless well-known paths get an explicit media type from the middleware
+for (const [path, expected] of [
+  ['/.well-known/api-catalog', /^application\/linkset\+json/],
+  ['/.well-known/oauth-protected-resource', /^application\/json/],
+]) {
+  const response = await middleware(context(new Request(`https://emiliano-go.com${path}`, { headers: { Accept: '*/*' } })));
+  assert.match(response.headers.get('Content-Type'), expected, `${path} media type`);
   assert.equal(response.headers.get('Access-Control-Allow-Origin'), '*');
 }
 

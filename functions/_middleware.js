@@ -17,18 +17,21 @@ const SECURITY_HEADERS = {
   'Access-Control-Allow-Origin': '*',
 };
 
-// RFC 9727 fixes this path without a file extension, so the media type cannot be
-// inferred by the asset server. public/_headers also sets it; this keeps the
-// guarantee even where a static-asset Content-Type override is ignored.
-const LINKSET_PATH = '/.well-known/api-catalog';
-const LINKSET_TYPE = 'application/linkset+json; charset=utf-8';
+// These well-known paths carry no file extension, so the asset server cannot infer
+// their media type (RFC 9727 fixes the linkset path; RFC 9728 fixes the protected
+// resource path). public/_headers also sets them; this keeps the guarantee even
+// where a static-asset Content-Type override is ignored.
+const TYPED_DOCUMENTS = {
+  '/.well-known/api-catalog': 'application/linkset+json; charset=utf-8',
+  '/.well-known/oauth-protected-resource': 'application/json; charset=utf-8',
+};
 
 function markdownPath(pathname) {
   if (pathname.endsWith('/')) return `${pathname}index.md`;
   return `${pathname}/index.md`;
 }
 
-async function serveLinkset(context, url) {
+async function serveTypedDocument(context, url, contentType) {
   const { request, env } = context;
   try {
     const asset = await env.ASSETS.fetch(new Request(url.toString()));
@@ -38,7 +41,7 @@ async function serveLinkset(context, url) {
       status: 200,
       headers: {
         ...SECURITY_HEADERS,
-        'Content-Type': LINKSET_TYPE,
+        'Content-Type': contentType,
         Vary: 'Accept',
         'Cache-Control': 'public, max-age=3600',
       },
@@ -54,9 +57,10 @@ export async function onRequest(context) {
   if (request.method !== 'GET' && request.method !== 'HEAD') return next();
 
   const url = new URL(request.url);
-  if (url.pathname === LINKSET_PATH && env && env.ASSETS) {
-    const linkset = await serveLinkset(context, url);
-    if (linkset) return linkset;
+  const typed = TYPED_DOCUMENTS[url.pathname];
+  if (typed && env && env.ASSETS) {
+    const document = await serveTypedDocument(context, url, typed);
+    if (document) return document;
   }
 
   const accept = request.headers.get('Accept') || '';

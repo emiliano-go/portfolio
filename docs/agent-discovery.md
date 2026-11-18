@@ -130,15 +130,24 @@ header → Set** for `Link`.
 
 ## 4. What is deliberately not published
 
-- **`/.well-known/oauth-authorization-server` and `/.well-known/oauth-protected-resource`**:
-  this origin runs no OAuth 2.0 / OpenID Connect authorization server and protects no
-  endpoint, so there is no truthful metadata to publish. `auth.md` states this
-  explicitly. If an identity provider is ever put in front of an API here, publish the
-  metadata and add the `authorization_servers` entry to the protected resource — the
-  checks in `scripts/check_discovery.py` are ready for it.
-- **`/.well-known/oauth-protected-resource`** for the same reason: a resource
-  declaration without an authorization server would tell agents to obtain tokens that
-  cannot be issued.
+- **`/.well-known/oauth-authorization-server`** and **`/.well-known/openid-configuration`**:
+  this origin runs no OAuth 2.0 / OpenID Connect authorization server, so there is no
+  truthful issuer metadata to publish. Inventing `authorization_endpoint` /
+  `token_endpoint` values would point agents at an endpoint that cannot mint a token.
+  If an identity provider is ever put in front of an API here, publish the metadata
+  and add it to `authorization_servers` in the protected resource below.
+
+`/.well-known/oauth-protected-resource` **is** published (RFC 9728), because a resource
+declaration can honestly state that no authorization server applies:
+
+```json
+{ "resource": "https://emiliano-go.com/", "authorization_servers": [], "bearer_methods_supported": [], "scopes_supported": [] }
+```
+
+An empty `authorization_servers` list is how an anonymous, unauthenticated resource
+says "no token required" in machine-readable form. The file has no extension, so
+`_headers` sets its media type and `functions/_middleware.js` sets it again, exactly
+like the API catalog.
 
 ## 5. Verifying the deployment
 

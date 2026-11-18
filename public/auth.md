@@ -26,6 +26,7 @@ Agents that summarise, cite, index or answer questions about Emiliano G.O.'s wor
 | Capability manifest (ARD) | `https://emiliano-go.com/.well-known/ai-catalog.json` | `application/json` |
 | MCP server card | `https://emiliano-go.com/.well-known/mcp/server-card.json` | `application/json` |
 | Agent skills index | `https://emiliano-go.com/.well-known/agent-skills/index.json` | `application/json` |
+| Protected resource metadata (RFC 9728) | `https://emiliano-go.com/.well-known/oauth-protected-resource` | `application/json` |
 
 CORS is open (`Access-Control-Allow-Origin: *`), so browser-based agents may call the JSON endpoints directly.
 
@@ -39,7 +40,18 @@ There is no registration endpoint and no credential issuance. Do not probe for o
 
 ## OAuth / OIDC discovery
 
-This origin does **not** operate an OAuth 2.0 or OpenID Connect authorization server, and publishes no `/.well-known/oauth-authorization-server` or `/.well-known/oauth-protected-resource`, because there is no protected resource to describe. Agents that require OAuth metadata should skip this site rather than read missing metadata as an error; if that ever changes, the metadata will appear at the standard paths and in the API catalog.
+This origin does **not** operate an OAuth 2.0 or OpenID Connect authorization server. To say so unambiguously rather than by omission, it publishes RFC 9728 protected resource metadata at `/.well-known/oauth-protected-resource`:
+
+```json
+{
+  "resource": "https://emiliano-go.com/",
+  "authorization_servers": [],
+  "bearer_methods_supported": [],
+  "scopes_supported": []
+}
+```
+
+An empty `authorization_servers` list is the machine-readable form of "no token is needed": there is no `/.well-known/oauth-authorization-server` and no `/.well-known/openid-configuration` here, and publishing invented endpoints would send agents to a token endpoint that cannot mint anything. Agents that require OAuth should treat this origin as anonymous-only and not retry with credentials. If an identity provider is ever put in front of an API here, both documents will appear at the standard paths and in the API catalog.
 
 ## Attribution
 

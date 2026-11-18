@@ -13,6 +13,10 @@
   ! Content-Type
   Content-Type: application/linkset+json; charset=utf-8
 
+/.well-known/oauth-protected-resource
+  ! Content-Type
+  Content-Type: application/json; charset=utf-8
+
 /*.md
   ! Content-Type
   Content-Type: text/markdown; charset=utf-8
