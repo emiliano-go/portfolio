@@ -51,12 +51,18 @@ jobs:
         run: |
           docker run -d --rm --name portfolio-smoke -p 8080:80 \
             "${{ fromJSON(steps.meta.outputs.json).tags[0] }}"
+          # nginx needs a moment to bind; connecting while it starts gets reset, which
+          # curl reports as exit 56 (recv error) rather than a status code.
+          for attempt in $(seq 1 30); do
+            if curl -sf -o /dev/null http://127.0.0.1:8080/; then break; fi
+            sleep 1
+          done
           for path in \
             / /en/ /en/projects/ /en/work/trustsight/ /does-not-exist \
             /.well-known/api-catalog /.well-known/ai-catalog.json \
             /.well-known/mcp/server-card.json /.well-known/agent-skills/index.json \
             /auth.md /api.md /openapi.json /llms.txt; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$path")
+            code=$(curl -s --retry 5 --retry-all-errors -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$path")
             echo "$path -> $code"
             test "$code" = "200" -o "$code" = "404"
           done
