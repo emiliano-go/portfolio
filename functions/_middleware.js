@@ -1,0 +1,93 @@
+// Markdown content negotiation for the static site.
+//
+// `scripts/generate_markdown.py` writes an `index.md` twin next to every built
+// `index.html`. When a client asks for `text/markdown`, this middleware serves the
+// twin from the ASSETS binding; otherwise the request continues untouched, so HTML
+// stays the default for browsers. The `.md` paths are excluded from Functions in
+// `_routes.json`, which also keeps the ASSETS lookup from re-entering this middleware.
+
+const MARKDOWN_TYPE = 'text/markdown; charset=utf-8';
+
+// Function responses bypass public/_headers, so the security-relevant headers are
+// repeated here. Keep them in sync with the `/*` rule in that file.
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Access-Control-Allow-Origin': '*',
+};
+
+// RFC 9727 fixes this path without a file extension, so the media type cannot be
+// inferred by the asset server. public/_headers also sets it; this keeps the
+// guarantee even where a static-asset Content-Type override is ignored.
+const LINKSET_PATH = '/.well-known/api-catalog';
+const LINKSET_TYPE = 'application/linkset+json; charset=utf-8';
+
+function markdownPath(pathname) {
+  if (pathname.endsWith('/')) return `${pathname}index.md`;
+  return `${pathname}/index.md`;
+}
+
+async function serveLinkset(context, url) {
+  const { request, env } = context;
+  try {
+    const asset = await env.ASSETS.fetch(new Request(url.toString()));
+    if (!asset.ok) return null;
+    const body = await asset.text();
+    return new Response(request.method === 'HEAD' ? null : body, {
+      status: 200,
+      headers: {
+        ...SECURITY_HEADERS,
+        'Content-Type': LINKSET_TYPE,
+        Vary: 'Accept',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  } catch {
+    return null;
+  }
+}
+
+export async function onRequest(context) {
+  const { request, env, next } = context;
+
+  if (request.method !== 'GET' && request.method !== 'HEAD') return next();
+
+  const url = new URL(request.url);
+  if (url.pathname === LINKSET_PATH && env && env.ASSETS) {
+    const linkset = await serveLinkset(context, url);
+    if (linkset) return linkset;
+  }
+
+  const accept = request.headers.get('Accept') || '';
+  if (!/\btext\/markdown\b/i.test(accept)) return next();
+
+  const { pathname, origin } = url;
+  if (!env || !env.ASSETS) return next();
+  // JSON endpoints, the MCP endpoint and static files keep their own representation.
+  if (pathname.startsWith('/api/') || pathname.startsWith('/.well-known/')) return next();
+  if (pathname === '/mcp' || pathname.startsWith('/mcp/')) return next();
+  if (/\.[a-z0-9]{1,6}$/i.test(pathname)) return next();
+
+  try {
+    const target = new URL(markdownPath(pathname), origin).toString();
+    const asset = await env.ASSETS.fetch(new Request(target, { headers: { Accept: 'text/markdown' } }));
+    if (!asset.ok) return next();
+
+    const body = await asset.text();
+    return new Response(request.method === 'HEAD' ? null : body, {
+      status: 200,
+      headers: {
+        ...SECURITY_HEADERS,
+        'Content-Type': MARKDOWN_TYPE,
+        'Content-Length': String(new TextEncoder().encode(body).byteLength),
+        'x-markdown-tokens': String(Math.max(1, Math.ceil(body.length / 4))),
+        Vary: 'Accept',
+        'Cache-Control': 'public, max-age=0, must-revalidate',
+      },
+    });
+  } catch {
+    // Never break the page because a twin is missing or unreadable.
+    return next();
+  }
+}

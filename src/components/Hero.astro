@@ -3,7 +3,8 @@ import { createT } from '../i18n';
 const t = createT(Astro.props.lang);
 const email = 'e@emiliano-go.com';
 // Keep the address out of the served HTML so simple scrapers cannot harvest it.
-const emailToken = Buffer.from(email, 'utf8').toString('base64');
+// btoa is the counterpart of the atob() in the copy handler and needs no Node types.
+const emailToken = btoa(email);
 ---
 
 <section class="relative min-h-[100svh] pt-24 pb-12 flex items-center">

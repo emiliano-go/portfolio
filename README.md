@@ -24,13 +24,26 @@ npm run dev
 ## Build and checks
 
 ```bash
-npm run build     # prebuild: i18n copy + SEO manifest/sitemap, then astro build
+npm run build     # prebuild: i18n copy + SEO manifest/sitemap → astro build → postbuild: Markdown twins
 npm run check     # astro check (TypeScript + Astro diagnostics)
-npm test          # i18n parity, catalog/route/SEO/llms consistency, WCAG contrast
+npm test          # content/SEO/llms parity, WCAG contrast, agent-discovery docs, /mcp + Markdown negotiation
 npm run preview
 ```
 
 `npm run seo` regenerates `src/data/seo-manifest.json` and `public/sitemap.xml` without a full build. The generated files are committed as a fallback for CI hosts without the Python toolchain.
+
+## Agent discovery
+
+The site is published for machine readers as well as browsers. `docs/agent-discovery.md` documents every surface, the DNS-AID/DNSSEC records the zone needs, and how to verify a deploy.
+
+- `Link` headers advertise the API catalog, OpenAPI description and capability manifest on every response (`public/_headers`).
+- `/.well-known/api-catalog` (RFC 9727), `/.well-known/ai-catalog.json` (ARD), `/.well-known/mcp/server-card.json` and `/.well-known/agent-skills/index.json` are static documents in `public/`.
+- `POST /mcp` is a stateless Model Context Protocol endpoint (`functions/mcp.js`) exposing four read-only tools, fed by `dist/mcp/catalog.json`, which `src/pages/mcp/catalog.json.ts` renders from `src/data/`.
+- `Accept: text/markdown` returns the prebuilt Markdown twin of a page (`functions/_middleware.js`); the twins come from `scripts/generate_markdown.py` during `postbuild`.
+- `robots.txt` declares Content Signals and an `Agentmap`, and `/auth.md` states the access policy.
+- WebMCP tools are registered in `src/layouts/Layout.astro` when the browser exposes `document.modelContext`.
+
+`npm test` fails if a document drifts: skill digests, `urn:air:` identifiers, media types, advertised URLs, the MCP tools and the Markdown twins are all checked against this tree. The documents require no build step of their own, but the Markdown twins do — run `npm run build` before `npm test` locally.
 
 ## Project catalog
 
@@ -65,12 +78,17 @@ Local copies go in `.env` (ignored) or the shell environment. Do not commit toke
 src/pages/[lang]/         localized pages
 src/pages/[lang]/work/    project case studies
 src/data/projects.ts      case-study content
+src/pages/mcp/catalog.json.ts  JSON catalog consumed by /mcp and WebMCP
 src/data/seo-manifest.json generated SEO payloads
 src/i18n/                 UI copy (en/es/fr)
 public/                   static assets, headers, sitemap, llms files
+public/.well-known/       API catalog, ARD manifest, MCP card, agent skills, security.txt
+functions/                Cloudflare Pages Functions (/api/katib, /api/health, /mcp, Markdown negotiation)
 scripts/generate_seo.py   SEO manifest + sitemap
+scripts/generate_markdown.py  post-build Markdown twins for Accept: text/markdown
 scripts/check_content.py  catalog/route/llms consistency
-functions/                Cloudflare Pages Functions
+scripts/check_discovery.py  agent-discovery document consistency
+docs/agent-discovery.md   what is published, and the DNS records the zone needs
 ```
 
 ## License

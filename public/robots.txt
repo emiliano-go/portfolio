@@ -1,4 +1,12 @@
+# Content Signals (https://contentsignals.org/) declares how this site may be used.
+# ai-train: training corpora. search: indexing and search results. ai-input: retrieval
+# for generative answers and agentic use. All three are permitted: this is a public
+# professional portfolio meant to be read, cited and summarised.
 User-agent: *
 Allow: /
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
+# Agentic Resource Discovery (ARD) capability manifest.
+Agentmap: https://emiliano-go.com/.well-known/ai-catalog.json
 
 Sitemap: https://emiliano-go.com/sitemap.xml

@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "description": "Personal portfolio for Emiliano G.O. — projects, writing and engineering work.",
+  "description": "Personal portfolio for Emiliano G.O. \u2014 projects, writing and engineering work.",
   "license": "MIT",
   "repository": "github:emiliano-go/portfolio",
   "type": "module",
@@ -14,9 +14,10 @@
     "seo": "python3 scripts/generate_seo.py",
     "prebuild": "sh scripts/prebuild.sh",
     "build": "NODE_OPTIONS='--no-deprecation' astro build",
+    "postbuild": "sh scripts/postbuild.sh",
     "preview": "NODE_OPTIONS='--no-deprecation' astro preview",
     "check": "astro check",
-    "test": "python3 scripts/check_content.py && python3 scripts/check_contrast.py",
+    "test": "python3 scripts/check_content.py && python3 scripts/check_contrast.py && python3 scripts/check_discovery.py && node scripts/check_functions.mjs",
     "astro": "astro"
   },
   "dependencies": {

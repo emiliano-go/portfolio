@@ -1,0 +1,46 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://emiliano-go.com/api/katib",
+      "service-desc": [
+        {
+          "href": "https://emiliano-go.com/openapi.json",
+          "type": "application/vnd.oai.openapi+json;version=3.1"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://emiliano-go.com/api.md",
+          "type": "text/markdown"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://emiliano-go.com/api/health",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://emiliano-go.com/mcp",
+      "service-desc": [
+        {
+          "href": "https://emiliano-go.com/.well-known/mcp/server-card.json",
+          "type": "application/mcp-server-card+json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://emiliano-go.com/api.md#mcp",
+          "type": "text/markdown"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://emiliano-go.com/api/health",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

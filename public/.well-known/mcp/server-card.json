@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/server-card.json",
+  "serverInfo": {
+    "name": "emiliano-go-portfolio",
+    "title": "Emiliano G.O. — portfolio",
+    "version": "1.0.0"
+  },
+  "description": "Read-only Model Context Protocol server over Emiliano G.O.'s public portfolio: featured case studies, secondary packages, their stack and links, and his professional profile. No authentication, no writes.",
+  "websiteUrl": "https://emiliano-go.com/",
+  "documentation": "https://emiliano-go.com/api.md#mcp",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://emiliano-go.com/mcp",
+    "url": "https://emiliano-go.com/mcp",
+    "protocolVersion": "2025-06-18",
+    "contentTypes": [
+      "application/json"
+    ]
+  },
+  "endpoint": "https://emiliano-go.com/mcp",
+  "protocolVersion": "2025-06-18",
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    }
+  },
+  "tools": [
+    {
+      "name": "list_projects",
+      "description": "List every featured case study and secondary package, with category, summary, stack and links."
+    },
+    {
+      "name": "get_project",
+      "description": "Return one project by id: category, summary, stack, links and its case-study URL."
+    },
+    {
+      "name": "search_projects",
+      "description": "Search projects by free-text query across name, summary, stack and category."
+    },
+    {
+      "name": "get_profile",
+      "description": "Return Emiliano G.O.'s name, role, location, spoken languages and profile links."
+    }
+  ],
+  "instructions": "Call tools/list to inspect the schemas, then tools/call. All tools are read-only and unauthenticated; results are sourced from the same JSON that renders the website."
+}

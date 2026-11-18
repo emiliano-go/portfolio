@@ -1,0 +1,323 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "emiliano-go.com public API",
+    "summary": "Read-only JSON endpoints that back the portfolio's live activity sections.",
+    "description": "Two unauthenticated endpoints: GitHub activity for emiliano-go (aggregated by Katib, optional server-side GitHub token) and a liveness probe. No credentials, accounts or write operations. CORS is open (Access-Control-Allow-Origin: *).",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT",
+      "identifier": "MIT"
+    },
+    "contact": {
+      "name": "Emiliano G.O.",
+      "url": "https://emiliano-go.com/",
+      "email": "e@emiliano-go.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://emiliano-go.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "activity",
+      "description": "Public repository activity for the emiliano-go GitHub account."
+    },
+    {
+      "name": "health",
+      "description": "Liveness."
+    }
+  ],
+  "paths": {
+    "/api/katib": {
+      "get": {
+        "operationId": "getActivity",
+        "tags": [
+          "activity"
+        ],
+        "summary": "Latest public repository activity",
+        "description": "With no parameters, returns the most recent commits and language mix for the emiliano-go GitHub account. `endpoint=repo-commits` returns the newest commit per repository, and `endpoint=latest-release` returns the latest release of one repository. Responses are cacheable for 5 minutes (`s-maxage=300`); release lookups for 1 hour. Failures surface as 502 with `{error, fallback}` rather than cached partial data.",
+        "parameters": [
+          {
+            "name": "endpoint",
+            "in": "query",
+            "required": false,
+            "description": "Activity view to return.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "commits",
+                "repo-commits",
+                "latest-release"
+              ],
+              "default": "commits"
+            }
+          },
+          {
+            "name": "repos",
+            "in": "query",
+            "required": false,
+            "description": "Comma-separated `owner/name` repositories. Only read when `endpoint=repo-commits`; at most 12 entries.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "emiliano-go/trustsight,emiliano-go/dbwarden"
+          },
+          {
+            "name": "repo",
+            "in": "query",
+            "required": false,
+            "description": "Single `owner/name` repository. Only read when `endpoint=latest-release`.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "emiliano-go/trustsight"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity payload.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CommitsResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RepoCommitsResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ReleaseResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid `repo`/`repos` value (expected `owner/name`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The repository has no release.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Upstream GitHub or Katib failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "tags": [
+          "health"
+        ],
+        "summary": "Liveness probe",
+        "description": "Always unauthenticated and never cached. Use it as the `status` resource for this catalog.",
+        "responses": {
+          "200": {
+            "description": "The site is serving requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Health": {
+        "type": "object",
+        "required": [
+          "status",
+          "site",
+          "time"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok"
+          },
+          "site": {
+            "type": "string",
+            "format": "uri",
+            "const": "https://emiliano-go.com/"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Server time at response."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "fallback": {
+            "type": "boolean",
+            "description": "Present and true when the UI should fall back to its build-time snapshot."
+          }
+        }
+      },
+      "Commit": {
+        "type": "object",
+        "required": [
+          "repo",
+          "message",
+          "sha",
+          "date",
+          "url"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "Repository name without the owner."
+          },
+          "message": {
+            "type": "string",
+            "description": "First line of the commit message."
+          },
+          "sha": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "CommitsResponse": {
+        "type": "object",
+        "required": [
+          "commits"
+        ],
+        "properties": {
+          "commits": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "$ref": "#/components/schemas/Commit"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Language mix as reported by Katib."
+            }
+          }
+        }
+      },
+      "RepoCommit": {
+        "type": "object",
+        "required": [
+          "repo"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string"
+          },
+          "sha": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "author": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string",
+            "description": "Set instead of the commit fields when this repository could not be read."
+          }
+        }
+      },
+      "RepoCommitsResponse": {
+        "type": "object",
+        "required": [
+          "repos"
+        ],
+        "properties": {
+          "repos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepoCommit"
+            }
+          }
+        }
+      },
+      "ReleaseResponse": {
+        "type": "object",
+        "required": [
+          "repo",
+          "tag",
+          "url",
+          "publishedAt"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

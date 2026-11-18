@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "portfolio-navigation",
+      "type": "skill-md",
+      "description": "Read emiliano-go.com efficiently as an agent: Markdown negotiation, the llms files, the public JSON API, the MCP endpoint, and which page carries which content.",
+      "url": "https://emiliano-go.com/.well-known/agent-skills/portfolio-navigation/SKILL.md",
+      "digest": "sha256:cac9197d8ad452dcc8e55c490a478864c97da23cb0744d45bfcb3c253dee81fe"
+    },
+    {
+      "name": "project-catalog",
+      "type": "skill-md",
+      "description": "Canonical list of Emiliano G.O.'s projects with one-line scope and the URL that documents each one, plus the names that are easy to confuse.",
+      "url": "https://emiliano-go.com/.well-known/agent-skills/project-catalog/SKILL.md",
+      "digest": "sha256:3dbff4085d130fb02f53f5cd6eeffdb6ca08807ba669a0c4e308503c408fba6a"
+    }
+  ]
+}

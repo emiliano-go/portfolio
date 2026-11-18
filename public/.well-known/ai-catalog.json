@@ -1,0 +1,56 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Emiliano G.O. — Systems & Infrastructure Engineer",
+    "identifier": "https://emiliano-go.com/",
+    "url": "https://emiliano-go.com/"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:emiliano-go.com:server:portfolio-mcp",
+      "displayName": "Portfolio MCP server",
+      "description": "Read-only Model Context Protocol endpoint exposing the project catalog and professional profile.",
+      "type": "application/mcp-server-card+json",
+      "url": "https://emiliano-go.com/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "what has Emiliano built with Rust",
+        "list Emiliano G.O. portfolio projects and their repositories",
+        "tell me about the TrustSight project"
+      ]
+    },
+    {
+      "identifier": "urn:air:emiliano-go.com:api:activity",
+      "displayName": "Public activity API",
+      "description": "Unauthenticated JSON endpoint returning the latest public GitHub activity, per-repository commits and latest releases for the emiliano-go account.",
+      "type": "application/vnd.oai.openapi+json;version=3.1",
+      "url": "https://emiliano-go.com/openapi.json",
+      "representativeQueries": [
+        "what did emiliano-go commit to recently",
+        "latest release of the trustsight repository",
+        "recent commits for emiliano-go/dbwarden"
+      ]
+    },
+    {
+      "identifier": "urn:air:emiliano-go.com:linkset:api-catalog",
+      "displayName": "API catalog",
+      "description": "RFC 9727 linkset pointing at the OpenAPI description, documentation and health endpoint of the public APIs.",
+      "type": "application/linkset+json",
+      "url": "https://emiliano-go.com/.well-known/api-catalog",
+      "representativeQueries": [
+        "which public APIs does emiliano-go.com expose",
+        "find the OpenAPI description for emiliano-go.com"
+      ]
+    },
+    {
+      "identifier": "urn:air:emiliano-go.com:skills:index",
+      "displayName": "Agent skills index",
+      "description": "Agent Skills Discovery index describing how to read the site and how to resolve its project catalog.",
+      "type": "application/json",
+      "url": "https://emiliano-go.com/.well-known/agent-skills/index.json",
+      "representativeQueries": [
+        "how should an agent read the emiliano-go.com portfolio",
+        "where is the project catalog for emiliano-go.com"
+      ]
+    }
+  ]
+}

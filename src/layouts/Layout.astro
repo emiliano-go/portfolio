@@ -23,6 +23,13 @@ const t = createT(lang);
 
 const pageTitle = title ?? t('meta.default.title');
 const pageDesc = description ?? t('meta.default.desc');
+
+// scripts/generate_markdown.py writes an index.md twin next to every built
+// index.html; the alternate link advertises it so agents can skip negotiation.
+const currentPath = Astro.url.pathname;
+const markdownHref = currentPath.endsWith('.html')
+  ? undefined
+  : `${currentPath.endsWith('/') ? currentPath : `${currentPath}/`}index.md`;
 ---
 
 <!doctype html>
@@ -35,6 +42,10 @@ const pageDesc = description ?? t('meta.default.desc');
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href={barlowBoldUrl} as="font" type="font/woff2" crossorigin />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
+    {markdownHref && <link rel="alternate" type="text/markdown" href={markdownHref} title="Markdown" />}
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
+    <link rel="api-catalog" href="/.well-known/api-catalog" />
+    <link rel="service-doc" type="text/markdown" href="/api.md" />
     <ClientRouter />
     <Seo route={route ?? Astro.url.pathname} fallbackTitle={pageTitle} fallbackDescription={pageDesc} lang={lang} />
 
@@ -167,6 +178,129 @@ const pageDesc = description ?? t('meta.default.desc');
           copyText(email, function (ok) {
             showToast(email, ok);
           });
+        });
+      })();
+    </script>
+
+    <!-- WebMCP: expose the site's read-only actions to browser agents. The API is
+         feature-detected (document.modelContext, older builds navigator.modelContext);
+         nothing runs when it is absent. Data comes from /mcp/catalog.json and
+         /llms.txt, the same sources the MCP endpoint uses. -->
+    <script is:inline>
+      (function () {
+        var mc = (typeof document !== 'undefined' && document.modelContext)
+          || (typeof navigator !== 'undefined' && navigator.modelContext);
+        if (!mc || typeof mc.registerTool !== 'function') return;
+        if (window.__webmcpRegistered) return;
+        window.__webmcpRegistered = true;
+
+        var controller = typeof AbortController === 'function' ? new AbortController() : null;
+        var lang = document.documentElement.lang || 'en';
+        var SECTIONS = ['work', 'about', 'engineering', 'studies', 'opensource', 'references'];
+
+        function register(tool) {
+          function fallback() {
+            try {
+              Promise.resolve(mc.registerTool(tool)).catch(function () {});
+            } catch (error) {}
+          }
+          try {
+            var result = controller ? mc.registerTool(tool, { signal: controller.signal }) : mc.registerTool(tool);
+            if (result && typeof result.catch === 'function') result.catch(fallback);
+          } catch (error) {
+            fallback();
+          }
+        }
+
+        function catalog() {
+          return fetch('/mcp/catalog.json', { headers: { Accept: 'application/json' } })
+            .then(function (response) {
+              if (!response.ok) throw new Error('catalog unavailable');
+              return response.json();
+            });
+        }
+
+        register({
+          name: 'go_to_section',
+          description: 'Scroll the landing page to one section: work, about, engineering, studies, opensource or references.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              section: { type: 'string', enum: SECTIONS, description: 'Section id to scroll to.' }
+            },
+            required: ['section'],
+            additionalProperties: false
+          },
+          execute: function (args) {
+            var section = args && args.section;
+            if (SECTIONS.indexOf(section) === -1) return { ok: false, error: 'Unknown section: ' + section };
+            var target = document.getElementById(section);
+            if (!target) {
+              location.href = '/' + lang + '/#' + section;
+              return { ok: true, navigated: true, url: location.href };
+            }
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', '#' + section);
+            return { ok: true, section: section };
+          }
+        });
+
+        register({
+          name: 'list_projects',
+          description: 'List every featured case study and secondary package with its id, name and canonical URL.',
+          inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+          execute: function () {
+            return catalog().then(function (data) {
+              return {
+                ok: true,
+                count: data.projects.length,
+                projects: data.projects.map(function (project) {
+                  return { id: project.id, name: project.name, url: project.url || null, tier: project.tier };
+                })
+              };
+            });
+          }
+        });
+
+        register({
+          name: 'open_project',
+          description: 'Navigate to the case study of one project, by id or name (for example "trustsight").',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              id: { type: 'string', description: 'Project id, e.g. "trustsight".' }
+            },
+            required: ['id'],
+            additionalProperties: false
+          },
+          execute: function (args) {
+            var wanted = String((args && args.id) || '').trim().toLowerCase();
+            if (!wanted) return { ok: false, error: 'Missing required argument "id".' };
+            return catalog().then(function (data) {
+              var project = data.projects.filter(function (item) {
+                return item.id.toLowerCase() === wanted || item.name.toLowerCase() === wanted;
+              })[0];
+              if (!project) return { ok: false, error: 'No project with id ' + wanted };
+              if (!project.url) return { ok: false, error: project.name + ' has no case study page', links: project.links };
+              location.href = project.url;
+              return { ok: true, navigated: true, url: project.url };
+            });
+          }
+        });
+
+        register({
+          name: 'read_summary',
+          description: 'Return the site summary an agent should read first (llms.txt), with the canonical URLs of the main sections.',
+          inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+          execute: function () {
+            return fetch('/llms.txt', { headers: { Accept: 'text/plain' } })
+              .then(function (response) {
+                return response.ok ? response.text() : '';
+              })
+              .then(function (text) {
+                return { ok: Boolean(text), url: location.origin + '/llms.txt', text: text };
+              });
+          }
         });
       })();
     </script>
