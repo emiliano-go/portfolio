@@ -46,12 +46,34 @@ def localized_projects(lang: str) -> dict:
     return json.loads(read(f"src/data/projects.{lang}.json"))
 
 
+def english_projects() -> dict[str, dict]:
+    """Section kinds and summary per project, read straight from the TS source.
+
+    Translation lag used to be invisible: a rewritten English case study kept its
+    old Spanish body and nothing failed. Comparing shapes makes the two files
+    diverge at build time instead of silently shipping a half-translated site.
+    """
+    src = read("src/data/projects.ts")
+    out: dict[str, dict] = {}
+    for block in re.split(r"\n  \{\n", src):
+        match = re.search(r"^    id: '([^']+)'", block, re.M)
+        if not match:
+            continue
+        summary = re.search(r"summary:\s*\n?\s*'([^']*)'", block)
+        out[match.group(1)] = {
+            "kinds": re.findall(r"kind: '(\w+)'", block),
+            "summary": summary.group(1) if summary else "",
+        }
+    return out
+
+
 def main() -> int:
     errors: list[str] = []
 
     ids = project_ids()
     pages = work_page_ids()
     seo_slugs = seo_work_slugs()
+    en_projects = english_projects()
 
     if ids != pages:
         errors.append(f"project ids vs work pages: only in data={sorted(ids - pages)}, only in pages={sorted(pages - ids)}")
@@ -80,6 +102,15 @@ def main() -> int:
         fr_sections = [s["kind"] for s in fr_projects[pid]["sections"]]
         if es_sections != fr_sections:
             errors.append(f"{pid}: es/fr section structure differs")
+        en_kinds = en_projects.get(pid, {}).get("kinds", [])
+        if es_sections != en_kinds:
+            errors.append(f"{pid}: es section structure differs from English ({len(es_sections)} vs {len(en_kinds)})")
+        if fr_sections != en_kinds:
+            errors.append(f"{pid}: fr section structure differs from English ({len(fr_sections)} vs {len(en_kinds)})")
+        if es_projects[pid]["summary"].strip() == en_projects.get(pid, {}).get("summary", "").strip():
+            errors.append(f"{pid}: es summary is untranslated")
+        if fr_projects[pid]["summary"].strip() == en_projects.get(pid, {}).get("summary", "").strip():
+            errors.append(f"{pid}: fr summary is untranslated")
         if len(es_projects[pid].get("facts", [])) != len(fr_projects[pid].get("facts", [])):
             errors.append(f"{pid}: es/fr facts differ")
         if not es_projects[pid]["summary"].strip() or not fr_projects[pid]["summary"].strip():

@@ -704,7 +704,7 @@
       },
       {
         "kind": "list",
-        "title": "lo que no puede ver",
+        "title": "Lo que no puede ver",
         "items": [
           "Tarballs maliciosos de lanzamiento ascendente (audita el PKGBUILD, no los archivos binarios)",
           "Ataques deliberadamente anodinos (sin señal diferencial = invisible)",
@@ -978,12 +978,38 @@
         ]
       },
       {
+        "kind": "prose",
+        "title": "La retención es una máquina de estados, no un número",
+        "body": [
+          "Casi todos los clientes de chat expresan el historial con un solo número y dejan que el cero signifique «no guardes nada», lo que choca en silencio con «guárdalo todo». postal los separa: `limited`, `unlimited` y un `inherit` por chat que lee la política global hasta que se le diga lo contrario. La configuración global no puede heredar, y un límite de cero es una instrucción real de no retener mensajes, no un hueco en el modelo. Los ajustes numéricos y las excepciones por chat existentes migran sin cambiar la política de disco que expresaban.",
+          "Borrar tiene que significar una sola cosa. La retención en disco caduca los mensajes de forma estricta, incluido el último de un chat tranquilo, mientras la identidad del chat, la última actividad, los nombres y los fijados sobreviven como metadatos para que un chat vacío no conserve una vista previa que ya no tiene. «Borrar en este equipo» es una marca local que atenúa el mensaje y nunca elimina una fila; solo la retención en disco o vaciar el historial eliminan filas. Eliminar el chat y vaciar el historial son operaciones distintas con consecuencias distintas, y la interfaz dice cuál elegiste."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Dos límites que hubo que encontrar midiendo",
+        "body": [
+          "El primero es el raíl de mensajes. Antes de virtualizarlo con virtua, una conversación cargada de medios empujaba la memoria de GPU por encima de 3 GB porque cada foto de la ventana abierta se decodificaba a la vez. Ahora el raíl monta solo las filas de la ventana y de su alrededor, y las imágenes decodificadas salen del renderer a medida que las filas se desplazan, que es por lo que ese mismo chat se queda cerca de 0,2 GB en lugar de seguir la longitud de la conversación.",
+          "El segundo era más silencioso. Los secretos de descifrado para ediciones y reacciones se guardaban un horizonte fijo de 30 días, lo que suena modesto hasta que un perfil llegó a 97 MB en 399.620 filas. El horizonte ahora sigue la ventana de retención de mensajes, y los perfiles existentes se recuperan al arrancar: 97 MB pasaron a 5,8 MB. Ninguno de los dos límites fue una decisión escrita; ambos salieron de mirar un proceso en marcha."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Lo que estas cifras no afirman",
+        "items": [
+          "Un archivo SQLite sin límite puede crecer en disco; las mediciones no establecen su tamaño máximo ni su latencia de consulta.",
+          "La comparación es contra un enfoque de webview en la misma cuenta y máquina, no contra todos los clientes nativos: el coste es una propiedad de ejecutar WhatsApp Web, no de los proyectos que lo hacen.",
+          "Las bases de datos locales están en texto plano por defecto. Existe cifrado SQLCipher con la clave de la cuenta en el almacén de credenciales del sistema, pero los medios y las copias exportadas siguen en texto plano.",
+          "Las vistas previas de enlaces las pide la app a direcciones HTTP(S) públicas tras resolver el DNS, incluidas las redirecciones, y se omiten cuando hay un proxy HTTP configurado, porque su destino no se puede verificar localmente."
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compensaciones",
         "items": [
-          "Las bases de datos, los medios y las copias de seguridad son texto sin formato en el disco; el cifrado es un trabajo abierto",
-          "Los lanzamientos están en espera hasta que cubran todas las plataformas compatibles; Los instaladores construyen desde el maestro.",
-          "Aún no hay llamadas, íconos de bandeja, actualizaciones de estado, comunidades ni soporte para álbumes"
+          "Las bases de datos, los medios y las copias de seguridad están en texto plano en disco; el cifrado es trabajo pendiente.",
+          "Las releases están en pausa hasta cubrir todas las plataformas soportadas; los instaladores se compilan desde master.",
+          "Todavía no hay llamadas, icono en la bandeja, estados, comunidades ni soporte de álbumes."
         ]
       }
     ]
@@ -1075,12 +1101,95 @@
         ]
       },
       {
+        "kind": "steps",
+        "title": "Del audio a los píxeles",
+        "steps": [
+          {
+            "title": "Captura",
+            "body": "El audio del sistema se lee por aplicación desde flujos de PipeWire o PulseAudio, con una lista de ignorados para que una llamada de voz nunca entre en el visual, y NBS_IGNORE para ampliarla. Las muestras se ventanean en una FFT de 2048 puntos a 44,1 kHz y se pliegan en 24 bandas logarítmicas de 40 Hz a 12 kHz."
+          },
+          {
+            "title": "Juzga cada banda",
+            "body": "Cada banda se compara con su propio suelo espectral de adaptación lenta: un violín 30 dB por debajo del bajo igual enciende su banda, mientras que un zumbido constante desaparece en el suelo. Una curva de igual sonoridad f^0.85 al estilo cava evita que los agudos queden estructuralmente desnutridos, una ganancia automática lenta hace el resultado independiente del volumen, y una puerta de picos separa el contenido tonal del ruido en cada banda."
+          },
+          {
+            "title": "Inyecta y simula",
+            "body": "Cada banda inyecta corriente en su propio subconjunto de neuronas y la red corre a un tick fijo de 100 Hz. La dinámica recurrente hace que la actividad se propague, reverbere y decaiga por la topología real del cerebro de la mosca en lugar de seguir la envolvente de la FFT."
+          },
+          {
+            "title": "Dibuja",
+            "body": "Las actividades agrupadas —por banda, por grupo de columnas, equilibrio excitador/inhibidor, tasa global— mueven la figura, que se dibuja en un búfer de fósforo en coma flotante a resolución de subcelda 2×4 y se pliega en braille. El decaimiento de persistencia produce las estelas."
+          }
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Mapa estricto de banda a efecto",
+        "columns": [
+          "Bandas",
+          "Contenido",
+          "Efecto"
+        ],
+        "rows": [
+          [
+            "0–3",
+            "Sub y bajo",
+            "Diámetro del anillo, escalado por el volumen bruto"
+          ],
+          [
+            "4–7",
+            "Cuerpo de medios bajos",
+            "Bultos en el borde con un término de vibración de 7 Hz"
+          ],
+          [
+            "8–9",
+            "Cuerpo de caja",
+            "Brasas lentas y pesadas, rojas"
+          ],
+          [
+            "10–12",
+            "Voz y guitarra",
+            "Desgarros del borde que se abren y se curan"
+          ],
+          [
+            "13–15",
+            "Violín o flauta, grave",
+            "Nudos y hebras que salen del borde, magenta"
+          ],
+          [
+            "16–18",
+            "Armónicos de violín",
+            "Orbitadores interiores que enhebran el anillo, cian"
+          ],
+          [
+            "19–21",
+            "Metales y aire",
+            "Orbitadores lunares exteriores, azul"
+          ],
+          [
+            "22–23",
+            "Platillos y aire",
+            "Estelas finas y rápidas, cian"
+          ]
+        ],
+        "note": "Las combinaciones de bandas desbloquean anomalías extra: batería más cuerpo de bajo disparan pulsos de onda de choque, voz más cuerdas dibujan una cuerda tensada sobre el disco, armónicos de violín más metales levantan fulguraciones coronales, platillos más bajo distorsionan el interior, y cuerdas más platillos espolvorean chispas blancas. La rotación va anclada al pulso —cada golpe de bajo avanza un cuarto de vuelta y el disco lo persigue—, así que un pasaje monótono se queda perfectamente quieto."
+      },
+      {
+        "kind": "prose",
+        "title": "De dónde viene el grafo",
+        "body": [
+          "El conectoma es FlyWire release v783: 138.333 neuronas revisadas y 2.052.622 sinapsis, del cerebro de la mosca hembra adulta, publicado con DOI y con el artículo de cableado de Dorkenwald et al. en Nature (2024). El paso de compilación preprocesa el archivo feather publicado a un binario compacto, ponderando las aristas por número de sinapsis y tomando el signo de las probabilidades de neurotransmisor de la neurona presináptica: GABA inhibitorio, el resto excitatorio.",
+          "Los pulsos son golpes de bajo, detectados como un salto positivo en las bandas 0–3 que supera 1,8× la media móvil del propio bajo. El umbral se adapta a la canción, así que las pistas densas de BPM alto no lo saturan y los bombos suaves siguen contando. Sin golpes, no hay movimiento.",
+          "El color sale exclusivamente de la paleta ANSI de la terminal (30–37, negrita para el brillo), así que el disco adopta el tema que ya tengas abierto en vez de imponer uno. El eje de inclinación precesa, lo que hace que el tumbo sea multidireccional y no una rotación fija."
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compensaciones",
         "items": [
-          "Solo Linux (PipeWire/PulseAudio) y un terminal compatible con braille Unicode",
-          "El conectoma de 18 MB está excluido de la caja publicada, que recurre a una red sintética.",
-          "La regeneración de la red necesita el archivo de plumas Zenodo y las herramientas de preprocesamiento Python"
+          "Solo Linux (PipeWire/PulseAudio) y una terminal con soporte de braille Unicode.",
+          "El conectoma de 18 MB queda fuera del crate publicado, que recurre a una red sintética.",
+          "Regenerar la red requiere el archivo feather de Zenodo y las herramientas de preprocesado en Python."
         ]
       }
     ]
@@ -1180,12 +1289,79 @@
         ]
       },
       {
+        "kind": "prose",
+        "title": "Los mismos bytes desde tres runtimes",
+        "body": [
+          "Toda la lógica vive en easeo-core, un crate de Rust sin dependencias de E/S. El paquete de Python lo envuelve con maturin y reexporta símbolos idiomáticos en snake_case; el de JavaScript envuelve el mismo crate con napi-rs como `@easeo/core`. Nada se reimplementa en un binding, porque una segunda implementación es un segundo conjunto de casos límite.",
+          "La afirmación se prueba en lugar de enunciarse: `tests/conformance/test_conformance.py` construye las mismas cargas desde las APIs de Rust, Python y JavaScript y compara la salida renderizada byte a byte. Si un binding convierte un argumento de otra forma, la conformidad falla antes que una release. Este sitio usa easeo para su propio manifiesto y su sitemap, que es como la promesa de determinismo se ejerce de verdad."
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Qué lleva una carga",
+        "columns": [
+          "Salida",
+          "Detalle"
+        ],
+        "rows": [
+          [
+            "URL canónica",
+            "HTTPS obligatorio, rutas en minúsculas, política de barra final, colapso de barras duplicadas y eliminación de parámetros de seguimiento aplicados como política de URL, no como concatenación de cadenas."
+          ],
+          [
+            "Título y descripción",
+            "Se resuelven por cadenas de respaldo desde los campos de la entidad, con validación de longitud antes de aceptar la carga."
+          ],
+          [
+            "Directivas de robots",
+            "index/noindex, follow/nofollow, max-snippet, max-image-preview, max-video-preview."
+          ],
+          [
+            "Open Graph",
+            "og:type, título, descripción, imagen, locale, más audio y vídeo cuando la entidad los tiene."
+          ],
+          [
+            "Twitter Cards",
+            "summary_large_image por defecto, con alt de la imagen, sitio y creador."
+          ],
+          [
+            "JSON-LD",
+            "WebSite, WebPage, Article, Product, Organization, LocalBusiness, BreadcrumbList, más generadores propios mediante un registro de esquemas."
+          ],
+          [
+            "Contrato SEO",
+            "Una declaración de intención legible por máquina que se puede versionar y validar en CI."
+          ],
+          [
+            "Hash y ETag",
+            "SHA-256 de la carga, para que el caché y la detección de cambios no dependan de comparar HTML renderizado."
+          ]
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "El determinismo es el producto",
+        "body": [
+          "Como la carga es una función pura de sus entradas, la pregunta útil deja de ser «¿cambió el metadato?» y pasa a ser «¿queríamos que cambiara?». Las pruebas de instantánea comparan contra cargas esperadas, el hash da ETags estables, los resultados se memorizan sin riesgo y una compilación puede comparar metadatos en lugar de adivinar qué hizo un despliegue.",
+          "Los contratos llevan eso más lejos. `build_seo_contract` emite la intención SEO de una ruta —canónica, robots, etiquetas obligatorias— como datos, así que un pull request que elimine una canónica o amplíe una directiva de indexación falla en CI en vez de llegar a producción y descubrirse en Search Console semanas después."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Adaptadores, no frameworks",
+        "items": [
+          "JavaScript: `@easeo/next` devuelve un objeto Metadata de Next.js, `@easeo/astro` corre en tiempo de compilación y emite contratos, `@easeo/vite` engancha `transformIndexHtml`, `@easeo/nuxt` expone `useEaseoSeo()`, `@easeo/sveltekit` ofrece `buildEaseoPayload()` y `<EaseoHead />`, y `@easeo/react` publica solo el componente.",
+          "Python: `easeo.adapters.fastapi`, `.django`, `.flask`, más una extensión de Zensical para generar metadatos de documentación.",
+          "Publicado como `easeo` en PyPI, `@easeo/core` en npm y `easeo-core` en crates.io, con el sitio de documentación exponiendo `llms.txt` y `llms-full.txt` para que los agentes lean la misma referencia que las personas."
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compensaciones",
         "items": [
-          "No es un marco: los adaptadores organizan las entradas, no poseen el ciclo de vida de la aplicación",
-          "No es una herramienta de puntuación, análisis de palabras clave, rastreo o reescritura de contenido.",
-          "Muestra un fragmento de encabezado, no un documento completo; estado de liberación alfa"
+          "No es un framework: los adaptadores convierten entradas, no gobiernan el ciclo de vida de la aplicación.",
+          "No es una herramienta de puntuación, análisis de palabras clave, rastreo ni reescritura de contenido.",
+          "Renderiza un fragmento de head, no un documento completo; estado alfa."
         ]
       }
     ]
@@ -1303,6 +1479,80 @@
             "body": "Si la creación del usuario se realiza parcialmente (por ejemplo, las concesiones fallan), el complemento elimina el usuario creado parcialmente para evitar cuentas huérfanas."
           }
         ]
+      },
+      {
+        "kind": "steps",
+        "title": "Ciclo de vida de una credencial",
+        "steps": [
+          {
+            "title": "Se configura una vez",
+            "body": "Vault guarda la URL de conexión a ClickHouse y una cuenta de servicio. Init y VerifyConnection abren la conexión y comprueban que esa cuenta puede crear, eliminar y modificar usuarios antes de permitir que cualquier rol emita credenciales."
+          },
+          {
+            "title": "Se crea bajo demanda",
+            "body": "Un rol dinámico lleva sus creation_statements. El plugin sustituye un usuario y una contraseña generados, ejecuta el DDL y devuelve la lease una sola vez. A partir de ahí el TTL y la renovación son de Vault."
+          },
+          {
+            "title": "Falla sin dejar residuos",
+            "body": "Si las concesiones fallan después de crear el usuario, la cuenta parcial se elimina antes de devolver el error. Un usuario de ClickHouse huérfano con una contraseña que nadie tiene es una fuga esperando a que alguien la encuentre en un log."
+          },
+          {
+            "title": "Se revoca, o se rota en el sitio",
+            "body": "Al expirar la lease el usuario se elimina. Un rol estático es la misma maquinaria al revés: rota la contraseña de un usuario de larga vida según un calendario, para que los servicios que no pueden releer una lease dejen de cargar un secreto compartido."
+          }
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Dónde está la complejidad",
+        "columns": [
+          "Aspecto",
+          "Cómo lo resuelve clickvault"
+        ],
+        "rows": [
+          [
+            "Posición de ON CLUSTER",
+            "Se inserta donde la gramática de ClickHouse lo exige, no al final: un modificador al final es un error de sintaxis en algunas sentencias."
+          ],
+          [
+            "Sustitución literal",
+            "El DDL de ClickHouse no se puede parametrizar, así que cada valor generado se rechaza si contiene comillas, backticks, barras invertidas o caracteres de control. La operación falla en lugar de ejecutar SQL inseguro."
+          ],
+          [
+            "Concurrencia",
+            "Un único sync.RWMutex se mantiene durante toda la operación, lo que cierra la ventana TOCTOU entre comprobar un usuario y crearlo."
+          ],
+          [
+            "Colisiones de usuario",
+            "Se comprueba si el usuario existe antes de crearlo; un nombre truncado falla con un error explícito en vez de mapear dos roles sobre la misma cuenta."
+          ],
+          [
+            "Transporte",
+            "TLS, timeout de conexión y timeout de lectura se configuran por conexión en lugar de deducirse de la URL."
+          ]
+        ],
+        "note": "El plugin implementa la interfaz dbplugin.Database que Vault llama. El motor de secretos de base de datos no trae driver de ClickHouse, así que cada sentencia por debajo de esa interfaz se escribe aquí."
+      },
+      {
+        "kind": "list",
+        "title": "Cómo se verifica",
+        "items": [
+          "1.017 líneas de código frente a 979 de pruebas en internal/clickvault (clickvault.go, ddl.go).",
+          "Las pruebas unitarias simulan la base de datos con go-sqlmock y no necesitan servicios externos, así que la suite corre en cada push.",
+          "Las pruebas de integración levantan un contenedor real de ClickHouse y recorren el ciclo completo: crear, leer una lease, expirar, revocar.",
+          "85,4% de cobertura del paquete; Codecov exige un objetivo de 70% con 5% de tolerancia en los pull requests.",
+          "Seis documentos acompañan al código: inicio rápido, configuración, roles, arquitectura, desarrollo y glosario."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compensaciones",
+        "items": [
+          "Un solo mutex serializa todas las operaciones: correcto ante las llamadas concurrentes de Vault, pero limita el rendimiento a una sentencia a la vez.",
+          "El DDL de ClickHouse no se puede parametrizar, así que los valores generados se rechazan en lugar de enlazarse; un usuario raro falla en vez de escaparse.",
+          "El modo clúster depende del soporte de ON CLUSTER y de que la cuenta de servicio tenga permisos en todos los nodos.",
+          "La cobertura describe el motor: main.go queda excluido porque solo llama a dbplugin.ServeMultiplex."
+        ]
       }
     ]
   },
@@ -1416,13 +1666,47 @@
         ]
       },
       {
+        "kind": "prose",
+        "title": "El pie solo lleva lo que el mensaje no puede decir",
+        "body": [
+          "La carga firmada se reconstruye desde cero en el lado que verifica, nunca se parsea del mensaje: versión, tipo de evento, id del autor, id del canal, el id del mensaje de Discord en las ediciones, la marca de tiempo firmada y, al final, el contenido, para que nunca pueda desplazar un campo. Casi todo lo que necesita un verificador ya está en pantalla; el pie solo lleva los dos valores que no están.",
+          "Ese pie es `‖dsig:1:{marca en base36}:{firma en base64}`. El estilo de subtexto lo prefija con el marcador `-# ` de Discord, y el prefijo es opcional al leer, así que ambos estilos parsean igual. El estilo invisible escribe los mismos dos campos en un flujo enmarcado —byte mágico, versión, longitud del blob, seis bytes de marca de tiempo, firma y CRC-8— como dos bits por símbolo sobre cuatro caracteres de ancho cero, añadidos tras un único espacio separador para que una URL final sobreviva.",
+          "El byte de longitud y el checksum están para que el daño sea legible en lugar de misterioso: un flujo al que le cortaron la cola informa «la firma se cortó: llegaron N de M bytes», los bytes alterados fallan el checksum, y cualquier cosa por debajo de 255 bytes cabe. Un mensaje lleva exactamente un pie y gana el último."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Disciplina de verificación",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Status-fd, no códigos de salida",
+            "body": "Los veredictos se leen de gpg --status-fd. EXPKEYSIG y REVKEYSIG no son firmas válidas aquí aunque las matemáticas cuadren: una clave expirada o revocada es una atestación fallida."
+          },
+          {
+            "title": "Sin shell y sin escribir en el llavero",
+            "body": "gpg se lanza con arrays de argumentos, nunca con una cadena de shell. Las cargas van por stdin; las firmas y las claves de pares, por archivos 0600 en un directorio mkdtemp nuevo que se borra en un finally."
+          },
+          {
+            "title": "Una clave de par no hereda tu confianza",
+            "body": "La clave de un par se importa en un GNUPGHOME desechable, así que un veredicto nunca puede quedar satisfecho por una clave no relacionada que ya estuviera en tu llavero real, e inspeccionarla no lo modifica."
+          },
+          {
+            "title": "Dos formas de firma",
+            "body": "Una forma compacta de 72 bytes reconstruye el resto desde la copia que el verificador tiene de la huella del firmante, y solo se usa cuando la firma sobrevive byte a byte a comprimir y descomprimir. Si no, viaja el paquete OpenPGP completo, para que una versión rara de gpg no pueda emitir pies que nadie verifique."
+          }
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compensaciones",
         "items": [
-          "Solo para escritorio (la web no puede acceder a gpg-agent)",
-          "Requiere configuración del par de claves GPG",
-          "Algunos clientes pueden eliminar la codificación invisible",
-          "El compromiso clave está fuera del alcance (limitación estándar GPG)"
+          "Solo escritorio: un navegador no alcanza gpg-agent y el modelo de seguridad necesita acceso local a la clave.",
+          "Requiere un par de claves GPG, y el firmante tiene que fijar él mismo las claves de sus pares.",
+          "Los pies compactos e invisibles no se pueden comprobar a mano: la huella del firmante se omite a propósito del cable, así que solo el pie blindado se verifica con gpg a secas.",
+          "El estilo invisible sobrevive hoy al cliente de Discord pero no está garantizado: un cliente que elimine caracteres de ancho cero degrada el mensaje a no firmado, algo que al menos se ve.",
+          "Firmar es atestiguar, no cifrar: una insignia verde dice quién lo escribió, no quién puede leerlo.",
+          "El compromiso de la clave queda fuera de alcance, y los mods de cliente violan los términos de servicio de Discord."
         ]
       }
     ]

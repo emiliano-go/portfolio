@@ -108,7 +108,12 @@ const markdownHref = currentPath.endsWith('.html')
       })();
     </script>
   </head>
-  <body class="bg-(--color-bg) font-[family-name:var(--font-body)] text-(--color-text-base) antialiased">
+  <body
+    class="bg-(--color-bg) font-[family-name:var(--font-body)] text-(--color-text-base) antialiased"
+    data-copied-label={t('ui.copied')}
+    data-copy-failed-label={t('ui.copyFailed')}
+    data-close-label={t('ui.close')}
+  >
     <a class="skip-link" href="#main">{t('a11y.skip')}</a>
     <div id="i18n-wrapper" class="i18n-show">
       <slot />
@@ -158,7 +163,7 @@ const markdownHref = currentPath.endsWith('.html')
             toast.setAttribute('role', 'status');
             toast.setAttribute('aria-live', 'polite');
             toast.innerHTML = '<p class="min-w-0 flex-1 break-all"><span data-toast-label></span> <span class="font-mono text-(--color-text-bright)" data-toast-email></span></p>'
-              + '<button type="button" data-toast-close aria-label="Close" class="shrink-0 cursor-pointer text-(--color-text-dim) transition-colors duration-150 hover:text-(--color-text-bright)">'
+              + '<button type="button" data-toast-close class="shrink-0 cursor-pointer text-(--color-text-dim) transition-colors duration-150 hover:text-(--color-text-bright)">'
               + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>'
               + '</button>';
             document.body.appendChild(toast);
@@ -167,7 +172,12 @@ const markdownHref = currentPath.endsWith('.html')
             });
           }
 
-          toast.querySelector('[data-toast-label]').textContent = ok ? 'Copied email:' : 'Copy failed:';
+          var copiedLabel = document.body.getAttribute('data-copied-label') || '';
+          var failedLabel = document.body.getAttribute('data-copy-failed-label') || '';
+          var closeLabel = document.body.getAttribute('data-close-label') || '';
+          toast.querySelector('[data-toast-label]').textContent = ok ? copiedLabel : failedLabel;
+          var closeButton = toast.querySelector('[data-toast-close]');
+          if (closeButton && closeLabel) closeButton.setAttribute('aria-label', closeLabel);
           toast.querySelector('[data-toast-email]').textContent = email;
           var close = toast.querySelector('[data-toast-close]');
           if (close) close.focus({ preventScroll: true });

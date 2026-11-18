@@ -183,5 +183,9 @@
   "about.page.contact.heading": "Contact",
   "about.page.contact.body": "L'e-mail est le moyen le plus rapide de me joindre. Je réponds en espagnol ou en anglais.",
   "about.page.contact.email": "Copier l'e-mail",
-  "about.page.work": "Travail sélectionné"
+  "about.page.work": "Travail sélectionné",
+  "ui.copied": "E-mail copié :",
+  "ui.copyFailed": "Copie impossible :",
+  "ui.close": "Fermer",
+  "nav.chooseLanguage": "Choisir une langue"
 }

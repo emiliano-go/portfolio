@@ -25,7 +25,7 @@ const t = createT('en');
       {t('meta.default.desc')}
     </p>
 
-    <nav aria-label="Choose a language">
+    <nav aria-label={t('nav.chooseLanguage')}>
       <ul class="flex flex-wrap items-center justify-center gap-3 list-none">
         {langs.map((l) => (
           <li>

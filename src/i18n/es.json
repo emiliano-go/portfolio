@@ -183,5 +183,9 @@
   "about.page.contact.heading": "Contacto",
   "about.page.contact.body": "El email es la vía más rápida para escribirme. Respondo en español o inglés.",
   "about.page.contact.email": "Copiar email",
-  "about.page.work": "Trabajo seleccionado"
+  "about.page.work": "Trabajo seleccionado",
+  "ui.copied": "Correo copiado:",
+  "ui.copyFailed": "No se pudo copiar:",
+  "ui.close": "Cerrar",
+  "nav.chooseLanguage": "Elige un idioma"
 }

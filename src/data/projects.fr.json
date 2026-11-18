@@ -978,12 +978,38 @@
         ]
       },
       {
+        "kind": "prose",
+        "title": "La rétention est une machine à états, pas un nombre",
+        "body": [
+          "La plupart des clients de messagerie expriment l'historique par un seul nombre et laissent zéro signifier « ne garde rien », ce qui entre silencieusement en collision avec « garde tout ». postal les sépare : `limited`, `unlimited` et un `inherit` par conversation qui lit la politique globale jusqu'à ce qu'on lui dise le contraire. Les réglages globaux ne peuvent pas hériter, et une limite à zéro est une vraie consigne de ne rien conserver, pas un trou dans le modèle. Les réglages numériques et les exceptions par conversation existants migrent sans changer la politique de disque qu'ils exprimaient.",
+          "Supprimer doit signifier une seule chose. La rétention sur disque expire les messages strictement, y compris le dernier d'une conversation calme, tandis que l'identité de la conversation, la dernière activité, les noms et les épingles survivent comme métadonnées, pour qu'une conversation vide ne garde pas un aperçu qu'elle n'a plus. « Supprimer sur cet ordinateur » est un marqueur local qui grise le message et ne retire jamais de ligne ; seule la rétention sur disque ou l'effacement de l'historique retirent des lignes. Supprimer une conversation et effacer son historique sont deux opérations aux conséquences différentes, et l'interface dit laquelle vous avez choisie."
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Deux limites qu'il a fallu trouver en mesurant",
+        "body": [
+          "La première est le rail de messages. Avant sa virtualisation avec virtua, une conversation riche en médias poussait la mémoire GPU au-delà de 3 Go, parce que chaque photo de la fenêtre ouverte était décodée d'un coup. Le rail ne monte désormais que les lignes de la fenêtre et de ses abords, et les images décodées quittent le moteur de rendu à mesure que les lignes défilent : c'est pourquoi la même conversation reste autour de 0,2 Go au lieu de suivre la longueur de l'historique.",
+          "La seconde était plus discrète. Les secrets de déchiffrement des éditions et des réactions étaient conservés sur un horizon fixe de 30 jours, ce qui paraît modeste jusqu'à ce qu'un profil atteigne 97 Mo sur 399 620 lignes. L'horizon suit maintenant la fenêtre de rétention des messages, et les profils existants sont récupérés au démarrage : 97 Mo sont devenus 5,8 Mo. Aucune des deux limites n'était une décision écrite ; toutes deux viennent d'avoir regardé un processus en marche."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Ce que ces chiffres n'affirment pas",
+        "items": [
+          "Une archive SQLite sans limite peut croître sur le disque ; les mesures n'établissent ni sa taille maximale ni sa latence de requête.",
+          "La comparaison porte sur une approche webview, même compte et même machine, pas sur tous les clients natifs : le coût tient à l'usage de WhatsApp Web, pas aux projets qui le font.",
+          "Les bases locales sont en clair par défaut. Le chiffrement SQLCipher, avec la clé de compte dans le magasin d'identifiants du système, existe dans les réglages, mais les médias et les sauvegardes exportées restent en clair.",
+          "Les aperçus de liens sont demandés par l'application à des adresses HTTP(S) publiques après résolution DNS, redirections comprises, et sont ignorés lorsqu'un proxy HTTP est configuré, car sa cible ne peut pas être vérifiée localement."
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compromis",
         "items": [
-          "Les bases de données, les supports et les sauvegardes sont en texte brut sur le disque ; le cryptage est un travail ouvert",
-          "Les versions sont suspendues jusqu'à ce qu'elles couvrent toutes les plates-formes prises en charge ; les installateurs construisent à partir du maître",
-          "Pas encore d'appels, d'icône de barre d'état, de mises à jour de statut, de communautés ou d'albums"
+          "Bases de données, médias et sauvegardes sont en clair sur le disque ; le chiffrement reste à faire.",
+          "Les versions sont en pause jusqu'à couvrir toutes les plateformes prises en charge ; les installeurs se compilent depuis master.",
+          "Pas encore d'appels, d'icône de barre système, de statuts, de communautés ni de prise en charge des albums."
         ]
       }
     ]
@@ -1075,12 +1101,95 @@
         ]
       },
       {
+        "kind": "steps",
+        "title": "De l'audio aux pixels",
+        "steps": [
+          {
+            "title": "Capture",
+            "body": "L'audio système est lu par application depuis les flux PipeWire ou PulseAudio, avec une liste d'exclusions pour qu'un appel vocal n'entre jamais dans le visuel, et NBS_IGNORE pour l'étendre. Les échantillons sont fenêtrés en une FFT de 2048 points à 44,1 kHz et repliés en 24 bandes logarithmiques de 40 Hz à 12 kHz."
+          },
+          {
+            "title": "Juger chaque bande",
+            "body": "Chaque bande est comparée à son propre plancher spectral à adaptation lente : un violon 30 dB sous la basse allume quand même sa bande, tandis qu'un bourdonnement constant disparaît dans le plancher. Une courbe d'isosonie f^0.85 façon cava évite que les aigus soient structurellement affamés, un gain automatique lent rend le résultat indépendant du volume, et une porte de crête sépare le contenu tonal du bruit bande par bande."
+          },
+          {
+            "title": "Injecter et simuler",
+            "body": "Chaque bande injecte du courant dans son propre sous-ensemble de neurones et le réseau tourne à un tick fixe de 100 Hz. La dynamique récurrente fait que l'activité se propage, résonne et décroît dans la topologie réelle du cerveau de mouche plutôt que de suivre l'enveloppe de la FFT."
+          },
+          {
+            "title": "Dessiner",
+            "body": "Les activités agrégées — par bande, par groupe de colonnes, équilibre excitateur/inhibiteur, taux global — animent la figure, dessinée dans un tampon phosphorescent flottant à résolution de sous-cellule 2×4 puis repliée en braille. La décroissance de persistance produit les traînées."
+          }
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Correspondance stricte bande → effet",
+        "columns": [
+          "Bandes",
+          "Contenu",
+          "Effet"
+        ],
+        "rows": [
+          [
+            "0–3",
+            "Sub et basse",
+            "Diamètre de l'anneau, mis à l'échelle du volume brut"
+          ],
+          [
+            "4–7",
+            "Corps médium-grave",
+            "Bosselures du bord avec un terme de vibration à 7 Hz"
+          ],
+          [
+            "8–9",
+            "Corps de caisse claire",
+            "Braises lentes et lourdes, rouges"
+          ],
+          [
+            "10–12",
+            "Voix et guitare",
+            "Déchirures du bord qui s'ouvrent et se referment"
+          ],
+          [
+            "13–15",
+            "Violon ou flûte, grave",
+            "Nœuds et filaments jaillissant du bord, magenta"
+          ],
+          [
+            "16–18",
+            "Harmoniques de violon",
+            "Orbiteurs intérieurs enfilant l'anneau, cyan"
+          ],
+          [
+            "19–21",
+            "Cuivres et air",
+            "Orbiteurs lunaires extérieurs, bleu"
+          ],
+          [
+            "22–23",
+            "Cymbales et air",
+            "Traînées fines et rapides, cyan"
+          ]
+        ],
+        "note": "Les combinaisons de bandes débloquent des anomalies supplémentaires : batterie plus corps de basse déclenchent des impulsions d'onde de choc, voix plus cordes tendent une corde à travers le disque, harmoniques de violon plus cuivres lèvent des éruptions coronales, cymbales plus basse font boguer l'intérieur, cordes plus cymbales sèment des étincelles blanches. La rotation est calée sur le tempo — chaque coup de basse avance d'un quart de tour et le disque le poursuit — si bien qu'un passage monotone reste parfaitement immobile."
+      },
+      {
+        "kind": "prose",
+        "title": "D'où vient le graphe",
+        "body": [
+          "Le connectome est FlyWire release v783 : 138 333 neurones relus et 2 052 622 synapses, issus du cerveau de la mouche femelle adulte, publiés avec un DOI et l'article de câblage de Dorkenwald et al. dans Nature (2024). L'étape de compilation prétraite le fichier feather publié en un binaire compact, en pondérant les arêtes par le nombre de synapses et en prenant le signe dans les probabilités de neurotransmetteur du neurone présynaptique : GABA inhibiteur, le reste excitateur.",
+          "Les battements sont des coups de basse, détectés comme un saut positif dans les bandes 0–3 dépassant 1,8× la moyenne mobile de la basse elle-même. Le seuil s'adapte au morceau, donc les pistes denses à tempo élevé ne le saturent pas et les coups discrets comptent quand même. Sans coups, pas de mouvement.",
+          "La couleur vient exclusivement de la palette ANSI du terminal (30–37, gras pour le brillant) : le disque adopte le thème déjà ouvert au lieu d'en imposer un. L'axe d'inclinaison précesse, ce qui rend le basculement multidirectionnel plutôt qu'une rotation fixe."
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compromis",
         "items": [
-          "Linux uniquement (PipeWire/PulseAudio) et un terminal avec prise en charge du braille Unicode",
-          "Le connectome de 18 Mo est exclu de la caisse publiée, qui revient à un réseau synthétique",
-          "La régénération du réseau nécessite le fichier plume Zenodo et l'outil de prétraitement Python"
+          "Linux uniquement (PipeWire/PulseAudio) et un terminal compatible braille Unicode.",
+          "Le connectome de 18 Mo est exclu du crate publié, qui retombe sur un réseau synthétique.",
+          "Régénérer le réseau exige le fichier feather de Zenodo et l'outillage de prétraitement Python."
         ]
       }
     ]
@@ -1180,12 +1289,79 @@
         ]
       },
       {
+        "kind": "prose",
+        "title": "Les mêmes octets depuis trois environnements",
+        "body": [
+          "Toute la logique vit dans easeo-core, un crate Rust sans dépendance d'entrée-sortie. Le paquet Python l'enveloppe via maturin et réexporte des symboles idiomatiques en snake_case ; le paquet JavaScript enveloppe le même crate via napi-rs sous le nom `@easeo/core`. Rien n'est réimplémenté dans un binding, car une seconde implémentation est un second jeu de cas limites.",
+          "L'affirmation est testée plutôt qu'énoncée : `tests/conformance/test_conformance.py` construit les mêmes charges depuis les API Rust, Python et JavaScript et compare la sortie rendue octet pour octet. Si un binding convertit un argument autrement, la conformité échoue avant la sortie. Ce site utilise easeo pour son propre manifeste et son sitemap, ce qui met la promesse de déterminisme à l'épreuve du réel."
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Ce que contient une charge",
+        "columns": [
+          "Sortie",
+          "Détail"
+        ],
+        "rows": [
+          [
+            "URL canonique",
+            "HTTPS imposé, chemins en minuscules, politique de barre finale, réduction des barres doubles et suppression des paramètres de suivi, appliqués comme politique d'URL et non par concaténation de chaînes."
+          ],
+          [
+            "Titre et description",
+            "Résolus par chaînes de repli depuis les champs de l'entité, avec validation de longueur avant acceptation de la charge."
+          ],
+          [
+            "Directives robots",
+            "index/noindex, follow/nofollow, max-snippet, max-image-preview, max-video-preview."
+          ],
+          [
+            "Open Graph",
+            "og:type, titre, description, image, locale, plus audio et vidéo quand l'entité en possède."
+          ],
+          [
+            "Cartes Twitter",
+            "summary_large_image par défaut, avec alt de l'image, site et créateur."
+          ],
+          [
+            "JSON-LD",
+            "WebSite, WebPage, Article, Product, Organization, LocalBusiness, BreadcrumbList, plus des générateurs propres via un registre de schémas."
+          ],
+          [
+            "Contrat SEO",
+            "Une déclaration d'intention lisible par machine, versionnable et validable en CI."
+          ],
+          [
+            "Hash et ETag",
+            "SHA-256 de la charge, pour que le cache et la détection de changement ne dépendent pas d'une comparaison de HTML rendu."
+          ]
+        ]
+      },
+      {
+        "kind": "prose",
+        "title": "Le déterminisme est le produit",
+        "body": [
+          "Comme la charge est une fonction pure de ses entrées, la question utile cesse d'être « le métadata a-t-il changé » pour devenir « voulions-nous qu'il change ». Les tests d'instantané comparent à des charges attendues, le hash donne des ETag stables, les résultats se mémorisent sans risque et une compilation peut comparer des métadonnées au lieu de deviner ce qu'a fait un déploiement.",
+          "Les contrats vont plus loin. `build_seo_contract` émet l'intention SEO d'une route — canonique, robots, balises obligatoires — sous forme de données : une pull request qui supprime une canonique ou élargit une directive d'indexation échoue en CI au lieu d'arriver en production et d'être découverte dans Search Console des semaines plus tard."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Des adaptateurs, pas des frameworks",
+        "items": [
+          "JavaScript : `@easeo/next` renvoie un objet Metadata de Next.js, `@easeo/astro` s'exécute à la compilation et émet des contrats, `@easeo/vite` accroche `transformIndexHtml`, `@easeo/nuxt` expose `useEaseoSeo()`, `@easeo/sveltekit` fournit `buildEaseoPayload()` et `<EaseoHead />`, et `@easeo/react` ne publie que le composant.",
+          "Python : `easeo.adapters.fastapi`, `.django`, `.flask`, plus une extension Zensical pour générer les métadonnées de documentation.",
+          "Publié comme `easeo` sur PyPI, `@easeo/core` sur npm et `easeo-core` sur crates.io, le site de documentation exposant `llms.txt` et `llms-full.txt` pour que les agents lisent la même référence que les humains."
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compromis",
         "items": [
-          "Pas un framework : les adaptateurs rassemblent les entrées, ils ne possèdent pas le cycle de vie des applications",
-          "Il ne s'agit pas d'un outil de notation, d'analyse de mots clés, d'exploration ou de réécriture de contenu.",
-          "Rend un extrait de code, pas un document complet ; statut de version alpha"
+          "Ce n'est pas un framework : les adaptateurs convertissent des entrées, ils ne gouvernent pas le cycle de vie de l'application.",
+          "Ce n'est pas un outil de notation, d'analyse de mots-clés, d'exploration ni de réécriture de contenu.",
+          "Il rend un fragment de head, pas un document complet ; statut alpha."
         ]
       }
     ]
@@ -1303,6 +1479,80 @@
             "body": "Si la création d'un utilisateur réussit partiellement (par exemple, les autorisations échouent), le plugin supprime l'utilisateur partiellement créé pour éviter les comptes orphelins."
           }
         ]
+      },
+      {
+        "kind": "steps",
+        "title": "Cycle de vie d'un identifiant",
+        "steps": [
+          {
+            "title": "Configuration unique",
+            "body": "Vault conserve l'URL de connexion à ClickHouse et un compte de service. Init et VerifyConnection ouvrent la connexion et prouvent que ce compte peut créer, supprimer et modifier des utilisateurs avant qu'un rôle puisse émettre le moindre identifiant."
+          },
+          {
+            "title": "Création à la demande",
+            "body": "Un rôle dynamique porte ses creation_statements. Le plugin substitue un nom d'utilisateur et un mot de passe générés, exécute le DDL et renvoie le bail une seule fois. Ensuite, le TTL et le renouvellement appartiennent à Vault."
+          },
+          {
+            "title": "Échouer sans résidu",
+            "body": "Si les droits échouent après la création de l'utilisateur, le compte partiel est supprimé avant que l'erreur ne remonte. Un utilisateur ClickHouse orphelin avec un mot de passe que personne ne détient est une fuite qui attend qu'un journal la révèle."
+          },
+          {
+            "title": "Révocation, ou rotation sur place",
+            "body": "À l'expiration du bail, l'utilisateur est supprimé. Un rôle statique est la même mécanique à l'envers : il fait tourner le mot de passe d'un utilisateur de longue durée selon un calendrier, pour que les services incapables de relire un bail cessent de transporter un secret partagé."
+          }
+        ]
+      },
+      {
+        "kind": "table",
+        "title": "Où se situe la complexité",
+        "columns": [
+          "Aspect",
+          "Traitement par clickvault"
+        ],
+        "rows": [
+          [
+            "Position de ON CLUSTER",
+            "Inséré là où la grammaire de ClickHouse l'exige, pas à la fin : un modificateur final est une erreur de syntaxe sur certaines instructions."
+          ],
+          [
+            "Substitution littérale",
+            "Le DDL de ClickHouse ne peut pas être paramétré, donc chaque valeur générée est rejetée si elle contient un guillemet, un backtick, une barre oblique inversée ou un caractère de contrôle. L'opération échoue au lieu d'exécuter du SQL dangereux."
+          ],
+          [
+            "Concurrence",
+            "Un unique sync.RWMutex est tenu pendant toute l'opération, ce qui ferme la fenêtre TOCTOU entre la vérification d'un utilisateur et sa création."
+          ],
+          [
+            "Collisions de nom",
+            "L'existence de l'utilisateur est vérifiée avant la création ; un nom tronqué échoue avec une erreur explicite au lieu de faire correspondre deux rôles à un même compte."
+          ],
+          [
+            "Transport",
+            "TLS, délai de connexion et délai de lecture sont configurables par connexion plutôt que déduits de l'URL."
+          ]
+        ],
+        "note": "Le plugin implémente l'interface dbplugin.Database appelée par Vault. Le moteur de secrets de base de données n'embarque aucun pilote ClickHouse : chaque instruction sous cette interface est donc écrite ici."
+      },
+      {
+        "kind": "list",
+        "title": "Comment c'est vérifié",
+        "items": [
+          "1 017 lignes de code pour 979 lignes de tests dans internal/clickvault (clickvault.go, ddl.go).",
+          "Les tests unitaires simulent la base avec go-sqlmock et ne nécessitent aucun service externe : la suite tourne à chaque push.",
+          "Les tests d'intégration démarrent un vrai conteneur ClickHouse et parcourent le cycle complet : création, lecture d'un bail, expiration, révocation.",
+          "85,4 % de couverture du paquet ; Codecov impose une cible projet de 70 % avec 5 % de tolérance sur les pull requests.",
+          "Six documents accompagnent le code : démarrage rapide, configuration, rôles, architecture, développement, glossaire."
+        ]
+      },
+      {
+        "kind": "list",
+        "title": "Compromis",
+        "items": [
+          "Un seul mutex sérialise toutes les opérations : correct face aux appels concurrents de Vault, mais le débit plafonne à une instruction à la fois.",
+          "Le DDL de ClickHouse ne peut pas être paramétré : les valeurs générées sont rejetées plutôt que liées, donc un nom inhabituel échoue au lieu d'être échappé.",
+          "Le mode cluster dépend du support de ON CLUSTER et du fait que le compte de service détienne les droits sur chaque nœud.",
+          "La couverture décrit le moteur : main.go est exclu car il ne fait qu'appeler dbplugin.ServeMultiplex."
+        ]
       }
     ]
   },
@@ -1416,13 +1666,47 @@
         ]
       },
       {
+        "kind": "prose",
+        "title": "Le pied ne porte que ce que le message ne peut pas dire",
+        "body": [
+          "La charge signée est reconstruite de zéro côté vérificateur, jamais extraite du message : version, type d'événement, identifiant de l'auteur, identifiant du canal, identifiant du message Discord pour les éditions, horodatage signé, puis le contenu en dernier pour qu'il ne puisse jamais décaler un champ. Presque tout ce dont un vérificateur a besoin est déjà à l'écran ; le pied ne transporte que les deux valeurs qui n'y sont pas.",
+          "Ce pied vaut `‖dsig:1:{horodatage en base36}:{signature en base64}`. Le style sous-texte le préfixe du marqueur `-# ` de Discord, et ce préfixe est facultatif à la lecture : les deux styles s'analysent de la même façon. Le style invisible écrit les mêmes deux champs dans un flux encadré — octet magique, version, longueur du blob, six octets d'horodatage, signature, CRC-8 — à raison de deux bits par symbole sur quatre caractères de largeur nulle, ajouté après un unique espace séparateur pour qu'une URL finale survive.",
+          "L'octet de longueur et le checksum servent à rendre les dégâts lisibles plutôt que mystérieux : un flux tronqué annonce « la signature a été coupée : N octets sur M reçus », un octet altéré fait échouer la somme de contrôle, et tout ce qui reste sous 255 octets tient. Un message porte exactement un pied, et le dernier gagne."
+        ]
+      },
+      {
+        "kind": "cards",
+        "title": "Discipline de vérification",
+        "columns": 2,
+        "cards": [
+          {
+            "title": "Status-fd, pas les codes de sortie",
+            "body": "Les verdicts sont lus depuis gpg --status-fd. EXPKEYSIG et REVKEYSIG ne sont pas de bonnes signatures ici, même si les mathématiques tiennent : une clé expirée ou révoquée est une attestation ratée."
+          },
+          {
+            "title": "Ni shell, ni écriture dans le trousseau",
+            "body": "gpg est lancé avec des tableaux d'arguments, jamais une chaîne de shell. Les charges passent par stdin ; signatures et clés de pairs par des fichiers 0600 dans un mkdtemp neuf, supprimé dans un finally."
+          },
+          {
+            "title": "Une clé de pair n'hérite pas de votre confiance",
+            "body": "La clé d'un pair est importée dans un GNUPGHOME jetable : un verdict ne peut donc jamais être satisfait par une clé sans rapport déjà présente dans votre vrai trousseau, et l'inspecter ne le modifie pas."
+          },
+          {
+            "title": "Deux formes de signature",
+            "body": "Une forme compacte de 72 octets reconstruit le reste à partir de la copie que le vérificateur possède de l'empreinte du signataire, et n'est utilisée que si la signature survit octet pour octet à la compression et à la décompression. Sinon, le paquet OpenPGP complet voyage, pour qu'une version inhabituelle de gpg ne puisse pas émettre des pieds que personne ne vérifie."
+          }
+        ]
+      },
+      {
         "kind": "list",
         "title": "Compromis",
         "items": [
-          "Ordinateur de bureau uniquement (le Web ne peut pas accéder à gpg-agent)",
-          "Nécessite la configuration de la paire de clés GPG",
-          "L'encodage invisible peut être supprimé par certains clients",
-          "Le compromis clé est hors de portée (limitation standard GPG)"
+          "Bureau uniquement : un navigateur n'atteint pas gpg-agent, et le modèle de sécurité exige l'accès local à la clé.",
+          "Nécessite une paire de clés GPG, et le signataire doit épingler lui-même les clés de ses pairs.",
+          "Les pieds compacts et invisibles ne se vérifient pas à la main : l'empreinte du signataire est volontairement absente du fil, donc seul le pied blindé se vérifie avec gpg nu.",
+          "Le style invisible survit aujourd'hui au client Discord mais rien ne le garantit : un client qui supprime les caractères de largeur nulle ramène le message à un état non signé, ce qui se voit au moins.",
+          "Signer atteste, ne chiffre pas : un badge vert dit qui a écrit, pas qui peut lire.",
+          "La compromission de clé est hors périmètre, et les mods de client violent les conditions d'utilisation de Discord."
         ]
       }
     ]
