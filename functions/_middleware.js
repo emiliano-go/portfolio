@@ -26,6 +26,35 @@ const TYPED_DOCUMENTS = {
   '/.well-known/oauth-protected-resource': 'application/json; charset=utf-8',
 };
 
+// The language entry pages exist because the site is served from path prefixes. A
+// visitor's stored choice (cookie) wins over their Accept-Language; without either we
+// keep serving the stub, whose client redirect picks English — which is also what a
+// crawler without those headers must keep seeing.
+const ENTRY_PATHS = new Set(['/', '/projects', '/projects/', '/about', '/about/']);
+const LOCALE_RE = /^(en|es|fr)\b/i;
+
+function readCookie(header, name) {
+  if (!header) return null;
+  for (const part of header.split(';')) {
+    const [key, ...rest] = part.trim().split('=');
+    if (key === name) return rest.join('=').trim();
+  }
+  return null;
+}
+
+function preferredLocale(request) {
+  const stored = readCookie(request.headers.get('Cookie'), 'lang');
+  if (stored && LOCALE_RE.test(stored)) return stored.slice(0, 2).toLowerCase();
+
+  const acceptLanguage = request.headers.get('Accept-Language') || '';
+  for (const candidate of acceptLanguage.split(',')) {
+    const tag = candidate.split(';')[0].trim();
+    const match = LOCALE_RE.exec(tag);
+    if (match) return match[1].toLowerCase();
+  }
+  return 'en';
+}
+
 function markdownPath(pathname) {
   if (pathname.endsWith('/')) return `${pathname}index.md`;
   return `${pathname}/index.md`;
@@ -72,6 +101,22 @@ export async function onRequest(context) {
   }
 
   if (request.method !== 'GET' && request.method !== 'HEAD') return next();
+
+  if (ENTRY_PATHS.has(url.pathname)) {
+    const locale = preferredLocale(request);
+    if (locale !== 'en') {
+      const suffix = url.pathname === '/' ? '/' : `/${url.pathname.split('/').filter(Boolean).join('/')}/`;
+      return new Response(null, {
+        status: 302,
+        headers: {
+          ...SECURITY_HEADERS,
+          Location: new URL(`/${locale}${suffix}`, 'https://emiliano-go.com').toString(),
+          Vary: 'Accept-Language, Cookie',
+          'Cache-Control': 'private, no-store',
+        },
+      });
+    }
+  }
 
   const typed = TYPED_DOCUMENTS[url.pathname];
   if (typed && env && env.ASSETS) {

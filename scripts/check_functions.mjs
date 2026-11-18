@@ -193,6 +193,34 @@ async function rpc(body) {
   assert.equal(apex.status, 200, 'the apex is not redirected');
 }
 
+// The language entry pages redirect on Accept-Language, but never over an explicit choice
+{
+  const spanish = await middleware(context(
+    new Request('https://emiliano-go.com/', { headers: { Accept: 'text/html', 'Accept-Language': 'es-UY,es;q=0.9' } }),
+  ));
+  assert.equal(spanish.status, 302);
+  assert.equal(spanish.headers.get('Location'), 'https://emiliano-go.com/es/');
+  assert.match(spanish.headers.get('Vary'), /Accept-Language/);
+
+  const frenchProjects = await middleware(context(
+    new Request('https://emiliano-go.com/projects/', { headers: { Accept: 'text/html', 'Accept-Language': 'fr-FR' } }),
+  ));
+  assert.equal(frenchProjects.headers.get('Location'), 'https://emiliano-go.com/fr/projects/');
+
+  const chosen = await middleware(context(
+    new Request('https://emiliano-go.com/', { headers: { Accept: 'text/html', 'Accept-Language': 'es', Cookie: 'lang=en' } }),
+  ));
+  assert.equal(chosen.status, 200, 'a stored choice beats Accept-Language');
+
+  const crawler = await middleware(context(new Request('https://emiliano-go.com/', { headers: { Accept: 'text/html' } })));
+  assert.equal(crawler.status, 200, 'no Accept-Language keeps serving the stub');
+
+  const deep = await middleware(context(
+    new Request('https://emiliano-go.com/en/about/', { headers: { Accept: 'text/html', 'Accept-Language': 'es' } }),
+  ));
+  assert.equal(deep.status, 200, 'only entry pages redirect');
+}
+
 // Markdown negotiation
 {
   const request = new Request('https://emiliano-go.com/en/work/trustsight/', {

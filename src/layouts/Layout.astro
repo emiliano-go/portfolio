@@ -74,6 +74,17 @@ const markdownHref = currentPath.endsWith('.html')
             if (s.fontsize === 'large' || s.fontsize === 'xlarge') document.documentElement.setAttribute('data-fontsize', s.fontsize);
           } catch(e) {}
         }
+        // Remember the effective language: the edge redirect on /, /projects and
+        // /about honours this cookie over Accept-Language, so an explicit choice
+        // through the switcher is never overridden by a guessed locale.
+        function syncLangCookie() {
+          try {
+            document.cookie = 'lang=' + (document.documentElement.lang || 'en')
+              + '; path=/; max-age=31536000; samesite=lax';
+          } catch (e) {}
+        }
+        syncLangCookie();
+        document.addEventListener('astro:page-load', syncLangCookie);
         if (!window.__astroThemeInit) {
           window.__astroThemeInit = true;
           document.addEventListener('astro:page-load', function() {
