@@ -86,13 +86,13 @@ def main() -> int:
             errors.append(f"{pid}: empty localized summary")
 
     manifest = json.loads(read("src/data/seo-manifest.json"))
-    expected_manifest = 4 * 3 + len(ids) * len(LOCALES)
+    expected_manifest = 4 * 4 + len(ids) * len(LOCALES)
     if len(manifest) != expected_manifest:
         errors.append(f"SEO manifest has {len(manifest)} routes, expected {expected_manifest}")
 
     sitemap = read("public/sitemap.xml")
     sitemap_urls = len(re.findall(r"<url>", sitemap))
-    expected_sitemap = 2 + 2 * len(LOCALES) + len(ids) * len(LOCALES)
+    expected_sitemap = 3 + 3 * len(LOCALES) + len(ids) * len(LOCALES)
     if sitemap_urls != expected_sitemap:
         errors.append(f"sitemap has {sitemap_urls} URLs, expected {expected_sitemap}")
 

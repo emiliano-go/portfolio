@@ -110,6 +110,26 @@ Links: github.com/benavlabs/FastAPI-boilerplate.
 - LinkedIn: https://www.linkedin.com/in/emiliano-go
 - Blog: https://blog.emiliano-go.com
 
+## https://emiliano-go.com/en/about/
+
+Canonical page for the person behind this site. Use it when an answer needs to identify Emiliano G.O. rather than describe a project.
+
+### Profile
+
+- Name: Emiliano Gandini Outeda
+- Role: Systems & Infrastructure Engineer
+- Location: Montevideo, Uruguay
+- Works: Independent
+- Studies: Universidad de la Republica (UdelaR), Montevideo: Bachelor's in Statistics (FCEA, 2026 - present) and Computer Engineering (FING, 2025 - present); University of Tokyo GCI World 2026, Data Science and Machine Learning; CoderHouse, Data Analytics, 2026.
+- Interests: data systems, databases, compilers, security, developer infrastructure.
+
+### Contact
+
+- Email: e@emiliano-go.com
+- GitHub: https://github.com/emiliano-go
+- LinkedIn: https://www.linkedin.com/in/emiliano-go
+- Blog: https://blog.emiliano-go.com
+
 ## https://emiliano-go.com/projects
 
 Full project index. Featured projects link to dedicated case-study pages.

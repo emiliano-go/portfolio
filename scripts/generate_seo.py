@@ -14,6 +14,7 @@ or a relative canonical fails the build rather than shipping.
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -35,6 +36,27 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 SITE_URL = "https://emiliano-go.com"
 TWITTER = "@emiliano_gando"
+
+# One Person/WebSite node per site, referenced by @id from every page, so search
+# engines resolve all 45 URLs to the same human and the same site instead of 45
+# anonymous publisher blobs.
+PERSON_ID = f"{SITE_URL}/#person"
+WEBSITE_ID = f"{SITE_URL}/#website"
+CONTENT_DATES = PROJECT_ROOT / "src" / "data" / "content-dates.json"
+
+# Components that carry the landing-page content. A change in any of them changes
+# what the home page says, so they all feed its lastmod.
+LANDING_COMPONENTS = [
+    "src/components/Hero.astro",
+    "src/components/About.astro",
+    "src/components/Engineering.astro",
+    "src/components/Studies.astro",
+    "src/components/OpenSource.astro",
+    "src/components/References.astro",
+    "src/components/Activity.astro",
+    "src/components/Work.astro",
+    "src/components/Ecosystem.astro",
+]
 
 LOCALES: dict[str, str] = {
     "en": "en_US",
@@ -171,7 +193,7 @@ def build_config(locale: str | None, alternates: list[str] | None) -> SEOConfig:
     )
 
 
-def person_node(t: dict[str, str], home_url: str) -> dict:
+def person_node(t: dict[str, str]) -> dict:
     """A Person node so search engines resolve the site to a human, not just a page."""
     return {
         "@context": "https://schema.org",
@@ -180,7 +202,7 @@ def person_node(t: dict[str, str], home_url: str) -> dict:
         "givenName": t["meta.ld.given"],
         "familyName": t["meta.ld.family"],
         "jobTitle": t["meta.ld.job"],
-        "url": home_url,
+        "url": f"{SITE_URL}/",
         "image": OG_IMAGE.url,
         "sameAs": SAME_AS,
         "worksFor": {"@type": "Organization", "name": t["meta.ld.works"]},
@@ -228,6 +250,17 @@ def routes_for(prefix: str, t: dict[str, str]) -> list[tuple[str, SEOEntity, SEO
             True,
         ),
         (
+            f"{prefix}/about/",
+            SEOEntity(
+                entity_type="page",
+                title=t["about.page.title"],
+                excerpt=t["about.page.desc"],
+                breadcrumbs=[Breadcrumb(name=t["nav.logo"], url=home), Breadcrumb(name=t["nav.about"], url=f"{prefix}/about/")],
+            ),
+            SEOOverrides(twitter_creator=TWITTER),
+            True,
+        ),
+        (
             f"{prefix}/404/",
             SEOEntity(
                 entity_type="page",
@@ -265,22 +298,140 @@ def as_list(schema) -> list:
     return list(schema) if isinstance(schema, list) else [schema]
 
 
-def build_sitemap(entries: list[tuple[str, dict[str, str]]]) -> str:
-    """entries: (canonical url, {hreflang: url}) - one <url> per canonical."""
-    today = date.today().isoformat()
+def route_sources(route: str) -> list[str]:
+    """Source files whose last commit is the honest lastmod for this route."""
+    if route == "/":
+        return ["src/pages/index.astro", "src/components/LangEntry.astro"]
+    if route == "/projects/":
+        return ["src/pages/projects.astro", "src/components/LangEntry.astro"]
+    if route == "/about/":
+        return ["src/pages/about.astro", "src/components/LangEntry.astro"]
+    if route == "/404/":
+        return ["src/pages/404.astro"]
+
+    lang = next((code for code in LOCALES if route.startswith(f"/{code}/")), "en")
+    suffix = route[len(lang) + 1 :]
+    if suffix == "/":
+        return [f"src/pages/[lang]/index.astro", f"src/i18n/{lang}.json", *LANDING_COMPONENTS]
+    if suffix == "/404/":
+        return ["src/pages/[lang]/404.astro"]
+    if suffix == "/about/":
+        return ["src/pages/[lang]/about.astro", f"src/i18n/{lang}.json"]
+    if suffix == "/projects/":
+        return [
+            "src/pages/[lang]/projects.astro",
+            "src/components/ProjectPage.astro",
+            "src/data/catalog.ts",
+            f"src/i18n/{lang}.json",
+        ]
+    if suffix.startswith("/work/"):
+        slug = suffix.strip("/").split("/")[-1]
+        sources = [
+            f"src/pages/[lang]/work/{slug}.astro",
+            "src/components/ProjectPage.astro",
+            "src/data/projects.ts",
+        ]
+        if lang != "en":
+            sources.append(f"src/data/projects.{lang}.json")
+        return sources
+    return [f"src/pages/[lang]{suffix}index.astro"]
+
+
+def git_last_commit(paths: list[str]) -> str | None:
+    """Most recent commit date touching any of these paths, or None if unknown."""
+    if not (PROJECT_ROOT / ".git").exists():
+        return None
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "log", "-1", "--format=%cs", "--", *paths],
+            capture_output=True,
+            text=True,
+            timeout=20,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    value = completed.stdout.strip()
+    return value if completed.returncode == 0 and value else None
+
+
+def load_content_dates() -> dict[str, str]:
+    if not CONTENT_DATES.is_file():
+        return {}
+    try:
+        raw = json.loads(CONTENT_DATES.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+    return {route: stamp for route, stamp in raw.items() if isinstance(stamp, str)}
+
+
+def lastmod_resolver() -> "callable":
+    """git when the checkout has history, the committed map otherwise (Docker)."""
+    committed = load_content_dates()
+    use_git = (PROJECT_ROOT / ".git").exists()
+
+    def resolve(route: str) -> str:
+        stamp = git_last_commit(route_sources(route)) if use_git else None
+        return stamp or committed.get(route) or date.today().isoformat()
+
+    return resolve
+
+
+def link_schema(nodes, route: str, lang: str, lastmod: str, person: dict) -> list[dict]:
+    """Wire the emitted nodes into one @id graph and add language + freshness.
+
+    easeo emits them independently, which is valid but leaves `publisher` anonymous
+    and says nothing about language. Both are cheap to state and expensive to infer.
+    """
+    url = f"{SITE_URL}{route}"
+    graph = [node for node in as_list(nodes) if isinstance(node, dict)]
+    has_breadcrumb = any(node.get("@type") == "BreadcrumbList" for node in graph)
+
+    for node in graph:
+        node_type = node.get("@type")
+        if node_type == "WebPage":
+            if route.endswith("/about/"):
+                node["@type"] = "ProfilePage"
+                node["mainEntity"] = {"@id": PERSON_ID}
+            node["@id"] = f"{url}#webpage"
+            node["inLanguage"] = lang
+            node["isPartOf"] = {"@id": WEBSITE_ID}
+            node["publisher"] = {"@id": PERSON_ID}
+            node["author"] = {"@id": PERSON_ID}
+            node["dateModified"] = lastmod
+            if has_breadcrumb:
+                node["breadcrumb"] = {"@id": f"{url}#breadcrumb"}
+        elif node_type == "WebSite":
+            node["@id"] = WEBSITE_ID
+            node["inLanguage"] = lang
+            node["publisher"] = {"@id": PERSON_ID}
+        elif node_type == "BreadcrumbList":
+            node["@id"] = f"{url}#breadcrumb"
+        elif node_type == "Person":
+            node["@id"] = PERSON_ID
+
+    person_node_ = dict(person)
+    person_node_["@id"] = PERSON_ID
+    if not any(node.get("@id") == PERSON_ID for node in graph):
+        graph.append(person_node_)
+    return graph
+
+
+def build_sitemap(entries: list[tuple[str, dict[str, str], str]]) -> str:
+    """entries: (canonical url, {hreflang: url}, lastmod) - one <url> per canonical."""
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
         '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
     ]
-    for loc, alternates in entries:
+    for loc, alternates, lastmod in entries:
         lines.append("  <url>")
         lines.append(f"    <loc>{escape(loc)}</loc>")
         for hreflang, href in alternates.items():
             lines.append(
                 f'    <xhtml:link rel="alternate" hreflang="{hreflang}" href="{escape(href)}" />'
             )
-        lines.append(f"    <lastmod>{today}</lastmod>")
+        lines.append(f"    <lastmod>{lastmod}</lastmod>")
         lines.append("    <changefreq>monthly</changefreq>")
         lines.append(f"    <priority>{'1.0' if loc.rstrip('/') == SITE_URL else '0.8'}</priority>")
         lines.append("  </url>")
@@ -288,11 +439,28 @@ def build_sitemap(entries: list[tuple[str, dict[str, str]]]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _all_routes(i18n: dict[str, dict[str, str]]) -> list[str]:
+    routes: list[str] = []
+    for prefix in ("", "/en", "/es", "/fr"):
+        lang = prefix.lstrip("/") or "en"
+        for route, _entity, _overrides, _in_sitemap in routes_for(prefix, i18n[lang]):
+            routes.append(route)
+    return routes
+
+
 def main() -> int:
     i18n = load_i18n()
     manifest: dict[str, dict] = {}
     warnings: list[str] = []
     sitemap_paths: list[str] = []
+    lastmod_for = lastmod_resolver()
+    lastmods: dict[str, str] = {}
+
+    if "--write-dates" in sys.argv:
+        dates = {route: lastmod_for(route) for route in sorted(_all_routes(i18n))}
+        CONTENT_DATES.write_text(json.dumps(dates, indent=2) + "\n", encoding="utf-8")
+        print(f"Written {CONTENT_DATES} ({len(dates)} routes)")
+        return 0
 
     # "" covers the unprefixed entry pages (/ and /projects/), which the language
     # redirect stubs serve and which are what most people actually link to. Without
@@ -303,16 +471,16 @@ def main() -> int:
         locale = LOCALES[lang]
         alternates = [v for k, v in LOCALES.items() if k != lang]
         config = build_config(locale, alternates)
-        home_url = f"{SITE_URL}{prefix}/" or f"{SITE_URL}/"
 
         for route, entity, overrides, in_sitemap in routes_for(prefix, t):
             payload = build_seo_payload(entity, route, config, overrides)
             payload_dict = payload.to_dict()
 
-            if entity.entity_type == "home":
-                payload_dict["schema_jsonld"] = as_list(payload_dict.get("schema_jsonld")) + [
-                    person_node(t, home_url)
-                ]
+            lastmod = lastmod_for(route)
+            lastmods[route] = lastmod
+            payload_dict["schema_jsonld"] = link_schema(
+                payload_dict.get("schema_jsonld"), route, lang, lastmod, person_node(t)
+            )
 
             for issue in validate_payload(payload):
                 if issue.severity == "info":
@@ -335,7 +503,7 @@ def main() -> int:
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     # One <url> per canonical, each advertising every language plus x-default.
-    entries: list[tuple[str, dict[str, str]]] = []
+    entries: list[tuple[str, dict[str, str], str]] = []
     for route in sitemap_paths:
         suffix = route
         for lang in LOCALES:
@@ -348,7 +516,7 @@ def main() -> int:
             alternates["x-default"] = f"{SITE_URL}/en{suffix}"
         else:
             alternates["x-default"] = f"{SITE_URL}{suffix}"
-        entries.append((f"{SITE_URL}{route}", alternates))
+        entries.append((f"{SITE_URL}{route}", alternates, lastmods.get(route, date.today().isoformat())))
 
     sitemap_path = PROJECT_ROOT / "public" / "sitemap.xml"
     sitemap_path.write_text(build_sitemap(entries), encoding="utf-8")

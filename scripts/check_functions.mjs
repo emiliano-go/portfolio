@@ -178,6 +178,21 @@ async function rpc(body) {
   assert.match(get.headers.get('Allow'), /POST/);
 }
 
+// www is a duplicate host: it must redirect to the canonical apex, at any path
+{
+  const response = await middleware(context(
+    new Request('https://www.emiliano-go.com/en/work/trustsight/?ref=x', { headers: { Accept: 'text/html' } }),
+  ));
+  assert.equal(response.status, 301);
+  assert.equal(response.headers.get('Location'), 'https://emiliano-go.com/en/work/trustsight/?ref=x');
+
+  const post = await middleware(context(new Request('https://www.emiliano-go.com/x', { method: 'POST', body: 'a' })));
+  assert.equal(post.status, 308, 'non-GET keeps its method via 308');
+
+  const apex = await middleware(context(new Request('https://emiliano-go.com/en/', { headers: { Accept: 'text/html' } })));
+  assert.equal(apex.status, 200, 'the apex is not redirected');
+}
+
 // Markdown negotiation
 {
   const request = new Request('https://emiliano-go.com/en/work/trustsight/', {

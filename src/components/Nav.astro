@@ -5,7 +5,7 @@ const { lang } = Astro.props as { lang: string };
 const t = createT(lang);
 
 const links = [
-  { href: '/' + lang + '/#about', key: 'nav.about' },
+  { href: '/' + lang + '/about', key: 'nav.about' },
   { href: '/' + lang + '/#engineering', key: 'nav.engineering' },
   { href: '/' + lang + '/projects', key: 'nav.projects' },
   { href: '/' + lang + '/#studies', key: 'nav.studies' },

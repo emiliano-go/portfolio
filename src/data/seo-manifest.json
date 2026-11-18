@@ -27,10 +27,11 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Emiliano G.O. > Systems & Infrastructure Engineer",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/"
+        "url": "https://emiliano-go.com/",
+        "@id": "https://emiliano-go.com/#website",
+        "inLanguage": "en"
       },
       {
         "@context": "https://schema.org",
@@ -57,7 +58,8 @@
           "@type": "PostalAddress",
           "addressLocality": "Montevideo",
           "addressCountry": "UY"
-        }
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
@@ -99,10 +101,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Projects | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/projects/"
+        "url": "https://emiliano-go.com/projects/",
+        "@id": "https://emiliano-go.com/projects/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-23",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/projects/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -120,7 +133,36 @@
             "name": "Projects",
             "position": 2
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/projects/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Projects | Emiliano G.O.",
@@ -132,6 +174,112 @@
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "Projects | Emiliano G.O."
+    }
+  },
+  "/about/": {
+    "canonical": "https://emiliano-go.com/about/",
+    "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+    "og": {
+      "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "About | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/about/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "About | Emiliano G.O.",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/about/",
+        "mainEntity": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "@id": "https://emiliano-go.com/about/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-23",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/about/#breadcrumb"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/about/",
+            "name": "About",
+            "position": 2
+          }
+        ],
+        "@id": "https://emiliano-go.com/about/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
+    "title": "About | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "About | Emiliano G.O."
     }
   },
   "/404/": {
@@ -154,18 +302,56 @@
       "url": "https://emiliano-go.com/404/"
     },
     "robots": "noindex,nofollow",
-    "schema_jsonld": {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "description": "Page not found.",
-      "image": "https://emiliano-go.com/og-image.png",
-      "name": "404: Page Not Found",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Emiliano Gandini Outeda"
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Page not found.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "404: Page Not Found",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/404/",
+        "@id": "https://emiliano-go.com/404/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27"
       },
-      "url": "https://emiliano-go.com/404/"
-    },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
     "title": "404: Page Not Found",
     "twitter": {
       "card": "summary_large_image",
@@ -204,10 +390,11 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Emiliano G.O. > Systems & Infrastructure Engineer",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/"
+        "url": "https://emiliano-go.com/en/",
+        "@id": "https://emiliano-go.com/#website",
+        "inLanguage": "en"
       },
       {
         "@context": "https://schema.org",
@@ -216,7 +403,7 @@
         "givenName": "Emiliano",
         "familyName": "Gandini Outeda",
         "jobTitle": "Systems & Infrastructure Engineer",
-        "url": "https://emiliano-go.com/en/",
+        "url": "https://emiliano-go.com/",
         "image": "https://emiliano-go.com/og-image.png",
         "sameAs": [
           "https://github.com/emiliano-go",
@@ -234,7 +421,8 @@
           "@type": "PostalAddress",
           "addressLocality": "Montevideo",
           "addressCountry": "UY"
-        }
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Emiliano G.O. > Systems & Infrastructure Engineer",
@@ -276,10 +464,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Projects | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/projects/"
+        "url": "https://emiliano-go.com/en/projects/",
+        "@id": "https://emiliano-go.com/en/projects/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-11-02",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/projects/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -297,7 +496,36 @@
             "name": "Projects",
             "position": 2
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/projects/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Projects | Emiliano G.O.",
@@ -309,6 +537,112 @@
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "Projects | Emiliano G.O."
+    }
+  },
+  "/en/about/": {
+    "canonical": "https://emiliano-go.com/en/about/",
+    "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+    "og": {
+      "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "en_US",
+      "locale_alternate": [
+        "es_ES",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "About | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/en/about/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "About | Emiliano G.O.",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/en/about/",
+        "mainEntity": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "@id": "https://emiliano-go.com/en/about/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-11-02",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/about/#breadcrumb"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/en/about/",
+            "name": "About",
+            "position": 2
+          }
+        ],
+        "@id": "https://emiliano-go.com/en/about/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
+    "title": "About | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Emiliano Gandini Outeda — systems and infrastructure engineer in Montevideo, Uruguay. Background, current work, studies and how to get in touch.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "About | Emiliano G.O."
     }
   },
   "/en/404/": {
@@ -331,18 +665,56 @@
       "url": "https://emiliano-go.com/en/404/"
     },
     "robots": "noindex,nofollow",
-    "schema_jsonld": {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "description": "Page not found.",
-      "image": "https://emiliano-go.com/og-image.png",
-      "name": "404: Page Not Found",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Emiliano Gandini Outeda"
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Page not found.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "404: Page Not Found",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/en/404/",
+        "@id": "https://emiliano-go.com/en/404/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-23"
       },
-      "url": "https://emiliano-go.com/en/404/"
-    },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
     "title": "404: Page Not Found",
     "twitter": {
       "card": "summary_large_image",
@@ -381,10 +753,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "DBWarden | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/dbwarden/"
+        "url": "https://emiliano-go.com/en/work/dbwarden/",
+        "@id": "https://emiliano-go.com/en/work/dbwarden/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/dbwarden/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -408,7 +791,36 @@
             "name": "DBWarden",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/dbwarden/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "DBWarden | Emiliano G.O.",
@@ -450,10 +862,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/trustsight/"
+        "url": "https://emiliano-go.com/en/work/trustsight/",
+        "@id": "https://emiliano-go.com/en/work/trustsight/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/trustsight/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -477,7 +900,36 @@
             "name": "TrustSight",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/trustsight/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "TrustSight | Emiliano G.O.",
@@ -519,10 +971,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "rypipe | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/rypipe/"
+        "url": "https://emiliano-go.com/en/work/rypipe/",
+        "@id": "https://emiliano-go.com/en/work/rypipe/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/rypipe/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -546,7 +1009,36 @@
             "name": "rypipe",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/rypipe/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "rypipe | Emiliano G.O.",
@@ -588,10 +1080,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Kestrel | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/kestrel/"
+        "url": "https://emiliano-go.com/en/work/kestrel/",
+        "@id": "https://emiliano-go.com/en/work/kestrel/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/kestrel/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -615,7 +1118,36 @@
             "name": "Kestrel",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/kestrel/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Kestrel | Emiliano G.O.",
@@ -657,10 +1189,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "postal | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/postal/"
+        "url": "https://emiliano-go.com/en/work/postal/",
+        "@id": "https://emiliano-go.com/en/work/postal/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/postal/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -684,7 +1227,36 @@
             "name": "postal",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/postal/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "postal | Emiliano G.O.",
@@ -726,10 +1298,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "neurafly | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/neurafly/"
+        "url": "https://emiliano-go.com/en/work/neurafly/",
+        "@id": "https://emiliano-go.com/en/work/neurafly/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/neurafly/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -753,7 +1336,36 @@
             "name": "neurafly",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/neurafly/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "neurafly | Emiliano G.O.",
@@ -795,10 +1407,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "easeo | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/easeo/"
+        "url": "https://emiliano-go.com/en/work/easeo/",
+        "@id": "https://emiliano-go.com/en/work/easeo/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/easeo/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -822,7 +1445,36 @@
             "name": "easeo",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/easeo/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "easeo | Emiliano G.O.",
@@ -864,10 +1516,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "ClickVault | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/clickvault/"
+        "url": "https://emiliano-go.com/en/work/clickvault/",
+        "@id": "https://emiliano-go.com/en/work/clickvault/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/clickvault/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -891,7 +1554,36 @@
             "name": "ClickVault",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/clickvault/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "ClickVault | Emiliano G.O.",
@@ -933,10 +1625,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "dsig | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/dsig/"
+        "url": "https://emiliano-go.com/en/work/dsig/",
+        "@id": "https://emiliano-go.com/en/work/dsig/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/dsig/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -960,7 +1663,36 @@
             "name": "dsig",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/dsig/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "dsig | Emiliano G.O.",
@@ -1002,10 +1734,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "xmlstreamer-ng | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/xmlstreamer-ng/"
+        "url": "https://emiliano-go.com/en/work/xmlstreamer-ng/",
+        "@id": "https://emiliano-go.com/en/work/xmlstreamer-ng/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/xmlstreamer-ng/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1029,7 +1772,36 @@
             "name": "xmlstreamer-ng",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/xmlstreamer-ng/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "xmlstreamer-ng | Emiliano G.O.",
@@ -1071,10 +1843,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "eclipse | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/en/work/eclipse/"
+        "url": "https://emiliano-go.com/en/work/eclipse/",
+        "@id": "https://emiliano-go.com/en/work/eclipse/#webpage",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/en/work/eclipse/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1098,7 +1881,36 @@
             "name": "eclipse",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/en/work/eclipse/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Systems & Infrastructure Engineer",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independent"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "eclipse | Emiliano G.O.",
@@ -1140,10 +1952,11 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/"
+        "url": "https://emiliano-go.com/es/",
+        "@id": "https://emiliano-go.com/#website",
+        "inLanguage": "es"
       },
       {
         "@context": "https://schema.org",
@@ -1152,7 +1965,7 @@
         "givenName": "Emiliano",
         "familyName": "Gandini Outeda",
         "jobTitle": "Ingeniero de Sistemas e Infraestructura",
-        "url": "https://emiliano-go.com/es/",
+        "url": "https://emiliano-go.com/",
         "image": "https://emiliano-go.com/og-image.png",
         "sameAs": [
           "https://github.com/emiliano-go",
@@ -1170,7 +1983,8 @@
           "@type": "PostalAddress",
           "addressLocality": "Montevideo",
           "addressCountry": "UY"
-        }
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Emiliano G.O. > Ingeniero de Sistemas e Infraestructura",
@@ -1212,10 +2026,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Proyectos | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/projects/"
+        "url": "https://emiliano-go.com/es/projects/",
+        "@id": "https://emiliano-go.com/es/projects/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-11-02",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/projects/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1233,7 +2058,36 @@
             "name": "Proyectos",
             "position": 2
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/projects/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Proyectos | Emiliano G.O.",
@@ -1245,6 +2099,112 @@
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "Proyectos | Emiliano G.O."
+    }
+  },
+  "/es/about/": {
+    "canonical": "https://emiliano-go.com/es/about/",
+    "description": "Emiliano Gandini Outeda, ingeniero de sistemas e infraestructura en Montevideo, Uruguay. Trayectoria, trabajo actual, estudios y cómo contactarme.",
+    "og": {
+      "description": "Emiliano Gandini Outeda, ingeniero de sistemas e infraestructura en Montevideo, Uruguay. Trayectoria, trabajo actual, estudios y cómo contactarme.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "es_ES",
+      "locale_alternate": [
+        "en_US",
+        "fr_FR"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "Sobre mí | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/es/about/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "description": "Emiliano Gandini Outeda, ingeniero de sistemas e infraestructura en Montevideo, Uruguay. Trayectoria, trabajo actual, estudios y cómo contactarme.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "Sobre mí | Emiliano G.O.",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/es/about/",
+        "mainEntity": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "@id": "https://emiliano-go.com/es/about/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-11-02",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/about/#breadcrumb"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/es/about/",
+            "name": "Sobre mí",
+            "position": 2
+          }
+        ],
+        "@id": "https://emiliano-go.com/es/about/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
+    "title": "Sobre mí | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Emiliano Gandini Outeda, ingeniero de sistemas e infraestructura en Montevideo, Uruguay. Trayectoria, trabajo actual, estudios y cómo contactarme.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "Sobre mí | Emiliano G.O."
     }
   },
   "/es/404/": {
@@ -1267,18 +2227,56 @@
       "url": "https://emiliano-go.com/es/404/"
     },
     "robots": "noindex,nofollow",
-    "schema_jsonld": {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "description": "Página no encontrada.",
-      "image": "https://emiliano-go.com/og-image.png",
-      "name": "404: Página no encontrada",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Emiliano Gandini Outeda"
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Página no encontrada.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "404: Página no encontrada",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/es/404/",
+        "@id": "https://emiliano-go.com/es/404/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-23"
       },
-      "url": "https://emiliano-go.com/es/404/"
-    },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
     "title": "404: Página no encontrada",
     "twitter": {
       "card": "summary_large_image",
@@ -1317,10 +2315,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "DBWarden | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/dbwarden/"
+        "url": "https://emiliano-go.com/es/work/dbwarden/",
+        "@id": "https://emiliano-go.com/es/work/dbwarden/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/dbwarden/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1344,7 +2353,36 @@
             "name": "DBWarden",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/dbwarden/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "DBWarden | Emiliano G.O.",
@@ -1386,10 +2424,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/trustsight/"
+        "url": "https://emiliano-go.com/es/work/trustsight/",
+        "@id": "https://emiliano-go.com/es/work/trustsight/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/trustsight/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1413,7 +2462,36 @@
             "name": "TrustSight",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/trustsight/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "TrustSight | Emiliano G.O.",
@@ -1455,10 +2533,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "rypipe | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/rypipe/"
+        "url": "https://emiliano-go.com/es/work/rypipe/",
+        "@id": "https://emiliano-go.com/es/work/rypipe/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/rypipe/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1482,7 +2571,36 @@
             "name": "rypipe",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/rypipe/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "rypipe | Emiliano G.O.",
@@ -1524,10 +2642,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Kestrel | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/kestrel/"
+        "url": "https://emiliano-go.com/es/work/kestrel/",
+        "@id": "https://emiliano-go.com/es/work/kestrel/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/kestrel/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1551,7 +2680,36 @@
             "name": "Kestrel",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/kestrel/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Kestrel | Emiliano G.O.",
@@ -1593,10 +2751,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "postal | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/postal/"
+        "url": "https://emiliano-go.com/es/work/postal/",
+        "@id": "https://emiliano-go.com/es/work/postal/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/postal/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1620,7 +2789,36 @@
             "name": "postal",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/postal/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "postal | Emiliano G.O.",
@@ -1662,10 +2860,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "neurafly | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/neurafly/"
+        "url": "https://emiliano-go.com/es/work/neurafly/",
+        "@id": "https://emiliano-go.com/es/work/neurafly/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/neurafly/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1689,7 +2898,36 @@
             "name": "neurafly",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/neurafly/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "neurafly | Emiliano G.O.",
@@ -1731,10 +2969,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "easeo | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/easeo/"
+        "url": "https://emiliano-go.com/es/work/easeo/",
+        "@id": "https://emiliano-go.com/es/work/easeo/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/easeo/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1758,7 +3007,36 @@
             "name": "easeo",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/easeo/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "easeo | Emiliano G.O.",
@@ -1800,10 +3078,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "ClickVault | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/clickvault/"
+        "url": "https://emiliano-go.com/es/work/clickvault/",
+        "@id": "https://emiliano-go.com/es/work/clickvault/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/clickvault/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1827,7 +3116,36 @@
             "name": "ClickVault",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/clickvault/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "ClickVault | Emiliano G.O.",
@@ -1869,10 +3187,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "dsig | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/dsig/"
+        "url": "https://emiliano-go.com/es/work/dsig/",
+        "@id": "https://emiliano-go.com/es/work/dsig/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/dsig/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1896,7 +3225,36 @@
             "name": "dsig",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/dsig/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "dsig | Emiliano G.O.",
@@ -1938,10 +3296,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "xmlstreamer-ng | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/xmlstreamer-ng/"
+        "url": "https://emiliano-go.com/es/work/xmlstreamer-ng/",
+        "@id": "https://emiliano-go.com/es/work/xmlstreamer-ng/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/xmlstreamer-ng/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -1965,7 +3334,36 @@
             "name": "xmlstreamer-ng",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/xmlstreamer-ng/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "xmlstreamer-ng | Emiliano G.O.",
@@ -2007,10 +3405,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "eclipse | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/es/work/eclipse/"
+        "url": "https://emiliano-go.com/es/work/eclipse/",
+        "@id": "https://emiliano-go.com/es/work/eclipse/#webpage",
+        "inLanguage": "es",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/es/work/eclipse/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2034,7 +3443,36 @@
             "name": "eclipse",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/es/work/eclipse/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingeniero de Sistemas e Infraestructura",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Independiente"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "eclipse | Emiliano G.O.",
@@ -2076,10 +3514,11 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/"
+        "url": "https://emiliano-go.com/fr/",
+        "@id": "https://emiliano-go.com/#website",
+        "inLanguage": "fr"
       },
       {
         "@context": "https://schema.org",
@@ -2088,7 +3527,7 @@
         "givenName": "Emiliano",
         "familyName": "Gandini Outeda",
         "jobTitle": "Ingénieur Systèmes & Infrastructure",
-        "url": "https://emiliano-go.com/fr/",
+        "url": "https://emiliano-go.com/",
         "image": "https://emiliano-go.com/og-image.png",
         "sameAs": [
           "https://github.com/emiliano-go",
@@ -2106,7 +3545,8 @@
           "@type": "PostalAddress",
           "addressLocality": "Montevideo",
           "addressCountry": "UY"
-        }
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Emiliano G.O. > Ingénieur Systèmes & Infrastructure",
@@ -2148,10 +3588,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Projets | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/projects/"
+        "url": "https://emiliano-go.com/fr/projects/",
+        "@id": "https://emiliano-go.com/fr/projects/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-11-02",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/projects/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2169,7 +3620,36 @@
             "name": "Projets",
             "position": 2
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/projects/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Projets | Emiliano G.O.",
@@ -2181,6 +3661,112 @@
       "image_alt": "Emiliano G.O. - portfolio preview card",
       "site": "@emiliano_gando",
       "title": "Projets | Emiliano G.O."
+    }
+  },
+  "/fr/about/": {
+    "canonical": "https://emiliano-go.com/fr/about/",
+    "description": "Emiliano Gandini Outeda, ingénieur systèmes et infrastructure à Montevideo, Uruguay. Parcours, travail actuel, études et comment me contacter.",
+    "og": {
+      "description": "Emiliano Gandini Outeda, ingénieur systèmes et infrastructure à Montevideo, Uruguay. Parcours, travail actuel, études et comment me contacter.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "image_height": 630,
+      "image_width": 1200,
+      "locale": "fr_FR",
+      "locale_alternate": [
+        "en_US",
+        "es_ES"
+      ],
+      "site_name": "Emiliano G.O.",
+      "title": "À propos | Emiliano G.O.",
+      "type": "website",
+      "url": "https://emiliano-go.com/fr/about/"
+    },
+    "robots": "index,follow,max-snippet:-1,max-image-preview:large",
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "description": "Emiliano Gandini Outeda, ingénieur systèmes et infrastructure à Montevideo, Uruguay. Parcours, travail actuel, études et comment me contacter.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "À propos | Emiliano G.O.",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/fr/about/",
+        "mainEntity": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "@id": "https://emiliano-go.com/fr/about/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-11-02",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/about/#breadcrumb"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/",
+            "name": "EMILIANO G.O.",
+            "position": 1
+          },
+          {
+            "@type": "ListItem",
+            "item": "https://emiliano-go.com/fr/about/",
+            "name": "À propos",
+            "position": 2
+          }
+        ],
+        "@id": "https://emiliano-go.com/fr/about/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
+    "title": "À propos | Emiliano G.O.",
+    "twitter": {
+      "card": "summary_large_image",
+      "creator": "@emiliano_gando",
+      "description": "Emiliano Gandini Outeda, ingénieur systèmes et infrastructure à Montevideo, Uruguay. Parcours, travail actuel, études et comment me contacter.",
+      "image": "https://emiliano-go.com/og-image.png",
+      "image_alt": "Emiliano G.O. - portfolio preview card",
+      "site": "@emiliano_gando",
+      "title": "À propos | Emiliano G.O."
     }
   },
   "/fr/404/": {
@@ -2203,18 +3789,56 @@
       "url": "https://emiliano-go.com/fr/404/"
     },
     "robots": "noindex,nofollow",
-    "schema_jsonld": {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "description": "Page non trouvée.",
-      "image": "https://emiliano-go.com/og-image.png",
-      "name": "404: Page non trouvée",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Emiliano Gandini Outeda"
+    "schema_jsonld": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "Page non trouvée.",
+        "image": "https://emiliano-go.com/og-image.png",
+        "name": "404: Page non trouvée",
+        "publisher": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "url": "https://emiliano-go.com/fr/404/",
+        "@id": "https://emiliano-go.com/fr/404/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-23"
       },
-      "url": "https://emiliano-go.com/fr/404/"
-    },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
+      }
+    ],
     "title": "404: Page non trouvée",
     "twitter": {
       "card": "summary_large_image",
@@ -2253,10 +3877,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "DBWarden | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/dbwarden/"
+        "url": "https://emiliano-go.com/fr/work/dbwarden/",
+        "@id": "https://emiliano-go.com/fr/work/dbwarden/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/dbwarden/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2280,7 +3915,36 @@
             "name": "DBWarden",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/dbwarden/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "DBWarden | Emiliano G.O.",
@@ -2322,10 +3986,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "TrustSight | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/trustsight/"
+        "url": "https://emiliano-go.com/fr/work/trustsight/",
+        "@id": "https://emiliano-go.com/fr/work/trustsight/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/trustsight/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2349,7 +4024,36 @@
             "name": "TrustSight",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/trustsight/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "TrustSight | Emiliano G.O.",
@@ -2391,10 +4095,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "rypipe | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/rypipe/"
+        "url": "https://emiliano-go.com/fr/work/rypipe/",
+        "@id": "https://emiliano-go.com/fr/work/rypipe/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/rypipe/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2418,7 +4133,36 @@
             "name": "rypipe",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/rypipe/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "rypipe | Emiliano G.O.",
@@ -2460,10 +4204,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "Kestrel | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/kestrel/"
+        "url": "https://emiliano-go.com/fr/work/kestrel/",
+        "@id": "https://emiliano-go.com/fr/work/kestrel/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/kestrel/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2487,7 +4242,36 @@
             "name": "Kestrel",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/kestrel/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "Kestrel | Emiliano G.O.",
@@ -2529,10 +4313,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "postal | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/postal/"
+        "url": "https://emiliano-go.com/fr/work/postal/",
+        "@id": "https://emiliano-go.com/fr/work/postal/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/postal/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2556,7 +4351,36 @@
             "name": "postal",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/postal/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "postal | Emiliano G.O.",
@@ -2598,10 +4422,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "neurafly | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/neurafly/"
+        "url": "https://emiliano-go.com/fr/work/neurafly/",
+        "@id": "https://emiliano-go.com/fr/work/neurafly/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/neurafly/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2625,7 +4460,36 @@
             "name": "neurafly",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/neurafly/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "neurafly | Emiliano G.O.",
@@ -2667,10 +4531,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "easeo | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/easeo/"
+        "url": "https://emiliano-go.com/fr/work/easeo/",
+        "@id": "https://emiliano-go.com/fr/work/easeo/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/easeo/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2694,7 +4569,36 @@
             "name": "easeo",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/easeo/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "easeo | Emiliano G.O.",
@@ -2736,10 +4640,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "ClickVault | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/clickvault/"
+        "url": "https://emiliano-go.com/fr/work/clickvault/",
+        "@id": "https://emiliano-go.com/fr/work/clickvault/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/clickvault/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2763,7 +4678,36 @@
             "name": "ClickVault",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/clickvault/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "ClickVault | Emiliano G.O.",
@@ -2805,10 +4749,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "dsig | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/dsig/"
+        "url": "https://emiliano-go.com/fr/work/dsig/",
+        "@id": "https://emiliano-go.com/fr/work/dsig/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/dsig/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2832,7 +4787,36 @@
             "name": "dsig",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/dsig/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "dsig | Emiliano G.O.",
@@ -2874,10 +4858,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "xmlstreamer-ng | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/xmlstreamer-ng/"
+        "url": "https://emiliano-go.com/fr/work/xmlstreamer-ng/",
+        "@id": "https://emiliano-go.com/fr/work/xmlstreamer-ng/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/xmlstreamer-ng/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2901,7 +4896,36 @@
             "name": "xmlstreamer-ng",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/xmlstreamer-ng/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "xmlstreamer-ng | Emiliano G.O.",
@@ -2943,10 +4967,21 @@
         "image": "https://emiliano-go.com/og-image.png",
         "name": "eclipse | Emiliano G.O.",
         "publisher": {
-          "@type": "Organization",
-          "name": "Emiliano Gandini Outeda"
+          "@id": "https://emiliano-go.com/#person"
         },
-        "url": "https://emiliano-go.com/fr/work/eclipse/"
+        "url": "https://emiliano-go.com/fr/work/eclipse/",
+        "@id": "https://emiliano-go.com/fr/work/eclipse/#webpage",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@id": "https://emiliano-go.com/#website"
+        },
+        "author": {
+          "@id": "https://emiliano-go.com/#person"
+        },
+        "dateModified": "2026-10-27",
+        "breadcrumb": {
+          "@id": "https://emiliano-go.com/fr/work/eclipse/#breadcrumb"
+        }
       },
       {
         "@context": "https://schema.org",
@@ -2970,7 +5005,36 @@
             "name": "eclipse",
             "position": 3
           }
-        ]
+        ],
+        "@id": "https://emiliano-go.com/fr/work/eclipse/#breadcrumb"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emiliano Gandini Outeda",
+        "givenName": "Emiliano",
+        "familyName": "Gandini Outeda",
+        "jobTitle": "Ingénieur Systèmes & Infrastructure",
+        "url": "https://emiliano-go.com/",
+        "image": "https://emiliano-go.com/og-image.png",
+        "sameAs": [
+          "https://github.com/emiliano-go",
+          "https://www.linkedin.com/in/emiliano-go"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Indépendant"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de la Republica"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Montevideo",
+          "addressCountry": "UY"
+        },
+        "@id": "https://emiliano-go.com/#person"
       }
     ],
     "title": "eclipse | Emiliano G.O.",

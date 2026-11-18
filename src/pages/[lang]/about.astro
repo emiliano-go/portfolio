@@ -1,0 +1,207 @@
+---
+// A durable "who is this" page: brand query, recruiter, and every AI answer engine
+// that needs one URL to point at a person. Linked from the nav and the sitemap, and
+// emitted with ProfilePage schema (see scripts/generate_seo.py).
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { createT, type Lang } from '../../i18n';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+    { params: { lang: 'fr' } },
+  ];
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = createT(lang);
+
+const email = 'e@emiliano-go.com';
+const emailToken = btoa(email);
+
+const degrees = [1, 2].map((index) => ({
+  title: t(`studies.career.${index}.title`),
+  institution: t(`studies.career.${index}.institution`),
+  period: t(`studies.career.${index}.period`),
+  spec: t(`studies.career.${index}.spec`, ''),
+}));
+
+const programmes = [1, 2].map((index) => ({
+  degree: t(`studies.edu.${index}.degree`),
+  field: t(`studies.edu.${index}.field`),
+  institution: t(`studies.edu.${index}.institution`),
+  period: t(`studies.edu.${index}.period`),
+}));
+
+const certifications = [1].map((index) => ({
+  course: t(`studies.cert.${index}.course`),
+  platform: t(`studies.cert.${index}.platform`),
+  completed: t(`studies.cert.${index}.completed`),
+}));
+
+const profiles = [
+  { label: 'GitHub', href: 'https://github.com/emiliano-go' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/emiliano-go' },
+  { label: 'Blog', href: 'https://blog.emiliano-go.com/' },
+];
+---
+
+<Layout
+  lang={lang}
+  route={'/' + lang + '/about'}
+  title={t('about.page.title')}
+  description={t('about.page.desc')}
+>
+  <Nav lang={lang} />
+  <main id="main" class="pt-28">
+    <section class="border-b border-(--color-border-subtle) pb-16 pt-8">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <p class="mb-4 font-mono text-[10px] uppercase tracking-[0.16em] text-(--color-accent)">
+          {t('about.heading')}
+        </p>
+        <h1
+          class="mb-3 text-balance font-[family-name:var(--font-display)] text-[clamp(32px,5vw,56px)] font-bold uppercase leading-[0.95] tracking-wide text-(--color-text-head)"
+        >
+          {t('about.page.heading')}
+        </h1>
+        <p class="mb-6 font-mono text-[11px] uppercase tracking-[0.1em] text-(--color-text-dim)">
+          {t('meta.ld.job')} · {t('about.page.location')}
+        </p>
+        <p class="mb-10 max-w-[560px] text-pretty text-sm leading-relaxed text-(--color-text-muted)">
+          {t('about.bio')}
+        </p>
+
+        <div class="grid grid-cols-1 gap-px border border-(--color-border-subtle) bg-(--color-border-subtle) md:grid-cols-3">
+          <div class="bg-(--color-bg) p-5">
+            <h2 class="mb-2 font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright)">
+              {t('about.current')}
+            </h2>
+            <p class="text-xs leading-relaxed text-(--color-text-muted)">{t('about.current.desc')}</p>
+          </div>
+          <div class="bg-(--color-bg) p-5">
+            <h2 class="mb-2 font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright)">
+              {t('about.interests')}
+            </h2>
+            <p class="text-xs leading-relaxed text-(--color-text-muted)">{t('about.interests.desc')}</p>
+          </div>
+          <div class="bg-(--color-bg) p-5">
+            <h2 class="mb-2 font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright)">
+              {t('about.hobbies')}
+            </h2>
+            <p class="text-xs leading-relaxed text-(--color-text-muted)">{t('about.hobbies.desc')}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-b border-(--color-border-subtle) py-16">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <div class="mb-10 flex items-center gap-4">
+          <h2
+            class="whitespace-nowrap font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim)"
+          >
+            {t('studies.heading')}
+          </h2>
+          <div class="h-px flex-1 bg-(--color-border-subtle)"></div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-px border border-(--color-border-subtle) bg-(--color-border-subtle) md:grid-cols-2">
+          {degrees.map((degree) => (
+            <div class="bg-(--color-bg) p-5">
+              <div class="mb-1 flex items-baseline justify-between gap-3">
+                <h3 class="font-[family-name:var(--font-mono)] text-sm font-medium text-(--color-text-head)">{degree.title}</h3>
+                <span class="shrink-0 font-mono text-[10px] text-(--color-text-dim)">{degree.period}</span>
+              </div>
+              <p class="text-[11px] text-(--color-text-muted)">{degree.institution}</p>
+              {degree.spec && <p class="mt-1 font-mono text-[10px] text-(--color-text-dim)">{degree.spec}</p>}
+            </div>
+          ))}
+        </div>
+
+        <p class="mb-3 mt-8 font-mono text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">
+          {t('studies.edu.heading')}
+        </p>
+        <div class="grid grid-cols-1 gap-px border border-(--color-border-subtle) bg-(--color-border-subtle) md:grid-cols-2">
+          {programmes.map((programme) => (
+            <div class="bg-(--color-bg) p-5">
+              <div class="mb-1 flex items-baseline justify-between gap-3">
+                <h3 class="font-[family-name:var(--font-mono)] text-sm font-medium text-(--color-text-head)">{programme.degree}</h3>
+                <span class="shrink-0 font-mono text-[10px] text-(--color-text-dim)">{programme.period}</span>
+              </div>
+              <p class="text-[11px] text-(--color-text-muted)">{programme.field} · {programme.institution}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="mb-3 mt-8 font-mono text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">
+          {t('studies.cert.heading')}
+        </p>
+        <div class="grid grid-cols-1 gap-px border border-(--color-border-subtle) bg-(--color-border-subtle)">
+          {certifications.map((certification) => (
+            <div class="flex flex-wrap items-baseline justify-between gap-3 bg-(--color-bg) p-5">
+              <div>
+                <h3 class="font-[family-name:var(--font-mono)] text-sm font-medium text-(--color-text-head)">{certification.course}</h3>
+                <p class="text-[11px] text-(--color-text-muted)">{certification.platform}</p>
+              </div>
+              <span class="font-mono text-[10px] text-(--color-text-dim)">{certification.completed}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="mx-auto w-[85%] md:w-[60%] max-w-none min-w-0">
+        <div class="mb-8 flex items-center gap-4">
+          <h2
+            class="whitespace-nowrap font-[family-name:var(--font-display)] text-[13px] font-semibold uppercase tracking-[0.12em] text-(--color-text-dim)"
+          >
+            {t('about.page.contact.heading')}
+          </h2>
+          <div class="h-px flex-1 bg-(--color-border-subtle)"></div>
+        </div>
+
+        <p class="mb-6 max-w-[520px] text-sm leading-relaxed text-(--color-text-muted)">
+          {t('about.page.contact.body')}
+        </p>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            data-copy-email-token={emailToken}
+            aria-label={t('about.page.contact.email')}
+            class="inline-flex cursor-pointer items-center gap-1.5 border border-(--color-border) px-3 py-1.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
+          >
+            {t('about.page.contact.email')}
+          </button>
+          <a
+            href={`mailto:${email}`}
+            class="inline-flex items-center gap-1 border border-(--color-border) px-3 py-1.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
+          >
+            {email}
+          </a>
+          {profiles.map((profile) => (
+            <a
+              href={profile.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 border border-(--color-border) px-3 py-1.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
+            >
+              {profile.label} <span class="text-[8px]" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+
+        <p class="mt-10 font-mono text-[10px] uppercase tracking-[0.1em] text-(--color-text-dim)">
+          {t('about.page.work')}
+        </p>
+        <a href={`/${lang}/projects/`} class="mt-2 inline-block text-sm text-(--color-accent) hover:text-(--color-text-bright)">
+          {t('nav.projects')} →
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>

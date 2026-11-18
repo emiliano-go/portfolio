@@ -174,5 +174,14 @@
   "activity.project.none": "Sin repositorios relacionados.",
   "about.hobbies": "Hobbies",
   "about.hobbies.desc": "Leer e ir al gimnasio son los pilares de mi día a día que me permiten mantenerme centrado entre el trabajo.",
-  "hero.cta.contact.aria": "Copiar dirección de correo"
+  "hero.cta.contact.aria": "Copiar dirección de correo",
+  "project.updated": "Actualizado",
+  "about.page.title": "Sobre mí | Emiliano G.O.",
+  "about.page.desc": "Emiliano Gandini Outeda, ingeniero de sistemas e infraestructura en Montevideo, Uruguay. Trayectoria, trabajo actual, estudios y cómo contactarme.",
+  "about.page.heading": "Emiliano Gandini Outeda",
+  "about.page.location": "Montevideo, Uruguay",
+  "about.page.contact.heading": "Contacto",
+  "about.page.contact.body": "El email es la vía más rápida para escribirme. Respondo en español o inglés.",
+  "about.page.contact.email": "Copiar email",
+  "about.page.work": "Trabajo seleccionado"
 }

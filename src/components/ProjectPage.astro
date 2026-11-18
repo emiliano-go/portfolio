@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import ProjectActivity from '../components/ProjectActivity.astro';
 import { getProject, neighbours, sectionId, type Section, type Tone } from '../data/projects';
 import { createT, type Lang } from '../i18n';
+import contentDates from '../data/content-dates.json';
 
 interface Props {
   lang: string;
@@ -15,6 +16,20 @@ const { lang, id } = Astro.props as Props;
 const t = createT(lang);
 const project = getProject(id, lang as Lang);
 const { prev, next } = neighbours(id);
+
+// src/data/content-dates.json is written by scripts/generate_seo.py --write-dates from
+// the last commit that touched this route's sources, so the visible date, the sitemap
+// lastmod and schema dateModified all agree instead of drifting.
+const route = `/${lang}/work/${id}/`;
+const lastmodIso = (contentDates as Record<string, string>)[route];
+const lastmodLabel = lastmodIso
+  ? new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : lang, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(new Date(`${lastmodIso}T00:00:00Z`))
+  : null;
 
 const pad = (n: number) => String(n + 1).padStart(2, '0');
 const toneClass = (tone?: Tone) =>
@@ -32,16 +47,19 @@ const LICENSE_URL: Record<string, string> = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareSourceCode',
+  '@id': `https://emiliano-go.com${route}#software`,
   name: project.name,
   description: project.meta.description,
   codeRepository: repo?.href,
   programmingLanguage: project.stack.join(', '),
   license: LICENSE_URL[project.license],
   author: {
+    '@id': 'https://emiliano-go.com/#person',
     '@type': 'Person',
     name: 'Emiliano Gandini Outeda',
     url: 'https://emiliano-go.com',
   },
+  ...(lastmodIso ? { dateModified: lastmodIso } : {}),
 };
 
 const escapeHtml = (value: string) =>
@@ -149,6 +167,13 @@ const projectRepos = Array.from(
                 </a>
               ))}
             </div>
+
+            {lastmodLabel && (
+              <p class="mt-4 font-mono text-[10px] text-(--color-text-dim)">
+                {t("project.updated")}{' '}
+                <time datetime={lastmodIso}>{lastmodLabel}</time>
+              </p>
+            )}
           </div>
 
           <div class="w-full min-w-0">

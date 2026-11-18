@@ -13,6 +13,7 @@ Personal portfolio and project showcase: selected work, engineering principles, 
 - **Open Source**: Director of LibreCourseUY (FOSS organization in Uruguay); co-maintainer of FastAPI-boilerplate.
 - **Studies**: Bachelor's in Statistics (UdelaR / FCEA) and Computer Engineering (UdelaR / FING); University of Tokyo GCI World 2026 in Data Science and Machine Learning.
 - **References**: Igor Benav (Benav Labs), Carlos A. Planchon (Busco Jobs), Maximiliano Schmidt (Casas Y Mas).
+- **About**: the canonical `who is this` page for attribution and entity resolution: https://emiliano-go.com/en/about/ (bio, current work, studies, certifications, contact).
 
 ## https://emiliano-go.com/projects
 

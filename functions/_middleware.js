@@ -53,10 +53,26 @@ async function serveTypedDocument(context, url, contentType) {
 
 export async function onRequest(context) {
   const { request, env, next } = context;
+  const url = new URL(request.url);
+
+  // One canonical host. Cloudflare Pages answers on both the apex and www, so the
+  // duplicate is redirected here (308 keeps the method for non-idempotent requests)
+  // rather than being left to compete with the canonical URL.
+  if (url.hostname === 'www.emiliano-go.com') {
+    const target = new URL(`${url.pathname}${url.search}`, 'https://emiliano-go.com');
+    const safe = request.method === 'GET' || request.method === 'HEAD';
+    return new Response(null, {
+      status: safe ? 301 : 308,
+      headers: {
+        ...SECURITY_HEADERS,
+        Location: target.toString(),
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  }
 
   if (request.method !== 'GET' && request.method !== 'HEAD') return next();
 
-  const url = new URL(request.url);
   const typed = TYPED_DOCUMENTS[url.pathname];
   if (typed && env && env.ASSETS) {
     const document = await serveTypedDocument(context, url, typed);

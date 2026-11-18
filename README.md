@@ -40,10 +40,17 @@ The site is published for machine readers as well as browsers. `docs/agent-disco
 - `/.well-known/api-catalog` (RFC 9727), `/.well-known/ai-catalog.json` (ARD), `/.well-known/mcp/server-card.json` and `/.well-known/agent-skills/index.json` are static documents in `public/`.
 - `POST /mcp` is a stateless Model Context Protocol endpoint (`functions/mcp.js`) exposing four read-only tools, fed by `dist/mcp/catalog.json`, which `src/pages/mcp/catalog.json.ts` renders from `src/data/`.
 - `Accept: text/markdown` returns the prebuilt Markdown twin of a page (`functions/_middleware.js`); the twins come from `scripts/generate_markdown.py` during `postbuild`.
+- `www.emiliano-go.com` 301s to the apex in the same middleware, so the duplicate host that Cloudflare Pages also answers never competes with the canonical URL.
 - `robots.txt` declares Content Signals and an `Agentmap`, and `/auth.md` states the access policy.
 - WebMCP tools are registered in `src/layouts/Layout.astro` when the browser exposes `document.modelContext`.
 
 `npm test` fails if a document drifts: skill digests, `urn:air:` identifiers, media types, advertised URLs, the MCP tools and the Markdown twins are all checked against this tree. The documents require no build step of their own, but the Markdown twins do — run `npm run build` before `npm test` locally.
+
+## About page, lastmod and dates
+
+`/{lang}/about` is the canonical "who is this" URL (bio, studies, certifications, contact) with `ProfilePage` schema and `mainEntity` pointing at the shared `Person` node. It exists in all three locales plus the `/about/` language entry stub.
+
+`scripts/generate_seo.py` derives each route's `lastmod` (sitemap) and `dateModified` (JSON-LD) from the last commit that touched that route's sources, so a rebuild without a content change does not restamp the whole sitemap. When git history is unavailable (the Docker build, which ignores `.git`), it falls back to the committed `src/data/content-dates.json`; refresh that file with `python3 scripts/generate_seo.py --write-dates` after content edits. `ProjectPage.astro` renders the same date as a visible "Last updated" line, so the page, the sitemap and the structured data cannot disagree.
 
 ## Project catalog
 
