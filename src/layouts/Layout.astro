@@ -194,9 +194,25 @@ const markdownHref = currentPath.endsWith('.html')
         if (window.__webmcpRegistered) return;
         window.__webmcpRegistered = true;
 
-        var controller = typeof AbortController === 'function' ? new AbortController() : null;
+        // One signal for the page lifetime (it unregisters the tools when the page
+        // goes away) combined with a per-request deadline via AbortSignal.any.
+        var lifetime = typeof AbortController === 'function' ? new AbortController() : null;
+        if (lifetime) {
+          window.addEventListener('pagehide', function () {
+            lifetime.abort(new DOMException('Page hidden', 'AbortError'));
+          }, { once: true });
+        }
         var lang = document.documentElement.lang || 'en';
         var SECTIONS = ['work', 'about', 'engineering', 'studies', 'opensource', 'references'];
+
+        function requestSignal(ms) {
+          if (!lifetime) return AbortSignal.timeout(ms);
+          return AbortSignal.any([lifetime.signal, AbortSignal.timeout(ms)]);
+        }
+
+        function failure(error) {
+          return { ok: false, error: String((error && error.message) || error || 'unknown error') };
+        }
 
         function register(tool) {
           function fallback() {
@@ -205,7 +221,7 @@ const markdownHref = currentPath.endsWith('.html')
             } catch (error) {}
           }
           try {
-            var result = controller ? mc.registerTool(tool, { signal: controller.signal }) : mc.registerTool(tool);
+            var result = lifetime ? mc.registerTool(tool, { signal: lifetime.signal }) : mc.registerTool(tool);
             if (result && typeof result.catch === 'function') result.catch(fallback);
           } catch (error) {
             fallback();
@@ -213,10 +229,16 @@ const markdownHref = currentPath.endsWith('.html')
         }
 
         function catalog() {
-          return fetch('/mcp/catalog.json', { headers: { Accept: 'application/json' } })
+          return fetch('/mcp/catalog.json', {
+            headers: { Accept: 'application/json' },
+            signal: requestSignal(5000)
+          })
             .then(function (response) {
-              if (!response.ok) throw new Error('catalog unavailable');
+              if (!response.ok) throw new Error('catalog request failed: HTTP ' + response.status);
               return response.json();
+            })
+            .catch(function (error) {
+              throw new Error('Could not load /mcp/catalog.json', { cause: error });
             });
         }
 
@@ -258,7 +280,7 @@ const markdownHref = currentPath.endsWith('.html')
                   return { id: project.id, name: project.name, url: project.url || null, tier: project.tier };
                 })
               };
-            });
+            }).catch(failure);
           }
         });
 
@@ -277,14 +299,14 @@ const markdownHref = currentPath.endsWith('.html')
             var wanted = String((args && args.id) || '').trim().toLowerCase();
             if (!wanted) return { ok: false, error: 'Missing required argument "id".' };
             return catalog().then(function (data) {
-              var project = data.projects.filter(function (item) {
+              var project = data.projects.find(function (item) {
                 return item.id.toLowerCase() === wanted || item.name.toLowerCase() === wanted;
-              })[0];
+              });
               if (!project) return { ok: false, error: 'No project with id ' + wanted };
               if (!project.url) return { ok: false, error: project.name + ' has no case study page', links: project.links };
               location.href = project.url;
               return { ok: true, navigated: true, url: project.url };
-            });
+            }).catch(failure);
           }
         });
 
@@ -293,13 +315,18 @@ const markdownHref = currentPath.endsWith('.html')
           description: 'Return the site summary an agent should read first (llms.txt), with the canonical URLs of the main sections.',
           inputSchema: { type: 'object', properties: {}, additionalProperties: false },
           execute: function () {
-            return fetch('/llms.txt', { headers: { Accept: 'text/plain' } })
+            return fetch('/llms.txt', {
+              headers: { Accept: 'text/plain' },
+              signal: requestSignal(5000)
+            })
               .then(function (response) {
-                return response.ok ? response.text() : '';
+                if (!response.ok) throw new Error('llms.txt request failed: HTTP ' + response.status);
+                return response.text();
               })
               .then(function (text) {
                 return { ok: Boolean(text), url: location.origin + '/llms.txt', text: text };
-              });
+              })
+              .catch(failure);
           }
         });
       })();
