@@ -982,7 +982,7 @@ export const projects: Project[] = [
         kind: 'prose',
         title: 'Determinism is the product',
         body: [
-          'No timestamps, no randomness, no environment reads, no hidden I/O. The same entity, route and config produce the same payload forever, which turns SEO metadata into something ordinary engineering practices apply to: snapshot tests assert against expected payloads, hashes make stable ETags, results are safely memoized, and builds can diff metadata instead of guessing whether a deploy changed it.',
+          'Because the payload is a pure function of its inputs, the useful question stops being "did the metadata change" and becomes "did we mean it to". Snapshot tests assert against expected payloads, hashes give stable ETags, results memoize safely, and a build can diff metadata instead of guessing what a deploy did.',
           'Contracts push that further. `build_seo_contract` emits the SEO intent of a route — canonical, robots, required tags — as data, so a pull request that silently drops a canonical or widens an index directive fails CI rather than shipping and being discovered in Search Console weeks later.',
         ],
       },
@@ -1114,6 +1114,16 @@ export const projects: Project[] = [
           'Six documents ship with the code: quick start, configuration, roles, architecture, development, glossary.',
         ],
       },
+      {
+        kind: 'list',
+        title: 'Tradeoffs',
+        items: [
+          'One mutex serialises every operation: correct under Vault\'s concurrent calls, but it bounds throughput to one statement at a time.',
+          'ClickHouse DDL cannot be parameterised, so generated values are rejected rather than bound; an unusual username fails instead of being escaped.',
+          'Cluster mode depends on ON CLUSTER support and on the service account holding grants on every node.',
+          'Coverage describes the engine: main.go is excluded because it only calls dbplugin.ServeMultiplex.',
+        ],
+      },
     ],
   },
   {
@@ -1206,22 +1216,14 @@ export const projects: Project[] = [
       },
       {
         kind: 'list',
-        title: 'Known limitations',
-        items: [
-          'Compact and invisible footers cannot be checked by hand: the signer fingerprint is deliberately not on the wire, so only the armored footer is verifiable with plain gpg.',
-          'Invisible encoding survives Discord\'s client today but is not guaranteed: any client that strips zero-width characters downgrades the message to unsigned, which is at least visible.',
-          'Signing is attestation, not secrecy. A green badge says who wrote it, not who can read it.',
-          'Client mods violate Discord\'s terms of service; the project says so plainly in its own documentation.',
-        ],
-      },
-      {
-        kind: 'list',
         title: 'Tradeoffs',
         items: [
-          'Desktop-only (web cannot access gpg-agent)',
-          'Requires GPG key pair setup',
-          'Invisible encoding may be stripped by some clients',
-          'Key compromise is out of scope (standard GPG limitation)',
+          'Desktop-only: a browser cannot reach gpg-agent, and the security model needs local key access.',
+          'Requires a GPG key pair, and the signer has to pin peer keys themselves.',
+          'Compact and invisible footers cannot be checked by hand: the signer fingerprint is deliberately not on the wire, so only the armored footer verifies with plain gpg.',
+          'Invisible encoding survives Discord\'s client today but is not guaranteed: a client that strips zero-width characters downgrades the message to unsigned, which at least shows.',
+          'Signing is attestation, not secrecy: a green badge says who wrote it, not who can read it.',
+          'Key compromise is out of scope, and client mods violate Discord\'s terms of service.',
         ],
       },
     ],

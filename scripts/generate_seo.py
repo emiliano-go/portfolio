@@ -206,6 +206,13 @@ def person_node(t: dict[str, str]) -> dict:
         "url": f"{SITE_URL}/",
         "image": OG_IMAGE.url,
         "sameAs": SAME_AS,
+        "knowsAbout": [
+            "Distributed systems",
+            "Database internals",
+            "Developer tooling",
+            "Security engineering",
+            "Data engineering",
+        ],
         "worksFor": {"@type": "Organization", "name": t["meta.ld.works"]},
         "alumniOf": {"@type": "EducationalOrganization", "name": t["meta.ld.alumni"]},
         "address": {
@@ -301,12 +308,15 @@ def as_list(schema) -> list:
 
 def route_sources(route: str) -> list[str]:
     """Source files whose last commit is the honest lastmod for this route."""
+    # The unprefixed entry pages are built from LangEntry and one set of strings, and
+    # they are what x-default points at, so a wording change there is a change to them.
+    entry = [f"src/components/LangEntry.astro", *[f"src/i18n/{code}.json" for code in LOCALES]]
     if route == "/":
-        return ["src/pages/index.astro", "src/components/LangEntry.astro"]
+        return ["src/pages/index.astro", *entry]
     if route == "/projects/":
-        return ["src/pages/projects.astro", "src/components/LangEntry.astro"]
+        return ["src/pages/projects.astro", *entry]
     if route == "/about/":
-        return ["src/pages/about.astro", "src/components/LangEntry.astro"]
+        return ["src/pages/about.astro", *entry]
     if route == "/404/":
         return ["src/pages/404.astro"]
 
@@ -329,12 +339,15 @@ def route_sources(route: str) -> list[str]:
         # Only the content sources: a shared renderer (ProjectPage.astro) changes on
         # every layout tweak, and restamping 33 case studies for a CSS change is not
         # what lastmod is for.
-        sources = [
-            f"src/pages/[lang]/work/{slug}.astro",
-            "src/data/projects.ts",
-        ]
-        if lang != "en":
+        # A translated case study renders from its own JSON, so the English catalogue
+        # is not a source for it: sharing it would date all 24 translated pages to an
+        # English-only edit.
+        localized = PROJECT_ROOT / "src" / "data" / f"projects.{lang}.json"
+        sources = [f"src/pages/[lang]/work/{slug}.astro"]
+        if lang != "en" and localized.exists():
             sources.append(f"src/data/projects.{lang}.json")
+        else:
+            sources.append("src/data/projects.ts")
         return sources
     return [f"src/pages/[lang]{suffix}index.astro"]
 
@@ -439,6 +452,23 @@ def link_schema(nodes, route: str, lang: str, lastmod: str, person: dict) -> lis
     person_node_["@id"] = PERSON_ID
     if not any(node.get("@id") == PERSON_ID for node in graph):
         graph.append(person_node_)
+
+    # The home page only asks easeo for a WebSite entity, so it would be the one page
+    # with no WebPage node: no dateModified, no inLanguage, nothing for a crawler to
+    # date. State the page too, and let the WebSite keep describing the site.
+    if not any(node.get("@type") in ("WebPage", "ProfilePage") for node in graph):
+        homepage = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": f"{url}#webpage",
+            "url": url,
+            "inLanguage": lang,
+            "isPartOf": {"@id": WEBSITE_ID},
+            "publisher": {"@id": PERSON_ID},
+            "author": {"@id": PERSON_ID},
+            "dateModified": lastmod,
+        }
+        graph.append(homepage)
     return graph
 
 
@@ -452,13 +482,15 @@ def build_sitemap(entries: list[tuple[str, dict[str, str], str]]) -> str:
     for loc, alternates, lastmod in entries:
         lines.append("  <url>")
         lines.append(f"    <loc>{escape(loc)}</loc>")
+        lines.append(f"    <lastmod>{lastmod}</lastmod>")
+        lines.append("    <changefreq>monthly</changefreq>")
+        lines.append(f"    <priority>{'1.0' if loc.rstrip('/') == SITE_URL else '0.8'}</priority>")
+        # xhtml:link is an extension element: the sitemap XSD requires it after the
+        # core children, which strict validators enforce even though Google does not.
         for hreflang, href in alternates.items():
             lines.append(
                 f'    <xhtml:link rel="alternate" hreflang="{hreflang}" href="{escape(href)}" />'
             )
-        lines.append(f"    <lastmod>{lastmod}</lastmod>")
-        lines.append("    <changefreq>monthly</changefreq>")
-        lines.append(f"    <priority>{'1.0' if loc.rstrip('/') == SITE_URL else '0.8'}</priority>")
         lines.append("  </url>")
     lines.append("</urlset>")
     return "\n".join(lines) + "\n"

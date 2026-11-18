@@ -40,6 +40,28 @@ const toneClass = (tone?: Tone) =>
       : 'text-(--color-text-dim)';
 
 const repo = project.links.find((link) => link.href.startsWith('https://github.com/'));
+// `stack` is prose: it mixes languages with tools and distributions ("Arch Linux",
+// "Ed25519", "libgit2" are not ComputerLanguage values). Emit only what really is
+// one, and keep the whole list as keywords where a free-text list is correct.
+const LANGUAGES = [
+  'Rust',
+  'Python',
+  'Go',
+  'TypeScript',
+  'JavaScript',
+  'C',
+  'C++',
+  'SQL',
+  'Shell',
+  'Svelte',
+  'HTML',
+  'CSS',
+];
+const languages = project.stack.filter((entry) => {
+  // First token only, so "SQLite" is not "SQL" and "ClickHouse" is not "C".
+  const [head] = entry.trim().split(/[\s,+]/);
+  return LANGUAGES.some((language) => language.toLowerCase() === head.toLowerCase());
+});
 const LICENSE_URL: Record<string, string> = {
   MIT: 'https://opensource.org/licenses/MIT',
   'GPL-3.0': 'https://www.gnu.org/licenses/gpl-3.0.html',
@@ -51,13 +73,13 @@ const jsonLd = {
   name: project.name,
   description: project.meta.description,
   codeRepository: repo?.href,
-  programmingLanguage: project.stack.join(', '),
+  ...(languages.length > 0 ? { programmingLanguage: languages } : {}),
+  keywords: project.stack.join(', '),
   license: LICENSE_URL[project.license],
+  // A stub, not a second definition: the page already carries the full Person node,
+  // and two nodes sharing one @id with different values leave the merge undefined.
   author: {
     '@id': 'https://emiliano-go.com/#person',
-    '@type': 'Person',
-    name: 'Emiliano Gandini Outeda',
-    url: 'https://emiliano-go.com',
   },
   ...(lastmodIso ? { dateModified: lastmodIso } : {}),
 };

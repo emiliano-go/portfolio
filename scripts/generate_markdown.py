@@ -162,6 +162,10 @@ def inline(node: Node | str, in_link: bool = False) -> str:
         return esc(norm(node))
     if node.tag in SKIP:
         return ""
+    # Server-rendered shells (the commit feed) are filled by JavaScript and hold only
+    # a "loading" line at build time: in a Markdown twin that is a lie, not content.
+    if "data-project-activity" in node.attrs:
+        return ""
 
     # An <a> that wraps a whole card is a container, not a link: unwrap it so the
     # text and the links inside it survive instead of one enormous link.
@@ -270,6 +274,8 @@ def render_blocks(node: Node, out: list[str]) -> None:
             continue
         if child.tag in SKIP:
             continue
+        if "data-project-activity" in child.attrs:
+            continue
 
         if child.tag in HEADINGS:
             text = "".join(inline(grand) for grand in child.children).strip()
@@ -352,6 +358,8 @@ def render_blocks_with_inline(node: Node, out: list[str]) -> None:
             add(inline(child))
             continue
         if child.tag in SKIP:
+            continue
+        if "data-project-activity" in child.attrs:
             continue
         if child.tag == "a" and has_blocky_child(child):
             flush()

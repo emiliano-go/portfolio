@@ -21,6 +21,18 @@ const t = createT(lang);
 const email = 'e@emiliano-go.com';
 const emailToken = btoa(email);
 
+// One translation string carries a Markdown link ("Leading [LibreCourseUY](...)");
+// rendering it as text prints the brackets. Same allow-list as the case studies:
+// escape first, then promote only http(s) links.
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+const linkify = (value: string) =>
+  escapeHtml(value).replace(
+    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+    (_match, label, href) =>
+      `<a href="${href}" class="text-(--color-accent) underline underline-offset-2 hover:text-(--color-text-bright)" target="_blank" rel="noopener noreferrer">${label}</a>`,
+  );
+
 const degrees = [1, 2].map((index) => ({
   title: t(`studies.career.${index}.title`),
   institution: t(`studies.career.${index}.institution`),
@@ -78,7 +90,7 @@ const profiles = [
             <h2 class="mb-2 font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright)">
               {t('about.current')}
             </h2>
-            <p class="text-xs leading-relaxed text-(--color-text-muted)">{t('about.current.desc')}</p>
+            <p class="text-xs leading-relaxed text-(--color-text-muted)" set:html={linkify(t('about.current.desc'))} />
           </div>
           <div class="bg-(--color-bg) p-5">
             <h2 class="mb-2 font-[family-name:var(--font-mono)] text-xs font-medium text-(--color-text-bright)">
@@ -172,22 +184,24 @@ const profiles = [
             type="button"
             data-copy-email-token={emailToken}
             aria-label={t('about.page.contact.email')}
-            class="inline-flex cursor-pointer items-center gap-1.5 border border-(--color-border) px-3 py-1.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
+            class="inline-flex min-h-11 cursor-pointer items-center gap-1.5 border border-(--color-border) px-3 py-2.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
           >
             {t('about.page.contact.email')}
           </button>
           <a
-            href={`mailto:${email}`}
-            class="inline-flex items-center gap-1 border border-(--color-border) px-3 py-1.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
+            href="#"
+            data-email-link
+            data-email-token={emailToken}
+            class="inline-flex min-h-11 items-center gap-1 border border-(--color-border) px-3 py-2.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
           >
-            {email}
+            <span data-email-text>{t('about.page.contact.email')}</span>
           </a>
           {profiles.map((profile) => (
             <a
               href={profile.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 border border-(--color-border) px-3 py-1.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
+              class="inline-flex min-h-11 items-center gap-1 border border-(--color-border) px-3 py-2.5 font-mono text-xs text-(--color-text-muted) transition-colors duration-100 hover:border-(--color-text-muted) hover:text-(--color-text-bright)"
             >
               {profile.label} <span class="text-[8px]" aria-hidden="true">↗</span>
             </a>
@@ -205,3 +219,16 @@ const profiles = [
   </main>
   <Footer lang={lang} />
 </Layout>
+
+<script is:inline>
+  // Cloudflare's Email Obfuscation rewrites any literal address in the HTML, which
+  // injects a parser-blocking decoder and makes the page uncacheable. Assemble the
+  // address in the browser instead so the document stays static and cacheable.
+  for (const link of document.querySelectorAll('[data-email-link]')) {
+    const token = link.getAttribute('data-email-token') || '';
+    const address = atob(token);
+    link.setAttribute('href', 'mailto:' + address);
+    const text = link.querySelector('[data-email-text]');
+    if (text) text.textContent = address;
+  }
+</script>
