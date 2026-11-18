@@ -14,6 +14,7 @@ or a relative canonical fails the build rather than shipping.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from datetime import date
@@ -320,21 +321,45 @@ def route_sources(route: str) -> list[str]:
     if suffix == "/projects/":
         return [
             "src/pages/[lang]/projects.astro",
-            "src/components/ProjectPage.astro",
             "src/data/catalog.ts",
             f"src/i18n/{lang}.json",
         ]
     if suffix.startswith("/work/"):
         slug = suffix.strip("/").split("/")[-1]
+        # Only the content sources: a shared renderer (ProjectPage.astro) changes on
+        # every layout tweak, and restamping 33 case studies for a CSS change is not
+        # what lastmod is for.
         sources = [
             f"src/pages/[lang]/work/{slug}.astro",
-            "src/components/ProjectPage.astro",
             "src/data/projects.ts",
         ]
         if lang != "en":
             sources.append(f"src/data/projects.{lang}.json")
         return sources
     return [f"src/pages/[lang]{suffix}index.astro"]
+
+
+def git_is_usable() -> bool:
+    """Full history is required: a shallow clone reports HEAD's date for every path.
+
+    Cloudflare Pages checks out shallow, so trusting `git log -1` there would restamp
+    all 45 sitemap entries with the deploy date, which is exactly the bug this avoids.
+    """
+    if os.environ.get("SEO_SKIP_GIT") == "1":
+        return False
+    if not (PROJECT_ROOT / ".git").exists():
+        return False
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "rev-parse", "--is-shallow-repository"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return completed.returncode == 0 and completed.stdout.strip() == "false"
 
 
 def git_last_commit(paths: list[str]) -> str | None:
@@ -368,7 +393,7 @@ def load_content_dates() -> dict[str, str]:
 def lastmod_resolver() -> "callable":
     """git when the checkout has history, the committed map otherwise (Docker)."""
     committed = load_content_dates()
-    use_git = (PROJECT_ROOT / ".git").exists()
+    use_git = git_is_usable()
 
     def resolve(route: str) -> str:
         stamp = git_last_commit(route_sources(route)) if use_git else None
