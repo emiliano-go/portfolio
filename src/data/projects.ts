@@ -763,6 +763,32 @@ export const projects: Project[] = [
         ],
       },
       {
+        kind: 'prose',
+        title: 'Retention is a state machine, not a number',
+        body: [
+          'Most chat clients express history in one number and let zero mean "do not keep anything", which silently collides with "keep everything". Postal separates them: `limited`, `unlimited`, and a per-chat `inherit` that reads the global policy until it is told otherwise. Global settings cannot inherit, and a limited count of zero is a real instruction to retain no messages rather than a hole in the model. Existing numeric settings and per-chat overrides migrate without changing the disk policy they actually expressed.',
+          'Deletion has to mean one thing. Disk retention expires messages strictly, including a quiet chat\'s last message, while chat identity, last activity, names and pins survive as metadata so an empty chat does not keep a preview it no longer has. "Delete on this computer" is a local flag that greys a message out and never removes a row; only disk retention or clearing history remove rows. Delete-chat and clear-history are different operations with different consequences, and the UI says which one you picked.',
+        ],
+      },
+      {
+        kind: 'prose',
+        title: 'Two bounds that had to be found by measuring',
+        body: [
+          'The first is the message rail. Before it was virtualized with virtua, a media-heavy conversation pushed GPU memory past 3 GB because every photo in the open window decoded at once. The rail now mounts only the rows in and around the viewport and decoded images leave the renderer as rows scroll away, which is why the same chat settles near 0.2 GB rather than following the length of the conversation.',
+          'The second was quieter. Decryption secrets for edits and reactions were kept for a fixed 30-day horizon, which sounds modest until one profile reached 97 MB across 399,620 rows. The horizon now tracks the message retention window instead, and existing profiles are reclaimed on startup: 97 MB became 5.8 MB. Neither bound was a design decision anybody wrote down; both came out of looking at a running process.',
+        ],
+      },
+      {
+        kind: 'list',
+        title: 'What these numbers do not claim',
+        items: [
+          'An unlimited SQLite archive can grow on disk; the measurements do not establish its maximum size or its query latency.',
+          'The comparison is against a webview approach on the same account and machine, not against every native client: the cost is a property of driving WhatsApp Web, not of the projects that do it.',
+          'Local databases are plaintext by default. SQLCipher encryption, with the account key in the OS credential store, exists in settings, but media and exported backups stay plaintext.',
+          'Link previews are fetched by the app from public HTTP(S) addresses after resolving DNS, including redirects, and are skipped when an HTTP proxy is configured, because its target cannot be verified locally.',
+        ],
+      },
+      {
         kind: 'list',
         title: 'Tradeoffs',
         items: [
@@ -819,6 +845,53 @@ export const projects: Project[] = [
           { title: 'cava-style band processing', body: 'A 2048-point FFT folds into 24 logarithmic bands, each judged against its own rolling spectral floor, with equal-loudness EQ, auto-gain, and a peakiness gate.' },
           { title: 'Fixed-tick pipeline', body: 'Four modules (audio, sim, figure, canvas) share a fixed 100 Hz simulation tick, so each band injects current into its own neuron subset deterministically.' },
           { title: 'Terminal-native rendering', body: 'A float phosphor buffer at 2x4 sub-cell resolution folds into braille, and colors come exclusively from ANSI 30-37 so the disk adopts the user theme.' },
+        ],
+      },
+      {
+        kind: 'steps',
+        title: 'From audio to pixels',
+        steps: [
+          {
+            title: 'Capture',
+            body: 'System audio is read per application from PipeWire or PulseAudio streams, with an ignore list so a voice call never leaks into the visual, and NBS_IGNORE to extend it. Samples are windowed into a 2048-point FFT at 44.1 kHz and folded into 24 logarithmic bands spanning 40 Hz to 12 kHz.',
+          },
+          {
+            title: 'Judge each band',
+            body: 'Every band is compared against its own slowly adapting spectral floor: a violin 30 dB under the bass still lights its band, while a constant hum disappears into the floor. A cava-style f^0.85 equal-loudness curve stops treble from being structurally starved, a slow auto-gain makes the result independent of the volume knob, and a peakiness gate separates tonal content from noise per band.',
+          },
+          {
+            title: 'Inject and simulate',
+            body: 'Each band injects current into its own subset of neurons and the network runs at a fixed 100 Hz tick. Recurrent dynamics mean activity propagates, reverberates and decays through real fly-brain topology instead of following the FFT envelope.',
+          },
+          {
+            title: 'Draw',
+            body: 'Pool activities — per band, per column group, excitatory and inhibitory balance, global rate — drive the figure, which is drawn into a float phosphor buffer at 2×4 sub-cell resolution and folded into braille. Persistence decay gives the trails.',
+          },
+        ],
+      },
+      {
+        kind: 'table',
+        title: 'Strict band-to-effect map',
+        columns: ['Bands', 'Content', 'Effect'],
+        rows: [
+          ['0–3', 'Sub and bass', 'Ring diameter, scaled by raw loudness'],
+          ['4–7', 'Low-mid body', 'Rim bumps with a 7 Hz vibration term'],
+          ['8–9', 'Snare body', 'Slow heavy embers, red'],
+          ['10–12', 'Voice and guitar', 'Rim tears that rupture and heal'],
+          ['13–15', 'Violin or flute, low', 'Knots and strands darting out of the rim, magenta'],
+          ['16–18', 'Violin harmonics', 'Inner orbiters threading the ring, cyan'],
+          ['19–21', 'Brass and air', 'Outer moon orbiters, blue'],
+          ['22–23', 'Cymbals and air', 'Fast thin streaks, cyan'],
+        ],
+        note: 'Band combinations unlock extra anomalies: drums plus bass body fire shockwave pulses, voice plus strings draw a tether chord across the disk, violin harmonics plus brass raise corona flares, cymbals plus bass glitch the interior, strings plus cymbals spray white sparkles. Rotation is beat-locked — each bass hit steps a quarter turn and the disk chases it — so a monotone passage holds perfectly still.',
+      },
+      {
+        kind: 'prose',
+        title: 'Where the graph comes from',
+        body: [
+          'The connectome is FlyWire release v783: 138,333 proofread neurons and 2,052,622 synapses, from the adult female fly brain, published with a DOI and the Dorkenwald et al. Nature 2024 wiring paper. The build step preprocesses the published feather file into a compact binary, weighting edges by synapse count and taking the sign from the presynaptic neuron\'s neurotransmitter probabilities: GABA inhibitory, the rest excitatory.',
+          'Beats are bass hits, detected as a positive jump in bands 0–3 that exceeds 1.8× the bass\'s own running delta-mean. The threshold adapts to the song, so dense high-BPM tracks do not saturate it and quiet kicks still count. No hits, no motion.',
+          'Colour comes exclusively from the terminal\'s own ANSI palette (30–37, bold for bright), so the disk adopts whatever theme is already open instead of imposing one. The tilt axis precesses, which makes the tumble multidirectional rather than a fixed rotation.',
         ],
       },
       {
@@ -880,6 +953,46 @@ export const projects: Project[] = [
           { title: 'Pure determinism', body: 'No timestamps, randomness, environment reads, or hidden I/O. The same inputs always produce the same payload, so output can be hashed and committed.' },
           { title: 'SEO contracts for CI', body: 'build_seo_contract emits machine-readable SEO intent that can be committed and validated as code, catching metadata regressions in review.' },
           { title: 'Scoped extension registries', body: 'HookRegistry and SchemaRegistry add post-processing and custom JSON-LD without touching the core, scoped to a config rather than global.' },
+        ],
+      },
+      {
+        kind: 'prose',
+        title: 'The same bytes from three runtimes',
+        body: [
+          'All the logic lives in easeo-core, a Rust crate with no I/O dependencies. The Python package wraps it through maturin and re-exports idiomatic snake_case symbols; the JavaScript package wraps the same crate through napi-rs as `@easeo/core`. Nothing is reimplemented in a binding, because a second implementation is a second set of edge cases.',
+          'The claim is tested rather than asserted: `tests/conformance/test_conformance.py` builds the same payloads from the Rust, Python and JavaScript APIs and compares the rendered output byte for byte. If a binding marshals an argument differently, the conformance run fails before a release does. This site uses easeo for its own manifest and sitemap, which is how the deterministic claim gets exercised in anger.',
+        ],
+      },
+      {
+        kind: 'table',
+        title: 'What one payload contains',
+        columns: ['Output', 'Detail'],
+        rows: [
+          ['Canonical URL', 'HTTPS enforcement, lowercase paths, trailing-slash policy, duplicate-slash collapse and tracking-parameter removal applied as a URL policy, not as string concatenation.'],
+          ['Title and description', 'Resolved through fallback chains from entity fields, with length validation before the payload is accepted.'],
+          ['Robots directives', 'index/noindex, follow/nofollow, max-snippet, max-image-preview, max-video-preview.'],
+          ['Open Graph', 'og:type, title, description, image, locale, plus audio and video where the entity has them.'],
+          ['Twitter Cards', 'summary_large_image by default, with image alt, site and creator.'],
+          ['JSON-LD', 'WebSite, WebPage, Article, Product, Organization, LocalBusiness, BreadcrumbList, plus custom generators through a schema registry.'],
+          ['SEO contract', 'A machine-readable statement of intent that can be committed and validated in CI.'],
+          ['Hash and ETag', 'SHA-256 of the payload, so caching and change detection do not depend on diffing rendered HTML.'],
+        ],
+      },
+      {
+        kind: 'prose',
+        title: 'Determinism is the product',
+        body: [
+          'No timestamps, no randomness, no environment reads, no hidden I/O. The same entity, route and config produce the same payload forever, which turns SEO metadata into something ordinary engineering practices apply to: snapshot tests assert against expected payloads, hashes make stable ETags, results are safely memoized, and builds can diff metadata instead of guessing whether a deploy changed it.',
+          'Contracts push that further. `build_seo_contract` emits the SEO intent of a route — canonical, robots, required tags — as data, so a pull request that silently drops a canonical or widens an index directive fails CI rather than shipping and being discovered in Search Console weeks later.',
+        ],
+      },
+      {
+        kind: 'list',
+        title: 'Adapters, not frameworks',
+        items: [
+          'JavaScript: `@easeo/next` returns a Next.js Metadata object, `@easeo/astro` runs at build time and emits contracts, `@easeo/vite` hooks `transformIndexHtml`, `@easeo/nuxt` exposes `useEaseoSeo()`, `@easeo/sveltekit` provides `buildEaseoPayload()` and `<EaseoHead />`, `@easeo/react` ships the component alone.',
+          'Python: `easeo.adapters.fastapi`, `.django`, `.flask`, plus a Zensical extension for generating documentation metadata.',
+          'Published as `easeo` on PyPI, `@easeo/core` on npm and `easeo-core` on crates.io, with the docs site exposing `llms.txt` and `llms-full.txt` so agents can read the same reference humans do.',
         ],
       },
       {
@@ -955,6 +1068,52 @@ export const projects: Project[] = [
           { title: 'Cleanup on failure', body: 'If user creation partially succeeds (for example grants fail), the plugin removes the partially-created user to avoid orphaned accounts.' },
         ],
       },
+      {
+        kind: 'steps',
+        title: 'Lease lifecycle',
+        steps: [
+          {
+            title: 'Configure once',
+            body: 'Vault stores the ClickHouse connection URL and a service account. Init and VerifyConnection open the connection and prove that account can create, drop and alter users before any role is allowed to issue credentials.',
+          },
+          {
+            title: 'Create on demand',
+            body: 'A dynamic role carries creation_statements. The plugin substitutes a generated username and password, runs the DDL, and returns the lease once. Vault owns the TTL and the renewal from that point.',
+          },
+          {
+            title: 'Fail without residue',
+            body: 'If grants fail after the user exists, the partial account is removed before the error reaches the caller. An orphaned ClickHouse user with a password nobody holds is a credential leak waiting for a log to surface it.',
+          },
+          {
+            title: 'Revoke, or rotate in place',
+            body: 'Lease expiry drops the user. A static role is the same machinery in reverse: it rotates the password of a long-lived user on a schedule, so services that cannot re-read a lease still stop carrying a shared secret.',
+          },
+        ],
+      },
+      {
+        kind: 'table',
+        title: 'Where the complexity sits',
+        columns: ['Concern', 'How clickvault handles it'],
+        rows: [
+          ['ON CLUSTER placement', 'Inserted at the position ClickHouse grammar requires, not appended: a trailing modifier is a syntax error on some statements.'],
+          ['Literal substitution', 'ClickHouse DDL cannot be parameterized, so every generated value is rejected if it contains a quote, backtick, backslash or control character. The operation fails instead of running unsafe SQL.'],
+          ['Concurrency', 'A single sync.RWMutex is held across the whole operation, which closes the TOCTOU window between checking a user and creating it.'],
+          ['Username collisions', 'Existing users are checked before creation; truncated names fail with an explicit error rather than mapping two roles onto one account.'],
+          ['Transport', 'TLS, dial timeout and read timeout are configurable per connection instead of assumed from the URL.'],
+        ],
+        note: 'The plugin implements the dbplugin.Database interface Vault calls. There is no ClickHouse driver in the database secrets engine, so every statement below the interface is written here.',
+      },
+      {
+        kind: 'list',
+        title: 'How it is verified',
+        items: [
+          '1,017 source lines against 979 test lines in internal/clickvault (clickvault.go, ddl.go).',
+          'Unit tests mock the database with go-sqlmock and need no external services, so the suite runs on every push.',
+          'Integration tests start a real ClickHouse container and drive the full lifecycle: create, read a lease, expire, revoke.',
+          '85.4% coverage on the package; Codecov enforces a 70% project target with 5% tolerance on pull requests.',
+          'Six documents ship with the code: quick start, configuration, roles, architecture, development, glossary.',
+        ],
+      },
     ],
   },
   {
@@ -1011,6 +1170,48 @@ export const projects: Project[] = [
           { title: 'Content canonicalization', body: 'NFC normalization, CRLF to LF conversion, whitespace collapsing. Prevents trivial bypasses via Unicode normalization or line-ending differences.' },
           { title: 'gpg-agent isolation', body: 'Verification uses a throwaway GNUPGHOME to prevent verification from accessing the signing key. Each verify operation runs in isolation.' },
           { title: 'Desktop-only by design', body: 'Web browsers cannot access gpg-agent. The plugin is desktop-only (Vencord/Vesktop) because the security model requires local key access.' },
+        ],
+      },
+      {
+        kind: 'prose',
+        title: 'The footer carries only what the message cannot',
+        body: [
+          'The signed payload is rebuilt from scratch on the verifying side, never parsed out of the message: version, event type, author id, channel id, the Discord message id for edits, the signed timestamp, then the content last so it can never shift a field. Almost everything a verifier needs is already on screen; the footer carries only the two values that are not.',
+          'That footer is `‖dsig:1:{base36 timestamp}:{base64 signature}`. The subtext style prefixes it with Discord\'s `-# ` marker, and the prefix is optional on the way in so both styles parse identically. The invisible style writes the same two fields into a framed stream — magic byte, version, blob length, six-byte timestamp, signature, CRC-8 — as two bits per symbol over four zero-width characters, appended after a single separating space so a trailing URL survives.',
+          'The length byte and the checksum are there so damage is legible instead of mysterious: a stream whose tail was cut reports "the signature was cut: N of M bytes arrived", altered bytes fail the checksum, and anything under 255 bytes fits. A message carries exactly one footer and the last one wins.',
+        ],
+      },
+      {
+        kind: 'cards',
+        title: 'Verification discipline',
+        columns: 2,
+        cards: [
+          {
+            title: 'Status-fd, not exit codes',
+            body: 'Verdicts are parsed from gpg --status-fd. EXPKEYSIG and REVKEYSIG are not good signatures here even though the mathematics checks out: an expired or revoked key is a failed attestation.',
+          },
+          {
+            title: 'No shell, no keyring writes',
+            body: 'gpg is spawned with argv arrays, never a shell string. Payloads go through stdin, signatures and peer keys through 0600 files in a fresh mkdtemp directory removed in a finally block.',
+          },
+          {
+            title: 'Peer keys cannot borrow your trust',
+            body: 'A peer key is imported into a throwaway GNUPGHOME, so a verdict can never be satisfied by some unrelated key already in your real keyring, and inspecting a peer never mutates it.',
+          },
+          {
+            title: 'Two signature shapes',
+            body: 'A compact 72-byte form rebuilds the rest from the verifier\'s copy of the signer fingerprint, and is only used when the signature survives compress and inflate byte for byte. Otherwise the full OpenPGP packet ships, so an unusual gpg build cannot emit footers nobody can verify.',
+          },
+        ],
+      },
+      {
+        kind: 'list',
+        title: 'Known limitations',
+        items: [
+          'Compact and invisible footers cannot be checked by hand: the signer fingerprint is deliberately not on the wire, so only the armored footer is verifiable with plain gpg.',
+          'Invisible encoding survives Discord\'s client today but is not guaranteed: any client that strips zero-width characters downgrades the message to unsigned, which is at least visible.',
+          'Signing is attestation, not secrecy. A green badge says who wrote it, not who can read it.',
+          'Client mods violate Discord\'s terms of service; the project says so plainly in its own documentation.',
         ],
       },
       {
